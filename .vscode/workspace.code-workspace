@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "C:/Projects/Trakt2"
+		}
+	],
+	"settings": {
+		"workbench.colorCustomizations": {
+			"minimap.background": "#00ff9906",
+			"scrollbar.shadow": "#00ff9906"
+		}
+	}
+}
