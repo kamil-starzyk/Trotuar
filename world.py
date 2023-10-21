@@ -1,6 +1,7 @@
 class World:
-  def __init__(self, size_x, size_y, size_z):
-    self.size_x = size_x
-    self.size_y = size_y
-    self.size_z = size_z
+  def __init__(self, file_path):
+    self.size_x = 1
+    self.size_y = 1
+    self.size_z = 1
+    self.ground_level = 0
     self.squares = []
