@@ -5,6 +5,7 @@ from player import Player
 
 class Game:
   def __init__(self):
+    self.version = "0.0.0"
     self.gameplay = 0
     self.god_mode = True
     self.world = None
