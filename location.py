@@ -1,3 +1,5 @@
+from square import Square
+
 class Location:
   def __init__(self, name, description, size_x, size_y, size_z, ground_level, squares):
     self.name = name
@@ -21,6 +23,8 @@ class Location:
    
   @classmethod
   def from_dict(cls, data):
+    name = data["name"]
+    description = data["description"]
     size_x = data["size_x"]
     size_y = data["size_y"]
     size_z = data["size_z"]

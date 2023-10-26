@@ -7,7 +7,7 @@ class Konsola:
 	@classmethod
 	def show_title_screen(cls, version):
 		os.system('cls')
-		print("Trakt v. " + version)
+		print("Trotuar v. " + version)
 		print("Witaj")
 		print("---------------")
 		print("[1] Nowa gra")

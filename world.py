@@ -1,3 +1,5 @@
+from location import Location
+
 class World:
   def __init__(self, locations):
     self.locations = locations

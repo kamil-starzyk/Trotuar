@@ -33,13 +33,13 @@ class Game:
 	def new_game(self):
 		data = MyJson.load_json("data/init/world.json")
 		self.world = World.from_dict(data)
-		self.player = Player(0,0, "Jozin", "z Bazin", "hooman", 90, 100, 5, 5, 10, 10, 10, 0, 1, 90, 100, 70, 100)
+		self.player = Player(0,0, "Jozin", "z Bazin", "hooman", "warrior", 90, 100, 5, 5, 10, 10, 10, 0, 1, 90, 100, 70, 100)
 		self.is_playing = True
 	
 
 	def end_game(self):
 		self.is_playing = False
-		Konsola.print("Czy na pewno chcesz wyjść? Upewnij się, że zapisałeś grę (Y/N)", "lyellow", "red")
+		print("Czy na pewno chcesz wyjść? Upewnij się, że zapisałeś grę (Y/N)")
 		are_you_sure = input()
 		are_you_sure = "Y"
 		if are_you_sure in ("Y", "y"):

@@ -1,10 +1,10 @@
 from mob import Mob
 
 class Player(Mob):
-  def __init__(self, x, y, name, description, race, hp, hp_max, mana, mana_max, strength, attack, defence, exp, lvl, satiation, satiation_max, hydration, hydration_max):
-    super(Player, self).__init__(x, y, name, description, race, hp, hp_max, mana, mana_max, strength, attack, defence)
-    self.exp
-    self.lvl
+  def __init__(self, x, y, name, description, race, proficiency, hp, hp_max, mana, mana_max, strength, attack, defence, exp, lvl, satiation, satiation_max, hydration, hydration_max):
+    super(Player, self).__init__(x, y, name, description, race, proficiency, hp, hp_max, mana, mana_max, strength, attack, defence)
+    self.exp = exp
+    self.lvl = lvl
     self.satiation = satiation
     self.satiation_max = satiation_max
     self.hydration = hydration
