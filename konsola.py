@@ -5,7 +5,7 @@ class Konsola:
 		pass
 
 	@classmethod
-  def landing(cls, version):
+	def landing(cls, version):
 		os.system('cls')
 		print("Trakt v. " + version)
 		print("Witaj")

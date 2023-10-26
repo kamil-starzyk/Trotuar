@@ -1,0 +1,123 @@
+{
+  "locations" : [
+    { "name": "Torenberg",
+      "description": "Torenberg to piękne portowe miasto",
+      "size_x": 4,
+      "size_y": 4,
+      "size_z": 1,
+      "ground_level": 0,
+      "squares": [
+        {
+          "name": "Wieża",
+          "description": "Wszedłeś do wieży. W górę prowadzą kręte schody.",
+          "coord": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "exit": [0,0,1,0,0,0]
+        },
+        {
+          "name": "Przed wieżą",
+          "description": "Stoisz przed wejściem do wieży strażniczej. Wejście do niej znajduje się na północy. Na zachodzie jest wielki kamienny mur. Do ulicy dostaniesz sięidąc na wschód.",
+          "coord": {
+            "x": 0,
+            "y": 1,
+            "z": 0
+          },
+          "exit": [1,1,0,0,0,0]
+        },
+        {
+          "name": "Domek",
+          "description": "Wszedłeś do małego, przytulnego mieszkanka. Stoi tu pod ścianą skrzynia.",
+          "coord": {
+            "x": 2,
+            "y": 0,
+            "z": 0
+          },
+          "exit": [0,0,1,0,0,0]
+        },
+        {
+          "name": "Kuźnia",
+          "description": "Oto warsztat miejscowego kowala. Stoi tu palenisko, a przy nim miech. Obok jest kowadło oraz brus. Wyjście jest na zachodzie.",
+          "coord": {
+            "x": 2,
+            "y": 1,
+            "z": 0
+          },
+          "exit": [0,0,0,1,0,0]
+        },
+        {
+          "name": "Ulica",
+          "description": "Przechadzasz się ulicami miasta",
+          "coord": {
+            "x": 1,
+            "y": 1,
+            "z": 0
+          },
+          "exit": [0,0,0,0,0,0]
+        },
+        {
+          "name": "Ulica",
+          "description": "Przechadzasz się ulicami miasta",
+          "coord": {
+            "x": 2,
+            "y": 1,
+            "z": 0
+          },
+          "exit": [0,0,0,0,0,0]
+        },
+        {
+          "name": "Ulica",
+          "description": "Przechadzasz się ulicami miasta",
+          "coord": {
+            "x": 3,
+            "y": 1,
+            "z": 0
+          },
+          "exit": [0,0,0,0,0,0]
+        },
+        {
+          "name": "Ulica",
+          "description": "Przechadzasz się ulicami miasta",
+          "coord": {
+            "x": 1,
+            "y": 2,
+            "z": 0
+          },
+          "exit": [0,0,0,0,0,0]
+        },
+        {
+          "name": "Ulica",
+          "description": "Przechadzasz się ulicami miasta",
+          "coord": {
+            "x": 3,
+            "y": 2,
+            "z": 0
+          },
+          "exit": [0,0,0,0,0,0]
+        },
+        {
+          "name": "Ulica",
+          "description": "Przechadzasz się ulicami miasta",
+          "coord": {
+            "x": 1,
+            "y": 3,
+            "z": 0
+          },
+          "exit": [0,0,0,0,0,0]
+        },
+        {
+          "name": "Ulica",
+          "description": "Przechadzasz się ulicami miasta",
+          "coord": {
+            "x": 3,
+            "y": 3,
+            "z": 0
+          },
+          "exit": [0,0,0,0,0,0]
+        }
+      ]
+    }
+  ]
+}
