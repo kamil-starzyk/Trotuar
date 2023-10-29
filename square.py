@@ -13,7 +13,16 @@ class Square:
       "u": exits["u"],
       "d": exits["d"]
     }
+    #print(f'{self.name: <16} X: {self.x}, Y: {self.y}, Z: {self.z}')
   
+  def show_square(self):
+    print(self.name)
+    print(self.description)
+    print("Wyjścia: ",end=" ")
+    for e in self.exits:
+      if self.exits[e]:
+        print(e, end=" ")
+    print()
   def to_dict(self):
     return {
       "x": self.x, 

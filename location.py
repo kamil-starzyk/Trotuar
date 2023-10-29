@@ -9,6 +9,14 @@ class Location:
     self.size_z = size_z
     self.ground_level = ground_level
     self.squares = squares
+  
+  def find_square(self, target_x, target_y, target_z):
+    for square in self.squares:
+      #print(f'{square.name: <16} X: {square.x}, Y: {square.y}, Z: {square.z}')
+      #print(f'X: {target_x}, Y: {target_y}, Z: {target_z}')
+      if square.x == target_x and square.y == target_y and square.z == target_z:
+        return square
+    return None
 
   def to_dict(self):
     return {
@@ -18,7 +26,7 @@ class Location:
       "size_y": self.size_y,
       "size_z": self.size_z,
       "ground_level": self.ground_level,
-      "squares": [member.to_dict() for member in self.members]
+      "squares": [square.to_dict() for square in self.squares]
     }
    
   @classmethod

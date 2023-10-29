@@ -33,7 +33,8 @@ class Game:
 	def new_game(self):
 		data = MyJson.load_json("data/init/world.json")
 		self.world = World.from_dict(data)
-		self.player = Player(0,0, "Jozin", "z Bazin", "hooman", "warrior", 90, 100, 5, 5, 10, 10, 10, 0, 1, 90, 100, 70, 100)
+		current_location = self.world.locations[0]
+		self.player = Player(0,0,0, current_location, "Jozin", "z Bazin", "hooman", "warrior", 90, 100, 5, 5, 10, 10, 10, 0, 1, 90, 100, 70, 100)
 		self.is_playing = True
 	
 
