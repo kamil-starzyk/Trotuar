@@ -5,11 +5,11 @@ game = Game()
 game.title_screen()
 
 player = game.player
-print(game.world.locations[0].squares[0].exits["n"])
 
 print("Brawo! Udało Ci się rozpocząć grę")
 
 player.whereami()
+print(player.current_location.find_square(2,2,0).items)
 
 command_mapping = {
   "n" :         (player.move_in_direction, "n"),

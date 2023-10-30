@@ -1,5 +1,5 @@
 class Square:
-  def __init__(self, x, y, z, name, description, exits):
+  def __init__(self, x, y, z, name, description, exits, items):
     self.x = x
     self.y = y
     self.z = z
@@ -13,6 +13,7 @@ class Square:
       "u": exits["u"],
       "d": exits["d"]
     }
+    self.items = items
     #print(f'{self.name: <16} X: {self.x}, Y: {self.y}, Z: {self.z}')
   
   def show_square(self):
@@ -23,6 +24,7 @@ class Square:
       if self.exits[e]:
         print(e, end=" ")
     print()
+    
   def to_dict(self):
     return {
       "x": self.x, 
@@ -30,9 +32,10 @@ class Square:
       "z": self.z,
       "name": self.name,
       "description": self.description,
-      "exits": self.exits
+      "exits": self.exits,
+      "items" : self.items
     }
   
   @classmethod
   def from_dict(cls, data):
-    return cls(data["x"], data["y"], data["z"], data["name"], data["description"], data["exits"])
+    return cls(data["x"], data["y"], data["z"], data["name"], data["description"], data["exits"], data["items"])

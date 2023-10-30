@@ -21,7 +21,8 @@
             "w": 0,
             "u": 0,
             "d": 0
-          }
+          }, 
+          "items" : []
         },
         {
           "name": "Przed wieżą",
@@ -36,7 +37,8 @@
             "w": 0,
             "u": 0,
             "d": 0
-          }
+          }, 
+          "items" : []
         },
         {
           "name": "Domek",
@@ -51,7 +53,30 @@
             "w": 0,
             "u": 0,
             "d": 0
-          }
+          }, 
+          "items" : [
+            {
+              "type" : "Consumable",
+              "name" : "Podpłomyk",
+              "description" : "Przaśny placuszek upieczony na blasze",
+              "weight" : 0.5,
+              "price" : 5,
+              "attributes" : {
+                "satiation" : 10,
+                "hp" : 5
+              }
+            },
+            {
+              "type" : "Consumable",
+              "name" : "Eliksir magii",
+              "description" : "Malutka fiolka z niebieskim płynem",
+              "weight" : 0.2,
+              "price" : 120,
+              "attributes" : {
+                "mana" : 20
+              }
+            }
+          ]
         },
         {
           "name": "Kuźnia",
@@ -66,7 +91,30 @@
             "w": 1,
             "u": 0,
             "d": 0
-          }
+          }, 
+          "items" : [
+            {
+              "type" : "Tool",
+              "name" : "Młot kowala",
+              "description" : "Masywny młot służący do kucia stali",
+              "weight" : 10,
+              "price" : 100,
+              "attributes" : {
+
+              }
+            },
+            {
+              "type" : "Weapon",
+              "name" : "Miecz strudzonych",
+              "description" : "Prosty, lekki miecz. Idealny na początek",
+              "weight" : 4,
+              "price" : 60,
+              "attributes" : {
+                "damage" : 20,
+                "strength" : 10
+              }
+            }
+          ]
         },
         {
           "name": "Ulica",
@@ -81,7 +129,8 @@
             "w": 1,
             "u": 0,
             "d": 0
-          }
+          }, 
+          "items" : []
         },
         {
           "name": "Ulica",
@@ -96,7 +145,8 @@
             "w": 1,
             "u": 0,
             "d": 0
-          }
+          }, 
+          "items" : []
         },
         {
           "name": "Ulica",
@@ -111,7 +161,8 @@
             "w": 1,
             "u": 0,
             "d": 0
-          }
+          }, 
+          "items" : []
         },
         {
           "name": "Ulica",
@@ -126,7 +177,8 @@
             "w": 0,
             "u": 0,
             "d": 0
-          }
+          }, 
+          "items" : []
         },
         {
           "name": "Ulica",
@@ -141,7 +193,8 @@
             "w": 0,
             "u": 0,
             "d": 0
-          }
+          }, 
+          "items" : []
         },
         {
           "name": "Ulica",
@@ -156,7 +209,8 @@
             "w": 0,
             "u": 0,
             "d": 0
-          }
+          }, 
+          "items" : []
         },
         {
           "name": "Ulica",
@@ -171,7 +225,8 @@
             "w": 0,
             "u": 0,
             "d": 0
-          }
+          }, 
+          "items" : []
         }
       ]
     }
