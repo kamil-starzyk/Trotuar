@@ -5,11 +5,12 @@ game = Game()
 game.title_screen()
 
 player = game.player
+player.current_location.find_square(2,2,0).items[0].pick_up(player)
 
 print("Brawo! Udało Ci się rozpocząć grę")
 
-player.whereami()
-print(player.current_location.find_square(2,2,0).items)
+item = None
+mob = None
 
 command_mapping = {
   "n" :         (player.move_in_direction, "n"),
@@ -24,6 +25,9 @@ command_mapping = {
   "w" :         (player.move_in_direction, "w"),
   "west" :      (player.move_in_direction, "w"),
   "4" :         (player.move_in_direction, "w"),
+  
+  "podnies":    (player.pick_up, item),
+
   "whoami" :    player.whoami,
   "whereami" :  player.whereami,
   "help" :      Konsola.help,
@@ -38,6 +42,8 @@ while game.is_playing:
   prompt = Konsola.prompt(game.player)
   command = prompt[0]
   argument = prompt[1]
+
+  #todo finding item
 
   if command in command_mapping:
     action = command_mapping[command]

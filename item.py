@@ -6,25 +6,10 @@ class Item:
     self.weight = weight
     self.price = price
     self.attributes = attributes
-    
-  def pick_up(self, mob):
-    mob.equipment.append(self)
-
-  def drop(self, mob):
-    if self in mob.equipment:
-      mob.equipment.remove(self)
-      square = mob.current_location.find_square(mob.x, mob.y, mob.z)
-      square.items.append(self)
 
   def look_up(self):
     print(self.name)
     print(self.description)
-  
-  def use(self, mob):
-    pass
-  
-  def equip(self, mob):
-    pass
 
   def to_dict(self):
     return {

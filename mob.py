@@ -23,3 +23,20 @@ class Mob:
     self.body = None
     self.finger = None
     self.neck = None
+  
+  def pick_up(self, item):
+    square = self.current_location.find_square(self.x, self.y, self.z)
+    square.items.remove(item)
+    self.equipment.append(item)
+  
+  def drop(self, item):
+    if item in self.equipment:
+      self.equipment.remove(item)
+      square = self.current_location.find_square(self.x, self.y, self.z)
+      square.items.append(item)
+
+  def use(self, item):
+    pass
+  
+  def equip(self, item):
+    pass
