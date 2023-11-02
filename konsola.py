@@ -105,6 +105,7 @@ class Konsola:
       print(f_lwhite + f' {i.name: <24}' + c_reset+'|', end='')
       print(f_lwhite + f' {i.weight: <6}' + c_reset+'|', end='')
       print(f_lwhite + f' {i.price: <6}' + c_reset+'|')
+      index+=1
 
   @classmethod
   def help(cls, command=''):
@@ -114,10 +115,13 @@ class Konsola:
       ("e", "east",  "6") : ["Przemieść się na wschód", "Przemieść się jedną kratkę na wschód jeśli, jest dostępne wyjście w tym kierunku oraz drzwi(jesli są) są otwarte"],
       ("s", "south",  "2") : ["Przemieść się na południe", "Przemieść się jedną kratkę na południe, jeśli jest dostępne wyjście w tym kierunku oraz drzwi(jesli są) są otwarte"],
       ("w", "west",  "4") : ["Przemieść się na zachód", "Przemieść się jedną kratkę na zachód, jeśli jest dostępne wyjście w tym kierunku oraz drzwi(jesli są) są otwarte"],
-      ("u", "north",  "5") : ["Wejdź pięto wyżej", "Przemieść się o jedno piętro w górę,jeśli jest dostępne wyjście w tym kierunku oraz drzwi(jesli są) są otwarte"],
-      ("d", "north",  "0") : ["Zejdź piętro niżej", "Przemieść się o jedno piętro w dół, jeśli jest dostępne wyjście w tym kierunku oraz drzwi(jesli są) są otwarte"],
+      ("u", "up",  "5") : ["Wejdź pięto wyżej", "Przemieść się o jedno piętro w górę,jeśli jest dostępne wyjście w tym kierunku oraz drzwi(jesli są) są otwarte"],
+      ("d", "down",  "0") : ["Zejdź piętro niżej", "Przemieść się o jedno piętro w dół, jeśli jest dostępne wyjście w tym kierunku oraz drzwi(jesli są) są otwarte"],
       ("whoami") : ["Wyświetl podstawowe informacje o sobie", "Wyświetl informacje o swoim imieniu rasie oraz opis"],
       ("whereami") : ["Pokaż swoje koordynaty", "Pokaż swoje współrzędne x, y, z oraz nazwę lokacji, w której się obecnie znajdujesz"],
+      ("ekwipunek", "eq") : ["Pokaż zawartość ekwipunku", "Pokaż listę przedmiotów jakie masz przy sobie oraz ich wagę i cenę"],
+      ("podnieś", "podnies") : ["Podnieś przedmiot", "Podnieś dany przedmiot, jeśli znajduje się w tym samym miejscu co ty. \nSKŁADNIA: <podnieś nazwa przedmiotu>"],
+      ("podnieś", "podnies") : ["Upuść przedmiot", "Upuść dany przedmiot, jeśli znajduje się w twoim ekwipunku. \nSKŁADNIA: <upuść nazwa przedmiotu>"],
       ("help", "pomoc", "?") : ["Pokaż swoje koordynaty", "Pokaż swoje współrzędne x, y, z oraz nazwę lokacji, w której się obecnie znajdujesz"],
       ("exit", "quit", "q") : ["Opuść grę", "Wyjdź z gry, ale wcześniej upewnij się, że zapisałeś swoje postępy, jeśli nie chcesz ich stracić"],
       ("help", "pomoc", "?") : ["Wyświetl pomoc", "Wyświetl wszystkie dostępne komendy, albo poznaj szczegóły konkretnej komendy wpisując po 'help' jej nazwę. Na przykład 'help rozmawiaj'"]

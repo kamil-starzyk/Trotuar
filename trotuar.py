@@ -28,7 +28,7 @@ command_mapping = {
   "upuść" :     player.drop,
   "upusc" :     player.drop,
   "ekwipunek" : player.show_equipment,
-  "eq" : player.show_equipment,
+  "eq" :        player.show_equipment,
 
   "whoami" :    player.whoami,
   "whereami" :  player.whereami,
