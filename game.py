@@ -39,9 +39,9 @@ class Game:
 	
 
 	def end_game(self):
-		self.is_playing = False
 		print("Czy na pewno chcesz wyjść? Upewnij się, że zapisałeś grę (Y/N)")
 		are_you_sure = input()
 		are_you_sure = "Y"
 		if are_you_sure in ("Y", "y"):
+			self.is_playing = False
 			exit()

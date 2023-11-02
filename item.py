@@ -1,3 +1,5 @@
+from konsola import Konsola
+
 class Item:
   def __init__(self, type, alias, name, description, weight, price, attributes):
     self.type = type
@@ -9,8 +11,12 @@ class Item:
     self.attributes = attributes
 
   def see_more(self):
-    print(self.name)
-    print(self.description)
+    Konsola.print(self.name, "lmagenta")
+    Konsola.print(self.description, "lwhite")
+    Konsola.print("Wartość: ", line_end='')
+    Konsola.print(self.price, "lwhite")
+    Konsola.print("Ciężar: ", line_end='')
+    Konsola.print(self.weight, "lwhite")
 
   def to_dict(self):
     return {

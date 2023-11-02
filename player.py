@@ -1,5 +1,5 @@
 from konsola import Konsola
-
+from helper import Helper
 from mob import Mob
 
 class Player(Mob):
@@ -57,3 +57,22 @@ class Player(Mob):
       Konsola.print(item.name, "lwhite")
     else:
       Konsola.print("Nie ma tu takiej rzeczy", "red")
+  
+  def drop(self, item_name):
+    item = super().drop(item_name)
+    if item:
+      Konsola.print("Upuściłeś ", line_end='')
+      Konsola.print(item.name, "lwhite")
+    else:
+      Konsola.print("Nie masz takiej rzeczy w ekwipunku", "red")
+
+  def see_item(self, item_name):
+    item = Helper.find_item(self.equipment, item_name)
+    if item:
+      item.see_more()
+      return 1
+    item = Helper.find_item(self.my_square().items, item_name)
+    if item:
+      item.see_more()
+      return 1
+    Konsola.print("Nie ma tu takiej rzeczy, ani nie masz jej w ekwipunku", "red")

@@ -22,7 +22,19 @@
             "u": 0,
             "d": 0
           }, 
-          "items" : []
+          "items" : [
+            {
+              "type" : "Outfit",
+              "alias": ["naszyjnik z kandoru", "naszyjnik z kandoru", "naszyjnik"],
+              "name" : "Naszyjnik z Kandoru",
+              "description" : "Piękny, złoty naszyjnik stworzony z kilku nakładających się na siebie łańcuszków",
+              "weight" : 0.5,
+              "price" : 220,
+              "attributes" : {
+                "body_part" : "neck"
+              }
+            }
+          ]
         },
         {
           "name": "Przed wieżą",
@@ -103,7 +115,7 @@
               "weight" : 10,
               "price" : 100,
               "attributes" : {
-
+                "body_part" : "first_hand"
               }
             },
             {
@@ -114,6 +126,7 @@
               "weight" : 4,
               "price" : 60,
               "attributes" : {
+                "body_part" : "first_hand",
                 "damage" : 20,
                 "strength" : 10
               }
@@ -126,6 +139,7 @@
               "weight" : 3,
               "price" : 250,
               "attributes" : {
+                "body_part" : "first_hand",
                 "damage" : 40,
                 "strength" : 20
               }
