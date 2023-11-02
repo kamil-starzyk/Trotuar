@@ -1,19 +1,21 @@
 class Item:
-  def __init__(self, type, name, description, weight, price, attributes):
+  def __init__(self, type, alias, name, description, weight, price, attributes):
     self.type = type
+    self.alias = alias
     self.name = name
     self.description = description
     self.weight = weight
     self.price = price
     self.attributes = attributes
 
-  def look_up(self):
+  def see_more(self):
     print(self.name)
     print(self.description)
 
   def to_dict(self):
     return {
       "type": self.type,
+      "alias" : self.alias,
       "name": self.name,
       "description": self.description,
       "weight": self.weight,
@@ -23,5 +25,5 @@ class Item:
   
   @classmethod
   def from_dict(cls, data):
-    return cls(data["type"], data["name"], data["description"], data["weight"], data["price"], data["attributes"])
+    return cls(data["type"], data["alias"], data["name"], data["description"], data["weight"], data["price"], data["attributes"])
   

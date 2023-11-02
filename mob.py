@@ -1,3 +1,5 @@
+from helper import Helper
+
 class Mob:
   def __init__(self, x, y, z, current_location, name, description, race, proficiency, hp, hp_max, mana, mana_max, strength, attack, defence):
     self.x = x
@@ -24,12 +26,14 @@ class Mob:
     self.finger = None
     self.neck = None
   
-  def pick_up(self, item):
+  def pick_up(self, item_name):
     square = self.current_location.find_square(self.x, self.y, self.z)
+    item = Helper.find_item(square.items, item_name)
     square.items.remove(item)
     self.equipment.append(item)
   
-  def drop(self, item):
+  def drop(self, item_name):
+    item = Helper.find_item(self.equipment, item_name)
     if item in self.equipment:
       self.equipment.remove(item)
       square = self.current_location.find_square(self.x, self.y, self.z)
@@ -39,4 +43,7 @@ class Mob:
     pass
   
   def equip(self, item):
+    pass
+
+  def show_equipment(self):
     pass

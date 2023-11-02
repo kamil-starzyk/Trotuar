@@ -28,7 +28,10 @@ class Square:
     print("Przedmioty: ")
     for i in self.items:
       print("  "+i.name)
-    
+
+  
+
+
   def to_dict(self):
     return {
       "x": self.x, 

@@ -57,6 +57,7 @@
           "items" : [
             {
               "type" : "Consumable",
+              "alias": ["podpłomyk", "podplomyk"],
               "name" : "Podpłomyk",
               "description" : "Przaśny placuszek upieczony na blasze",
               "weight" : 0.5,
@@ -68,6 +69,7 @@
             },
             {
               "type" : "Consumable",
+              "alias": ["eliksir magii, eliksir"],
               "name" : "Eliksir magii",
               "description" : "Malutka fiolka z niebieskim płynem",
               "weight" : 0.2,
@@ -95,6 +97,7 @@
           "items" : [
             {
               "type" : "Tool",
+              "alias": ["młot kowala", "mlot kowala", "młot", "mlot"],
               "name" : "Młot kowala",
               "description" : "Masywny młot służący do kucia stali",
               "weight" : 10,
@@ -105,6 +108,7 @@
             },
             {
               "type" : "Weapon",
+              "alias": [],
               "name" : "Miecz strudzonych",
               "description" : "Prosty, lekki miecz. Idealny na początek",
               "weight" : 4,
