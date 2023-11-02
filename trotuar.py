@@ -4,9 +4,10 @@ from konsola import Konsola
 game = Game()
 game.title_screen()
 
-player = game.playerc
-
+player = game.player
 print("Brawo! Udało Ci się rozpocząć grę")
+
+player.my_square().show_square()
 
 command_mapping = {
   "n" :         (player.move_in_direction, "n"),

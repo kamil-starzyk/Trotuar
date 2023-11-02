@@ -27,17 +27,20 @@ class Mob:
     self.neck = None
   
   def pick_up(self, item_name):
-    square = self.current_location.find_square(self.x, self.y, self.z)
-    item = Helper.find_item(square.items, item_name)
-    square.items.remove(item)
-    self.equipment.append(item)
+    item = Helper.find_item(self.my_square().items, item_name)
+    if item:
+      self.my_square().items.remove(item)
+      self.equipment.append(item)
+      return item
+    return 0
   
   def drop(self, item_name):
     item = Helper.find_item(self.equipment, item_name)
-    if item in self.equipment:
+    if item:
       self.equipment.remove(item)
-      square = self.current_location.find_square(self.x, self.y, self.z)
-      square.items.append(item)
+      self.my_square().items.append(item)
+      return item
+    return 0
 
   def use(self, item):
     pass
@@ -47,3 +50,6 @@ class Mob:
 
   def show_equipment(self):
     pass
+
+  def my_square(self):
+    return self.current_location.find_square(self.x, self.y, self.z)

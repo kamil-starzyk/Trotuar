@@ -1,3 +1,4 @@
+from konsola import Konsola
 from item import Item
 
 class Square:
@@ -19,19 +20,19 @@ class Square:
     #print(f'{self.name: <16} X: {self.x}, Y: {self.y}, Z: {self.z}')
   
   def show_square(self):
-    print(self.name)
-    print(self.description)
-    print("Wyjścia: ",end=" ")
+    Konsola.print(self.name, "lyellow")
+    Konsola.print(self.description, "lwhite")
+    Konsola.print("Wyjścia: ", "lmagenta", line_end=" ")
     for e in self.exits:
       if self.exits[e]:
         print(e, end=" ")
-    print("Przedmioty: ")
-    for i in self.items:
-      print("  "+i.name)
+    print('')
+    if len(self.items) > 0:
+      Konsola.print("Przedmioty: ", "lcyan")
+      for i in self.items:
+        print("  "+i.name)
 
   
-
-
   def to_dict(self):
     return {
       "x": self.x, 

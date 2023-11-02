@@ -1,3 +1,5 @@
+from konsola import Konsola
+
 from mob import Mob
 
 class Player(Mob):
@@ -31,8 +33,7 @@ class Player(Mob):
       self.exp -= self.max_exp_for_level(self.level)
 
   def move_in_direction(self, direction):
-    current_square = self.current_location.find_square(self.x, self.y, self.z)
-    if current_square.exits[direction]:
+    if self.my_square().exits[direction]:
       match direction:
         case "n":
           self.y -= 1
@@ -46,6 +47,13 @@ class Player(Mob):
           self.z += 1
         case "d":
           self.z -= 1
-      current_square = self.current_location.find_square(self.x, self.y, self.z)
-      current_square.show_square()
+      self.my_square().show_square()
     else: print("Nie możesz tam przejść")
+  
+  def pick_up(self, item_name):
+    item = super().pick_up(item_name)
+    if item:
+      Konsola.print("Podniosłeś ", line_end='')
+      Konsola.print(item.name, "lwhite")
+    else:
+      Konsola.print("Nie ma tu takiej rzeczy", "red")

@@ -13,7 +13,7 @@ class Helper:
       print("O którą rzecz dokładnie Ci chodzi?")
       return cls.chose_one_item(hit)
     else:
-      print("Nie ma tu takiej rzeczy")
+      return 0
   
   def chose_one_item(cls, item_list):
     for i in range(len(item_list)):
