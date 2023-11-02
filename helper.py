@@ -1,5 +1,12 @@
+import time
+
 class Helper:
   
+
+  @classmethod
+  def sleep(cls, seconds):
+    time.sleep(seconds)
+
   @classmethod
   def find_item(cls, item_list, item_name):
     hit = []
@@ -15,6 +22,7 @@ class Helper:
     else:
       return 0
   
+  @classmethod
   def chose_one_item(cls, item_list):
     for i in range(len(item_list)):
       print(str(i+1)+". "+item_list[i].name)
@@ -23,3 +31,4 @@ class Helper:
       for i in range(len(item_list)):
         if item_number == i:
           return item_list[item_number]
+  

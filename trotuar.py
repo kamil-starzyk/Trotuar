@@ -27,7 +27,8 @@ command_mapping = {
   "podnieś" :   player.pick_up,
   "upuść" :     player.drop,
   "upusc" :     player.drop,
-  "equipment" : player.show_equipment,
+  "ekwipunek" : player.show_equipment,
+  "eq" : player.show_equipment,
 
   "whoami" :    player.whoami,
   "whereami" :  player.whereami,

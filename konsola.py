@@ -2,7 +2,6 @@ from colorama import init, Fore, Back, Style
 import math
 import os
 import msvcrt
-import time
 import keyboard
 import textwrap 
 import random
@@ -89,16 +88,23 @@ class Konsola:
     os.system('cls')
 
   @classmethod
-  def printRandom(cls, komunikat):
+  def print_random(cls, komunikat):
     print(random.choice(komunikat))
 
   @classmethod
   def hr(cls):
     print("-"*20)
-
+  
   @classmethod
-  def sleep(cls, seconds):
-    time.sleep(seconds)
+  def print_item_list(cls, items):
+    print("|lp. | nazwa                   | waga  | cena  |")
+    print(" ---- ------------------------- ------- ------- ")
+    index = 1
+    for i in items:
+      print('|' + f_lwhite + f'{str(index): <4}' + c_reset+'|', end='')
+      print(f_lwhite + f' {i.name: <24}' + c_reset+'|', end='')
+      print(f_lwhite + f' {i.weight: <6}' + c_reset+'|', end='')
+      print(f_lwhite + f' {i.price: <6}' + c_reset+'|')
 
   @classmethod
   def help(cls, command=''):

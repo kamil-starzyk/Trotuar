@@ -1,4 +1,5 @@
 from helper import Helper
+from konsola import Konsola
 
 class Mob:
   def __init__(self, x, y, z, current_location, name, description, race, proficiency, hp, hp_max, mana, mana_max, strength, attack, defence):
@@ -42,14 +43,14 @@ class Mob:
       return item
     return 0
 
-  def use(self, item):
+  def use(self, item_name):
     pass
   
-  def equip(self, item):
+  def equip(self, item_name):
     pass
 
   def show_equipment(self):
-    pass
-
+    Konsola.print_item_list(self.equipment)
+      
   def my_square(self):
     return self.current_location.find_square(self.x, self.y, self.z)

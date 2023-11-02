@@ -108,7 +108,7 @@
             },
             {
               "type" : "Weapon",
-              "alias": [],
+              "alias": ["miecz strudzonych", "miecz"],
               "name" : "Miecz strudzonych",
               "description" : "Prosty, lekki miecz. Idealny na początek",
               "weight" : 4,
@@ -116,6 +116,18 @@
               "attributes" : {
                 "damage" : 20,
                 "strength" : 10
+              }
+            },
+            {
+              "type" : "Weapon",
+              "alias": ["miecz synthion", "miecz", "synthion"],
+              "name" : "Miecz Synthion",
+              "description" : "Prosty, lekki miecz. Idealny na początek",
+              "weight" : 3,
+              "price" : 250,
+              "attributes" : {
+                "damage" : 40,
+                "strength" : 20
               }
             }
           ]
