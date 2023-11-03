@@ -63,7 +63,10 @@ class Konsola:
   def prompt(cls, player):
     command = []
     while not command:
-      print("<HP: {}/{} Mana: {}/{}>".format(player.hp, player.hp_max, player.mana, player.mana_max), end="")
+      print(f_lmagenta, end="")
+      print("<HP: {}/{} Mana: {}/{}> ".format(player.hp, player.hp_max, player.mana, player.mana_max), end="")
+      print(c_reset, end="")
+
       decision = input().lower()
       command = decision.split()
     if len(command) == 1:
@@ -210,3 +213,15 @@ class Konsola:
     else: 
       color += Back.RESET
     return color
+
+  @classmethod
+  def test_colorama(cls):
+    colors = dict(Fore.__dict__.items())
+    backs = dict(Back.__dict__.items())
+
+    for color in colors.keys():
+      print(colors[color] + f"{color}")
+    
+    for back in backs.keys():
+      print(backs[back] + f"{back}",end='')
+      print(c_reset)

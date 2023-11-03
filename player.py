@@ -76,3 +76,10 @@ class Player(Mob):
       item.see_more()
       return 1
     Konsola.print("Nie ma tu takiej rzeczy, ani nie masz jej w ekwipunku", "red")
+  
+  def equip(self, item_name):
+    item = super().equip(item_name)
+    if item:
+      print("Założyłeś " + item.name)
+    else:
+      Konsola.print("Nie masz takiej rzeczy w ekwipunku", "red")

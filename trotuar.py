@@ -42,8 +42,8 @@ command_mapping = {
   "?" :         Konsola.help,
   "exit" :      game.end_game,
   "quit" :      game.end_game,
-  "q" :         game.end_game
-
+  "q" :         game.end_game,
+  "colorama" :  Konsola.test_colorama
 }
 
 while game.is_playing:

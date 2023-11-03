@@ -52,14 +52,17 @@ class Mob:
     item = Helper.find_item(self.equipment, item_name)
     if 'body_part' in item.attributes:
       self.slots[item.attributes['body_part']] = item
-      print("Założyłeś "+item.name)
+      return item
+    else:
+      return 0
 
 
   def show_equipment(self):
     Konsola.print_item_list(self.equipment)
   
   def outfit(self):
-    Konsola.print("Twoje wyposarzenie: ", "lwhite")
+    print("Wyposarzenie postaci", end=' ')
+    Konsola.print(self.name, "lwhite")
     for i in self.slots:
       print(i, end=": ")
       Konsola.print(self.slots[i].name, "lwhite") if self.slots[i] else print("-")
