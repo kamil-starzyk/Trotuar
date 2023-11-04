@@ -42,6 +42,8 @@ command_mapping = {
   "ubiór" :     player.outfit,
   "ubior" :     player.outfit,
 
+  "rozmawiaj":  player.talk_to,
+
   "whoami" :    player.whoami,
   "whereami" :  player.whereami,
   "help" :      Konsola.help,

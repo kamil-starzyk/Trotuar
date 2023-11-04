@@ -4,7 +4,7 @@ from item import Item
 
 class Mob:
   
-  def __init__(self, x, y, z, name, alias, description, lvl, race, proficiency, params, stats, equipment, slots):
+  def __init__(self, x, y, z, name, alias, description, lvl, race, proficiency, params, stats, equipment, slots, conversations):
     self.x = x
     self.y = y
     self.z = z
@@ -19,7 +19,7 @@ class Mob:
     self.stats = stats
     self.equipment = equipment
     self.slots = slots
-  
+    self.conversations = conversations
   def pick_up(self, item_name):
     item = Helper.find_item(self.my_square().items, item_name)
     if item:
@@ -60,6 +60,12 @@ class Mob:
     return self.current_location.find_square(self.x, self.y, self.z)
 
   def to_dict(self):
+    slots_dict = {}
+    for key, value in self.slots.items():
+      if value is None:
+        slots_dict[key] = {}
+      else:
+        slots_dict[key] = value.to_dict()
     return {
       "x": self.x, 
       "y": self.y,
@@ -70,18 +76,10 @@ class Mob:
       "lvl": self.lvl,
       "params": self.params,
       "stats": self.stats,
-      "equipment": self.equipment,
-      "slots": self.slots
+      "equipment": [item.to_dict() for item in self.equipment],
+      "slots": slots_dict,
+      "conversations": self.conversations
     }
-  
-  def restore_slots_structure(self, data):
-    if isinstance(data, dict):
-      for key, value in data.items():
-        data[key] = self.restore_slots_structure(value)
-        if data[key] == {}:
-          data[key] = None
-    return data
-
 
   @classmethod
   def from_dict(cls, data):
@@ -93,5 +91,4 @@ class Mob:
       else:
         slots[key] = Item.from_dict(slots[key])
     
-
-    return cls(data["x"], data["y"], data["z"], data["name"], data["alias"], data["description"], data["lvl"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots)
+    return cls(data["x"], data["y"], data["z"], data["name"], data["alias"], data["description"], data["lvl"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"])

@@ -57,8 +57,9 @@ class Game:
       "finger" : {},
       "neck" : {}
     }
-        
-    self.player = Player(2,2,0, "Alwer", ["alwer"], "to ty ", "Człowiek", "Wojownik", 1, params, stats, equipment, slots, 0 )
+    conversations = {}
+     
+    self.player = Player(2,2,0, "Alwer", ["alwer"], "to ty ", "Człowiek", "Wojownik", 1, params, stats, equipment, slots, conversations, 0 )
     self.player.current_location = self.world.locations[0]
     self.is_playing = True
   

@@ -3,8 +3,8 @@ from helper import Helper
 from mob import Mob
 
 class Player(Mob):
-  def __init__(self, x, y, z, name, alias, description, lvl, race, proficiency, params, stats, equipment, slots, exp):
-    super(Player, self).__init__(x, y, z, name, alias, description, lvl, race, proficiency, params, stats, equipment, slots)
+  def __init__(self, x, y, z, name, alias, description, lvl, race, proficiency, params, stats, equipment, slots, conversations, exp):
+    super(Player, self).__init__(x, y, z, name, alias, description, lvl, race, proficiency, params, stats, equipment, conversations, slots)
     self.exp = exp
 
   def whoami(self):
@@ -82,3 +82,34 @@ class Player(Mob):
   def outfit(self):
     Konsola.print("Twoje wyposarzenie", "lcyan")
     super().outfit()
+
+  def navigate_conversation(self, current_step):
+    options = current_step.get("options", [])
+    if not options:
+      return
+    
+    for option in options:
+      Konsola.print(option["text"])
+    
+    choice = int(input(" > "))
+    if 1 <= choice <= len(options):
+      selected_option = options[choice - 1]
+      Konsola.wrap(selected_option["response"], "lwhite")
+      Helper.sleep(1)
+      next_step = selected_option.get("next_step")
+      if next_step:
+        self.navigate_conversation(next_step)
+      elif choice == len(options):
+        return
+      else:
+        self.navigate_conversation(current_step)
+    else:
+      print("Błędny wybór")
+      self.navigate_conversation(current_step)
+
+  def talk_to(self, mob_name):
+    mob = Helper.find_item(self.current_location.mobs, mob_name)
+    if mob:
+      if mob.conversations:
+        Konsola.print(mob.conversations["greeting"])
+        self.navigate_conversation(mob.conversations)

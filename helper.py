@@ -17,7 +17,7 @@ class Helper:
     if len(hit) == 1:
       return hit[0]
     elif len(hit) > 1:
-      print("O którą rzecz dokładnie Ci chodzi?")
+      print("O co Ci dokładnie chodzi?")
       return cls.chose_one_item(hit)
     else:
       return 0
