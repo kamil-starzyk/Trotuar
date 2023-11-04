@@ -64,7 +64,7 @@ class Konsola:
     command = []
     while not command:
       print(f_lmagenta, end="")
-      print("<HP: {}/{} Mana: {}/{}> ".format(player.hp, player.hp_max, player.mana, player.mana_max), end="")
+      print("<HP: {}/{} Mana: {}/{}> ".format(player.params["hp"], player.params["hp_max"], player.params["mana"], player.params["mana_max"]), end="")
       print(c_reset, end="")
 
       decision = input().lower()
@@ -77,14 +77,21 @@ class Konsola:
     result.append(command[0])
     result.append(argument)
     return result
+  
   @classmethod
   def print(cls, text, f=f_reset, b=b_reset, line_end="\n"):
     color = cls.color_parser(f, b)
 
-    if isinstance(text,int):
-      text = str(text)
+    text = str(text)
 
     print(color + text + c_reset, end=line_end)
+
+  @classmethod
+  def wrap(cls, text_to_wrap, f=f_reset, b=b_reset):
+    wrapper = textwrap.TextWrapper(width=100)
+    word_list = wrapper.wrap(text=text_to_wrap)
+    for element in word_list: 
+      cls.print(element, f, b)
 
   @classmethod
   def clear(cls):
@@ -123,8 +130,10 @@ class Konsola:
       ("whoami") : ["Wyświetl podstawowe informacje o sobie", "Wyświetl informacje o swoim imieniu rasie oraz opis"],
       ("whereami") : ["Pokaż swoje koordynaty", "Pokaż swoje współrzędne x, y, z oraz nazwę lokacji, w której się obecnie znajdujesz"],
       ("ekwipunek", "eq") : ["Pokaż zawartość ekwipunku", "Pokaż listę przedmiotów jakie masz przy sobie oraz ich wagę i cenę"],
+      ("outfit", "ubiór", "ubior") : ["Pokaż co masz na sobie", "Pokaż listę slotów twojej postaci oraz jakie przedmioty są przypisane do każdego z nich"],
       ("podnieś", "podnies") : ["Podnieś przedmiot", "Podnieś dany przedmiot, jeśli znajduje się w tym samym miejscu co ty. \nSKŁADNIA: <podnieś nazwa przedmiotu>"],
-      ("podnieś", "podnies") : ["Upuść przedmiot", "Upuść dany przedmiot, jeśli znajduje się w twoim ekwipunku. \nSKŁADNIA: <upuść nazwa przedmiotu>"],
+      ("upuść", "upusc") : ["Upuść przedmiot", "Upuść dany przedmiot, jeśli znajduje się w twoim ekwipunku. \nSKŁADNIA: <upuść nazwa przedmiotu>"],
+      ("załóż", "zaloz"): ["Załóż przedmiot", "Załóż przedmiot jeśli znajduje się w twoim ekwipunku.\nSKŁADNIA: <załóż nazwa przedmiotu>"],
       ("help", "pomoc", "?") : ["Pokaż swoje koordynaty", "Pokaż swoje współrzędne x, y, z oraz nazwę lokacji, w której się obecnie znajdujesz"],
       ("exit", "quit", "q") : ["Opuść grę", "Wyjdź z gry, ale wcześniej upewnij się, że zapisałeś swoje postępy, jeśli nie chcesz ich stracić"],
       ("help", "pomoc", "?") : ["Wyświetl pomoc", "Wyświetl wszystkie dostępne komendy, albo poznaj szczegóły konkretnej komendy wpisując po 'help' jej nazwę. Na przykład 'help rozmawiaj'"]

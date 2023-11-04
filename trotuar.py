@@ -22,6 +22,12 @@ command_mapping = {
   "w" :         (player.move_in_direction, "w"),
   "west" :      (player.move_in_direction, "w"),
   "4" :         (player.move_in_direction, "w"),
+  "u" :         (player.move_in_direction, "u"),
+  "up" :        (player.move_in_direction, "u"),
+  "5" :         (player.move_in_direction, "u"),
+  "d" :         (player.move_in_direction, "d"),
+  "down" :      (player.move_in_direction, "d"),
+  "0" :         (player.move_in_direction, "d"),
   
   "podnies" :   player.pick_up,
   "podnieś" :   player.pick_up,

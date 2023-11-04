@@ -1,33 +1,24 @@
 from helper import Helper
 from konsola import Konsola
+from item import Item
 
 class Mob:
-  def __init__(self, x, y, z, current_location, name, description, race, proficiency, hp, hp_max, mana, mana_max, strength, attack, defence):
+  
+  def __init__(self, x, y, z, name, alias, description, lvl, race, proficiency, params, stats, equipment, slots):
     self.x = x
     self.y = y
     self.z = z
-    self.current_location = current_location
+    self.current_location = None
     self.name = name
+    self.alias = alias
     self.description = description
+    self.lvl = lvl
     self.race = race
     self.proficiency = proficiency
-    self.hp = hp
-    self.hp_max = hp_max
-    self.mana = mana
-    self.mana_max = mana_max
-    self.strength = strength
-    self.attack = attack
-    self.defence = defence
-
-    self.equipment = []
-    self.slots = {
-      'first_hand' : None,
-      'second_hand' : None,
-      'head' : None,
-      'body' : None,
-      'finger' : None,
-      'neck' : None,
-    }
+    self.params = params
+    self.stats = stats
+    self.equipment = equipment
+    self.slots = slots
   
   def pick_up(self, item_name):
     item = Helper.find_item(self.my_square().items, item_name)
@@ -61,11 +52,46 @@ class Mob:
     Konsola.print_item_list(self.equipment)
   
   def outfit(self):
-    print("Wyposarzenie postaci", end=' ')
-    Konsola.print(self.name, "lwhite")
     for i in self.slots:
       print(i, end=": ")
       Konsola.print(self.slots[i].name, "lwhite") if self.slots[i] else print("-")
       
   def my_square(self):
     return self.current_location.find_square(self.x, self.y, self.z)
+
+  def to_dict(self):
+    return {
+      "x": self.x, 
+      "y": self.y,
+      "z": self.z,
+      "name": self.name,
+      "alias": self.alias,
+      "description": self.description,
+      "lvl": self.lvl,
+      "params": self.params,
+      "stats": self.stats,
+      "equipment": self.equipment,
+      "slots": self.slots
+    }
+  
+  def restore_slots_structure(self, data):
+    if isinstance(data, dict):
+      for key, value in data.items():
+        data[key] = self.restore_slots_structure(value)
+        if data[key] == {}:
+          data[key] = None
+    return data
+
+
+  @classmethod
+  def from_dict(cls, data):
+    eq = [Item.from_dict(item_data) for item_data in data["equipment"]]
+    slots = data["slots"]
+    for key in slots:
+      if slots[key] == {}:
+        slots[key] = None
+      else:
+        slots[key] = Item.from_dict(slots[key])
+    
+
+    return cls(data["x"], data["y"], data["z"], data["name"], data["alias"], data["description"], data["lvl"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots)

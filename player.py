@@ -3,14 +3,9 @@ from helper import Helper
 from mob import Mob
 
 class Player(Mob):
-  def __init__(self, x, y, z, current_location, name, description, race, proficiency, hp, hp_max, mana, mana_max, strength, attack, defence, exp, lvl, satiation, satiation_max, hydration, hydration_max):
-    super(Player, self).__init__(x, y, z, current_location, name, description, race, proficiency, hp, hp_max, mana, mana_max, strength, attack, defence)
+  def __init__(self, x, y, z, name, alias, description, lvl, race, proficiency, params, stats, equipment, slots, exp):
+    super(Player, self).__init__(x, y, z, name, alias, description, lvl, race, proficiency, params, stats, equipment, slots)
     self.exp = exp
-    self.lvl = lvl
-    self.satiation = satiation
-    self.satiation_max = satiation_max
-    self.hydration = hydration
-    self.hydration_max = hydration_max
 
   def whoami(self):
     print("Jestem " + self.name + ", rasa: " + self.race + "\n" + self.description)
@@ -83,3 +78,7 @@ class Player(Mob):
       print("Założyłeś " + item.name)
     else:
       Konsola.print("Nie masz takiej rzeczy w ekwipunku", "red")
+  
+  def outfit(self):
+    Konsola.print("Twoje wyposarzenie", "lcyan")
+    super().outfit()

@@ -6,6 +6,7 @@ class Square:
     self.x = x
     self.y = y
     self.z = z
+    self.location = None
     self.name = name
     self.description = description
     self.exits = {
@@ -21,16 +22,25 @@ class Square:
   
   def show_square(self):
     Konsola.print(self.name, "lyellow")
-    Konsola.print(self.description, "lwhite")
-    Konsola.print("Wyjścia: ", "lmagenta", line_end=" ")
+    Konsola.wrap(self.description, "lwhite")
+    Konsola.print("Wyjścia: ", "red", line_end=" ")
     for e in self.exits:
       if self.exits[e]:
         print(e, end=" ")
     print('')
+    mobs = []
+    for mob in self.location.mobs:
+      if mob.x == self.x and mob.y == self.y and mob.z == self.z:
+        mobs.append(mob)
+    if len(mobs) > 0:
+      Konsola.print("Istoty: ", "lgreen")
+      for mob in mobs:
+        print("  "+mob.name)
     if len(self.items) > 0:
       Konsola.print("Przedmioty: ", "lcyan")
       for i in self.items:
         print("  "+i.name)
+
 
   
   def to_dict(self):
