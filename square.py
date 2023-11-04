@@ -51,7 +51,7 @@ class Square:
       "name": self.name,
       "description": self.description,
       "exits": self.exits,
-      "items" : self.items
+      "items" : [item.to_dict() for item in self.items]
     }
   
   @classmethod

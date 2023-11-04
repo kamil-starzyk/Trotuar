@@ -55,7 +55,9 @@ class Konsola:
     print("Trotuar v. " + version)
     print("Witaj")
     print("---------------")
-    print("[1] Nowa gra")
+    cls.print("[1] Nowa gra", "red")
+    print("[2] Wczytaj")
+    print("[3] Demo")
     print("[5] Wyjdź z gry")
     print(" > ", end="")
   

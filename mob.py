@@ -20,6 +20,7 @@ class Mob:
     self.equipment = equipment
     self.slots = slots
     self.conversations = conversations
+
   def pick_up(self, item_name):
     item = Helper.find_item(self.my_square().items, item_name)
     if item:
@@ -66,6 +67,7 @@ class Mob:
         slots_dict[key] = {}
       else:
         slots_dict[key] = value.to_dict()
+    
     return {
       "x": self.x, 
       "y": self.y,

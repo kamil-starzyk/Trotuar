@@ -1,6 +1,7 @@
 from konsola import Konsola
 from helper import Helper
 from mob import Mob
+from item import Item
 
 class Player(Mob):
   def __init__(self, x, y, z, name, alias, description, lvl, race, proficiency, params, stats, equipment, slots, conversations, exp):
@@ -111,5 +112,23 @@ class Player(Mob):
     mob = Helper.find_item(self.current_location.mobs, mob_name)
     if mob:
       if mob.conversations:
-        Konsola.print(mob.conversations["greeting"])
+        Konsola.print(mob.conversations["greeting"], "lwhite")
         self.navigate_conversation(mob.conversations)
+
+
+  def to_dict(self):
+    player = super().to_dict()
+    player["exp"] = self.exp
+    return player
+  
+  @classmethod
+  def from_dict(cls, data):
+    eq = [Item.from_dict(item_data) for item_data in data["equipment"]]
+    slots = data["slots"]
+    for key in slots:
+      if slots[key] == {}:
+        slots[key] = None
+      else:
+        slots[key] = Item.from_dict(slots[key])
+    
+    return cls(data["x"], data["y"], data["z"], data["name"], data["alias"], data["description"], data["lvl"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["exp"])

@@ -1,0 +1,537 @@
+{
+  "gameplay": 0,
+  "player": {
+    "x": 3,
+    "y": 3,
+    "z": 0,
+    "name": "Alwer",
+    "alias": [
+      "alwer",
+      "ja"
+    ],
+    "description": "To tylko ty",
+    "lvl": 1,
+    "params": {
+      "hp": 100,
+      "hp_max": 100,
+      "mana": 5,
+      "mana_max": 5,
+      "satiation": 80,
+      "satiation_max": 100,
+      "hydration": 50,
+      "hydration_max": 100
+    },
+    "stats": {
+      "strength": 10,
+      "attack": 15,
+      "defence": 10
+    },
+    "equipment": [
+      {
+        "type": "Consumable",
+        "alias": [
+          "placuszek z serem",
+          "placuszek"
+        ],
+        "name": "Placuszek z serem",
+        "description": "Słony tłusty placek, posypany roztopionym serem",
+        "weight": 1,
+        "price": 5,
+        "attributes": {
+          "satiation": 15,
+          "hp": 5
+        }
+      }
+    ],
+    "slots": {},
+    "conversations": {
+      "first_hand": null,
+      "second_hand": null,
+      "head": null,
+      "body": null,
+      "finger": null,
+      "neck": null
+    },
+    "exp": 0
+  },
+  "world": {
+    "locations": [
+      {
+        "name": "Torenberg",
+        "description": "Torenberg to piękne portowe miasto",
+        "size_x": 4,
+        "size_y": 4,
+        "size_z": 3,
+        "ground_level": 0,
+        "squares": [
+          {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "name": "Wieża",
+            "description": "Wszedłeś do wieży. W górę prowadzą kręte schody.",
+            "exits": {
+              "n": 0,
+              "e": 0,
+              "s": 1,
+              "w": 0,
+              "u": 1,
+              "d": 0
+            },
+            "items": [
+              {
+                "type": "Outfit",
+                "alias": [
+                  "naszyjnik z kandoru",
+                  "naszyjnik z kandoru",
+                  "naszyjnik"
+                ],
+                "name": "Naszyjnik z Kandoru",
+                "description": "Piękny, złoty naszyjnik stworzony z kilku nakładających się na siebie łańcuszków",
+                "weight": 0.5,
+                "price": 220,
+                "attributes": {
+                  "body_part": "neck",
+                  "mana_max": 5
+                }
+              }
+            ]
+          },
+          {
+            "x": 0,
+            "y": 1,
+            "z": 0,
+            "name": "Przed wieżą",
+            "description": "Stoisz przed wejściem do wieży strażniczej. Wejście do niej znajduje się na północy. Na zachodzie jest wielki kamienny mur. Do ulicy dostaniesz się idąc na wschód.",
+            "exits": {
+              "n": 1,
+              "e": 1,
+              "s": 0,
+              "w": 0,
+              "u": 0,
+              "d": 0
+            },
+            "items": []
+          },
+          {
+            "x": 2,
+            "y": 0,
+            "z": 0,
+            "name": "Domek",
+            "description": "Wszedłeś do małego, przytulnego mieszkanka. Stoi tu pod ścianą skrzynia.",
+            "exits": {
+              "n": 0,
+              "e": 0,
+              "s": 1,
+              "w": 0,
+              "u": 0,
+              "d": 0
+            },
+            "items": [
+              {
+                "type": "Consumable",
+                "alias": [
+                  "podpłomyk",
+                  "podplomyk"
+                ],
+                "name": "Podpłomyk",
+                "description": "Przaśny placuszek upieczony na blasze",
+                "weight": 0.5,
+                "price": 5,
+                "attributes": {
+                  "satiation": 10,
+                  "hp": 5
+                }
+              },
+              {
+                "type": "Consumable",
+                "alias": [
+                  "eliksir magii, eliksir"
+                ],
+                "name": "Eliksir magii",
+                "description": "Malutka fiolka z niebieskim płynem",
+                "weight": 0.2,
+                "price": 120,
+                "attributes": {
+                  "mana": 20
+                }
+              }
+            ]
+          },
+          {
+            "x": 2,
+            "y": 2,
+            "z": 0,
+            "name": "Kuźnia",
+            "description": "Oto warsztat miejscowego kowala. Stoi tu palenisko, a przy nim miech. Obok jest kowadło oraz brus. Wyjście jest na zachodzie.",
+            "exits": {
+              "n": 0,
+              "e": 0,
+              "s": 0,
+              "w": 1,
+              "u": 0,
+              "d": 0
+            },
+            "items": [
+              {
+                "type": "Tool",
+                "alias": [
+                  "młot kowala",
+                  "mlot kowala",
+                  "młot",
+                  "mlot"
+                ],
+                "name": "Młot kowala",
+                "description": "Masywny młot służący do kucia stali",
+                "weight": 10,
+                "price": 100,
+                "attributes": {
+                  "body_part": "first_hand"
+                }
+              },
+              {
+                "type": "Weapon",
+                "alias": [
+                  "miecz strudzonych",
+                  "miecz"
+                ],
+                "name": "Miecz strudzonych",
+                "description": "Prosty, lekki miecz. Idealny na początek",
+                "weight": 4,
+                "price": 60,
+                "attributes": {
+                  "body_part": "first_hand",
+                  "damage": 20,
+                  "strength": 10
+                }
+              },
+              {
+                "type": "Weapon",
+                "alias": [
+                  "miecz synthion",
+                  "miecz",
+                  "synthion"
+                ],
+                "name": "Miecz Synthion",
+                "description": "Prosty, lekki miecz. Idealny na początek",
+                "weight": 3,
+                "price": 250,
+                "attributes": {
+                  "body_part": "first_hand",
+                  "damage": 40,
+                  "strength": 20
+                }
+              }
+            ]
+          },
+          {
+            "x": 1,
+            "y": 1,
+            "z": 0,
+            "name": "Ulica",
+            "description": "Przechadzasz się ulicami miasta",
+            "exits": {
+              "n": 0,
+              "e": 1,
+              "s": 1,
+              "w": 1,
+              "u": 0,
+              "d": 0
+            },
+            "items": []
+          },
+          {
+            "x": 2,
+            "y": 1,
+            "z": 0,
+            "name": "Ulica",
+            "description": "Przechadzasz się ulicami miasta. Na północy widzisz wejście do małego domku",
+            "exits": {
+              "n": 1,
+              "e": 1,
+              "s": 0,
+              "w": 1,
+              "u": 0,
+              "d": 0
+            },
+            "items": []
+          },
+          {
+            "x": 3,
+            "y": 1,
+            "z": 0,
+            "name": "Ulica",
+            "description": "Przechadzasz się ulicami miasta",
+            "exits": {
+              "n": 0,
+              "e": 0,
+              "s": 1,
+              "w": 1,
+              "u": 0,
+              "d": 0
+            },
+            "items": []
+          },
+          {
+            "x": 1,
+            "y": 2,
+            "z": 0,
+            "name": "Ulica",
+            "description": "Przechadzasz się ulicami miasta",
+            "exits": {
+              "n": 1,
+              "e": 1,
+              "s": 1,
+              "w": 0,
+              "u": 0,
+              "d": 0
+            },
+            "items": []
+          },
+          {
+            "x": 3,
+            "y": 2,
+            "z": 0,
+            "name": "Ulica",
+            "description": "Przechadzasz się ulicami miasta",
+            "exits": {
+              "n": 1,
+              "e": 0,
+              "s": 1,
+              "w": 0,
+              "u": 0,
+              "d": 0
+            },
+            "items": []
+          },
+          {
+            "x": 1,
+            "y": 3,
+            "z": 0,
+            "name": "Ulica",
+            "description": "Przechadzasz się ulicami miasta",
+            "exits": {
+              "n": 1,
+              "e": 0,
+              "s": 1,
+              "w": 0,
+              "u": 0,
+              "d": 0
+            },
+            "items": []
+          },
+          {
+            "x": 3,
+            "y": 3,
+            "z": 0,
+            "name": "Ulica",
+            "description": "Przechadzasz się ulicami miasta",
+            "exits": {
+              "n": 1,
+              "e": 0,
+              "s": 0,
+              "w": 0,
+              "u": 0,
+              "d": 0
+            },
+            "items": []
+          },
+          {
+            "x": 0,
+            "y": 0,
+            "z": 1,
+            "name": "Wieża",
+            "description": "Idziesz po krętych schodach wewnątrz kamiennej wieży. Odrobina światła wpada do środka przez świetliki w ścianach. Schody prowadzą do klapy w drewnianym suficie oraz w dół na parter",
+            "exits": {
+              "n": 0,
+              "e": 0,
+              "s": 0,
+              "w": 0,
+              "u": 1,
+              "d": 1
+            },
+            "items": []
+          },
+          {
+            "x": 0,
+            "y": 0,
+            "z": 2,
+            "name": "Wieża",
+            "description": "Znalazłeś się na szczycie wieży. Pomiędzy blankami dostrzegaz rozległy krajobraz za murami. W kierunku południowo wschodnim widisz kręte uliczki. W podłodze jest klapa prowadząca w dół.",
+            "exits": {
+              "n": 0,
+              "e": 0,
+              "s": 0,
+              "w": 0,
+              "u": 0,
+              "d": 1
+            },
+            "items": [
+              {
+                "type": "Consumable",
+                "alias": [
+                  "mikstura życia",
+                  "mikstura zycia",
+                  "mikstura",
+                  "potion"
+                ],
+                "name": "Mikstura życia",
+                "description": "Mała fiolka z rubinowym, gęstym płynem",
+                "weight": 3,
+                "price": 250,
+                "attributes": {
+                  "hp": 10
+                }
+              }
+            ]
+          }
+        ],
+        "mobs": [
+          {
+            "x": 2,
+            "y": 2,
+            "z": 0,
+            "name": "Kowal Ben",
+            "alias": [
+              "kowal",
+              "ben"
+            ],
+            "description": "Wysoki umięśniony mężczyzna z brodą. Na lnianym bezrękawniku nosi skórzany fartuch.",
+            "lvl": 20,
+            "params": {
+              "hp": 100,
+              "hp_max": 100,
+              "mana": 5,
+              "mana_max": 5,
+              "satiation": 80,
+              "satiation_max": 100,
+              "hydration": 50,
+              "hydration_max": 100
+            },
+            "stats": {
+              "strength": 30,
+              "attack": 15,
+              "defence": 25
+            },
+            "equipment": [
+              {
+                "type": "Consumable",
+                "alias": [
+                  "jabłko",
+                  "jablko"
+                ],
+                "name": "Jabłko",
+                "description": "Lśniące czerwone jabłuszko",
+                "weight": 0.5,
+                "price": 2,
+                "attributes": {
+                  "satiation": 5,
+                  "hp": 5
+                }
+              },
+              {
+                "type": "Tool",
+                "alias": [
+                  "szczypce"
+                ],
+                "name": "Szczypce",
+                "description": "Duże, siermiężne narzędzie do wyciągania rzeczy z ognia.",
+                "weight": 3,
+                "price": 40,
+                "attributes": {}
+              }
+            ],
+            "slots": {
+              "first_hand": {},
+              "second_hand": {},
+              "head": {
+                "type": "Outfit",
+                "alias": [
+                  "czepiec"
+                ],
+                "name": "Czepiec",
+                "description": "Białe, materiałowe nakrycie głowy.",
+                "weight": 0.2,
+                "price": 12,
+                "attributes": {}
+              },
+              "body": {
+                "type": "Outfit",
+                "alias": [
+                  "fartuch kowala",
+                  "fartuch"
+                ],
+                "name": "Fartuch kowala",
+                "description": "Skórzany fartuch z kieszeniami. Stanowi ochronę przed iskrami i gorącem.",
+                "weight": 2,
+                "price": 60,
+                "attributes": {}
+              },
+              "finger": {},
+              "neck": {}
+            },
+            "conversations": {
+              "greeting": "Witaj w mojej kuźni. Czego potrzebujesz?",
+              "options": [
+                {
+                  "text": " (1.) Szukam ciekawych zadań i przygód",
+                  "response": "Być może będę miał zadanie dla Ciebie. Czy jesteś zainteresowany?",
+                  "next_step": {
+                    "options": [
+                      {
+                        "text": " (1.) Tak!",
+                        "response": "Wspaniale, oto zadanie...",
+                        "next_step": {
+                          "options": [
+                            {
+                              "text": " (1.) Dziękuję, wrócę jak najszybciej",
+                              "response": "Złoto już na Ciebie czeka"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "text": " (2.) Chyba jednak najpierw zajmę się czymś innym",
+                        "response": "Rozumiem, pewnie w mieście jest mnóstwo indywiduów mających ciekawsze zadania niż jakiś tam kowal. Bywaj..."
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": " (2.) Chciałem dowiedzieć się więcej o tym mieście",
+                  "response": "Torenberg to bardzo stare miasto z bogatą historią. Założył je Toren II zwany Ostrożnym gdy przypadła mu we władanie Nadmorska Prowincja. Mamy tu port i  wielkie magazyny gdyż miasto to stanowi ważny węzeł w handlu z zamorskimi państwami. Mamy tu też plac turniejowy, karczmę i oczywiście tę kuźnię. Czy interesuje Cię coś bardziej konkretnego?",
+                  "next_step": {
+                    "options": [
+                      {
+                        "text": " (1.) Ta wieża w rogu muru",
+                        "response": "To wieża północno-zachodnia. Ma ją w pieczy kapitan Rodgier. Napewno znajdziesz tam coś ciekawego."
+                      },
+                      {
+                        "text": " (2.) Ta kuźnia",
+                        "response": "Sam ją zbudowałem... a to będzie już ze 20 lat temu. Od tej pory zapracowała na swoją renomę. Wytwarzam tu miecze dla straży oraz na zamówienie dla możnych."
+                      },
+                      {
+                        "text": " (3.) Domek, ten na północ od kuźni. Wyraźnie odstaje wyglądem od reszty zabudowy",
+                        "response": "Mieszka tam stara Chloe, zielarka. Nie pozwoliła tknąć tej chaty palcem kiedy miasto dawało pieniądze na remont fasady."
+                      },
+                      {
+                        "text": " (4.) To wszystko, dziękuję",
+                        "response": "Bywaj zdrów. Ja wracam do pracy."
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": " (3.) Do widzenia",
+                  "response": "Do widzenia"
+                }
+              ],
+              "farewell": "Do miłego zobaczenia"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "time_in_sec": 0
+}

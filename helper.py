@@ -1,4 +1,5 @@
 import time
+from datetime import datetime
 
 class Helper:
   
@@ -6,6 +7,14 @@ class Helper:
   @classmethod
   def sleep(cls, seconds):
     time.sleep(seconds)
+  
+  @classmethod
+  def datetime(cls):
+    current_datetime = datetime.now()
+    formatted_date = current_datetime.strftime("%y%m%d%H%M")
+
+    return formatted_date
+
 
   @classmethod
   def find_item(cls, item_list, item_name):

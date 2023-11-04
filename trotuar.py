@@ -48,6 +48,8 @@ command_mapping = {
   "whereami" :  player.whereami,
   "help" :      Konsola.help,
   "?" :         Konsola.help,
+  "save":       game.save,
+  "zapisz":     game.save,
   "exit" :      game.end_game,
   "quit" :      game.end_game,
   "q" :         game.end_game,
