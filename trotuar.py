@@ -5,7 +5,6 @@ game = Game()
 game.title_screen()
 
 player = game.player
-print("Brawo! Udało Ci się rozpocząć grę")
 
 player.my_square().show_square()
 

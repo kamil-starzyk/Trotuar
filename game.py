@@ -5,7 +5,7 @@ from helper import Helper
 from myjson import MyJson
 
 class Game:
-  def __init__(self, gameplay=0, player=None, world=None, time_in_sec=0):
+  def __init__(self, gameplay=1, player=None, world=None, time_in_sec=0):
     self.version = "0.0.0"
     self.gameplay = gameplay
     self.god_mode = True
@@ -16,7 +16,7 @@ class Game:
   
   def title_screen(self):
     method_map = {
-      
+      "2": self.choose_save,
       "3": self.demo,
       "5": self.end_game,
     }
@@ -29,6 +29,45 @@ class Game:
       else:
         print("Wprowadź poprawny wybór")
 
+  def choose_save(self):
+    saves = Helper.open_saves()
+    if not saves:
+      Konsola.print("Nie masz żadnych zapisów", "lred")
+      return
+    
+    number = 1
+    for path in saves:
+      path = path.rsplit( ".", 1 )[ 0 ]
+      print(str(number) + ". ", end="")
+      Konsola.print(path, "lwhite")
+      number+=1
+
+    Konsola.print("Wybierz zapis: ", "lgreen")
+    correct = False
+    while not correct:
+      choice = input()
+      try:
+        choice = int(choice)
+      except:
+        print("Podaj liczbę ")
+        continue
+      if 0 < choice <= len(saves):
+        self.load_game(saves[choice-1])
+        return
+      else:
+        print("Nie ma takiego zapisu ")
+
+  def load_game(self, path):
+    data = MyJson.load_json("data/save/"+path)
+    self.player = Player.from_dict(data["player"])
+    self.world = World.from_dict(data["world"])
+     
+    self.player.current_location = self.world.locations[0]
+    self.is_playing = True
+    Konsola.clear()
+    Konsola.print("Udało Ci się wczytać grę", "lwhite")
+    Konsola.hr()
+    Helper.sleep(1)
 
   def demo(self):
     data = MyJson.load_json("data/init/demo.json")
@@ -37,6 +76,10 @@ class Game:
      
     self.player.current_location = self.world.locations[0]
     self.is_playing = True
+    Konsola.clear()
+    Konsola.print("Rozpocząłeś grę demonstracyjną", "lwhite")
+    Konsola.hr()
+    Helper.sleep(1)
   
   def save(self):
     data = self.to_dict()
@@ -55,7 +98,6 @@ class Game:
       self.is_playing = False
       exit()
   
-
   def to_dict(self):
     return {
       "gameplay": self.gameplay, 

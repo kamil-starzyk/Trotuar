@@ -77,6 +77,8 @@ class Mob:
       "alias": self.alias,
       "description": self.description,
       "lvl": self.lvl,
+      "race": self.race,
+      "proficiency": self.proficiency,
       "params": self.params,
       "stats": self.stats,
       "equipment": [item.to_dict() for item in self.equipment],

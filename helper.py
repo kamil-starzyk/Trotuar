@@ -1,5 +1,6 @@
 import time
 from datetime import datetime
+from os import listdir
 
 class Helper:
   
@@ -15,6 +16,10 @@ class Helper:
 
     return formatted_date
 
+  @classmethod
+  def open_saves(cls):
+    paths = listdir("./data/save")
+    return paths
 
   @classmethod
   def find_item(cls, item_list, item_name):

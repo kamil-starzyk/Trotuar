@@ -28,6 +28,7 @@ class Square:
       if self.exits[e]:
         print(e, end=" ")
     print('')
+    
     mobs = []
     for mob in self.location.mobs:
       if mob.x == self.x and mob.y == self.y and mob.z == self.z:
@@ -36,6 +37,7 @@ class Square:
       Konsola.print("Istoty: ", "lgreen")
       for mob in mobs:
         print("  "+mob.name)
+
     if len(self.items) > 0:
       Konsola.print("Przedmioty: ", "lcyan")
       for i in self.items:
