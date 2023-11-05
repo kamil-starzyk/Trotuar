@@ -112,12 +112,16 @@ class Konsola:
     print("|lp. | nazwa                   | waga  | cena  |")
     print(" ---- ------------------------- ------- ------- ")
     index = 1
+    weight = 0
     for i in items:
       print('|' + f_lwhite + f'{str(index): <4}' + c_reset+'|', end='')
       print(f_lwhite + f' {i.name: <24}' + c_reset+'|', end='')
       print(f_lwhite + f' {i.weight: <6}' + c_reset+'|', end='')
       print(f_lwhite + f' {i.price: <6}' + c_reset+'|')
       index+=1
+      weight+=i.weight
+    print(" ---- ------------------------- ------- ------- ")
+    print("Przedmiotów: " + f'{str(index-1): <13}' + "Waga:  " + str(weight))
 
   @classmethod
   def help(cls, command=''):

@@ -1,12 +1,13 @@
 {
   "player" :{
-    "x": 3,
-    "y": 3,
+    "x": 2,
+    "y": 2,
     "z": 0,
     "name": "Alwer",
     "alias": ["alwer", "ja"],
     "description": "To tylko ty",
     "lvl": 1,
+    "money": 20,
     "race": "Człowiek",
     "proficiency": "wojownik",
     "params": {
@@ -42,7 +43,17 @@
       "first_hand" : {},
       "second_hand" : {},
       "head" : {},
-      "body" : {},
+      "body" : {
+        "type" : "Outfit",
+        "alias": ["mieszczański strój", "mieszczanski stroj", "strój", "stroj"],
+        "name" : "Mieszczański strój",
+        "description" : "Biała koszula, brązowe spodnie i zielona narzuta",
+        "weight" : 2,
+        "price" : 30,
+        "attributes" : {
+          "body_part": "body"
+        }
+      },
       "finger" : {},
       "neck" : {}
     },
@@ -135,7 +146,7 @@
               },
               {
                 "type" : "Consumable",
-                "alias": ["eliksir magii, eliksir"],
+                "alias": ["eliksir magii", "eliksir"],
                 "name" : "Eliksir magii",
                 "description" : "Malutka fiolka z niebieskim płynem",
                 "weight" : 0.2,
@@ -250,7 +261,7 @@
           },
           {
             "name": "Ulica",
-            "description": "Przechadzasz się ulicami miasta",
+            "description": "Przechadzasz się ulicami miasta. Na wschodzie widzisz wejście do kuźni, nad którym buja się znak: Kuźnia u Bena.",
             "x": 1,
             "y": 2,
             "z": 0,
@@ -289,7 +300,7 @@
             "exits": {
               "n": 1,
               "e": 0,
-              "s": 1,
+              "s": 0,
               "w": 0,
               "u": 0,
               "d": 0
@@ -367,6 +378,7 @@
             "alias": ["kowal", "ben"],
             "description": "Wysoki umięśniony mężczyzna z brodą. Na lnianym bezrękawniku nosi skórzany fartuch.",
             "lvl": 20,
+            "money": 120,
             "race": "Człowiek",
             "proficiency": "kowal",
             "params": {
@@ -436,24 +448,25 @@
               "options": [
                 {
                   "text": "Szukam ciekawych zadań i przygód",
-                  "response": "Być może będę miał zadanie dla Ciebie. Czy jesteś zainteresowany?",
+                  "response": "Być może będę miał zadanie dla Ciebie. Zgubiłem srebrną podkowę. Powinna być tu gdzieś w okolicy. Przynieś mi ją a otrzymasz 10 złota. Czy jesteś zainteresowany?",
                   "next_step": {
                     "options": [
                       {
                         "text" : "Tak!",
-                        "response": "Wspaniale, oto zadanie...",
-                        "next_step": {
-                          "options":[
+                        "response": "Wspaniale.",
+                        "quest_id": 1,
+                        "next_step":{
+                          "options": [
                             {
-                              "text": "Dziękuję, wrócę jak najszybciej",
-                              "response": "Złoto już na Ciebie czeka"
+                              "text": "Już się zabieram.",
+                              "response": "Wracaj prędko."
                             }
                           ]
                         }
                       },
                       {
                         "text": "Chyba jednak najpierw zajmę się czymś innym",
-                        "response": "Rozumiem, pewnie w mieście jest mnóstwo indywiduów mających ciekawsze zadania niż jakiś tam kowal. Bywaj..."
+                        "response": "Rozumiem, ale zadanie będzie czekało dopóki jej nie znajdę. Bywaj!"
                       }
                     ]
                   }
@@ -502,6 +515,7 @@
             "alias": ["zielarka", "chloe"],
             "description": "Zgarbiona milutka Pani. Z jej wzrokiem jest coś nie tak",
             "lvl": 50,
+            "money": 30,
             "race": "Człowiek",
             "proficiency": "zielarka",
             "params": {
@@ -595,5 +609,34 @@
         ]
       }
     ]
-  }
+  },
+  "quests": [
+    {
+      "id": 1,
+      "name": "Zgubiona podkowa",
+      "description": "Kowal ben zgubił swoją srebrną podkowę. Muszę ją znaleźć w okolicy kuźni, a następnie mu ją oddać.",
+      "objectives": [
+        {
+          "type": "item_in_eq",
+          "name": "Znajdź srebrną podkowę",
+          "item": "Srebrna podkowa",
+          "progress": 0,
+          "amount": 1
+        },
+        {
+          "type": "return_item",
+          "name": "Zwróć podkowę kowalowi",
+          "item": "Srebrna podkowa",
+          "progress": 0,
+          "amount": 1,
+          "npc": "Kowal Ben"
+        }
+      ],
+      "reward": {
+        "money": 10,
+        "exp": 10
+      },
+      "status" : 0
+    }
+  ]
 }

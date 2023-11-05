@@ -4,9 +4,10 @@ from mob import Mob
 from item import Item
 
 class Player(Mob):
-  def __init__(self, x, y, z, name, alias, description, lvl, race, proficiency, params, stats, equipment, slots, conversations, knowledge, exp):
-    super(Player, self).__init__(x, y, z, name, alias, description, lvl, race, proficiency, params, stats, equipment, slots, conversations, knowledge)
+  def __init__(self, x, y, z, name, alias, description, lvl, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, exp):
+    super(Player, self).__init__(x, y, z, name, alias, description, lvl, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge)
     self.exp = exp
+    self.quest_id = None
 
   def whoami(self):
     print("Jestem " + self.name + ", rasa: " + self.race + "\n" + self.description)
@@ -107,6 +108,9 @@ class Player(Mob):
         for key, value in selected_option["knowledge"].items():
           if key not in self.knowledge:
             self.knowledge[key] = value
+      if "quest_id" in selected_option:
+        quest_id = selected_option["quest_id"]
+        self.quest_id = quest_id
       Helper.sleep(1)
       next_step = selected_option.get("next_step")
       if next_step:
@@ -142,4 +146,4 @@ class Player(Mob):
       else:
         slots[key] = Item.from_dict(slots[key])
     
-    return cls(data["x"], data["y"], data["z"], data["name"], data["alias"], data["description"], data["lvl"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"], data["exp"])
+    return cls(data["x"], data["y"], data["z"], data["name"], data["alias"], data["description"], data["lvl"], data["money"],data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"], data["exp"])

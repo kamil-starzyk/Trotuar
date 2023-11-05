@@ -42,6 +42,8 @@ command_mapping = {
   "ubior" :     player.outfit,
 
   "rozmawiaj":  player.talk_to,
+  "zadania":    game.active_quests,
+  "quests":     game.active_quests,
 
   "whoami" :    player.whoami,
   "whereami" :  player.whereami,
@@ -68,3 +70,4 @@ while game.is_playing:
       action(argument)
     else: action()
   
+  game.update_state()

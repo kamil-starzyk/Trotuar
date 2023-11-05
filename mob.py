@@ -4,7 +4,7 @@ from item import Item
 
 class Mob:
   
-  def __init__(self, x, y, z, name, alias, description, lvl, race, proficiency, params, stats, equipment, slots, conversations, knowledge):
+  def __init__(self, x, y, z, name, alias, description, lvl, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge):
     self.x = x
     self.y = y
     self.z = z
@@ -13,6 +13,7 @@ class Mob:
     self.alias = alias
     self.description = description
     self.lvl = lvl
+    self.money = money
     self.race = race
     self.proficiency = proficiency
     self.params = params
@@ -77,6 +78,7 @@ class Mob:
       "alias": self.alias,
       "description": self.description,
       "lvl": self.lvl,
+      "money": self.money,
       "race": self.race,
       "proficiency": self.proficiency,
       "params": self.params,
@@ -97,4 +99,4 @@ class Mob:
       else:
         slots[key] = Item.from_dict(slots[key])
     
-    return cls(data["x"], data["y"], data["z"], data["name"], data["alias"], data["description"], data["lvl"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"])
+    return cls(data["x"], data["y"], data["z"], data["name"], data["alias"], data["description"], data["lvl"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"])

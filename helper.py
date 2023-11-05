@@ -1,6 +1,8 @@
 import time
+import re
 from datetime import datetime
 from os import listdir
+
 
 class Helper:
   
@@ -19,8 +21,19 @@ class Helper:
   @classmethod
   def open_saves(cls):
     paths = listdir("./data/saves")
-    return paths
+    return list(reversed(paths))
 
+  @classmethod
+  def get_new_gameplay_number(cls):
+    highest_number = 0
+    for filename in cls.open_saves():
+      match = re.search(r'_(\d+)(?=\.\w+$)', filename)
+      if match:
+        number = match.group(1)
+        number = int(number)
+        if number > highest_number:
+          highest_number = number
+    return highest_number+1
   @classmethod
   def find_item(cls, item_list, item_name):
     hit = []
