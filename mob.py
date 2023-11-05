@@ -4,7 +4,7 @@ from item import Item
 
 class Mob:
   
-  def __init__(self, x, y, z, name, alias, description, lvl, race, proficiency, params, stats, equipment, slots, conversations):
+  def __init__(self, x, y, z, name, alias, description, lvl, race, proficiency, params, stats, equipment, slots, conversations, knowledge):
     self.x = x
     self.y = y
     self.z = z
@@ -20,6 +20,7 @@ class Mob:
     self.equipment = equipment
     self.slots = slots
     self.conversations = conversations
+    self.knowledge = knowledge
 
   def pick_up(self, item_name):
     item = Helper.find_item(self.my_square().items, item_name)
@@ -80,7 +81,8 @@ class Mob:
       "stats": self.stats,
       "equipment": [item.to_dict() for item in self.equipment],
       "slots": slots_dict,
-      "conversations": self.conversations
+      "conversations": self.conversations,
+      "knowledge": self.knowledge
     }
 
   @classmethod
@@ -93,4 +95,4 @@ class Mob:
       else:
         slots[key] = Item.from_dict(slots[key])
     
-    return cls(data["x"], data["y"], data["z"], data["name"], data["alias"], data["description"], data["lvl"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"])
+    return cls(data["x"], data["y"], data["z"], data["name"], data["alias"], data["description"], data["lvl"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"])

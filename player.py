@@ -4,8 +4,8 @@ from mob import Mob
 from item import Item
 
 class Player(Mob):
-  def __init__(self, x, y, z, name, alias, description, lvl, race, proficiency, params, stats, equipment, slots, conversations, exp):
-    super(Player, self).__init__(x, y, z, name, alias, description, lvl, race, proficiency, params, stats, equipment, conversations, slots)
+  def __init__(self, x, y, z, name, alias, description, lvl, race, proficiency, params, stats, equipment, slots, conversations, knowledge, exp):
+    super(Player, self).__init__(x, y, z, name, alias, description, lvl, race, proficiency, params, stats, equipment, slots, conversations, knowledge)
     self.exp = exp
 
   def whoami(self):
@@ -85,17 +85,28 @@ class Player(Mob):
     super().outfit()
 
   def navigate_conversation(self, current_step):
-    options = current_step.get("options", [])
+    options = []
+    for option in current_step.get("options", []):
+      condition = option.get("condition")
+      if condition is None or self.knowledge.get(condition, False):
+        options.append(option)
+
     if not options:
       return
     
+    number = 1
     for option in options:
-      Konsola.print(option["text"])
-    
+      Konsola.print(" (" + str(number) + ".) " + option["text"])
+      number+=1
+      
     choice = int(input(" > "))
     if 1 <= choice <= len(options):
       selected_option = options[choice - 1]
       Konsola.wrap(selected_option["response"], "lwhite")
+      if selected_option.get("knowledge"):
+        for key, value in selected_option["knowledge"].items():
+          if key not in self.knowledge:
+            self.knowledge[key] = value
       Helper.sleep(1)
       next_step = selected_option.get("next_step")
       if next_step:
@@ -131,4 +142,4 @@ class Player(Mob):
       else:
         slots[key] = Item.from_dict(slots[key])
     
-    return cls(data["x"], data["y"], data["z"], data["name"], data["alias"], data["description"], data["lvl"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["exp"])
+    return cls(data["x"], data["y"], data["z"], data["name"], data["alias"], data["description"], data["lvl"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"], data["exp"])

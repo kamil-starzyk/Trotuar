@@ -47,6 +47,7 @@
       "neck" : {}
     },
     "conversations": {},
+    "knowledge" : {},
     "exp": 0
 
   },
@@ -434,60 +435,161 @@
               "greeting": "Witaj w mojej kuźni. Czego potrzebujesz?",
               "options": [
                 {
-                  "text": " (1.) Szukam ciekawych zadań i przygód",
+                  "text": "Szukam ciekawych zadań i przygód",
                   "response": "Być może będę miał zadanie dla Ciebie. Czy jesteś zainteresowany?",
                   "next_step": {
                     "options": [
                       {
-                        "text" : " (1.) Tak!",
+                        "text" : "Tak!",
                         "response": "Wspaniale, oto zadanie...",
                         "next_step": {
                           "options":[
                             {
-                              "text": " (1.) Dziękuję, wrócę jak najszybciej",
+                              "text": "Dziękuję, wrócę jak najszybciej",
                               "response": "Złoto już na Ciebie czeka"
                             }
                           ]
                         }
                       },
                       {
-                        "text": " (2.) Chyba jednak najpierw zajmę się czymś innym",
+                        "text": "Chyba jednak najpierw zajmę się czymś innym",
                         "response": "Rozumiem, pewnie w mieście jest mnóstwo indywiduów mających ciekawsze zadania niż jakiś tam kowal. Bywaj..."
                       }
                     ]
                   }
                 },
                 {
-                  "text": " (2.) Chciałem dowiedzieć się więcej o tym mieście",
+                  "text": "Chciałem dowiedzieć się więcej o tym mieście",
                   "response": "Torenberg to bardzo stare miasto z bogatą historią. Założył je Toren II zwany Ostrożnym gdy przypadła mu we władanie Nadmorska Prowincja. Mamy tu port i  wielkie magazyny gdyż miasto to stanowi ważny węzeł w handlu z zamorskimi państwami. Mamy tu też plac turniejowy, karczmę i oczywiście tę kuźnię. Czy interesuje Cię coś bardziej konkretnego?",
                   "next_step": {
                     "options": [
                       {
-                        "text" : " (1.) Ta wieża w rogu muru",
+                        "text" : "Ta wieża w rogu muru",
                         "response": "To wieża północno-zachodnia. Ma ją w pieczy kapitan Rodgier. Napewno znajdziesz tam coś ciekawego."
                       },
                       {
-                        "text" : " (2.) Ta kuźnia",
+                        "text" : "Ta kuźnia",
                         "response": "Sam ją zbudowałem... a to będzie już ze 20 lat temu. Od tej pory zapracowała na swoją renomę. Wytwarzam tu miecze dla straży oraz na zamówienie dla możnych."
                       },
                       {
-                        "text" : " (3.) Domek, ten na północ od kuźni. Wyraźnie odstaje wyglądem od reszty zabudowy",
-                        "response": "Mieszka tam stara Chloe, zielarka. Nie pozwoliła tknąć tej chaty palcem kiedy miasto dawało pieniądze na remont fasady."
+                        "text" : "Domek, ten na północ od kuźni. Wyraźnie odstaje wyglądem od reszty zabudowy",
+                        "response": "Mieszka tam stara Chloe, zielarka. Nie pozwoliła tknąć tej chaty palcem kiedy miasto dawało pieniądze na remont fasady.",
+                        "knowledge": {"Domek Chloe" : "Stara zielarka Chloe nie chciała wyremontować domu za pieniądze miasta."} 
                       },
                       {
-                        "text" : " (4.) To wszystko, dziękuję",
+                        "text" : "To wszystko, dziękuję",
                         "response": "Bywaj zdrów. Ja wracam do pracy."
                       }
                     ]
                   }
                 },
                 {
-                  "text": " (3.) Do widzenia",
+                  "text": "Do widzenia",
                   "response": "Do widzenia"
                 }
               ],
               "farewell": "Do miłego zobaczenia"
-            }
+            },
+            "knowledge": {}
+            
+    
+          },
+          {
+            "x": 2,
+            "y": 1,
+            "z": 0,
+            "name": "Zielarka Chloe",
+            "alias": ["zielarka", "chloe"],
+            "description": "Zgarbiona milutka Pani. Z jej wzrokiem jest coś nie tak",
+            "lvl": 50,
+            "race": "Człowiek",
+            "proficiency": "zielarka",
+            "params": {
+              "hp": 100,
+              "hp_max": 100,
+              "mana": 30,
+              "mana_max": 30,
+              "satiation": 60,
+              "satiation_max": 100,
+              "hydration": 80,
+              "hydration_max": 100
+            },
+            "stats": {
+              "strength": 10,
+              "attack": 5,
+              "defence": 10
+            },
+            "equipment": [
+              {
+                "type" : "Consumable",
+                "alias": ["gałązka ostrokrzewu", "galazka ostrokrzewu", "gałązka", "galazka"],
+                "name" : "Gałązka ostrokrzewu",
+                "description" : "Mała gałązka",
+                "weight" : 0.2,
+                "price" : 5,
+                "attributes" : {
+                  "hp" : -5
+                }
+              },
+              {
+                "type" : "Tool",
+                "alias": ["nóż ogrodniczy", "noz ogrodniczy", "noz"],
+                "name" : "Nóż ogrodniczy",
+                "description" : "Mały, zużyty nożyk z białą rękojeścią",
+                "weight" : 0.5,
+                "price" : 18,
+                "attributes" : {}
+              }
+            ],
+            "slots": {
+              "first_hand" : {},
+              "second_hand" : {},
+              "head" : {
+                "type" : "Outfit",
+                "alias": ["chusta na głowę", "chusta na glowe", "chusta"],
+                "name" : "Chusta na głowę",
+                "description" : "Wzorzysta chusta chroniąca przed słońcem.",
+                "weight" : 0.2,
+                "price" : 10,
+                "attributes" : {
+                  "body_part": "head"
+                }
+              },
+              "body" : {
+                "type" : "Outfit",
+                "alias": ["kwiecisty fartuszek", "fartuszek"],
+                "name" : "Kwiecisty fartuszek",
+                "description" : "Lniany fartuszek z ponaszywanymi kwiatami. Ma kilka kieszeni i jest przewiązany w pasie,",
+                "weight" : 0.6,
+                "price" : 15,
+                "attributes" : {
+                  "body_part": "body"
+                }
+              },
+              "finger" : {},
+              "neck" : {}
+            },
+            "conversations": {
+              "greeting": "Dzień dobry przystojny chłopaku. W czym mogę Ci pomóc?",
+              "options": [
+                {
+                  "text": "Szukam ciekawych zadań i przygód",
+                  "response": "Wróć później, na razie nic dla Ciebie nie mam"
+                },
+                {
+                  "condition": "Domek Chloe",
+                  "text": "Dlaczego nie chciałaś wyremontować domu za darmo, kiedy miasto to oferowało",
+                  "response": "Miałam swoje powody, a Tobie wystarczy wiedzieć, że nie wolno mi nic zmieniać w tym domu, bo miałoby to tragiczne konsekwencje. Zbudował go tu mój pradziadek i jak dotąd stoi nie wymagająć ingerencji."
+                },
+                {
+                  "text": "Do widzenia",
+                  "response": "Do widzenia"
+                }
+              ],
+              "farewell": "Do miłego zobaczenia"
+            },
+            "knowledge": {}
+            
     
           }
         ]

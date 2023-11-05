@@ -1,6 +1,4 @@
 from world import World
-from square import Square
-from mob import Mob
 from player import Player
 from konsola import Konsola
 from helper import Helper
@@ -44,7 +42,7 @@ class Game:
     data = self.to_dict()
     location_name = self.player.current_location.name
     datetime = Helper.datetime()
-    path = 'data/save/'+	location_name + "_" + str(self.gameplay) + datetime + '.json'
+    path = 'data/save/' + datetime + "_" + location_name + "_" + str(self.gameplay) + '.json'
     path = path.lower()
     path = path.replace(" ", "_")
     print(path)
