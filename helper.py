@@ -18,7 +18,7 @@ class Helper:
 
   @classmethod
   def open_saves(cls):
-    paths = listdir("./data/save")
+    paths = listdir("./data/saves")
     return paths
 
   @classmethod

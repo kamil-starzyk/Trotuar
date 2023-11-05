@@ -58,7 +58,7 @@ class Game:
         print("Nie ma takiego zapisu ")
 
   def load_game(self, path):
-    data = MyJson.load_json("data/save/"+path)
+    data = MyJson.load_json("data/saves/"+path)
     self.player = Player.from_dict(data["player"])
     self.world = World.from_dict(data["world"])
      
@@ -85,7 +85,7 @@ class Game:
     data = self.to_dict()
     location_name = self.player.current_location.name
     datetime = Helper.datetime()
-    path = 'data/save/' + datetime + "_" + location_name + "_" + str(self.gameplay) + '.json'
+    path = 'data/saves/' + datetime + "_" + location_name + "_" + str(self.gameplay) + '.json'
     path = path.lower()
     path = path.replace(" ", "_")
     print(path)
