@@ -8,14 +8,20 @@ class Player(Mob):
     super(Player, self).__init__(x, y, z, name, alias, description, lvl, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge)
     self.exp = exp
     self.quest_id = None
+    self.picked_item = None
+    self.droped_item = None
+    self.given_item = None
+    self.item_receiver = None
 
   def whoami(self):
     print("Jestem " + self.name + ", rasa: " + self.race + "\n" + self.description)
+    print("Poziom: " + str(self.lvl) + " ( " + str(self.exp) + " / " + str(self.max_exp_for_level(self.lvl)) + " )")
+
   def whereami(self):
     print("Znajduję się w "+self.current_location.name + ". Moje współrzędne to:")
-    print("X: " + str(self.x))
-    print("Y: " + str(self.y))
-    print("Z: " + str(self.z))
+    print('"x": ' + str(self.x)+',')
+    print('"y": ' + str(self.y)+',')
+    print('"z": ' + str(self.z))
   
   def max_exp_for_level(self, level):
     if level == 1:
@@ -25,12 +31,13 @@ class Player(Mob):
     
   def add_exp(self, exp):
     self.exp += exp
-    while self.exp >= self.max_exp_for_level(self.level):
+    while self.exp >= self.max_exp_for_level(self.lvl):
       self.lvl += 1
-      self.exp -= self.max_exp_for_level(self.level)
+      Konsola.print(" >> Gratulacje! Osiągnąłeś kolejny poziom główny ( " + str(self.lvl) + " ) <<", "lgreen")
+      self.exp -= self.max_exp_for_level(self.lvl-1)
 
   def move_in_direction(self, direction):
-    if self.my_square().exits[direction]:
+    if direction in self.my_square().exits:
       match direction:
         case "n":
           self.y -= 1
@@ -50,6 +57,7 @@ class Player(Mob):
   def pick_up(self, item_name):
     item = super().pick_up(item_name)
     if item:
+      self.picked_item = item
       Konsola.print("Podniosłeś ", line_end='')
       Konsola.print(item.name, "lwhite")
     else:
@@ -58,10 +66,31 @@ class Player(Mob):
   def drop(self, item_name):
     item = super().drop(item_name)
     if item:
+      self.droped_item = item
       Konsola.print("Upuściłeś ", line_end='')
       Konsola.print(item.name, "lwhite")
     else:
       Konsola.print("Nie masz takiej rzeczy w ekwipunku", "red")
+  
+  def give(self, item_name):
+    item = Helper.find_item(self.equipment, item_name)
+    if item:
+      mobs = self.current_location.mobs_on_square(self.my_square())
+      mob = None
+      if len(mobs) == 1:
+        mob = mobs[0]
+      else:
+        Konsola.print("Komu chcesz przekazać " + item.name +"?", "lcyan", line_end=' ')
+        mob_name = input()
+        mob = Helper.find_item(mobs, mob_name)
+      if mob:
+        self.equipment.remove(item)
+        mob.equipment.append(item)
+        self.item_receiver = mob
+        self.given_item = item
+        return item
+      else:
+        Konsola.print("Nie udało się przekazać przedmiotu", "red")
 
   def see_item(self, item_name):
     item = Helper.find_item(self.equipment, item_name)
@@ -108,6 +137,11 @@ class Player(Mob):
         for key, value in selected_option["knowledge"].items():
           if key not in self.knowledge:
             self.knowledge[key] = value
+      if selected_option.get("forget"):
+        key = selected_option.get("forget")
+        if key in self.knowledge:
+          del self.knowledge[key]
+          
       if "quest_id" in selected_option:
         quest_id = selected_option["quest_id"]
         self.quest_id = quest_id
@@ -124,11 +158,14 @@ class Player(Mob):
       self.navigate_conversation(current_step)
 
   def talk_to(self, mob_name):
-    mob = Helper.find_item(self.current_location.mobs, mob_name)
-    if mob:
-      if mob.conversations:
-        Konsola.print(mob.conversations["greeting"], "lwhite")
-        self.navigate_conversation(mob.conversations)
+    mobs = self.current_location.mobs_on_square(self.my_square())
+    mob = Helper.find_item(mobs, mob_name)
+    if mob: 
+      if self.my_square() == mob.my_square():
+        if mob.conversations:
+          Konsola.print(mob.conversations["greeting"], "lwhite")
+          self.navigate_conversation(mob.conversations)
+  
 
 
   def to_dict(self):

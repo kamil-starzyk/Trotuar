@@ -42,6 +42,7 @@ command_mapping = {
   "ubior" :     player.outfit,
 
   "rozmawiaj":  player.talk_to,
+  "podaruj":    player.give,
   "zadania":    game.active_quests,
   "quests":     game.active_quests,
 

@@ -75,14 +75,57 @@ class Game:
       exit()
   
   def update_state(self):
-    if self.player.quest_id:
-      for quest in self.quests:
+    for quest in self.quests:
+
+      if self.player.quest_id:
         if quest.id == self.player.quest_id:
           quest.status = 1
-          self.player.quest_id = None
           Konsola.print(" Przyjąłeś zadanie: ", line_end="")
           Konsola.print(quest.name, "lyellow")
-    
+
+      if self.player.picked_item:
+        for obj in quest.objectives:
+          if obj["type"] == "item_in_eq" and obj["item"] == self.player.picked_item.name:
+            obj["progress"] += 1
+            Konsola.print(" Postęp w zadaniu: ", line_end="")
+            Konsola.print(quest.name, "lyellow")
+      
+      if self.player.item_receiver:
+        for obj in quest.objectives:
+          if obj["type"] == "return_item" and obj["npc"] == self.player.item_receiver.name and obj["item"] == self.player.given_item.name:
+            obj["progress"] += 1
+            Konsola.print(" Postęp w zadaniu: ", line_end="")
+            Konsola.print(quest.name, "lyellow")
+
+      if self.player.droped_item:
+        for obj in quest.objectives:
+          if obj["type"] == "item_in_eq" and obj["item"] == self.player.droped_item.name:
+            obj["progress"] -= 1
+      
+      if quest.is_finished():
+        quest.status = 2
+        Konsola.print(" Ukończyłeś zadanie : ", line_end="")
+        Konsola.print(quest.name, "lgreen")
+        if "money" in quest.reward:
+          self.player.money += quest.reward["money"]
+          Konsola.print("  Otrzymujesz: ", line_end="")
+          Konsola.print(str(quest.reward["money"]) + " złota", "lyellow")
+        if "exp" in quest.reward:
+          self.player.add_exp(quest.reward["exp"])
+          Konsola.print("  Otrzymujesz: ", line_end="")
+          Konsola.print(str(quest.reward["exp"]) + " doświadczenia", "lyellow")
+        key = quest.name
+        if key in self.player.knowledge:
+          del self.player.knowledge[key]
+        
+
+    self.player.quest_id = None
+    self.player.picked_item = None
+    self.player.droped_item = None
+    self.player.given_item = None
+    self.player.item_receiver = None
+
+
   def active_quests(self, quest_id=0):
     if not quest_id:
       Konsola.print("Twoje aktywne Questy", "lwhite")
@@ -105,12 +148,16 @@ class Game:
       for quest in self.quests:
         if quest.id == int(quest_id) and quest.status == 1:
           Konsola.print(quest.name, "lyellow")
+          Konsola.wrap(quest.description)
+          Konsola.hr()
           for obj in quest.objectives:
             color = "white"
             if obj["progress"] >= obj["amount"]:
               color = "lgreen"
             Konsola.print("  " + obj["name"], color, line_end=" ")
             print(" ( " + str(obj["progress"]) + " / " + str(obj["amount"]) + " )")
+          quest.print_reward()
+
   def to_dict(self):
     return {
       "gameplay": self.gameplay, 
@@ -135,12 +182,12 @@ class Game:
     
     number = 1
     for path in saves:
-      path = path.rsplit( ".", 1 )[ 0 ]
+      path = path.rsplit( ".", 1 )[ 0 ] #usuwa json
       print(str(number) + ". ", end="")
       Konsola.print(path, "lwhite")
       number+=1
 
-    Konsola.print("Wybierz zapis: ", "lgreen")
+    Konsola.print("Wybierz zapis: ", "lgreen", line_end='')
     correct = False
     while not correct:
       choice = input()

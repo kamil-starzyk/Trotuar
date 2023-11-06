@@ -17,6 +17,13 @@ class Location:
       if square.x == target_x and square.y == target_y and square.z == target_z:
         return square
     return None
+  
+  def mobs_on_square(self, square):
+    mob_list = []
+    for mob in self.mobs:
+      if mob.my_square() == square:
+        mob_list.append(mob)
+    return mob_list
 
   def to_dict(self):
     return {

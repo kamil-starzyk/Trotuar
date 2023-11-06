@@ -9,24 +9,15 @@ class Square:
     self.location = None
     self.name = name
     self.description = description
-    self.exits = {
-      "n": exits["n"],
-      "e": exits["e"],
-      "s": exits["s"],
-      "w": exits["w"],
-      "u": exits["u"],
-      "d": exits["d"]
-    }
+    self.exits = exits
     self.items = items
-    #print(f'{self.name: <16} X: {self.x}, Y: {self.y}, Z: {self.z}')
   
   def show_square(self):
     Konsola.print(self.name, "lyellow")
     Konsola.wrap(self.description, "lwhite")
     Konsola.print("Wyjścia: ", "red", line_end=" ")
     for e in self.exits:
-      if self.exits[e]:
-        print(e, end=" ")
+      print(e, end=" ")
     print('')
     
     mobs = []

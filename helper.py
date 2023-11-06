@@ -21,6 +21,7 @@ class Helper:
   @classmethod
   def open_saves(cls):
     paths = listdir("./data/saves")
+    paths.remove(".gitkeep")
     return list(reversed(paths))
 
   @classmethod
@@ -34,6 +35,7 @@ class Helper:
         if number > highest_number:
           highest_number = number
     return highest_number+1
+
   @classmethod
   def find_item(cls, item_list, item_name):
     hit = []
