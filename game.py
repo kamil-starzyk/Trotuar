@@ -35,7 +35,7 @@ class Game:
     data = MyJson.load_json("data/saves/"+path)
     self.player = Player.from_dict(data["player"])
     self.world = World.from_dict(data["world"])
-     
+    self.quests = [Quest.from_dict(data) for data in data["quests"]] 
     self.player.current_location = self.world.locations[0]
     self.is_playing = True
     Konsola.clear()
@@ -83,23 +83,34 @@ class Game:
           Konsola.print(" Przyjąłeś zadanie: ", line_end="")
           Konsola.print(quest.name, "lyellow")
     
-  def active_quests(self):
-    Konsola.print("Twoje aktywne Questy", "lwhite")
-    Konsola.hr()
-    for quest in self.quests:
-      if quest.status == 1:
-        print(str(quest.id) + ". ", end="")
-        Konsola.print(quest.name, "lyellow", line_end=" ")
-        obj_count = 0
-        obj_done = 0
-        for obj in quest.objectives:
-          obj_count += 1
-          if obj["progress"] >= obj["amount"]:
-            obj_done += 1
+  def active_quests(self, quest_id=0):
+    if not quest_id:
+      Konsola.print("Twoje aktywne Questy", "lwhite")
+      Konsola.hr()
+      for quest in self.quests:
+        if quest.status == 1:
+          print(str(quest.id) + ". ", end="")
+          Konsola.print(quest.name, "lyellow", line_end=" ")
+          obj_count = 0
+          obj_done = 0
+          for obj in quest.objectives:
+            obj_count += 1
+            if obj["progress"] >= obj["amount"]:
+              obj_done += 1
 
-        print(" ( " + str(obj_done) + " / " + str(obj_count) + " )")
-      #todo details about quest 
-  
+          print(" ( " + str(obj_done) + " / " + str(obj_count) + " )")
+        #todo details about quest 
+      Konsola.hr()
+    else:
+      for quest in self.quests:
+        if quest.id == int(quest_id) and quest.status == 1:
+          Konsola.print(quest.name, "lyellow")
+          for obj in quest.objectives:
+            color = "white"
+            if obj["progress"] >= obj["amount"]:
+              color = "lgreen"
+            Konsola.print("  " + obj["name"], color, line_end=" ")
+            print(" ( " + str(obj["progress"]) + " / " + str(obj["amount"]) + " )")
   def to_dict(self):
     return {
       "gameplay": self.gameplay, 

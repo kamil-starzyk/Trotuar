@@ -67,7 +67,14 @@ while game.is_playing:
     if isinstance(action, tuple):
       action[0](action[1])
     elif argument:
-      action(argument)
-    else: action()
+      try:
+        action(argument)
+      except TypeError:
+        Konsola.print("To polecenie jest jednowyrazowe!", "red")
+    else: 
+      try:
+        action()
+      except TypeError:
+        Konsola.print("To polecenie wymaga więcej informacji!", "red")
   
   game.update_state()
