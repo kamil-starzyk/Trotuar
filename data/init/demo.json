@@ -1,0 +1,642 @@
+{
+  "player" :{
+    "x": 2,
+    "y": 2,
+    "z": 0,
+    "name": "Alwer",
+    "alias": ["alwer", "ja"],
+    "description": "To tylko ty",
+    "lvl": 1,
+    "money": 20,
+    "race": "Człowiek",
+    "proficiency": "wojownik",
+    "params": {
+      "hp": 100,
+      "hp_max": 100,
+      "mana": 5,
+      "mana_max": 5,
+      "satiation": 80,
+      "satiation_max": 100,
+      "hydration": 50,
+      "hydration_max": 100
+    },
+    "stats": {
+      "strength": 10,
+      "attack": 15,
+      "defence": 10
+    },
+    "equipment": [
+      {
+        "type" : "Consumable",
+        "alias": ["placuszek z serem", "placuszek"],
+        "name" : "Placuszek z serem",
+        "description" : "Słony tłusty placek, posypany roztopionym serem",
+        "weight" : 1,
+        "price" : 5,
+        "attributes" : {
+          "satiation" : 15,
+          "hp" : 5
+        }
+      }
+    ],
+    "slots": {
+      "first_hand" : {},
+      "second_hand" : {},
+      "head" : {},
+      "body" : {
+        "type" : "Outfit",
+        "alias": ["mieszczański strój", "mieszczanski stroj", "strój", "stroj"],
+        "name" : "Mieszczański strój",
+        "description" : "Biała koszula, brązowe spodnie i zielona narzuta",
+        "weight" : 2,
+        "price" : 30,
+        "attributes" : {
+          "body_part": "body"
+        }
+      },
+      "finger" : {},
+      "neck" : {}
+    },
+    "conversations": {},
+    "knowledge" : {},
+    "exp": 0
+
+  },
+  "world": {
+    "locations": [
+      {
+        "name": "Torenberg",
+        "description": "Torenberg to piękne portowe miasto",
+        "size_x": 4,
+        "size_y": 4,
+        "size_z": 3,
+        "ground_level": 0,
+        "squares": [
+          {
+            "name": "Wieża",
+            "description": "Wszedłeś do wieży. W górę prowadzą kręte schody.",
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "exits": {
+              "n": 0,
+              "e": 0,
+              "s": 1,
+              "w": 0,
+              "u": 1,
+              "d": 0
+            }, 
+            "items" : [
+              {
+                "type" : "Outfit",
+                "alias": ["naszyjnik z kandoru", "naszyjnik z kandoru", "naszyjnik"],
+                "name" : "Naszyjnik z Kandoru",
+                "description" : "Piękny, złoty naszyjnik stworzony z kilku nakładających się na siebie łańcuszków",
+                "weight" : 0.5,
+                "price" : 220,
+                "attributes" : {
+                  "body_part" : "neck",
+                  "mana_max" : 5
+                }
+              }
+            ]
+          },
+          {
+            "name": "Przed wieżą",
+            "description": "Stoisz przed wejściem do wieży strażniczej. Wejście do niej znajduje się na północy. Na zachodzie jest wielki kamienny mur. Do ulicy dostaniesz się idąc na wschód.",
+            "x": 0,
+            "y": 1,
+            "z": 0,
+            "exits": {
+              "n": 1,
+              "e": 1,
+              "s": 0,
+              "w": 0,
+              "u": 0,
+              "d": 0
+            }, 
+            "items" : []
+          },
+          {
+            "name": "Domek",
+            "description": "Wszedłeś do małego, przytulnego mieszkanka. Stoi tu pod ścianą skrzynia.",
+            "x": 2,
+            "y": 0,
+            "z": 0,
+            "exits": {
+              "n": 0,
+              "e": 0,
+              "s": 1,
+              "w": 0,
+              "u": 0,
+              "d": 0
+            }, 
+            "items" : [
+              {
+                "type" : "Consumable",
+                "alias": ["podpłomyk", "podplomyk"],
+                "name" : "Podpłomyk",
+                "description" : "Przaśny placuszek upieczony na blasze",
+                "weight" : 0.5,
+                "price" : 5,
+                "attributes" : {
+                  "satiation" : 10,
+                  "hp" : 5
+                }
+              },
+              {
+                "type" : "Consumable",
+                "alias": ["eliksir magii", "eliksir"],
+                "name" : "Eliksir magii",
+                "description" : "Malutka fiolka z niebieskim płynem",
+                "weight" : 0.2,
+                "price" : 120,
+                "attributes" : {
+                  "mana" : 20
+                }
+              }
+            ]
+          },
+          {
+            "name": "Kuźnia",
+            "description": "Oto warsztat miejscowego kowala. Stoi tu palenisko, a przy nim miech. Obok jest kowadło oraz brus. Wyjście jest na zachodzie.",
+            "x": 2,
+            "y": 2,
+            "z": 0,
+            "exits": {
+              "n": 0,
+              "e": 0,
+              "s": 0,
+              "w": 1,
+              "u": 0,
+              "d": 0
+            }, 
+            "items" : [
+              {
+                "type" : "Tool",
+                "alias": ["młot kowala", "mlot kowala", "młot", "mlot"],
+                "name" : "Młot kowala",
+                "description" : "Masywny młot służący do kucia stali",
+                "weight" : 10,
+                "price" : 100,
+                "attributes" : {
+                  "body_part" : "first_hand"
+                }
+              },
+              {
+                "type" : "Weapon",
+                "alias": ["miecz strudzonych", "miecz"],
+                "name" : "Miecz strudzonych",
+                "description" : "Prosty, lekki miecz. Idealny na początek",
+                "weight" : 4,
+                "price" : 60,
+                "attributes" : {
+                  "body_part" : "first_hand",
+                  "damage" : 20,
+                  "strength" : 10
+                }
+              },
+              {
+                "type" : "Weapon",
+                "alias": ["miecz synthion", "miecz", "synthion"],
+                "name" : "Miecz Synthion",
+                "description" : "Prosty, lekki miecz. Idealny na początek",
+                "weight" : 3,
+                "price" : 250,
+                "attributes" : {
+                  "body_part" : "first_hand",
+                  "damage" : 40,
+                  "strength" : 20
+                }
+              }
+            ]
+          },
+          {
+            "name": "Ulica",
+            "description": "Przechadzasz się ulicami miasta",
+            "x": 1,
+            "y": 1,
+            "z": 0,
+            "exits": {
+              "n": 0,
+              "e": 1,
+              "s": 1,
+              "w": 1,
+              "u": 0,
+              "d": 0
+            }, 
+            "items" : []
+          },
+          {
+            "name": "Ulica",
+            "description": "Przechadzasz się ulicami miasta. Na północy widzisz wejście do małego domku",
+            "x": 2,
+            "y": 1,
+            "z": 0,
+            "exits": {
+              "n": 1,
+              "e": 1,
+              "s": 0,
+              "w": 1,
+              "u": 0,
+              "d": 0
+            }, 
+            "items" : []
+          },
+          {
+            "name": "Ulica",
+            "description": "Przechadzasz się ulicami miasta",
+            "x": 3,
+            "y": 1,
+            "z": 0,
+            "exits": {
+              "n": 0,
+              "e": 0,
+              "s": 1,
+              "w": 1,
+              "u": 0,
+              "d": 0
+            }, 
+            "items" : []
+          },
+          {
+            "name": "Ulica",
+            "description": "Przechadzasz się ulicami miasta. Na wschodzie widzisz wejście do kuźni, nad którym buja się znak: Kuźnia u Bena.",
+            "x": 1,
+            "y": 2,
+            "z": 0,
+            "exits": {
+              "n": 1,
+              "e": 1,
+              "s": 1,
+              "w": 0,
+              "u": 0,
+              "d": 0
+            }, 
+            "items" : []
+          },
+          {
+            "name": "Ulica",
+            "description": "Przechadzasz się ulicami miasta",
+            "x": 3,
+            "y": 2,
+            "z": 0,
+            "exits": {
+              "n": 1,
+              "e": 0,
+              "s": 1,
+              "w": 0,
+              "u": 0,
+              "d": 0
+            }, 
+            "items" : []
+          },
+          {
+            "name": "Ulica",
+            "description": "Przechadzasz się ulicami miasta",
+            "x": 1,
+            "y": 3,
+            "z": 0,
+            "exits": {
+              "n": 1,
+              "e": 0,
+              "s": 0,
+              "w": 0,
+              "u": 0,
+              "d": 0
+            }, 
+            "items" : []
+          },
+          {
+            "name": "Ulica",
+            "description": "Przechadzasz się ulicami miasta",
+            "x": 3,
+            "y": 3,
+            "z": 0,
+            "exits": {
+              "n": 1,
+              "e": 0,
+              "s": 0,
+              "w": 0,
+              "u": 0,
+              "d": 0
+            }, 
+            "items" : []
+          },
+
+          {
+            "name": "Wieża",
+            "description": "Idziesz po krętych schodach wewnątrz kamiennej wieży. Odrobina światła wpada do środka przez świetliki w ścianach. Schody prowadzą do klapy w drewnianym suficie oraz w dół na parter",
+            "x": 0,
+            "y": 0,
+            "z": 1,
+            "exits": {
+              "n": 0,
+              "e": 0,
+              "s": 0,
+              "w": 0,
+              "u": 1,
+              "d": 1
+            }, 
+            "items" : []
+          },
+          {
+            "name": "Wieża",
+            "description": "Znalazłeś się na szczycie wieży. Pomiędzy blankami dostrzegaz rozległy krajobraz za murami. W kierunku południowo wschodnim widisz kręte uliczki. W podłodze jest klapa prowadząca w dół.",
+            "x": 0,
+            "y": 0,
+            "z": 2,
+            "exits": {
+              "n": 0,
+              "e": 0,
+              "s": 0,
+              "w": 0,
+              "u": 0,
+              "d": 1
+            }, 
+            "items" : [
+              {
+                "type" : "Consumable",
+                "alias": ["mikstura życia", "mikstura zycia", "mikstura", "potion"],
+                "name" : "Mikstura życia",
+                "description" : "Mała fiolka z rubinowym, gęstym płynem",
+                "weight" : 3,
+                "price" : 250,
+                "attributes" : {
+                  "hp" : 10
+                }
+              }
+            ]
+          }
+        ],
+        "mobs": [
+          {
+            "x": 2,
+            "y": 2,
+            "z": 0,
+            "name": "Kowal Ben",
+            "alias": ["kowal", "ben"],
+            "description": "Wysoki umięśniony mężczyzna z brodą. Na lnianym bezrękawniku nosi skórzany fartuch.",
+            "lvl": 20,
+            "money": 120,
+            "race": "Człowiek",
+            "proficiency": "kowal",
+            "params": {
+              "hp": 100,
+              "hp_max": 100,
+              "mana": 5,
+              "mana_max": 5,
+              "satiation": 80,
+              "satiation_max": 100,
+              "hydration": 50,
+              "hydration_max": 100
+            },
+            "stats": {
+              "strength": 30,
+              "attack": 15,
+              "defence": 25
+            },
+            "equipment": [
+              {
+                "type" : "Consumable",
+                "alias": ["jabłko", "jablko"],
+                "name" : "Jabłko",
+                "description" : "Lśniące czerwone jabłuszko",
+                "weight" : 0.5,
+                "price" : 2,
+                "attributes" : {
+                  "satiation" : 5,
+                  "hp" : 5
+                }
+              },
+              {
+                "type" : "Tool",
+                "alias": ["szczypce"],
+                "name" : "Szczypce",
+                "description" : "Duże, siermiężne narzędzie do wyciągania rzeczy z ognia.",
+                "weight" : 3,
+                "price" : 40,
+                "attributes" : {}
+              }
+            ],
+            "slots": {
+              "first_hand" : {},
+              "second_hand" : {},
+              "head" : {
+                "type" : "Outfit",
+                "alias": ["czepiec"],
+                "name" : "Czepiec",
+                "description" : "Białe, materiałowe nakrycie głowy.",
+                "weight" : 0.2,
+                "price" : 12,
+                "attributes" : {}
+              },
+              "body" : {
+                "type" : "Outfit",
+                "alias": ["fartuch kowala", "fartuch"],
+                "name" : "Fartuch kowala",
+                "description" : "Skórzany fartuch z kieszeniami. Stanowi ochronę przed iskrami i gorącem.",
+                "weight" : 2,
+                "price" : 60,
+                "attributes" : {}
+              },
+              "finger" : {},
+              "neck" : {}
+            },
+            "conversations": {
+              "greeting": "Witaj w mojej kuźni. Czego potrzebujesz?",
+              "options": [
+                {
+                  "text": "Szukam ciekawych zadań i przygód",
+                  "response": "Być może będę miał zadanie dla Ciebie. Zgubiłem srebrną podkowę. Powinna być tu gdzieś w okolicy. Przynieś mi ją a otrzymasz 10 złota. Czy jesteś zainteresowany?",
+                  "next_step": {
+                    "options": [
+                      {
+                        "text" : "Tak!",
+                        "response": "Wspaniale.",
+                        "quest_id": 1,
+                        "next_step":{
+                          "options": [
+                            {
+                              "text": "Już się zabieram.",
+                              "response": "Wracaj prędko."
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "text": "Chyba jednak najpierw zajmę się czymś innym",
+                        "response": "Rozumiem, ale zadanie będzie czekało dopóki jej nie znajdę. Bywaj!"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": "Chciałem dowiedzieć się więcej o tym mieście",
+                  "response": "Torenberg to bardzo stare miasto z bogatą historią. Założył je Toren II zwany Ostrożnym gdy przypadła mu we władanie Nadmorska Prowincja. Mamy tu port i  wielkie magazyny gdyż miasto to stanowi ważny węzeł w handlu z zamorskimi państwami. Mamy tu też plac turniejowy, karczmę i oczywiście tę kuźnię. Czy interesuje Cię coś bardziej konkretnego?",
+                  "next_step": {
+                    "options": [
+                      {
+                        "text" : "Ta wieża w rogu muru",
+                        "response": "To wieża północno-zachodnia. Ma ją w pieczy kapitan Rodgier. Napewno znajdziesz tam coś ciekawego."
+                      },
+                      {
+                        "text" : "Ta kuźnia",
+                        "response": "Sam ją zbudowałem... a to będzie już ze 20 lat temu. Od tej pory zapracowała na swoją renomę. Wytwarzam tu miecze dla straży oraz na zamówienie dla możnych."
+                      },
+                      {
+                        "text" : "Domek, ten na północ od kuźni. Wyraźnie odstaje wyglądem od reszty zabudowy",
+                        "response": "Mieszka tam stara Chloe, zielarka. Nie pozwoliła tknąć tej chaty palcem kiedy miasto dawało pieniądze na remont fasady.",
+                        "knowledge": {"Domek Chloe" : "Stara zielarka Chloe nie chciała wyremontować domu za pieniądze miasta."} 
+                      },
+                      {
+                        "text" : "To wszystko, dziękuję",
+                        "response": "Bywaj zdrów. Ja wracam do pracy."
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": "Do widzenia",
+                  "response": "Do widzenia"
+                }
+              ],
+              "farewell": "Do miłego zobaczenia"
+            },
+            "knowledge": {}
+            
+    
+          },
+          {
+            "x": 2,
+            "y": 1,
+            "z": 0,
+            "name": "Zielarka Chloe",
+            "alias": ["zielarka", "chloe"],
+            "description": "Zgarbiona milutka Pani. Z jej wzrokiem jest coś nie tak",
+            "lvl": 50,
+            "money": 30,
+            "race": "Człowiek",
+            "proficiency": "zielarka",
+            "params": {
+              "hp": 100,
+              "hp_max": 100,
+              "mana": 30,
+              "mana_max": 30,
+              "satiation": 60,
+              "satiation_max": 100,
+              "hydration": 80,
+              "hydration_max": 100
+            },
+            "stats": {
+              "strength": 10,
+              "attack": 5,
+              "defence": 10
+            },
+            "equipment": [
+              {
+                "type" : "Consumable",
+                "alias": ["gałązka ostrokrzewu", "galazka ostrokrzewu", "gałązka", "galazka"],
+                "name" : "Gałązka ostrokrzewu",
+                "description" : "Mała gałązka",
+                "weight" : 0.2,
+                "price" : 5,
+                "attributes" : {
+                  "hp" : -5
+                }
+              },
+              {
+                "type" : "Tool",
+                "alias": ["nóż ogrodniczy", "noz ogrodniczy", "noz"],
+                "name" : "Nóż ogrodniczy",
+                "description" : "Mały, zużyty nożyk z białą rękojeścią",
+                "weight" : 0.5,
+                "price" : 18,
+                "attributes" : {}
+              }
+            ],
+            "slots": {
+              "first_hand" : {},
+              "second_hand" : {},
+              "head" : {
+                "type" : "Outfit",
+                "alias": ["chusta na głowę", "chusta na glowe", "chusta"],
+                "name" : "Chusta na głowę",
+                "description" : "Wzorzysta chusta chroniąca przed słońcem.",
+                "weight" : 0.2,
+                "price" : 10,
+                "attributes" : {
+                  "body_part": "head"
+                }
+              },
+              "body" : {
+                "type" : "Outfit",
+                "alias": ["kwiecisty fartuszek", "fartuszek"],
+                "name" : "Kwiecisty fartuszek",
+                "description" : "Lniany fartuszek z ponaszywanymi kwiatami. Ma kilka kieszeni i jest przewiązany w pasie,",
+                "weight" : 0.6,
+                "price" : 15,
+                "attributes" : {
+                  "body_part": "body"
+                }
+              },
+              "finger" : {},
+              "neck" : {}
+            },
+            "conversations": {
+              "greeting": "Dzień dobry przystojny chłopaku. W czym mogę Ci pomóc?",
+              "options": [
+                {
+                  "text": "Szukam ciekawych zadań i przygód",
+                  "response": "Wróć później, na razie nic dla Ciebie nie mam"
+                },
+                {
+                  "condition": "Domek Chloe",
+                  "text": "Dlaczego nie chciałaś wyremontować domu za darmo, kiedy miasto to oferowało",
+                  "response": "Miałam swoje powody, a Tobie wystarczy wiedzieć, że nie wolno mi nic zmieniać w tym domu, bo miałoby to tragiczne konsekwencje. Zbudował go tu mój pradziadek i jak dotąd stoi nie wymagająć ingerencji."
+                },
+                {
+                  "text": "Do widzenia",
+                  "response": "Do widzenia"
+                }
+              ],
+              "farewell": "Do miłego zobaczenia"
+            },
+            "knowledge": {}
+            
+    
+          }
+        ]
+      }
+    ]
+  },
+  "quests": [
+    {
+      "id": 1,
+      "name": "Zgubiona podkowa",
+      "description": "Kowal ben zgubił swoją srebrną podkowę. Muszę ją znaleźć w okolicy kuźni, a następnie mu ją oddać.",
+      "objectives": [
+        {
+          "type": "item_in_eq",
+          "name": "Znajdź srebrną podkowę",
+          "item": "Srebrna podkowa",
+          "progress": 0,
+          "amount": 1
+        },
+        {
+          "type": "return_item",
+          "name": "Zwróć podkowę kowalowi",
+          "item": "Srebrna podkowa",
+          "progress": 0,
+          "amount": 1,
+          "npc": "Kowal Ben"
+        }
+      ],
+      "reward": {
+        "money": 10,
+        "exp": 10
+      },
+      "status" : 0
+    }
+  ]
+}

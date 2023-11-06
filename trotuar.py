@@ -5,11 +5,8 @@ game = Game()
 game.title_screen()
 
 player = game.player
-print(game.world.locations[0].squares[0].exits["n"])
 
-print("Brawo! Udało Ci się rozpocząć grę")
-
-player.whereami()
+player.my_square().show_square()
 
 command_mapping = {
   "n" :         (player.move_in_direction, "n"),
@@ -24,14 +21,40 @@ command_mapping = {
   "w" :         (player.move_in_direction, "w"),
   "west" :      (player.move_in_direction, "w"),
   "4" :         (player.move_in_direction, "w"),
+  "u" :         (player.move_in_direction, "u"),
+  "up" :        (player.move_in_direction, "u"),
+  "5" :         (player.move_in_direction, "u"),
+  "d" :         (player.move_in_direction, "d"),
+  "down" :      (player.move_in_direction, "d"),
+  "0" :         (player.move_in_direction, "d"),
+  
+  "podnies" :   player.pick_up,
+  "podnieś" :   player.pick_up,
+  "upuść" :     player.drop,
+  "upusc" :     player.drop,
+  "zobacz" :    player.see_item,
+  "załóż" :     player.equip,
+  "zaloz" :     player.equip,
+  "ekwipunek" : player.show_equipment,
+  "eq" :        player.show_equipment,
+  "outfit" :    player.outfit,
+  "ubiór" :     player.outfit,
+  "ubior" :     player.outfit,
+
+  "rozmawiaj":  player.talk_to,
+  "zadania":    game.active_quests,
+  "quests":     game.active_quests,
+
   "whoami" :    player.whoami,
   "whereami" :  player.whereami,
   "help" :      Konsola.help,
   "?" :         Konsola.help,
+  "save":       game.save,
+  "zapisz":     game.save,
   "exit" :      game.end_game,
   "quit" :      game.end_game,
-  "q" :         game.end_game
-
+  "q" :         game.end_game,
+  "colorama" :  Konsola.test_colorama
 }
 
 while game.is_playing:
@@ -47,3 +70,4 @@ while game.is_playing:
       action(argument)
     else: action()
   
+  game.update_state()
