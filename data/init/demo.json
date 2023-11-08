@@ -72,7 +72,8 @@
     "conversations": {},
     "knowledge": {
 			"Pierwsze zadanie od kowala": "Nie byłem jeszcze u kowala, może ma dla mnie jakieś ciekawe zadanie.",
-			"Pierwsze zadanie od zielarki": "Nie byłem jeszcze u zielarki, może ma dla mnie jakieś ciekawe zadanie."
+			"Pierwsze zadanie od zielarki": "Nie byłem jeszcze u zielarki, może ma dla mnie jakieś ciekawe zadanie.",
+			"Pierwsze zadanie od kapitana": "Nie byłem jeszcze u kapitana, może ma dla mnie jakieś ciekawe zadanie."
 		},
     "exp": 0
   },
@@ -220,7 +221,7 @@
                   "synthion"
                 ],
                 "name": "Miecz Synthion",
-                "description": "Prosty, lekki miecz. Idealny na początek",
+                "description": "Lśniący miecz. Na gardzie widać jakieś runiczne zapiski.",
                 "weight": 3,
                 "price": 250,
                 "attr": {
@@ -728,6 +729,149 @@
                 }
               }
             ]
+          },
+          {
+            "x": 4,
+            "y": 1,
+            "z": 0,
+            "name": "Wejście do kanałów",
+            "description": "Jestś na początku kanałów odprowadzających nieczystości z miasta. Uderza Cię w nozdrza przykry zapach. Ściek ciągnie się na wschód",
+            "exits": [
+              "e",
+              "u"
+            ],
+            "items": []
+          },
+          {
+            "x": 5,
+            "y": 1,
+            "z": 0,
+            "name": "Kanały",
+            "description": "Poruszasz się cuchnącymi kanałami.",
+            "exits": [
+              "e",
+              "w"
+            ],
+            "items": []
+          },
+          {
+            "x": 6,
+            "y": 1,
+            "z": 0,
+            "name": "Kanały",
+            "description": "Poruszasz się cuchnącymi kanałami.",
+            "exits": [
+              "e",
+              "w"
+            ],
+            "items": []
+          },
+          {
+            "x": 7,
+            "y": 1,
+            "z": 0,
+            "name": "Kanały",
+            "description": "Poruszasz się cuchnącymi kanałami. Droga tu zakręca. Na południu sufit jest trochę niżej",
+            "exits": [
+              "e",
+              "s"
+            ],
+            "items": []
+          },
+          {
+            "x": 7,
+            "y": 2,
+            "z": 0,
+            "name": "Kanały",
+            "description": "Poruszasz się cuchnącymi kanałami.",
+            "exits": [
+              "n",
+              "s"
+            ],
+            "items": []
+          },
+          {
+            "x": 7,
+            "y": 3,
+            "z": 0,
+            "name": "Kanały",
+            "description": "Poruszasz się cuchnącymi kanałami.",
+            "exits": [
+              "n",
+              "s"
+            ],
+            "items": []
+          },
+          {
+            "x": 7,
+            "y": 4,
+            "z": 0,
+            "name": "Kanały",
+            "description": "Kanał biegnący z północy wpada tu do dużo szerszego, który biegnie ze wschodu za zachód, gdzie przejście uniemożliwiają grube kraty. ",
+            "exits": [
+              "n",
+              "w"
+            ],
+            "items": []
+          },
+          {
+            "x": 6,
+            "y": 4,
+            "z": 0,
+            "name": "Kanały",
+            "description": "Poruszasz się szerokim kanałem, na poludnie odchodzi stąd ciasny ściek.",
+            "exits": [
+              "e",
+              "s",
+              "w"
+            ],
+            "items": []
+          },
+          {
+            "x": 5,
+            "y": 4,
+            "z": 0,
+            "name": "Kanały",
+            "description": "Poruszasz się szerokim kanałem.",
+            "exits": [
+              "e",
+              "w"
+            ],
+            "items": []
+          },
+          {
+            "x": 4,
+            "y": 4,
+            "z": 0,
+            "name": "Kanały",
+            "description": "Dotarłeś na sam koniec. Powietrze jest tu trochę bardziej znośne. Na zachodzie ścieki wypływają pod kratą w murze. ",
+            "exits": [
+              "e"
+            ],
+            "items": []
+          },
+          {
+            "x": 6,
+            "y": 5,
+            "z": 0,
+            "name": "Ściek",
+            "description": "Przeciskasz się czymś co przypomina dużą rurę.",
+            "exits": [
+              "n",
+              "s"
+            ],
+            "items": []
+          },
+          {
+            "x": 6,
+            "y": 6,
+            "z": 0,
+            "name": "Ściek",
+            "description": "Przeciskasz się czymś co przypomina dużą rurę.",
+            "exits": [
+              "n"
+            ],
+            "items": []
           }
         ],
         "mobs": [
@@ -786,7 +930,9 @@
                 "description": "Duże, siermiężne narzędzie do wyciągania rzeczy z ognia.",
                 "weight": 3,
                 "price": 40,
-                "attr": {}
+                "attr": {
+                  "body_part": "second_hand"
+                }
               }
             ],
             "slots": {
@@ -1038,11 +1184,38 @@
                       },
                       {
                         "text": "Na razie podziękuję.",
-                        "response": "Na razie sama i tak się nie zbiorę. Może zmienisz zdanie."
+                        "response": "Ja i tak się sama nie zbiorę. Może zmienisz zdanie."
                       }
                     ]
                   }
 								},
+                {
+									"condition": "Dzikie zioła",
+                  "text": "W sprawie twojego zadania. Co miałem zrobić?",
+                  "response": "Znajdź w lesie 2 gałązki rozmarynu i jeden kwiat dziewanny.",
+                  "next_step": {
+                    "options": [
+                      {
+                        "text": "Dziękuję za przypomnienie.",
+                        "response": "W lesie może być niebezpiecznie, uważaj na siebie."
+                      }
+                    ]
+                  }
+                },
+                {
+									"condition": "Ukończono: Dzikie zioła",
+                  "text": "Znalazłem tę podkowę. Musialem się trochę nabiegać. Czy masz dla mnie jakieś kolejne zadanie?",
+                  "response": "Dobrze się spisałeś. Teraz muszę to tylko zagotować i miksturka gotowa. ",
+                  "next_step": {
+                    "options": [
+                      {
+                        "text": "Dziękuję za nagrodę i życzę miłej pracy",
+                        "response": "Do widzenia",
+												"forget": "Ukończono: Dzikie zioła"
+                      }
+                    ]
+                  }
+                },
                 {
                   "condition": "Domek Chloe",
                   "text": "Dlaczego nie chciałaś wyremontować domu za darmo, kiedy miasto to oferowało",
@@ -1056,6 +1229,212 @@
               "farewell": "Do miłego zobaczenia"
             },
             "knowledge": {}
+          },
+          {
+            "x": 4,
+            "y": 0,
+            "z": 1,
+            "name": "Kapitan Rodgier",
+            "alias": [
+              "kapitan rodgier",
+              "kapitan",
+              "rodgier"
+            ],
+            "description": "Wysoki szczupły mężczyzna z blizną na oku. Nosi ubrania straży miejskiej",
+            "lvl": 30,
+            "money": 50,
+            "race": "Człowiek",
+            "proficiency": "strażnik",
+            "params": {
+              "hp": 100,
+              "hp_max": 100,
+              "mana": 10,
+              "mana_max": 10,
+              "satiation": 70,
+              "satiation_max": 100,
+              "hydration": 90,
+              "hydration_max": 100
+            },
+            "stats": {
+              "strength": 30,
+              "attack": 40,
+              "defence": 30
+            },
+            "equipment": [
+              {
+                "type": "Consumable",
+                "alias": [
+                  "podpłomyk",
+                  "podplomyk"
+                ],
+                "name": "Podpłomyk",
+                "description": "Przaśny placuszek upieczony na blasze",
+                "weight": 0.5,
+                "price": 5,
+                "attr": {
+                  "amount": 1,
+                  "satiation": 10,
+                  "hp": 5
+                }
+              },
+              {
+                "type": "Outfit",
+                "alias": [
+                  "sygnet straży",
+                  "sygnet strazy",
+                  "sygnet"
+                ],
+                "name": "Sygnet Straży",
+                "description": "Srebrny pierścień z czerwonym emblematem.",
+                "weight": 0.1,
+                "price": 500,
+                "attr": {
+                  "body_part": "finger"
+                }
+              }
+            ],
+            "slots": {
+              "first_hand": {
+                "type": "Weapon",
+                "alias": [
+                  "miecz kapitana",
+                  "miecz"
+                ],
+                "name": "Miecz kapitana",
+                "description": "Ciężki, ciemno-szary miecz. Solidna kosntrukcja",
+                "weight": 6,
+                "price": 300,
+                "attr": {
+                  "body_part": "first_hand",
+                  "damage": 50,
+                  "strength": 25
+                }
+              },
+              "second_hand": {},
+              "head": {
+                "type": "Outfit",
+                "alias": [
+                  "hełm",
+                  "helm"
+                ],
+                "name": "Hełm",
+                "description": "Podstawowy hełm straży",
+                "weight": 1.5,
+                "price": 50,
+                "attr": {
+                  "defence": 10
+                }
+              },
+              "body": {
+                "type": "Outfit",
+                "alias": [
+                  "zbroja kapitańska",
+                  "zbroja"
+                ],
+                "name": "Zbroja kapitańska",
+                "description": "Lśniąca zbroja skrywajaca pod spodem czerwony gambeson",
+                "weight": 8,
+                "price": 40,
+                "attr": {
+                  "body_part": "body",
+                  "defence": 20
+                }
+              },
+              "finger": {},
+              "neck": {}
+            },
+            "conversations": {
+              "greeting": "Chronić i służyć, to moje motto",
+              "options": [
+                {
+									"condition": "Pierwsze zadanie od kapitana",
+                  "text": "Szukam ciekawych zadań i przygód",
+                  "response": "Mam jeden palący problem, ale nie wiem czy sobie z nim poradzisz. Otórz w mieście grasują od jakiegoś czasu szczury. Są tak bezczelne, że nawet przebiegają mi między nogami, ale zawsze jestem za wolny, żeby jakiegokolwiek złapać. Jeśli uda Ci się wytępić te pokraki to mogę Ci pomóc zdobyć jakieś lepsze wyposarzenie.",
+                  "next_step": {
+                    "options": [
+                      {
+                        "text": "Poradzę sobie",
+                        "response": "Nie wydaje mi się, ale zawsze możesz spróbować. Te paskudy biegają naprawdę szybko. Zabij 5 szczurów, to powinno być po problemie. Gdybyś nie mógł go znaleźćto wejście do kanałów jest tu przed wieżą. Wystarczy podnieść kratkę ściekową. ",
+												"forget": "Pierwsze zadanie od kapitana",
+												"knowledge": {
+													"Wejście do kanałów": "Przed wejściem do wieży, pod murem jest kratka ściekowa, którą da się podnieść i dostać do kanałów."
+												},
+                        "quest_id": 3,
+                        "next_step": {
+                          "options": [
+                            {
+                              "text": "Postaram się w takim razie.",
+                              "response": "Powodzenia.",
+                              "knowledge": {
+                                "Wytępić szczury": "Kapitan obiecał mi pomóc z uzbrojeniem jeśli zabiję 5 szczurów."
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "text": "Obawiam się, że na razie mogę sobie nie poradzić.",
+                        "response": "Też tak myślę, ale wróć do mnie gdy poprawidz swoją szybkość."
+                      }
+                    ]
+                  }
+                },
+								{
+									"condition": "Wytępić szczury",
+                  "text": "W sprawie twojego zadania. Co mam problem z zabiciem jakiegokolwiek szczura",
+                  "response": "Mówiłem Ci, że to nie będzie proste. Po pierwsze popraw swoją szybkość i zręczność. Po drugie zdobądź odpowiednią broń. Miecz nie nadaje sie do polowania na gryzonie. Dużo lepsza będzie pałka.",
+                  "next_step": {
+                    "options": [
+                      {
+                        "text": "Dziękuję za rady.",
+                        "response": "Powodzenia."
+                      }
+                    ]
+                  }
+                },
+								{
+									"condition": "Ukończono: Wytępić szczury",
+                  "text": "Miasto jest już wolne od tych zmór. Czy masz dla mnie jakieś kolejne zadanie?",
+                  "response": "Jestem Ci bardzo wdzięczny. Może potem coś będę miał.",
+                  "next_step": {
+                    "options": [
+                      {
+                        "text": "Chronić i służyć!",
+                        "response": "Tak jest",
+												"forget": "Ukończono: Wytępić szczury"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": "Chciałem dowiedzieć się więcej o straży.",
+                  "response": "Straż w Torengerbu to elitarna formacja...",
+                  "next_step": {
+                    "options": [
+                      {
+                        "text": "To ciekawe...",
+                        "response": "Nara"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": "Do widzenia",
+                  "response": "Do widzenia"
+                }
+              ],
+              "farewell": "Do miłego zobaczenia"
+            },
+            "knowledge": {}
+          }
+        ],
+        "secret_passages": [
+          {
+            "x": 4,
+            "y": 1,
+            "z": 1,
+            "direction": "d",
+            "condition": "Wejście do kanałów"
           }
         ]
       }
@@ -1133,6 +1512,33 @@
       },
       "status": 0,
 			"knowledge_entry": "Ukończono: Dzikie zioła"
+    },
+    {
+      "id": 2,
+      "name": "Wytępić szczury",
+      "description": "Kapitan Rodgier polecił mi zabić 5 szczurów w kanałach.",
+      "objectives": [
+        {
+          "type": "mob_killed",
+          "name": "Zabij 5 szczurów",
+          "item": "Szczur",
+          "progress": 0,
+          "amount": 5
+        },
+        {
+          "type": "talk_to_npc",
+          "name": "Zamelduj do kapitana rodgiera",
+          "npc": "Kapitan Rodgier",
+          "progress": 0,
+          "amount": 1
+        }
+      ],
+      "reward": {
+        "money": 25,
+        "exp": 30
+      },
+      "status": 0,
+			"knowledge_entry": "Ukończono: Wytępić szczury"
     }
   ]
 }

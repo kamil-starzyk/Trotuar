@@ -27,6 +27,8 @@ command_mapping = {
   "d" :         (player.move_in_direction, "d"),
   "down" :      (player.move_in_direction, "d"),
   "0" :         (player.move_in_direction, "d"),
+  "przejdź":    player.use_passage,
+  "przejdz":    player.use_passage,
   
   "podnies" :   player.pick_up,
   "podnieś" :   player.pick_up,

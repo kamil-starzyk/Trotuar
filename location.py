@@ -2,7 +2,7 @@ from square import Square
 from mob import Mob
 
 class Location:
-  def __init__(self, name, description, size_x, size_y, size_z, ground_level, squares, mobs):
+  def __init__(self, name, description, size_x, size_y, size_z, ground_level, squares, mobs, secret_passages):
     self.name = name
     self.description = description
     self.size_x = size_x
@@ -11,6 +11,7 @@ class Location:
     self.ground_level = ground_level
     self.squares = squares
     self.mobs = mobs
+    self.secret_passages = secret_passages
   
   def find_square(self, target_x, target_y, target_z):
     for square in self.squares:
@@ -34,7 +35,8 @@ class Location:
       "size_z": self.size_z,
       "ground_level": self.ground_level,
       "squares": [square.to_dict() for square in self.squares],
-      "mobs": [mob.to_dict() for mob in self.mobs]
+      "mobs": [mob.to_dict() for mob in self.mobs],
+      "secret_passages": self.secret_passages
     }
    
   @classmethod
@@ -49,7 +51,8 @@ class Location:
     mobs_list = data["mobs"]
     squares = [Square.from_dict(square_data) for square_data in squares_list]
     mobs = [Mob.from_dict(mob_data) for mob_data in mobs_list]
-    location = cls(name, description, size_x, size_y, size_z, ground_level, squares, mobs)
+    passages = data["secret_passages"]
+    location = cls(name, description, size_x, size_y, size_z, ground_level, squares, mobs, passages)
     for square in squares:
       square.location = location
     for mob in mobs:

@@ -175,7 +175,30 @@ class Player(Mob):
           Konsola.print(mob.conversations["greeting"], "lwhite")
           self.navigate_conversation(mob.conversations)
   
-
+  def use_passage(self, direction):
+    passages = self.current_location.secret_passages
+    for p in passages:
+      if p["x"] == self.x and p["y"] == self.y and p["z"] == self.z:
+        if p["direction"] == direction and p["condition"] in self.knowledge:
+          match direction:
+            case "n":
+              self.y -= 1
+            case "e":
+              self.x += 1
+            case "s":
+              self.y += 1
+            case "w":
+              self.x -= 1
+            case "u":
+              self.z += 1
+            case "d":
+              self.z -= 1
+          print("Skorzystałeś z tajnego przejścia")
+          Helper.sleep(1)
+          self.my_square().show_square()
+          return
+    print("Chyba nie tędy droga...")
+      
 
   def to_dict(self):
     player = super().to_dict()
