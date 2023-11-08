@@ -32,7 +32,7 @@ class Square:
     if len(self.items) > 0:
       Konsola.print("Przedmioty: ", "lcyan")
       for i in self.items:
-        print("  "+i.name)
+        print("  "+i.name_and_count)
 
 
   

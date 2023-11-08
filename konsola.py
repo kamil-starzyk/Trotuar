@@ -59,7 +59,6 @@ class Konsola:
     print("[2] Wczytaj")
     print("[3] Demo")
     print("[5] Wyjdź z gry")
-    print(" > ", end="")
   
   @classmethod
   def prompt(cls, player):
@@ -80,6 +79,18 @@ class Konsola:
     result.append(argument)
     return result
   
+  @classmethod
+  def int_input(cls, min_val=None, max_val=None):
+    while True:
+      try:
+        user_input = int(input(" > "))
+        if (min_val is None or user_input >= min_val) and (max_val is None or user_input <= max_val):
+          return user_input
+        else:
+          print("Wprowadź liczbę z zakresu (" + str(min_val) + " - " + str(max_val))
+      except ValueError:
+        print("Wprowadź liczbę")
+
   @classmethod
   def print(cls, text, f=f_reset, b=b_reset, line_end="\n"):
     color = cls.color_parser(f, b)
@@ -109,19 +120,27 @@ class Konsola:
   
   @classmethod
   def print_item_list(cls, items):
-    print("|lp. | nazwa                   | waga  | cena  |")
-    print(" ---- ------------------------- ------- ------- ")
+    print("|lp. | nazwa                   | waga  | wartość  |")
+    print(" ---- ------------------------- ------- ---------- ")
     index = 1
     weight = 0
+    amount = 0
+    price = 0
     for i in items:
       print('|' + f_lwhite + f'{str(index): <4}' + c_reset+'|', end='')
-      print(f_lwhite + f' {i.name: <24}' + c_reset+'|', end='')
-      print(f_lwhite + f' {i.weight: <6}' + c_reset+'|', end='')
-      print(f_lwhite + f' {i.price: <6}' + c_reset+'|')
+      print(f_lwhite + f' {i.name_and_count: <24}' + c_reset+'|', end='')
+      print(f_lwhite + f' {round(i.weight * i.amount, 2): <6}' + c_reset+'|', end='')
+      print(f_lwhite + f' {i.price * i.amount: <9}' + c_reset+'|')
       index+=1
-      weight+=i.weight
-    print(" ---- ------------------------- ------- ------- ")
-    print("Przedmiotów: " + f'{str(index-1): <13}' + "Waga:  " + str(weight))
+      amount += i.amount
+      weight += i.weight * i.amount
+      price += i.price * i.amount
+    if index > 2:
+      print(" ---- ------------------------- ------- ---------- ")
+      print(" Przedmiotów: " + f'{str(amount): <17}' + f'| {str(round(weight,2)): <6}' + f'| {str(price): <9}' + '|')
+      print(" ---- ------------------------- ------- ---------- ")
+    else:
+      print("")
 
   @classmethod
   def help(cls, command=''):

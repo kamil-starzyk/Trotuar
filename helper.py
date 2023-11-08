@@ -2,7 +2,7 @@ import time
 import re
 from datetime import datetime
 from os import listdir
-
+from konsola import Konsola
 
 class Helper:
   
@@ -37,6 +37,10 @@ class Helper:
     return highest_number+1
 
   @classmethod
+  def is_item_in_list(cls, item, list):
+    return next((i for i in list if i.name == item.name), False)
+    
+  @classmethod
   def find_item(cls, item_list, item_name):
     hit = []
     for i in item_list:
@@ -56,7 +60,7 @@ class Helper:
     for i in range(len(item_list)):
       print(str(i+1)+". "+item_list[i].name)
     while True:
-      item_number = int(input())-1
+      item_number = Konsola.int_input()-1
       for i in range(len(item_list)):
         if item_number == i:
           return item_list[item_number]

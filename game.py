@@ -25,7 +25,7 @@ class Game:
 
     Konsola.show_title_screen(self.version)
     while not self.is_playing:
-      choice = input()
+      choice = input(" > ")
       if choice in method_map:
         method_map[choice]()
       else:
@@ -76,44 +76,50 @@ class Game:
   
   def update_state(self):
     for quest in self.quests:
-
       if self.player.quest_id:
         if quest.id == self.player.quest_id:
           quest.status = 1
           Konsola.print(" Przyjąłeś zadanie: ", line_end="")
           Konsola.print(quest.name, "lyellow")
 
+    for quest in [q for q in self.quests if q.status == 1]:
       if self.player.picked_item:
         for obj in quest.objectives:
           if obj["type"] == "item_in_eq" and obj["item"] == self.player.picked_item.name:
-            obj["progress"] += 1
-            Konsola.print(" Postęp w zadaniu: ", line_end="")
-            Konsola.print(quest.name, "lyellow")
+            obj["progress"] += self.player.picked_item.amount
+            if obj["progress"] <= obj["amount"]:
+              Konsola.print(" Postęp w zadaniu: ", line_end="")
+              Konsola.print(quest.name, "lyellow")
       
       if self.player.item_receiver:
         for obj in quest.objectives:
           if obj["type"] == "return_item" and obj["npc"] == self.player.item_receiver.name and obj["item"] == self.player.given_item.name:
-            obj["progress"] += 1
-            Konsola.print(" Postęp w zadaniu: ", line_end="")
-            Konsola.print(quest.name, "lyellow")
+            obj["progress"] += self.player.given_item.amount
+            if obj["progress"] <= obj["amount"]:
+              Konsola.print(" Postęp w zadaniu: ", line_end="")
+              Konsola.print(quest.name, "lyellow")
 
       if self.player.droped_item:
         for obj in quest.objectives:
           if obj["type"] == "item_in_eq" and obj["item"] == self.player.droped_item.name:
-            obj["progress"] -= 1
+            if obj["progress"] >= self.player.droped_item.amount:
+              obj["progress"] -= self.player.droped_item.amount
+            else:
+              obj["progress"] = 0
       
       if quest.is_finished():
         quest.status = 2
         Konsola.print(" Ukończyłeś zadanie : ", line_end="")
         Konsola.print(quest.name, "lgreen")
+        Helper.sleep(1)
         if "money" in quest.reward:
-          self.player.money += quest.reward["money"]
           Konsola.print("  Otrzymujesz: ", line_end="")
           Konsola.print(str(quest.reward["money"]) + " złota", "lyellow")
+          self.player.money += quest.reward["money"]
         if "exp" in quest.reward:
-          self.player.add_exp(quest.reward["exp"])
           Konsola.print("  Otrzymujesz: ", line_end="")
           Konsola.print(str(quest.reward["exp"]) + " doświadczenia", "lyellow")
+          self.player.add_exp(quest.reward["exp"])
         key = quest.name
         if key in self.player.knowledge:
           del self.player.knowledge[key]

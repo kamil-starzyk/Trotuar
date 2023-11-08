@@ -40,7 +40,7 @@
         "description": "Słony tłusty placek, posypany roztopionym serem",
         "weight": 1,
         "price": 5,
-        "attributes": {
+        "attr": {
           "satiation": 15,
           "hp": 5
         }
@@ -62,7 +62,7 @@
         "description": "Biała koszula, brązowe spodnie i zielona narzuta",
         "weight": 2,
         "price": 30,
-        "attributes": {
+        "attr": {
           "body_part": "body"
         }
       },
@@ -108,7 +108,7 @@
                 "description": "Piękny, złoty naszyjnik stworzony z kilku nakładających się na siebie łańcuszków",
                 "weight": 0.5,
                 "price": 220,
-                "attributes": {
+                "attr": {
                   "body_part": "neck",
                   "mana_max": 5
                 }
@@ -147,7 +147,8 @@
                 "description": "Przaśny placuszek upieczony na blasze",
                 "weight": 0.5,
                 "price": 5,
-                "attributes": {
+                "attr": {
+                  "amount": 1,
                   "satiation": 10,
                   "hp": 5
                 }
@@ -162,7 +163,8 @@
                 "description": "Malutka fiolka z niebieskim płynem",
                 "weight": 0.2,
                 "price": 120,
-                "attributes": {
+                "attr": {
+                  "amount": 1,
                   "mana": 20
                 }
               }
@@ -190,7 +192,7 @@
                 "description": "Masywny młot służący do kucia stali",
                 "weight": 10,
                 "price": 100,
-                "attributes": {
+                "attr": {
                   "body_part": "first_hand"
                 }
               },
@@ -204,7 +206,7 @@
                 "description": "Prosty, lekki miecz. Idealny na początek",
                 "weight": 4,
                 "price": 60,
-                "attributes": {
+                "attr": {
                   "body_part": "first_hand",
                   "damage": 20,
                   "strength": 10
@@ -221,7 +223,7 @@
                 "description": "Prosty, lekki miecz. Idealny na początek",
                 "weight": 3,
                 "price": 250,
-                "attributes": {
+                "attr": {
                   "body_part": "first_hand",
                   "damage": 40,
                   "strength": 20
@@ -482,7 +484,7 @@
                 "description": "Piękna, lśniąca, srebrna podkowa",
                 "weight": 0.2,
                 "price": 10,
-                "attributes": {}
+                "attr": {}
               }
 						]
           },
@@ -506,7 +508,9 @@
                 "description": "Gałązka rozmarynu. Bardzo aromatyczna",
                 "weight": 0.1,
                 "price": 1,
-                "attributes": {}
+                "attr": {
+                  "amount": 1
+                }
               },
 							{
                 "type": "Consumable",
@@ -517,7 +521,9 @@
                 "description": "Zółty kwiat dziewanny",
                 "weight": 0.1,
                 "price": 2,
-                "attributes": {}
+                "attr": {
+                  "amount": 1
+                }
               }
 						]
           },
@@ -553,7 +559,9 @@
                 "description": "Gałązka rozmarynu. Bardzo aromatyczna",
                 "weight": 0.1,
                 "price": 1,
-                "attributes": {}
+                "attr": {
+                  "amount": 1
+                }
               }
 						]
           },
@@ -714,7 +722,8 @@
                 "description": "Mała fiolka z rubinowym, gęstym płynem",
                 "weight": 3,
                 "price": 250,
-                "attributes": {
+                "attr": {
+                  "amount": 1,
                   "hp": 10
                 }
               }
@@ -762,7 +771,8 @@
                 "description": "Lśniące czerwone jabłuszko",
                 "weight": 0.5,
                 "price": 2,
-                "attributes": {
+                "attr": {
+                  "amount": 1,
                   "satiation": 5,
                   "hp": 5
                 }
@@ -776,7 +786,7 @@
                 "description": "Duże, siermiężne narzędzie do wyciągania rzeczy z ognia.",
                 "weight": 3,
                 "price": 40,
-                "attributes": {}
+                "attr": {}
               }
             ],
             "slots": {
@@ -791,7 +801,7 @@
                 "description": "Białe, materiałowe nakrycie głowy.",
                 "weight": 0.2,
                 "price": 12,
-                "attributes": {}
+                "attr": {}
               },
               "body": {
                 "type": "Outfit",
@@ -803,7 +813,7 @@
                 "description": "Skórzany fartuch z kieszeniami. Stanowi ochronę przed iskrami i gorącem.",
                 "weight": 2,
                 "price": 60,
-                "attributes": {}
+                "attr": {}
               },
               "finger": {},
               "neck": {}
@@ -946,7 +956,8 @@
                 "description": "Mała gałązka",
                 "weight": 0.2,
                 "price": 5,
-                "attributes": {
+                "attr": {
+                  "amount": 1,
                   "hp": -5
                 }
               },
@@ -961,7 +972,7 @@
                 "description": "Mały, zużyty nożyk z białą rękojeścią",
                 "weight": 0.5,
                 "price": 18,
-                "attributes": {}
+                "attr": {}
               }
             ],
             "slots": {
@@ -978,7 +989,7 @@
                 "description": "Wzorzysta chusta chroniąca przed słońcem.",
                 "weight": 0.2,
                 "price": 10,
-                "attributes": {
+                "attr": {
                   "body_part": "head"
                 }
               },
@@ -992,7 +1003,7 @@
                 "description": "Lniany fartuszek z ponaszywanymi kwiatami. Ma kilka kieszeni i jest przewiązany w pasie,",
                 "weight": 0.6,
                 "price": 15,
-                "attributes": {
+                "attr": {
                   "body_part": "body"
                 }
               },

@@ -27,15 +27,32 @@ class Mob:
     item = Helper.find_item(self.my_square().items, item_name)
     if item:
       self.my_square().items.remove(item)
-      self.equipment.append(item)
+      item_in_eq = Helper.is_item_in_list(item, self.equipment)
+      if item.stackable() and item_in_eq:
+        item_in_eq.amount += item.amount
+      else:
+        self.equipment.append(item)
       return item
     return 0
   
   def drop(self, item_name):
     item = Helper.find_item(self.equipment, item_name)
     if item:
-      self.equipment.remove(item)
-      self.my_square().items.append(item)
+      if item.stackable() and item.amount > 1:
+        print("Jaką ilość chcesz wyrzucić? (max: " + str(item.amount) + ")")
+        amount_to_drop = Konsola.int_input(1, item.amount)
+        if amount_to_drop == item.amount:
+          self.equipment.remove(item)
+        else:
+          item = Item.unstack(item, amount_to_drop)
+      else:
+        self.equipment.remove(item)
+
+      item_on_square = Helper.is_item_in_list(item, self.my_square().items)
+      if item.stackable() and item_on_square:
+        item_on_square.amount += item.amount
+      else:
+        self.my_square().items.append(item)
       return item
     return 0
 
@@ -44,12 +61,11 @@ class Mob:
   
   def equip(self, item_name):
     item = Helper.find_item(self.equipment, item_name)
-    if 'body_part' in item.attributes:
-      self.slots[item.attributes['body_part']] = item
+    if 'body_part' in item.attr:
+      self.slots[item.attr['body_part']] = item
       return item
     else:
       return 0
-
 
   def show_equipment(self):
     Konsola.print_item_list(self.equipment)

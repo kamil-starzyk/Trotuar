@@ -84,7 +84,16 @@ class Player(Mob):
         mob_name = input()
         mob = Helper.find_item(mobs, mob_name)
       if mob:
-        self.equipment.remove(item)
+        if item.stackable() and item.amount > 1:
+          print("Jaką ilość chcesz podarować? (max: " + str(item.amount) + ")")
+          amount_to_give = Konsola.int_input(1, item.amount)
+          if amount_to_give == item.amount:
+            self.equipment.remove(item)
+          else:
+            item = Item.unstack(item, amount_to_give)
+        else:
+          self.equipment.remove(item)
+
         mob.equipment.append(item)
         self.item_receiver = mob
         self.given_item = item
@@ -129,7 +138,7 @@ class Player(Mob):
       Konsola.print(" (" + str(number) + ".) " + option["text"])
       number+=1
       
-    choice = int(input(" > "))
+    choice = Konsola.int_input()
     if 1 <= choice <= len(options):
       selected_option = options[choice - 1]
       Konsola.wrap(selected_option["response"], "lwhite")

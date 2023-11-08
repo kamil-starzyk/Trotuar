@@ -46,6 +46,7 @@ command_mapping = {
   "zadania":    game.active_quests,
   "quests":     game.active_quests,
 
+  "/" :         player.my_square().show_square,          
   "whoami" :    player.whoami,
   "whereami" :  player.whereami,
   "help" :      Konsola.help,
