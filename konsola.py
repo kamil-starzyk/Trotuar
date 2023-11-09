@@ -141,6 +141,21 @@ class Konsola:
       print(" ---- ------------------------- ------- ---------- ")
     else:
       print("")
+  
+  @classmethod
+  def print_stats(cls, mob):
+    print("STATYSTYKI " + f_lwhite + mob.name + c_reset)
+    cls.hr()
+    items_effect = mob.strength - mob.stats["strength"]
+    print("Siła: " + str(mob.stats["strength"]) + " ( " + str(items_effect) + " )") 
+    items_effect = mob.attack - mob.stats["attack"]
+    print("Atak: " + str(mob.stats["attack"]) + " ( " + str(items_effect) + " )")
+    items_effect = mob.defence - mob.stats["defence"]
+    print("Obrona: " + str(mob.stats["defence"]) + " ( " + str(items_effect) + " )") 
+    items_effect = mob.dexterity - mob.stats["dexterity"]
+    print("Zręczność: " + str(mob.stats["dexterity"]) + " ( " + str(items_effect) + " )")
+    items_effect = mob.speed - mob.stats["speed"]
+    print("Szybkość: " + str(mob.stats["speed"]) + " ( " + str(items_effect) + " )") 
 
   @classmethod
   def help(cls, command=''):

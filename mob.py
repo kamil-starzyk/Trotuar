@@ -23,6 +23,13 @@ class Mob:
     self.conversations = conversations
     self.knowledge = knowledge
 
+  def see_more(self):
+    Konsola.print(self.name, "lcyan")
+    Konsola.print(self.description, "lwhite")
+    Konsola.print("Wyposarzenie", "lcyan")
+    self.outfit()
+
+
   def pick_up(self, item_name):
     item = Helper.find_item(self.my_square().items, item_name)
     if item:
@@ -74,6 +81,9 @@ class Mob:
     for i in self.slots:
       print(i, end=": ")
       Konsola.print(self.slots[i].name, "lwhite") if self.slots[i] else print("-")
+    
+  def show_stats(self):
+    Konsola.print_stats(self)
       
   def my_square(self):
     return self.current_location.find_square(self.x, self.y, self.z)
@@ -104,6 +114,38 @@ class Mob:
       "conversations": self.conversations,
       "knowledge": self.knowledge
     }
+
+  def stat_minus_items_attr(self, stat):
+    stat_value = self.stats.get(stat, 0)
+    for _, slot in self.slots.items():
+      try:
+        if stat in slot.attr:
+          stat_value += slot.attr[stat]
+      except AttributeError:
+        pass
+    return max(0, stat_value) 
+  
+  # Getter properties
+  @property
+  def strength(self):
+    return self.stat_minus_items_attr("strength")
+
+  @property
+  def attack(self):
+    return self.stat_minus_items_attr("attack")
+
+  @property
+  def defence(self):
+    return self.stat_minus_items_attr("defence")
+
+  @property
+  def speed(self):
+    return self.stat_minus_items_attr("speed")
+
+  @property
+  def dexterity(self):
+    return self.stat_minus_items_attr("dexterity")
+
 
   @classmethod
   def from_dict(cls, data):
