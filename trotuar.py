@@ -34,7 +34,7 @@ command_mapping = {
   "podnieś" :   player.pick_up,
   "upuść" :     player.drop,
   "upusc" :     player.drop,
-  "zobacz" :    player.see_item,
+  "zobacz" :    player.see,
   "załóż" :     player.equip,
   "zaloz" :     player.equip,
   "ekwipunek" : player.show_equipment,
@@ -43,6 +43,12 @@ command_mapping = {
   "ubiór" :     player.outfit,
   "ubior" :     player.outfit,
 
+  "stats":      player.show_stats,
+  "statystyki": player.show_stats,
+
+  "oceń":       player.compare,
+  "ocen":       player.compare,
+  "compare":    player.compare,
   "rozmawiaj":  player.talk_to,
   "podaruj":    player.give,
   "zadania":    game.active_quests,
@@ -76,9 +82,9 @@ while game.is_playing:
       except TypeError:
         Konsola.print("To polecenie jest jednowyrazowe!", "red")
     else: 
-      try:
+      
         action()
-      except TypeError:
-        Konsola.print("To polecenie wymaga więcej informacji!", "red")
+      
+        
   
   game.update_state()

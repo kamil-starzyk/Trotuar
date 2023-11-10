@@ -27,7 +27,9 @@
     "stats": {
       "strength": 10,
       "attack": 15,
-      "defence": 10
+      "defence": 10,
+      "speed": 10,
+      "dexterity": 15
     },
     "equipment": [
       {
@@ -63,7 +65,8 @@
         "weight": 2,
         "price": 30,
         "attr": {
-          "body_part": "body"
+          "body_part": "body",
+          "agility": 2
         }
       },
       "finger": {},
@@ -111,6 +114,7 @@
                 "price": 220,
                 "attr": {
                   "body_part": "neck",
+                  "speed": 2,
                   "mana_max": 5
                 }
               }
@@ -194,6 +198,8 @@
                 "weight": 10,
                 "price": 100,
                 "attr": {
+                  "strength": -10,
+                  "agility": -3,
                   "body_part": "first_hand"
                 }
               },
@@ -902,7 +908,9 @@
             "stats": {
               "strength": 30,
               "attack": 15,
-              "defence": 25
+              "defence": 25,
+              "speed": 10,
+              "dexterity": 25
             },
             "equipment": [
               {
@@ -1087,7 +1095,9 @@
             "stats": {
               "strength": 10,
               "attack": 5,
-              "defence": 10
+              "defence": 10,
+              "speed": 5,
+              "dexterity": 15
             },
             "equipment": [
               {
@@ -1258,7 +1268,9 @@
             "stats": {
               "strength": 30,
               "attack": 40,
-              "defence": 30
+              "defence": 30,
+              "speed": 20,
+              "dexterity": 30
             },
             "equipment": [
               {
@@ -1426,7 +1438,149 @@
               "farewell": "Do miłego zobaczenia"
             },
             "knowledge": {}
+          },
+          {
+            "x": 1,
+            "y": 5,
+            "z": 1,
+            "name": "Łotrzyk Uzjel",
+            "alias": [
+              "łotrzyk uzjel",
+              "lotrzyk uzjel",
+              "łotrzyk",
+              "lotrzyk",
+              "uzjel"
+            ],
+            "description": "Młody, wojowniczo wyglądający jegomość. Ma szpiczastą bródkę i wąsik.",
+            "lvl": 5,
+            "money": 20,
+            "race": "Człowiek",
+            "proficiency": "łotrzyk",
+            "params": {
+              "hp": 100,
+              "hp_max": 100,
+              "mana": 5,
+              "mana_max": 5,
+              "satiation": 40,
+              "satiation_max": 100,
+              "hydration": 60,
+              "hydration_max": 100
+            },
+            "stats": {
+              "strength": 10,
+              "attack": 10,
+              "defence": 10,
+              "speed": 10,
+              "dexterity": 10
+            },
+            "equipment": [
+              {
+                "type": "Consumable",
+                "alias": [
+                  "suszone grzyby",
+                  "grzyby"
+                ],
+                "name": "Suszone grzyby",
+                "description": "Woreczek czarnych grzybów.",
+                "weight": 0.3,
+                "price": 2,
+                "attr": {
+                  "satiation": 5
+                }
+              }
+            ],
+            "slots": {
+              "first_hand": {
+                "type": "Weapon",
+                "alias": [
+                  "szbelka"
+                ],
+                "name": "Szabelka",
+                "description": "Lekka, żelazna, trochę podrdzewiała szabelka. ",
+                "weight": 1.5,
+                "price": 20,
+                "attr": {
+                  "body_part": "first_hand",
+                  "damage": 10,
+                  "strength": -2,
+                  "dexterity": -2
+                }
+              },
+              "second_hand": {
+                "type": "Armor",
+                "alias": [
+                  "kałkan",
+                  "kalkan"
+                ],
+                "name": "Kałkan",
+                "description": "Lekka, okrągła, drewniana tarcza, wypukła na srodku.",
+                "weight": 4,
+                "price": 40,
+                "attr": {
+                  "body_part": "second_hand",
+                  "defence": 10,
+                  "strength": -2,
+                  "dexterity": -5
+                }
+              },
+              "head": {
+                "type": "Outfit",
+                "alias": [
+                  "brązowy kaptur",
+                  "kaptur"
+                ],
+                "name": "Brązowy kaptur",
+                "description": "Wielki kaptur zasłaniający głowę",
+                "weight": 0.5,
+                "price": 15,
+                "attr": {
+                  "body_part": "head",
+                  "defence": 1
+                }
+              },
+              "body": {
+                "type": "Outfit",
+                "alias": [
+                  "zielona tunika",
+                  "tunika"
+                ],
+                "name": "Zielona tunika",
+                "description": "Tunika majaca luźny fason. Przewiązuje ją brązowy pas.",
+                "weight": 2,
+                "price": 30,
+                "attr": {
+                  "body_part": "body",
+                  "defence": 2
+                }
+              },
+              "finger": {},
+              "neck": {}
+            },
+            "conversations": {
+              "greeting": "Chcesz się ze mną zmierzyć gagatku?",
+              "options": [
+                {
+                  "text": "Chętnie Cię pokonam",
+                  "response": "No to dawaj!",
+                  "next_step": {
+                    "options": [
+                      {
+                        "text": "Bedziesz gryzł piach",
+                        "response": "Arr"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": "Życie mi miłe, poczekaj tu na kogoś, kto ma mniej rozumu",
+                  "response": "Wiedziałem, żeś cienki w barach"
+                }
+              ],
+              "farewell": "Spadaj"
+            },
+            "knowledge": {}
           }
+          
         ],
         "secret_passages": [
           {

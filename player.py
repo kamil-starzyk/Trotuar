@@ -101,7 +101,7 @@ class Player(Mob):
       else:
         Konsola.print("Nie udało się przekazać przedmiotu", "red")
 
-  def see_item(self, item_name):
+  def see(self, item_name):
     item = Helper.find_item(self.equipment, item_name)
     if item:
       item.see_more()
@@ -110,7 +110,12 @@ class Player(Mob):
     if item:
       item.see_more()
       return 1
-    Konsola.print("Nie ma tu takiej rzeczy, ani nie masz jej w ekwipunku", "red")
+    mobs = self.current_location.mobs_on_square(self.my_square())
+    mob = Helper.find_item(mobs, item_name)
+    if mob: 
+      mob.see_more()
+      return 1
+    Konsola.print("Nie ma tu takiej rzeczy, ani nie masz jej w ekwipunku. Nie ma tu także takiej osoby.", "red")
   
   def equip(self, item_name):
     item = super().equip(item_name)
@@ -122,6 +127,7 @@ class Player(Mob):
   def outfit(self):
     Konsola.print("Twoje wyposarzenie", "lcyan")
     super().outfit()
+
 
   def navigate_conversation(self, current_step):
     options = []
@@ -170,11 +176,60 @@ class Player(Mob):
     mobs = self.current_location.mobs_on_square(self.my_square())
     mob = Helper.find_item(mobs, mob_name)
     if mob: 
-      if self.my_square() == mob.my_square():
-        if mob.conversations:
-          Konsola.print(mob.conversations["greeting"], "lwhite")
-          self.navigate_conversation(mob.conversations)
-  
+      if mob.conversations:
+        Konsola.print(mob.conversations["greeting"], "lwhite")
+        self.navigate_conversation(mob.conversations)
+
+  def compare(self, mob_name):
+    mobs = self.current_location.mobs_on_square(self.my_square())
+    mob = Helper.find_item(mobs, mob_name)
+    if mob: 
+      Konsola.print("Porównujesz się z " + mob.name, "lwhite")
+      Konsola.hr()
+
+      mob_offensive_score = 0
+      mob_offensive_score += mob.stats["attack"]
+      mob_offensive_score += mob.stats["strength"]
+      mob_offensive_score += mob.stats["speed"]/2
+      mob_offensive_score += mob.stats["dexterity"]/2
+
+      my_offensive_score = 0
+      my_offensive_score += self.stats["attack"]
+      my_offensive_score += self.stats["strength"]
+      my_offensive_score += self.stats["speed"]/2
+      my_offensive_score += self.stats["dexterity"]/2
+
+      mob_defensive_score = 0
+      mob_defensive_score += mob.stats["defence"]
+      mob_defensive_score += mob.stats["speed"]
+      mob_defensive_score += mob.stats["dexterity"]/2
+
+      my_defensive_score = 0
+      my_defensive_score += self.stats["defence"]
+      my_defensive_score += self.stats["speed"]
+      my_defensive_score += self.stats["dexterity"]/2
+
+      off_result = mob_offensive_score / my_offensive_score
+      print(f"(Atak) {mob.name}: {mob_offensive_score}")
+      print(f"(Atak) {self.name}: {my_offensive_score}")
+      if off_result < 0.8:
+        Konsola.print("Twój przeciwnik jest słabszy od Ciebie w ataku", "green")
+      elif 0.8 <= off_result < 1.2 :
+        Konsola.print("Twój przeciwnik jest porównywalny do Ciebie w ataku", "yellow")
+      else:
+        Konsola.print("Twój przeciwnik jest silniejszy od Ciebie w ataku", "red")
+
+      def_result = mob_offensive_score / my_offensive_score
+      print(f"(Obrona) {mob.name}: {mob_defensive_score}")
+      print(f"(Obrona) {self.name}: {my_defensive_score}")
+      if def_result < 0.8:
+        Konsola.print("Twój przeciwnik jest słabszy od Ciebie w obronie", "green")
+      elif 0.8 <= def_result < 1.2 :
+        Konsola.print("Twój przeciwnik jest porównywalny do Ciebie w obronie", "yellow")
+      else:
+        Konsola.print("Twój przeciwnik jest silniejszy od Ciebie w obronie", "red")
+
+
   def use_passage(self, direction):
     passages = self.current_location.secret_passages
     for p in passages:
