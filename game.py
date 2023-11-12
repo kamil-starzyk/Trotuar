@@ -41,7 +41,7 @@ class Game:
     Konsola.clear()
     Konsola.print("Udało Ci się wczytać grę", "lwhite")
     Konsola.hr()
-    Helper.sleep(1)
+    #Helper.sleep(1)
 
   def demo(self):
     data = MyJson.load_json("data/init/demo.json")
@@ -53,7 +53,7 @@ class Game:
     Konsola.clear()
     Konsola.print("Rozpocząłeś grę demonstracyjną", "lwhite")
     Konsola.hr()
-    Helper.sleep(1)
+    #Helper.sleep(1)
     self.gameplay = Helper.get_new_gameplay_number()
   
   def save(self):
@@ -107,6 +107,11 @@ class Game:
             else:
               obj["progress"] = 0
       
+      if self.player.mob_killed:
+        for obj in quest.objectives:
+          if obj["type"] == "mobs_killed" and obj["npc"] == self.player.mob_killed.name:
+            obj["progress"] += 1
+      
       if quest.is_finished():
         quest.status = 2
         Konsola.print(" Ukończyłeś zadanie : ", line_end="")
@@ -130,6 +135,20 @@ class Game:
     self.player.droped_item = None
     self.player.given_item = None
     self.player.item_receiver = None
+
+    if self.player.hp == 0:
+      self.is_playing = False
+      Konsola.you_died()
+      Helper.sleep(2)
+      print("")
+      Konsola.hr()
+      print("[1] Wróć do menu")
+      print("[2] Opuść grę")
+      choice = Konsola.int_input(1,2)
+      if choice == 2:
+        exit()
+      
+
 
 
   def active_quests(self, quest_id=0):

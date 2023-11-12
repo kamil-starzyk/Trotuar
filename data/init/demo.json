@@ -11,6 +11,7 @@
     ],
     "description": "To tylko ty",
     "lvl": 1,
+    "exp": 0,
     "money": 20,
     "race": "Człowiek",
     "proficiency": "wojownik",
@@ -77,8 +78,7 @@
 			"Pierwsze zadanie od kowala": "Nie byłem jeszcze u kowala, może ma dla mnie jakieś ciekawe zadanie.",
 			"Pierwsze zadanie od zielarki": "Nie byłem jeszcze u zielarki, może ma dla mnie jakieś ciekawe zadanie.",
 			"Pierwsze zadanie od kapitana": "Nie byłem jeszcze u kapitana, może ma dla mnie jakieś ciekawe zadanie."
-		},
-    "exp": 0
+		}
   },
   "world": {
     "locations": [
@@ -892,6 +892,7 @@
             ],
             "description": "Wysoki umięśniony mężczyzna z brodą. Na lnianym bezrękawniku nosi skórzany fartuch.",
             "lvl": 20,
+            "exp": 100,
             "money": 120,
             "race": "Człowiek",
             "proficiency": "kowal",
@@ -1079,6 +1080,7 @@
             ],
             "description": "Zgarbiona milutka Pani. Z jej wzrokiem jest coś nie tak",
             "lvl": 50,
+            "exp": 20,
             "money": 30,
             "race": "Człowiek",
             "proficiency": "zielarka",
@@ -1252,6 +1254,7 @@
             ],
             "description": "Wysoki szczupły mężczyzna z blizną na oku. Nosi ubrania straży miejskiej",
             "lvl": 30,
+            "exp": 200,
             "money": 50,
             "race": "Człowiek",
             "proficiency": "strażnik",
@@ -1453,6 +1456,7 @@
             ],
             "description": "Młody, wojowniczo wyglądający jegomość. Ma szpiczastą bródkę i wąsik.",
             "lvl": 5,
+            "exp": 30,
             "money": 20,
             "race": "Człowiek",
             "proficiency": "łotrzyk",
@@ -1487,10 +1491,8 @@
                 "attr": {
                   "satiation": 5
                 }
-              }
-            ],
-            "slots": {
-              "first_hand": {
+              },
+              {
                 "type": "Weapon",
                 "alias": [
                   "szbelka"
@@ -1501,11 +1503,14 @@
                 "price": 20,
                 "attr": {
                   "body_part": "first_hand",
-                  "damage": 10,
+                  "damage": 15,
                   "strength": -2,
                   "dexterity": -2
                 }
-              },
+              }
+            ],
+            "slots": {
+              "first_hand": {},
               "second_hand": {
                 "type": "Armor",
                 "alias": [
@@ -1578,6 +1583,49 @@
               ],
               "farewell": "Spadaj"
             },
+            "knowledge": {}
+          },
+          {
+            "x": 6,
+            "y": 6,
+            "z": 1,
+            "name": "Szczur",
+            "alias": [
+              "szczur"
+            ],
+            "description": "Mały paskudny szczur.",
+            "lvl": 1,
+            "exp": 10,
+            "money": 0,
+            "race": "Szczur",
+            "proficiency": "gryzoń",
+            "params": {
+              "hp": 30,
+              "hp_max": 30,
+              "mana": 0,
+              "mana_max": 0,
+              "satiation": 20,
+              "satiation_max": 25,
+              "hydration": 25,
+              "hydration_max": 25
+            },
+            "stats": {
+              "strength": 3,
+              "attack": 5,
+              "defence": 5,
+              "speed": 30,
+              "dexterity": 15
+            },
+            "equipment": [],
+            "slots": {
+              "first_hand": {},
+              "second_hand": {},
+              "head": {},
+              "body": {},
+              "finger": {},
+              "neck": {}
+            },
+            "conversations": {},
             "knowledge": {}
           }
           
@@ -1668,14 +1716,14 @@
 			"knowledge_entry": "Ukończono: Dzikie zioła"
     },
     {
-      "id": 2,
+      "id": 3,
       "name": "Wytępić szczury",
       "description": "Kapitan Rodgier polecił mi zabić 5 szczurów w kanałach.",
       "objectives": [
         {
-          "type": "mob_killed",
+          "type": "mobs_killed",
           "name": "Zabij 5 szczurów",
-          "item": "Szczur",
+          "npc": "Szczur",
           "progress": 0,
           "amount": 5
         },

@@ -68,5 +68,5 @@ class Helper:
           return item_list[item_number]
   
   @classmethod
-  def random(cls):
-    return int(random.random() * 100)
+  def random(cls, min_value=0, max_value=100):
+    return random.randint(min_value, max_value)

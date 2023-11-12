@@ -116,7 +116,14 @@ class Konsola:
 
   @classmethod
   def hr(cls):
-    print("-"*20)
+    print("-"*24)
+
+  @classmethod
+  def damage_given(cls, by_player, mob, damage):
+    if by_player:
+      print("Zadałeś " + f_lwhite + mob.name + c_reset + f_lred + " " + str(damage) + c_reset + " obrażeń")
+    else:
+      print(f_lwhite + mob.name + c_reset + " zadał Ci " + f_lred + str(damage) + c_reset + " obrażeń")
   
   @classmethod
   def print_item_list(cls, items):
@@ -190,7 +197,18 @@ class Konsola:
           print(str(c), end=' - ')
           print(commands[c][1])
 
-  
+  @classmethod
+  def you_died(cls):
+    print("           _+_")
+    print("         _/ * \_")
+    print("/\     _/  \_/  \_     /\\")
+    print("||_&__/..-- 0 --..\__&_||")
+    print("--_______--- ---_______--")
+    cls.print(" POLEGŁEŚ NA POLU CHWAŁY", "lyellow")
+    print(" (') (') (') (') (') (') ")
+    print("  W   W   W   W   W   W ")
+
+
   @classmethod
   def color_parser(cls, f, b):
     if f != "reset":

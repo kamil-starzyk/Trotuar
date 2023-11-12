@@ -4,14 +4,14 @@ from mob import Mob
 from item import Item
 
 class Player(Mob):
-  def __init__(self, x, y, z, name, alias, description, lvl, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, exp):
-    super(Player, self).__init__(x, y, z, name, alias, description, lvl, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge)
-    self.exp = exp
+  def __init__(self, x, y, z, name, alias, description, lvl, exp, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge):
+    super(Player, self).__init__(x, y, z, name, alias, description, lvl, exp, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge)
     self.quest_id = None
     self.picked_item = None
     self.droped_item = None
     self.given_item = None
     self.item_receiver = None
+    self.mob_killed= None
 
   def whoami(self):
     print("Jestem " + self.name + ", rasa: " + self.race + "\n" + self.description)
@@ -31,7 +31,7 @@ class Player(Mob):
     
   def add_exp(self, exp):
     self.exp += exp
-    while self.exp >= self.max_exp_for_level(self.lvl):
+    while self.exp > self.max_exp_for_level(self.lvl):
       self.lvl += 1
       Konsola.print(" >> Gratulacje! Osiągnąłeś kolejny poziom główny ( " + str(self.lvl) + " ) <<", "lgreen")
       self.exp -= self.max_exp_for_level(self.lvl-1)
@@ -232,30 +232,46 @@ class Player(Mob):
   def kill(self, mob_name):
     mobs = self.current_location.mobs_on_square(self.my_square())
     mob = Helper.find_item(mobs, mob_name)
-    if mob: 
-      self_average_chance = 0
-      mob_average_chance = 0
-      self_hits = 0
-      mob_hits = 0
+    if mob:
+
+      mob.try_to_draw_weapon()
+      
       print("Walczysz z " + mob.name)
-      #while self.params["hp"] > 0 or mob.params["hp"] > 0:
-      for i in range(10):
+      while self.hp > 0 and mob.hp > 0:
         print("moje hp: " + str(self.params["hp"]))
         print("hp przeciwnika: " + str(mob.params["hp"]))
-        self_hit = self.hit(mob)
-        if self_hit >= 50:
-          self_hits += 1 
-        self_average_chance += self_hit
-        mob_hit = mob.hit(self)
-        if mob_hit >= 50:
-          mob_hits += 1
-        mob_average_chance += mob_hit
+        damage_given = self.hit(mob)
+        if damage_given:
+          mob.hp -= damage_given
+          Konsola.damage_given(True, mob, damage_given)
+        else:
+          print("Chybiłeś")
+        
+        if(mob.hp > 0):
+          damage_taken = mob.hit(self)
+          if damage_taken:
+            self.hp -= damage_taken
+            Konsola.damage_given(False, mob, damage_taken)
+          else:
+            print(f'{mob.name} chybia')
         print("")
-      print("Moja średnia szansa:" + str(self_average_chance/10))
-      print("MPrzeciwnika średnia szansa:" + str(mob_average_chance/10))
-      print("")
-      print("Moja trafienia:" + str(self_hits))
-      print("Przeciwnika trafienia:" + str(mob_hits))
+        Helper.sleep(1)
+      if self.hp > 0:
+        Konsola.print("Pokonałeś " + mob.name, "lgreen")
+        if mob.money > 0:
+          Konsola.print("  Zdobywasz: ", line_end="")
+          Konsola.print(str(mob.money) + " złota", "lyellow")
+          self.money+=mob.money
+          mob.money = 0
+        if mob.exp > 0:
+          Konsola.print("  Zdobywasz: ", line_end="")
+          Konsola.print(str(mob.exp) + " doświadczenia", "lyellow")
+          self.add_exp(mob.exp)
+          
+      else:
+        Konsola.print("Zostałeś pokonany przez " + mob.name, "lred")
+      
+      
 
   def use_passage(self, direction):
     passages = self.current_location.secret_passages
@@ -297,4 +313,4 @@ class Player(Mob):
       else:
         slots[key] = Item.from_dict(slots[key])
     
-    return cls(data["x"], data["y"], data["z"], data["name"], data["alias"], data["description"], data["lvl"], data["money"],data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"], data["exp"])
+    return cls(data["x"], data["y"], data["z"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["money"],data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"])

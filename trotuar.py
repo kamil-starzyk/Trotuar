@@ -2,16 +2,17 @@ from game import Game
 from konsola import Konsola
 from helper import Helper
 
-
-
 game = Game()
-game.title_screen()
 
-player = game.player
+while True:
+  
+  game.title_screen()
 
-player.my_square().show_square()
+  player = game.player
 
-command_mapping = {
+  player.my_square().show_square()
+
+  command_mapping = {
   "n" :         (player.move_in_direction, "n"),
   "north" :     (player.move_in_direction, "n"),
   "8" :         (player.move_in_direction, "n"),
@@ -71,23 +72,23 @@ command_mapping = {
   "colorama" :  Konsola.test_colorama
 }
 
-while game.is_playing:
-  prompt = Konsola.prompt(game.player)
-  command = prompt[0]
-  argument = prompt[1]
+  while game.is_playing:
+    prompt = Konsola.prompt(game.player)
+    command = prompt[0]
+    argument = prompt[1]
 
-  if command in command_mapping:
-    action = command_mapping[command]
-    if isinstance(action, tuple):
-      action[0](action[1])
-    elif argument:
-      
-        action(argument)
-      
-    else: 
-      
-        action()
-      
+    if command in command_mapping:
+      action = command_mapping[command]
+      if isinstance(action, tuple):
+        action[0](action[1])
+      elif argument:
         
-  
-  game.update_state()
+          action(argument)
+        
+      else: 
+        
+          action()
+        
+          
+    
+    game.update_state()
