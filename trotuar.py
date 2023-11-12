@@ -2,9 +2,7 @@ from game import Game
 from konsola import Konsola
 from helper import Helper
 
-for i in range(10):
-   print(Helper.random())
-exit()
+
 
 game = Game()
 game.title_screen()

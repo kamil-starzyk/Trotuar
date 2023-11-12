@@ -126,9 +126,11 @@ class Mob:
     return max(0, stat_value) 
   
   def hit(self, mob):
-    chance = self.dexterity + self.attack/2 - (mob.speed + mob.defence/2)/2
+    chance = Helper.random()
+    chance += self.dexterity + self.attack/2 - (mob.speed + mob.defence/2)
     Konsola.print("Atakuje: " + self.name, "lyellow")
     print("szansa: " + str(round(chance, 2)))
+    return chance
   
   # Getter properties
   @property

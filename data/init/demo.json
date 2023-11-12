@@ -66,7 +66,7 @@
         "price": 30,
         "attr": {
           "body_part": "body",
-          "agility": 2
+          "dexterity": 2
         }
       },
       "finger": {},
@@ -199,7 +199,7 @@
                 "price": 100,
                 "attr": {
                   "strength": -10,
-                  "agility": -3,
+                  "dexterity": -3,
                   "body_part": "first_hand"
                 }
               },

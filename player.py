@@ -233,13 +233,29 @@ class Player(Mob):
     mobs = self.current_location.mobs_on_square(self.my_square())
     mob = Helper.find_item(mobs, mob_name)
     if mob: 
+      self_average_chance = 0
+      mob_average_chance = 0
+      self_hits = 0
+      mob_hits = 0
       print("Walczysz z " + mob.name)
-      while self.params["hp"] > 0 or mob.params["hp"] > 0:
+      #while self.params["hp"] > 0 or mob.params["hp"] > 0:
+      for i in range(10):
         print("moje hp: " + str(self.params["hp"]))
         print("hp przeciwnika: " + str(mob.params["hp"]))
-        self.hit(mob)
-        mob.hit(self)
-
+        self_hit = self.hit(mob)
+        if self_hit >= 50:
+          self_hits += 1 
+        self_average_chance += self_hit
+        mob_hit = mob.hit(self)
+        if mob_hit >= 50:
+          mob_hits += 1
+        mob_average_chance += mob_hit
+        print("")
+      print("Moja średnia szansa:" + str(self_average_chance/10))
+      print("MPrzeciwnika średnia szansa:" + str(mob_average_chance/10))
+      print("")
+      print("Moja trafienia:" + str(self_hits))
+      print("Przeciwnika trafienia:" + str(mob_hits))
 
   def use_passage(self, direction):
     passages = self.current_location.secret_passages

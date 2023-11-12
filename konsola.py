@@ -146,16 +146,17 @@ class Konsola:
   def print_stats(cls, mob):
     print("STATYSTYKI " + f_lwhite + mob.name + c_reset)
     cls.hr()
-    items_effect = mob.strength - mob.stats["strength"]
-    print("Siła: " + str(mob.stats["strength"]) + " ( " + str(items_effect) + " )") 
-    items_effect = mob.attack - mob.stats["attack"]
-    print("Atak: " + str(mob.stats["attack"]) + " ( " + str(items_effect) + " )")
-    items_effect = mob.defence - mob.stats["defence"]
-    print("Obrona: " + str(mob.stats["defence"]) + " ( " + str(items_effect) + " )") 
-    items_effect = mob.dexterity - mob.stats["dexterity"]
-    print("Zręczność: " + str(mob.stats["dexterity"]) + " ( " + str(items_effect) + " )")
-    items_effect = mob.speed - mob.stats["speed"]
-    print("Szybkość: " + str(mob.stats["speed"]) + " ( " + str(items_effect) + " )") 
+
+    def print_stat(attribute_name, attribute_value):
+        items_effect = attribute_value - mob.stats[attribute_name]
+        items_effect_str = str(items_effect) if items_effect < 0 else "+" + str(items_effect)
+        print(f"{attribute_name.capitalize(): <15} {mob.stats[attribute_name]} ({items_effect_str})")
+
+    print_stat("strength", mob.strength)
+    print_stat("attack", mob.attack)
+    print_stat("defence", mob.defence)
+    print_stat("dexterity", mob.dexterity)
+    print_stat("speed", mob.speed)
 
   @classmethod
   def help(cls, command=''):
@@ -167,6 +168,7 @@ class Konsola:
       ("w", "west",  "4") : ["Przemieść się na zachód", "Przemieść się jedną kratkę na zachód, jeśli jest dostępne wyjście w tym kierunku oraz drzwi(jesli są) są otwarte"],
       ("u", "up",  "5") : ["Wejdź pięto wyżej", "Przemieść się o jedno piętro w górę,jeśli jest dostępne wyjście w tym kierunku oraz drzwi(jesli są) są otwarte"],
       ("d", "down",  "0") : ["Zejdź piętro niżej", "Przemieść się o jedno piętro w dół, jeśli jest dostępne wyjście w tym kierunku oraz drzwi(jesli są) są otwarte"],
+      ("/") : ["Pokaż miejsce gdzie jesteś", "Jesli po dłuższej rozmowie, albo walce nie wiesz gdzie jesteś możesz wyświetlić ponownie opis swojej kratki"],
       ("whoami") : ["Wyświetl podstawowe informacje o sobie", "Wyświetl informacje o swoim imieniu rasie oraz opis"],
       ("whereami") : ["Pokaż swoje koordynaty", "Pokaż swoje współrzędne x, y, z oraz nazwę lokacji, w której się obecnie znajdujesz"],
       ("ekwipunek", "eq") : ["Pokaż zawartość ekwipunku", "Pokaż listę przedmiotów jakie masz przy sobie oraz ich wagę i cenę"],
@@ -180,7 +182,7 @@ class Konsola:
     }
     if not command:
       for c in commands:
-        print(f'{str(c): <26}', end='')
+        print(f'{str(c): <30}', end='')
         print(commands[c][0])
     else:
       for c in commands:
