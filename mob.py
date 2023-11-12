@@ -125,6 +125,11 @@ class Mob:
         pass
     return max(0, stat_value) 
   
+  def hit(self, mob):
+    chance = self.dexterity + self.attack/2 - (mob.speed + mob.defence/2)/2
+    Konsola.print("Atakuje: " + self.name, "lyellow")
+    print("szansa: " + str(round(chance, 2)))
+  
   # Getter properties
   @property
   def strength(self):

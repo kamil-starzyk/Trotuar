@@ -1,5 +1,10 @@
 from game import Game
 from konsola import Konsola
+from helper import Helper
+
+for i in range(10):
+   print(Helper.random())
+exit()
 
 game = Game()
 game.title_screen()
@@ -50,6 +55,7 @@ command_mapping = {
   "ocen":       player.compare,
   "compare":    player.compare,
   "rozmawiaj":  player.talk_to,
+  "zabij":      player.kill,
   "podaruj":    player.give,
   "zadania":    game.active_quests,
   "quests":     game.active_quests,
@@ -77,10 +83,9 @@ while game.is_playing:
     if isinstance(action, tuple):
       action[0](action[1])
     elif argument:
-      try:
+      
         action(argument)
-      except TypeError:
-        Konsola.print("To polecenie jest jednowyrazowe!", "red")
+      
     else: 
       
         action()

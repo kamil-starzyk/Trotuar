@@ -229,6 +229,17 @@ class Player(Mob):
       else:
         Konsola.print("Twój przeciwnik jest silniejszy od Ciebie w obronie", "red")
 
+  def kill(self, mob_name):
+    mobs = self.current_location.mobs_on_square(self.my_square())
+    mob = Helper.find_item(mobs, mob_name)
+    if mob: 
+      print("Walczysz z " + mob.name)
+      while self.params["hp"] > 0 or mob.params["hp"] > 0:
+        print("moje hp: " + str(self.params["hp"]))
+        print("hp przeciwnika: " + str(mob.params["hp"]))
+        self.hit(mob)
+        mob.hit(self)
+
 
   def use_passage(self, direction):
     passages = self.current_location.secret_passages

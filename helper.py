@@ -3,6 +3,7 @@ import re
 from datetime import datetime
 from os import listdir
 from konsola import Konsola
+import random
 
 class Helper:
   
@@ -66,3 +67,6 @@ class Helper:
         if item_number == i:
           return item_list[item_number]
   
+  @classmethod
+  def random(cls):
+    return int(random.random() * 100)
