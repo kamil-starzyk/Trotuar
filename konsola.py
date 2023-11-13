@@ -14,6 +14,7 @@ b_reset = Back.RESET
 c_reset = Fore.RESET + Back.RESET
 
 f_blue = Fore.BLUE
+f_black = Fore.BLACK
 f_cyan = Fore.CYAN
 f_green = Fore.GREEN
 f_magenta = Fore.MAGENTA
@@ -65,7 +66,7 @@ class Konsola:
     command = []
     while not command:
       print(f_lmagenta, end="")
-      print("<HP: {}/{} Mana: {}/{}> ".format(player.params["hp"], player.params["hp_max"], player.params["mana"], player.params["mana_max"]), end="")
+      print("<HP: {}/{} Mana: {}/{}> ".format(player.hp, player.hp_max, player.mana, player.mana_max), end="")
       print(c_reset, end="")
 
       decision = input().lower()
@@ -145,25 +146,55 @@ class Konsola:
     if index > 2:
       print(" ---- ------------------------- ------- ---------- ")
       print(" Przedmiotów: " + f'{str(amount): <17}' + f'| {str(round(weight,2)): <6}' + f'| {str(price): <9}' + '|')
-      print(" ---- ------------------------- ------- ---------- ")
-    else:
-      print("")
-  
+    print(" ---- ------------------------- ------- ---------- ")
   @classmethod
   def print_stats(cls, mob):
     print("STATYSTYKI " + f_lwhite + mob.name + c_reset)
     cls.hr()
 
     def print_stat(attribute_name, attribute_value):
-        items_effect = attribute_value - mob.stats[attribute_name]
-        items_effect_str = str(items_effect) if items_effect < 0 else "+" + str(items_effect)
-        print(f"{attribute_name.capitalize(): <15} {mob.stats[attribute_name]} ({items_effect_str})")
+      items_effect = attribute_value - mob.stats[attribute_name]
+      items_effect_str = str(items_effect) if items_effect < 0 else "+" + str(items_effect)
+      print(f"{attribute_name.capitalize(): <15} {mob.stats[attribute_name]} ({items_effect_str})")
 
     print_stat("strength", mob.strength)
     print_stat("attack", mob.attack)
     print_stat("defence", mob.defence)
     print_stat("dexterity", mob.dexterity)
     print_stat("speed", mob.speed)
+
+  @classmethod
+  def print_params(cls, mob):
+    print("PARAMETRY " + f_lwhite + mob.name + c_reset)
+    cls.hr()
+
+    cls.print_param("hp", mob.hp, mob.hp_max, "lred")
+    cls.print_param("stamina", mob.stamina, mob.stamina_max, "lyellow")
+    cls.print_param("mana", mob.mana, mob.mana_max, "lblue")
+    cls.print_param("satiation", mob.satiation, mob.satiation_max, "lgreen")
+    cls.print_param("hydration", mob.hydration, mob.hydration_max, "lcyan")
+
+    print(c_reset)
+
+  @classmethod
+  def print_param(cls, attribute_name, attribute_value, attribute_max, bg_color):
+    color = cls.color_parser("black", bg_color)
+    text = " " + attribute_name.upper() + ": " + str(attribute_value) + " / " + str(attribute_max)
+    numbers_of_pixels = int((attribute_value / attribute_max)*24)
+    for i in range(24):
+      if i < numbers_of_pixels:
+        print(color, end='')
+        try:
+          print(text[i], end='')
+        except IndexError:
+          print(" ", end='')
+      else:
+        print(b_lblack + f_black, end='')
+        try:
+          print(text[i], end='')
+        except IndexError:
+          print(" ", end='')
+    print(c_reset)
 
   @classmethod
   def help(cls, command=''):
@@ -208,12 +239,26 @@ class Konsola:
     print(" (') (') (') (') (') (') ")
     print("  W   W   W   W   W   W ")
 
-
+  @classmethod
+  def direction_translator(cls, direction):
+    direction_map = {
+      ("n", "north"): "na północ",
+      ("e", "east"): "na wschód",
+      ("s", "south"): "na południe",
+      ("w", "west"): "na zachód",
+      ("u", "up"): "w górę",
+      ("d", "down"): "w górę",
+    }
+    for d in direction_map:
+      if direction in d:
+        return direction_map[d]
   @classmethod
   def color_parser(cls, f, b):
     if f != "reset":
       if f == "blue":
         color = f_blue
+      elif f == "black":
+        color = f_black
       elif f == "cyan":
         color = f_cyan
       elif f == "green":

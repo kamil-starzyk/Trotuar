@@ -12,12 +12,16 @@
     "description": "To tylko ty",
     "lvl": 1,
     "exp": 0,
+    "weight": 80,
     "money": 20,
     "race": "Człowiek",
     "proficiency": "wojownik",
     "params": {
       "hp": 100,
       "hp_max": 100,
+      "stamina": 100,
+      "stamina_max":100,
+      "stamina_total":200,
       "mana": 5,
       "mana_max": 5,
       "satiation": 80,
@@ -198,6 +202,7 @@
                 "weight": 10,
                 "price": 100,
                 "attr": {
+                  "damage": 10,
                   "strength": -10,
                   "dexterity": -3,
                   "body_part": "first_hand"
@@ -215,8 +220,9 @@
                 "price": 60,
                 "attr": {
                   "body_part": "first_hand",
-                  "damage": 20,
-                  "strength": 10
+                  "damage": 12,
+                  "strength": -5,
+                  "dexterity": -5
                 }
               },
               {
@@ -233,7 +239,8 @@
                 "attr": {
                   "body_part": "first_hand",
                   "damage": 40,
-                  "strength": 20
+                  "strength": -15,
+                  "dexterity": -15
                 }
               }
             ]
@@ -893,12 +900,16 @@
             "description": "Wysoki umięśniony mężczyzna z brodą. Na lnianym bezrękawniku nosi skórzany fartuch.",
             "lvl": 20,
             "exp": 100,
+            "weight": 110,
             "money": 120,
             "race": "Człowiek",
             "proficiency": "kowal",
             "params": {
               "hp": 100,
               "hp_max": 100,
+              "stamina": 100,
+              "stamina_max":100,
+              "stamina_total":200,
               "mana": 5,
               "mana_max": 5,
               "satiation": 80,
@@ -1081,12 +1092,16 @@
             "description": "Zgarbiona milutka Pani. Z jej wzrokiem jest coś nie tak",
             "lvl": 50,
             "exp": 20,
+            "weight": 55,
             "money": 30,
             "race": "Człowiek",
             "proficiency": "zielarka",
             "params": {
               "hp": 100,
               "hp_max": 100,
+              "stamina": 40,
+              "stamina_max":40,
+              "stamina_total":80,
               "mana": 30,
               "mana_max": 30,
               "satiation": 60,
@@ -1255,12 +1270,16 @@
             "description": "Wysoki szczupły mężczyzna z blizną na oku. Nosi ubrania straży miejskiej",
             "lvl": 30,
             "exp": 200,
+            "weight": 90,
             "money": 50,
             "race": "Człowiek",
             "proficiency": "strażnik",
             "params": {
               "hp": 100,
               "hp_max": 100,
+              "stamina": 100,
+              "stamina_max":100,
+              "stamina_total":200,
               "mana": 10,
               "mana_max": 10,
               "satiation": 70,
@@ -1456,13 +1475,17 @@
             ],
             "description": "Młody, wojowniczo wyglądający jegomość. Ma szpiczastą bródkę i wąsik.",
             "lvl": 5,
-            "exp": 30,
+            "exp": 20,
+            "weight": 65,
             "money": 20,
             "race": "Człowiek",
             "proficiency": "łotrzyk",
             "params": {
               "hp": 100,
               "hp_max": 100,
+              "stamina": 100,
+              "stamina_max":100,
+              "stamina_total":200,
               "mana": 5,
               "mana_max": 5,
               "satiation": 40,
@@ -1507,11 +1530,8 @@
                   "strength": -2,
                   "dexterity": -2
                 }
-              }
-            ],
-            "slots": {
-              "first_hand": {},
-              "second_hand": {
+              },
+              {
                 "type": "Armor",
                 "alias": [
                   "kałkan",
@@ -1525,9 +1545,13 @@
                   "body_part": "second_hand",
                   "defence": 10,
                   "strength": -2,
-                  "dexterity": -5
+                  "dexterity": -3
                 }
-              },
+              }
+            ],
+            "slots": {
+              "first_hand": {},
+              "second_hand": {},
               "head": {
                 "type": "Outfit",
                 "alias": [
@@ -1596,12 +1620,16 @@
             "description": "Mały paskudny szczur.",
             "lvl": 1,
             "exp": 10,
+            "weight": 2,
             "money": 0,
             "race": "Szczur",
             "proficiency": "gryzoń",
             "params": {
               "hp": 30,
               "hp_max": 30,
+              "stamina": 100,
+              "stamina_max":100,
+              "stamina_total":200,
               "mana": 0,
               "mana_max": 0,
               "satiation": 20,
@@ -1612,9 +1640,9 @@
             "stats": {
               "strength": 3,
               "attack": 5,
-              "defence": 5,
-              "speed": 30,
-              "dexterity": 15
+              "defence": 10,
+              "speed": 40,
+              "dexterity": 5
             },
             "equipment": [],
             "slots": {

@@ -20,6 +20,10 @@ class Item:
     if self.amount > 1:
       Konsola.print("Ilość: ", line_end='')
       Konsola.print(self.amount, "lwhite")
+    Konsola.print("Atrybuty:", "lwhite")
+    for k, v in self.attr.items():
+      Konsola.print(" " + k, line_end=': ')
+      Konsola.print(v, "lwhite")
   
   @property
   def name_and_count(self):

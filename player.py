@@ -4,8 +4,8 @@ from mob import Mob
 from item import Item
 
 class Player(Mob):
-  def __init__(self, x, y, z, name, alias, description, lvl, exp, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge):
-    super(Player, self).__init__(x, y, z, name, alias, description, lvl, exp, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge)
+  def __init__(self, x, y, z, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge):
+    super(Player, self).__init__(x, y, z, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge)
     self.quest_id = None
     self.picked_item = None
     self.droped_item = None
@@ -31,26 +31,13 @@ class Player(Mob):
     
   def add_exp(self, exp):
     self.exp += exp
-    while self.exp > self.max_exp_for_level(self.lvl):
+    while self.exp >= self.max_exp_for_level(self.lvl):
       self.lvl += 1
       Konsola.print(" >> Gratulacje! Osiągnąłeś kolejny poziom główny ( " + str(self.lvl) + " ) <<", "lgreen")
       self.exp -= self.max_exp_for_level(self.lvl-1)
 
   def move_in_direction(self, direction):
-    if direction in self.my_square().exits:
-      match direction:
-        case "n":
-          self.y -= 1
-        case "e":
-          self.x += 1
-        case "s":
-          self.y += 1
-        case "w":
-          self.x -= 1
-        case "u":
-          self.z += 1
-        case "d":
-          self.z -= 1
+    if super().move_in_direction(direction):
       self.my_square().show_square()
     else: print("Nie możesz tam przejść")
   
@@ -124,6 +111,13 @@ class Player(Mob):
     else:
       Konsola.print("Nie masz takiej rzeczy w ekwipunku", "red")
   
+  def unequip(self, item_name):
+    item = super().unequip(item_name)
+    if item:
+      print("Zdjąłeś " + item.name)
+    else:
+      Konsola.print("Nie masz takiej rzeczy na sobie", "red")
+  
   def outfit(self):
     Konsola.print("Twoje wyposarzenie", "lcyan")
     super().outfit()
@@ -179,6 +173,8 @@ class Player(Mob):
       if mob.conversations:
         Konsola.print(mob.conversations["greeting"], "lwhite")
         self.navigate_conversation(mob.conversations)
+      else:
+        print(mob.name + " nie ma Ci nic do powiedzenia")
 
   def compare(self, mob_name):
     mobs = self.current_location.mobs_on_square(self.my_square())
@@ -190,13 +186,13 @@ class Player(Mob):
       mob_offensive_score = 0
       mob_offensive_score += mob.stats["attack"]
       mob_offensive_score += mob.stats["strength"]
-      mob_offensive_score += mob.stats["speed"]/2
+      mob_offensive_score += mob.stats["speed"]/3
       mob_offensive_score += mob.stats["dexterity"]/2
 
       my_offensive_score = 0
       my_offensive_score += self.stats["attack"]
       my_offensive_score += self.stats["strength"]
-      my_offensive_score += self.stats["speed"]/2
+      my_offensive_score += self.stats["speed"]/3
       my_offensive_score += self.stats["dexterity"]/2
 
       mob_defensive_score = 0
@@ -210,8 +206,8 @@ class Player(Mob):
       my_defensive_score += self.stats["dexterity"]/2
 
       off_result = mob_offensive_score / my_offensive_score
-      print(f"(Atak) {mob.name}: {mob_offensive_score}")
-      print(f"(Atak) {self.name}: {my_offensive_score}")
+      # print(f"(Atak) {mob.name}: {mob_offensive_score}")
+      # print(f"(Atak) {self.name}: {my_offensive_score}")
       if off_result < 0.8:
         Konsola.print("Twój przeciwnik jest słabszy od Ciebie w ataku", "green")
       elif 0.8 <= off_result < 1.2 :
@@ -219,58 +215,178 @@ class Player(Mob):
       else:
         Konsola.print("Twój przeciwnik jest silniejszy od Ciebie w ataku", "red")
 
-      def_result = mob_offensive_score / my_offensive_score
-      print(f"(Obrona) {mob.name}: {mob_defensive_score}")
-      print(f"(Obrona) {self.name}: {my_defensive_score}")
+      def_result = mob_defensive_score / my_defensive_score
+      # print(f"(Obrona) {mob.name}: {mob_defensive_score}")
+      # print(f"(Obrona) {self.name}: {my_defensive_score}")
       if def_result < 0.8:
         Konsola.print("Twój przeciwnik jest słabszy od Ciebie w obronie", "green")
       elif 0.8 <= def_result < 1.2 :
         Konsola.print("Twój przeciwnik jest porównywalny do Ciebie w obronie", "yellow")
       else:
         Konsola.print("Twój przeciwnik jest silniejszy od Ciebie w obronie", "red")
+      
+      if mob.hp/mob.hp_max < 0.5:
+        Konsola.print("Przeciwnik nie wydaje się czuć zbyt dobrze", "lred")
+      elif 0.5 <= mob.hp/mob.hp_max < 0.8:
+        Konsola.print("Wygląda na to, że przeciwnik w dobrym stanie", "lblue")
+      else:
+        Konsola.print("Przeciwnik wygląda jakby czuł się doskonale", "lgreen")
 
   def kill(self, mob_name):
-    mobs = self.current_location.mobs_on_square(self.my_square())
-    mob = Helper.find_item(mobs, mob_name)
-    if mob:
+    if self.stamina > 10:
+      mobs = self.current_location.mobs_on_square(self.my_square())
+      mob = Helper.find_item(mobs, mob_name)
+      if mob:
 
-      mob.try_to_draw_weapon()
-      
-      print("Walczysz z " + mob.name)
-      while self.hp > 0 and mob.hp > 0:
-        print("moje hp: " + str(self.params["hp"]))
-        print("hp przeciwnika: " + str(mob.params["hp"]))
-        damage_given = self.hit(mob)
-        if damage_given:
-          mob.hp -= damage_given
-          Konsola.damage_given(True, mob, damage_given)
-        else:
-          print("Chybiłeś")
+        def player_and_mob_params():
+          Konsola.print_param("Ja", self.hp, self.hp_max, "lred")
+          Konsola.print_param("stamina", self.stamina, self.stamina_max, "lyellow")
+          print("")
+          Konsola.print_param(mob.name, mob.hp, mob.hp_max, "red")
+          Konsola.print_param("stamina", mob.stamina, mob.stamina_max, "yellow")
+
+        mob.try_to_draw_weapon()
         
-        if(mob.hp > 0):
-          damage_taken = mob.hit(self)
-          if damage_taken:
-            self.hp -= damage_taken
+        print("Walczysz z " + mob.name)
+        while self.hp > 0 and mob.hp > 0 and (self.stamina > 10 or mob.stamina > 10):
+          player_and_mob_params()
+          
+          damage_given = self.hit(mob)
+          if damage_given:
+            mob.hp -= damage_given
+            Konsola.damage_given(True, mob, damage_given)
+            mob.stamina -= damage_given/2
+            mob.stamina_max -= damage_given/3
+          else:
+            print("Chybiłeś")
+            if mob.hp <= mob.hp_max/2:
+              direction = mob.try_to_escape()
+              if direction:
+                print(mob.name + " uciekł " + Konsola.direction_translator(direction))
+                break
+          self.stamina -= 5
+          self.stamina_max -= 1
+
+          if(mob.hp > 0):
+            damage_taken = mob.hit(self)
+            if damage_taken:
+              self.hp -= damage_taken
+              Konsola.damage_given(False, mob, damage_taken)
+              self.stamina -= damage_taken/2
+              self.stamina_max -= damage_taken/3
+            else:
+              print(f'{mob.name} chybia')
+            mob.stamina -= 5
+            mob.stamina_max -= 1
+          print("")
+          Helper.sleep(1)
+
+        player_and_mob_params()
+
+        is_decided = False
+        if self.stamina > 10 and mob.stamina < 10 and mob.hp/mob.hp_max < 0.2:
+          Konsola.print("Twój przeciwnik chwieje się na nogach i nie jest w stanie walczyć. Co robisz?", "cyan")
+          print("[1] Dobij go!")      
+          print("[2] Daruj życie i pozwól odejść")      
+          print("[3] Pozwól odejść, ale ma oddać wszystkie pieniądze")      
+          print(" > ", end="")
+          choice = Konsola.int_input(1,3)
+          if choice == 1:
+            damage_given = mob.hp
+            mob.hp-=damage_given
+            Konsola.damage_given(True, mob, damage_given)
+          elif choice == 3:
+            if mob.money > 0:
+              Konsola.print("  Zdobywasz: ", line_end="")
+              Konsola.print(str(mob.money) + " złota", "lyellow")
+              self.money+=mob.money
+              mob.money = 0
+            if mob.exp > 0:
+              Konsola.print("  Zdobywasz: ", line_end="")
+              exp = int(mob.exp/2)
+              Konsola.print(str(exp) + " doświadczenia", "lyellow")
+              self.add_exp(exp)
+              mob.exp-=exp
+            mob.try_to_escape(100)
+            Konsola.print("Przeciwnik uciekł", "cyan")
+          else:
+            if mob.exp > 0:
+              Konsola.print("  Zdobywasz: ", line_end="")
+              exp = int(mob.exp*0.75)
+              Konsola.print(str(exp) + " doświadczenia", "lyellow")
+              self.add_exp(exp)
+              mob.exp-=exp
+            mob.try_to_escape(100)
+            Konsola.print("Przeciwnik uciekł dziękując za łaskę", "cyan")
+          is_decided = True
+            
+        elif self.stamina < 10 and self.hp/self.hp_max < 0.2:
+          Konsola.print("Jesteś zbyt zmęczony by walczyć", "cyan")
+          wants_to_kill_you = Helper.random()
+          if wants_to_kill_you > 60:
+            Konsola.print("Przeciwnik postanowił Cię wykończyć", "cyan")
+            damage_taken = self.hp
+            self.hp-=damage_taken
             Konsola.damage_given(False, mob, damage_taken)
           else:
-            print(f'{mob.name} chybia')
-        print("")
+            Konsola.print("Przeciwnik daruje Ci życie", "cyan")
+          is_decided = True
+
+        if self.hp > 0 and mob.hp == 0:
+          Konsola.print("Pokonałeś " + mob.name, "lgreen")
+          if mob.money > 0:
+            Konsola.print("  Zdobywasz: ", line_end="")
+            Konsola.print(str(mob.money) + " złota", "lyellow")
+            self.money+=mob.money
+            mob.money = 0
+          if mob.exp > 0:
+            Konsola.print("  Zdobywasz: ", line_end="")
+            Konsola.print(str(mob.exp) + " doświadczenia", "lyellow")
+            self.add_exp(mob.exp)
+          is_decided = True
+            
+        elif self.hp == 0 and mob.hp > 0:
+          Konsola.print("Zostałeś pokonany przez " + mob.name, "lred")
+          is_decided = True
+        
+        if not is_decided:
+          print("Pojedynek nie został rozstrzygnięty")
+    else:
+      print("Nie masz siły walczyć")
+
+  def rest(self, how_long=""):
+    resting_stories = [
+      "Patrzysz na przelatujące obłoczki",
+      "Drapiesz się po tyłku",
+      "Grzebiesz sobie w uchu",
+      "Słuchasz co w trawie piszczy",
+      "Wstajesz, przeciągasz się i siadasz z powrotem na kamieniu",
+      "Robisz pajacyki",
+      "Rozdzielasz źdźbło trawy na czworo",
+      "Zastanawiasz się nad sensem zycia",
+      "Ziewasz głośno",
+      "Nucisz rubaszną piosenkę",
+      "Liczysz mrówki chodzące Ci po nodze"
+    ]
+    start_hp = self.hp
+    start_stamina = self.stamina
+    how_long = super().rest(how_long)
+    if how_long:
+      for i in range(how_long):
+        Konsola.print_random(resting_stories)
         Helper.sleep(1)
-      if self.hp > 0:
-        Konsola.print("Pokonałeś " + mob.name, "lgreen")
-        if mob.money > 0:
-          Konsola.print("  Zdobywasz: ", line_end="")
-          Konsola.print(str(mob.money) + " złota", "lyellow")
-          self.money+=mob.money
-          mob.money = 0
-        if mob.exp > 0:
-          Konsola.print("  Zdobywasz: ", line_end="")
-          Konsola.print(str(mob.exp) + " doświadczenia", "lyellow")
-          self.add_exp(mob.exp)
-          
-      else:
-        Konsola.print("Zostałeś pokonany przez " + mob.name, "lred")
-      
+      end_hp = self.hp
+      end_stamina = self.stamina
+      Helper.sleep(1)
+      Konsola.print("Odpoczywałeś przez " + str(how_long) + " godzin", "green")
+      Konsola.print("Podczas odpoczynku odzyskałeś " + str(int(end_hp - start_hp)) + " zdrowia", "lgreen")
+      Konsola.print("oraz odpocząłeś o " + str(int(end_stamina - start_stamina)) + " punktów staminy", "lyellow")
+
+    else:
+      print("Musisz podać ilość godzin jaką chcesz odpoczywać.") 
+    
+    return how_long*3600
+
       
 
   def use_passage(self, direction):
@@ -300,7 +416,6 @@ class Player(Mob):
 
   def to_dict(self):
     player = super().to_dict()
-    player["exp"] = self.exp
     return player
   
   @classmethod
@@ -313,4 +428,4 @@ class Player(Mob):
       else:
         slots[key] = Item.from_dict(slots[key])
     
-    return cls(data["x"], data["y"], data["z"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["money"],data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"])
+    return cls(data["x"], data["y"], data["z"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"],data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"])

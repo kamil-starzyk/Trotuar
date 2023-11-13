@@ -4,10 +4,10 @@ from helper import Helper
 
 game = Game()
 
+
 while True:
   
   game.title_screen()
-
   player = game.player
 
   player.my_square().show_square()
@@ -41,6 +41,7 @@ while True:
   "zobacz" :    player.see,
   "załóż" :     player.equip,
   "zaloz" :     player.equip,
+  "zdejmij" :   player.unequip,
   "ekwipunek" : player.show_equipment,
   "eq" :        player.show_equipment,
   "outfit" :    player.outfit,
@@ -49,6 +50,11 @@ while True:
 
   "stats":      player.show_stats,
   "statystyki": player.show_stats,
+  "params":     player.show_params,
+  "parametry":  player.show_params,
+  "odpoczywaj": player.rest,
+  "odpocznij":  player.rest,
+  "rest":       player.rest,
 
   "oceń":       player.compare,
   "ocen":       player.compare,
