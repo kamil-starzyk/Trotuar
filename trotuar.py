@@ -88,12 +88,15 @@ while True:
       if isinstance(action, tuple):
         action[0](action[1])
       elif argument:
-        
+        try:
           action(argument)
-        
+        except TypeError:
+          Konsola.print("To polecenie jest jednowyrazowe!", "red")
       else: 
-        
+        try:
           action()
+        except TypeError:
+          Konsola.print("To polecenie wymaga więcej informacji!", "red")
         
           
     

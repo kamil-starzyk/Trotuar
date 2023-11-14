@@ -160,8 +160,9 @@ class Konsola:
     print_stat("strength", mob.strength)
     print_stat("attack", mob.attack)
     print_stat("defence", mob.defence)
-    print_stat("dexterity", mob.dexterity)
     print_stat("speed", mob.speed)
+    print_stat("dexterity", mob.dexterity)
+    print_stat("endurance", mob.endurance)
 
   @classmethod
   def print_params(cls, mob):

@@ -134,14 +134,14 @@ class Mob:
   
   def adjust_stamina(self, s, s_max):
     """
-    Method that changes value of stamina and stamina_max with regard to one's strength
+    Method that changes value of stamina and stamina_max with regard to one's endurance
     Returns:
       void
     """
-    strength = self.stat_coefficient(self.stats["strength"])
+    endurance = self.stat_coefficient(self.stats["endurance"])
 
-    self.stamina += (s / strength) if s < 0 else (s * strength)
-    self.stamina_max += (s_max / strength) if s_max < 0 else (s_max * strength)
+    self.stamina += (s / endurance) if s < 0 else (s * endurance)
+    self.stamina_max += (s_max / endurance) if s_max < 0 else (s_max * endurance)
     
 
 
@@ -315,9 +315,19 @@ class Mob:
      - 50 dexterity: damage_multiplier(45 - 55)
     Range of this stat is 0-50
     Returns:
-        int: The item-adjusted sexterity value.
+        int: The item-adjusted dexterity value.
     """
     return self.stat_minus_items_attr("dexterity")
+
+  @property
+  def endurance(self):
+    """
+    Endurance tells how quickly someone gets tired, and ho fast he regenerates
+    Range of this stat is 0-50
+    Returns:
+        int: The item-adjusted endurance value.
+    """
+    return self.stat_minus_items_attr("endurance")
 
   @property
   def hp(self):
@@ -338,7 +348,7 @@ class Mob:
 
   @property
   def stamina(self):
-    return self.params["stamina"]
+    return int(self.params["stamina"])
   
   @stamina.setter
   def stamina(self, value):
@@ -352,7 +362,7 @@ class Mob:
   @property
   def stamina_max(self):
     if self.params["stamina_max"] < self.params["stamina_total"]/2:
-      return self.params["stamina_max"]
+      return int(self.params["stamina_max"])
     return int(self.params["stamina_total"]/2)
     
   @stamina_max.setter

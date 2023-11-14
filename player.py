@@ -251,97 +251,107 @@ class Player(Mob):
       Konsola.print_param(mob.name, mob.hp, mob.hp_max, "red")
       Konsola.print_param("stamina", mob.stamina, mob.stamina_max, "yellow")
     
+    def award_exp(fraction=1):
+      Konsola.print("  Zdobywasz: ", line_end="")
+      exp = int(mob.exp*fraction)
+      Konsola.print(str(exp) + " doświadczenia", "lyellow")
+      self.add_exp(exp)
+      mob.exp-=exp
+    
+    def award_money():
+      Konsola.print("  Zdobywasz: ", line_end="")
+      Konsola.print(str(mob.money) + " złota", "lyellow")
+      self.money+=mob.money
+      mob.money = 0
+    
     mob.try_to_draw_weapon()
     print("Walczysz z " + mob.name)
-    while self.hp > 0 and mob.hp > 0 and (self.stamina > 10 or mob.stamina > 10):
+    while self.hp > self.hp_max/10 and mob.hp > mob.hp_max/10:
       player_and_mob_params()
-      damage_given = self.hit(mob)
-      if damage_given:
-        mob.hp -= damage_given
-        Konsola.damage_given(True, mob, damage_given)
-        mob.adjust_stamina(-damage_given/2, -damage_given/4)
+      if self.stamina <= 11:
+        Konsola.print("Odpocznij!!!", "lred")
+        self.adjust_stamina(5, 0.5)
       else:
-        print("Chybiłeś")
-        if mob.hp <= mob.hp_max/2:
-          direction = mob.try_to_escape()
-          if direction:
-            print(mob.name + " uciekł " + Konsola.direction_translator(direction))
-            break
-      self.adjust_stamina(-5, -1)
-
-      if(mob.hp > 0):
-        damage_taken = mob.hit(self)
-        if damage_taken:
-          self.hp -= damage_taken
-          Konsola.damage_given(False, mob, damage_taken)
-          self.adjust_stamina(-damage_given/2, -damage_given/4)
-        else:
-          print(f'{mob.name} chybia')
-        mob.adjust_stamina(-5, -1)
-      print("")
-      Helper.sleep(1)
-
-      if self.stamina > 10 and mob.stamina < 10 and mob.hp/mob.hp_max < 0.2:
-        Konsola.print("Twój przeciwnik chwieje się na nogach i nie jest w stanie walczyć. Co robisz?", "cyan")
-        print("[1] Dobij go!")      
-        print("[2] Daruj życie i pozwól odejść")      
-        print("[3] Pozwól odejść, ale ma oddać wszystkie pieniądze")      
-        print(" > ", end="")
-        choice = Konsola.int_input(1,3)
-        if choice == 1:
-          damage_given = mob.hp
-          mob.hp-=damage_given
+        damage_given = self.hit(mob)
+        if damage_given:
+          mob.hp -= damage_given
           Konsola.damage_given(True, mob, damage_given)
-        elif choice == 3:
-          if mob.money > 0:
-            Konsola.print("  Zdobywasz: ", line_end="")
-            Konsola.print(str(mob.money) + " złota", "lyellow")
-            self.money+=mob.money
-            mob.money = 0
-          if mob.exp > 0:
-            Konsola.print("  Zdobywasz: ", line_end="")
-            exp = int(mob.exp/2)
-            Konsola.print(str(exp) + " doświadczenia", "lyellow")
-            self.add_exp(exp)
-            mob.exp-=exp
-          mob.try_to_escape(100)
-          Konsola.print("Przeciwnik uciekł", "cyan")
+          mob.adjust_stamina(-damage_given/2, -damage_given/4)
         else:
-          if mob.exp > 0:
-            Konsola.print("  Zdobywasz: ", line_end="")
-            exp = int(mob.exp*0.75)
-            Konsola.print(str(exp) + " doświadczenia", "lyellow")
-            self.add_exp(exp)
-            mob.exp-=exp
-          mob.try_to_escape(100)
-          Konsola.print("Przeciwnik uciekł dziękując za łaskę", "cyan")
+          print("Chybiłeś")
+          if mob.hp <= mob.hp_max/2:
+            direction = mob.try_to_escape()
+            if direction:
+              print(mob.name + " uciekł " + Konsola.direction_translator(direction))
+              return
+        self.adjust_stamina(-5, -1)
 
-      elif self.stamina < 10 and self.hp/self.hp_max < 0.2:
-        Konsola.print("Jesteś zbyt zmęczony by walczyć", "cyan")
-        wants_to_kill_you = Helper.random()
-        if wants_to_kill_you > 60:
-          Konsola.print("Przeciwnik postanowił Cię wykończyć", "cyan")
-          damage_taken = self.hp
-          self.hp-=damage_taken
-          Konsola.damage_given(False, mob, damage_taken)
+      if mob.hp > mob.hp_max/10:
+        if mob.stamina <= 11:
+          Konsola.print("Przeciwnik czeka", "red")
+          mob.adjust_stamina(5, 0.5)
         else:
-          Konsola.print("Przeciwnik daruje Ci życie", "cyan")
-        is_decided = True
-      
-      if self.hp > 0 and mob.hp == 0:
-        Konsola.print("Pokonałeś " + mob.name, "lgreen")
+          damage_taken = mob.hit(self)
+          if damage_taken:
+            self.hp -= damage_taken
+            Konsola.damage_given(False, mob, damage_taken)
+            self.adjust_stamina(-damage_given/2, -damage_given/4)
+          else:
+            print(f'{mob.name} chybia')
+          mob.adjust_stamina(-5, -1)
+      Helper.sleep(1)
+      Konsola.clear()
+
+    if 0 < mob.hp < mob.hp_max/5 and self.hp > self.hp_max/5:
+      Konsola.print("Twój przeciwnik chwieje się na nogach i nie jest w stanie walczyć. Co robisz?", "cyan")
+      print("[1] Dobij go!")      
+      print("[2] Daruj życie i pozwól odejść")      
+      print("[3] Pozwól odejść, ale ma oddać wszystkie pieniądze")
+      choice = Konsola.int_input(1,3)
+      if choice == 1:
+        damage_given = mob.hp
+        mob.hp-=damage_given
+        Konsola.damage_given(True, mob, damage_given)
+      elif choice == 3:
         if mob.money > 0:
-          Konsola.print("  Zdobywasz: ", line_end="")
-          Konsola.print(str(mob.money) + " złota", "lyellow")
-          self.money+=mob.money
-          mob.money = 0
+          award_money()
         if mob.exp > 0:
-          Konsola.print("  Zdobywasz: ", line_end="")
-          Konsola.print(str(mob.exp) + " doświadczenia", "lyellow")
-          self.add_exp(mob.exp)
-          
-      elif self.hp == 0 and mob.hp > 0:
-        Konsola.print("Zostałeś pokonany przez " + mob.name, "lred")
+          award_exp(0.5)
+        direction = mob.try_to_escape()
+        Konsola.print("Przeciwnik uciekł" + Konsola.direction_translator(direction), "cyan")
+        return
+      else:
+        if mob.exp > 0:
+          award_exp(0.75)
+        mob.try_to_escape(100)
+        Konsola.print("Przeciwnik uciekł dziękując za łaskę", "cyan")
+        return
+
+    elif 0 < self.hp < self.hp_max/5 and mob.hp > mob.hp_max/5:
+      Konsola.print("Jesteś zbyt pobity by walczyć", "cyan")
+      wants_to_kill_you = Helper.random()
+      if wants_to_kill_you > 60:
+        Konsola.print("Przeciwnik postanowił Cię wykończyć", "cyan")
+        damage_taken = self.hp
+        self.hp-=damage_taken
+        Konsola.damage_given(False, mob, damage_taken)
+      else:
+        Konsola.print("Przeciwnik daruje Ci życie", "cyan")
+    
+
+    if self.hp > 0 and mob.hp == 0:
+      Konsola.print("Pokonałeś " + mob.name, "lgreen")
+      if mob.money > 0:
+        award_money()
+      if mob.exp > 0:
+        award_exp()
+        
+    elif self.hp == 0 and mob.hp > 0:
+      Konsola.print("Zostałeś pokonany przez " + mob.name, "lred")
+    
+    else:
+      Konsola.print("Obaj jesteście u kresu życia, żaden nie jest w stanie rozstrzygnąć walki.", "cyan")
+      award_exp(0.5)
         
 
   def rest(self, how_long=""):
@@ -356,25 +366,42 @@ class Player(Mob):
       "Zastanawiasz się nad sensem zycia",
       "Ziewasz głośno",
       "Nucisz rubaszną piosenkę",
-      "Liczysz mrówki chodzące Ci po nodze"
+      "Liczysz mrówki chodzące Ci po nodze",
+      "Obserwujesz spadające liście i udajesz, że to sztorm meteorów",
+      "Odliczasz oddechy ślimaka, który przechodzi obok",
+      "Organizujesz zawody w skakaniu kamykiem po kałuży",
+      "Zbierasz niewidzialne kamyki i układasz je w piramidę",
+      "Ćwiczysz siedemnastotonową sztuczkę językową",
+      "Próbujesz złapać wiatr w swoje dłonie",
+      "Symulujesz rozmowę z imaginarnym przyjacielem",
+      "Rozmawiasz z drzewem i udajesz, że zrozumiało twoje pytanie",
+      "Organizujesz wyścigi mrówek, przyznając medal za zwycięstwo",
+      "Zapraszasz mrówki na herbatę i dyskutujesz z nimi o polityce mrówkowej"
     ]
     start_hp = self.hp
     start_stamina = self.stamina
-    how_long = super().rest(how_long)
-    if how_long:
+    try:
+      how_long = int(how_long)
       for i in range(how_long):
-        Konsola.print_random(resting_stories)
-        Helper.sleep(1)
-      end_hp = self.hp
-      end_stamina = self.stamina
-      Helper.sleep(1)
-      Konsola.print("Odpoczywałeś przez " + str(how_long) + " godzin", "green")
-      Konsola.print("Podczas odpoczynku odzyskałeś " + str(int(end_hp - start_hp)) + " zdrowia", "lgreen")
-      Konsola.print("oraz odpocząłeś o " + str(int(end_stamina - start_stamina)) + " punktów staminy", "lyellow")
-
-    else:
+        self.hp += 2
+        self.adjust_stamina(10, 1)
+        for i in range(how_long):
+          Konsola.print_random(resting_stories)
+          Konsola.print_param("HP", self.hp, self.hp_max, "lred")
+          Konsola.print_param("Stamina", self.stamina, self.stamina_max, "lyellow")
+          Helper.sleep(1)
+      return how_long
+    except ValueError:
       print("Musisz podać ilość godzin jaką chcesz odpoczywać.") 
-    
+      return 0
+      
+    end_hp = self.hp
+    end_stamina = self.stamina
+    Helper.sleep(1)
+    Konsola.print("Odpoczywałeś przez " + str(how_long) + " godzin", "green")
+    Konsola.print("Podczas odpoczynku odzyskałeś " + str(int(end_hp - start_hp)) + " zdrowia", "lgreen")
+    Konsola.print("oraz odpocząłeś o " + str(int(end_stamina - start_stamina)) + " punktów staminy", "lyellow")
+
     return how_long*3600
 
       

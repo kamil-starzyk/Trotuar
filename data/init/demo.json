@@ -34,7 +34,8 @@
       "attack": 15,
       "defence": 10,
       "speed": 10,
-      "dexterity": 15
+      "dexterity": 15,
+      "endurance": 15
     },
     "equipment": [
       {
@@ -922,7 +923,8 @@
               "attack": 15,
               "defence": 25,
               "speed": 10,
-              "dexterity": 25
+              "dexterity": 25,
+              "endurance": 30
             },
             "equipment": [
               {
@@ -1114,7 +1116,8 @@
               "attack": 5,
               "defence": 10,
               "speed": 5,
-              "dexterity": 15
+              "dexterity": 15,
+              "endurance": 10
             },
             "equipment": [
               {
@@ -1292,7 +1295,8 @@
               "attack": 40,
               "defence": 30,
               "speed": 20,
-              "dexterity": 30
+              "dexterity": 30,
+              "endurance": 30
             },
             "equipment": [
               {
@@ -1498,7 +1502,8 @@
               "attack": 10,
               "defence": 10,
               "speed": 10,
-              "dexterity": 10
+              "dexterity": 10,
+              "endurance": 10
             },
             "equipment": [
               {
@@ -1640,9 +1645,10 @@
             "stats": {
               "strength": 3,
               "attack": 5,
-              "defence": 10,
+              "defence": 15,
               "speed": 40,
-              "dexterity": 5
+              "dexterity": 5,
+              "endurance": 30
             },
             "equipment": [],
             "slots": {
