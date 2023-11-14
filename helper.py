@@ -58,6 +58,21 @@ class Helper:
       return 0
   
   @classmethod
+  def find_utility(cls, utility_list, action):
+    hit = []
+    for u in utility_list:
+      if action in u.actions:
+        hit.append(u)
+    
+    if len(hit) == 1:
+      return hit[0]
+    elif len(hit) > 1:
+      print("O co Ci dokładnie chodzi?")
+      return cls.chose_one_item(hit)
+    else:
+      return 0
+  
+  @classmethod
   def chose_one_item(cls, item_list):
     for i in range(len(item_list)):
       print(str(i+1)+". "+item_list[i].name)

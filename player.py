@@ -406,13 +406,19 @@ class Player(Mob):
     return how_long*3600
 
   def sleep(self, how_long=""):
+    bed = Helper.find_utility("sleep")
+    if not bed:
+      Konsola.print("Tu nie ma na czym spać", "red")
+      return 0
+
     start_hp = self.hp
     start_stamina = self.stamina
+    comfort_factor = bed.attr["comfort"]/100
     try:
       how_long = int(how_long)
       for i in range(how_long):
-        self.hp += 8
-        self.adjust_stamina(15, 10)
+        self.hp += 16 * comfort_factor
+        self.adjust_stamina(24*comfort_factor, 16*comfort_factor)
         Konsola.print_param("HP", self.hp, self.hp_max, "lred")
         Konsola.print_param("Stamina", self.stamina, self.stamina_max, "lyellow")
         print("")

@@ -105,6 +105,7 @@
               "s",
               "u"
             ],
+            "utilities":[],
             "items": [
               {
                 "type": "Outfit",
@@ -135,6 +136,7 @@
               "n",
               "e"
             ],
+            "utilities":[],
             "items": []
           },
           {
@@ -146,6 +148,7 @@
             "exits": [
               "s"
             ],
+            "utilities":[],
             "items": [
               {
                 "type": "Consumable",
@@ -189,6 +192,7 @@
             "exits": [
               "w"
             ],
+            "utilities":[],
             "items": [
               {
                 "type": "Tool",
@@ -257,6 +261,7 @@
               "s",
               "w"
             ],
+            "utilities":[],
             "items": []
           },
           {
@@ -270,6 +275,7 @@
               "e",
               "w"
             ],
+            "utilities":[],
             "items": []
           },
           {
@@ -282,6 +288,7 @@
               "s",
               "w"
             ],
+            "utilities":[],
             "items": []
           },
           {
@@ -295,6 +302,7 @@
               "e",
               "s"
             ],
+            "utilities":[],
             "items": []
           },
           {
@@ -307,6 +315,7 @@
               "n",
               "s"
             ],
+            "utilities":[],
             "items": []
           },
           {
@@ -319,6 +328,7 @@
               "n",
 							"s"
             ],
+            "utilities":[],
             "items": []
           },
           {
@@ -331,6 +341,7 @@
               "n",
 							"s"
             ],
+            "utilities":[],
             "items": []
           },
 					{
@@ -344,6 +355,7 @@
               "s",
               "w"
             ],
+            "utilities":[],
             "items": []
           },
 					{
@@ -358,6 +370,7 @@
               "s",
               "w"
             ],
+            "utilities":[],
             "items": []
           },
 					{
@@ -371,6 +384,7 @@
               "s",
               "w"
             ],
+            "utilities":[],
             "items": []
           },
 					{
@@ -383,6 +397,7 @@
               "n",
               "w"
             ],
+            "utilities":[],
             "items": []
           },
 					{
@@ -395,6 +410,7 @@
               "n",
               "u"
             ],
+            "utilities":[],
             "items": []
           },
 					{
@@ -406,6 +422,7 @@
             "exits": [
               "d"
             ],
+            "utilities":[],
             "items": []
           },
 					{
@@ -418,6 +435,7 @@
               "n",
               "s"
             ],
+            "utilities":[],
             "items": []
           },
 					{
@@ -430,6 +448,7 @@
               "e",
               "d"
             ],
+            "utilities":[],
             "items": []
           },
 					{
@@ -443,6 +462,7 @@
               "w",
               "u"
             ],
+            "utilities":[],
             "items": []
           },
 					{
@@ -454,6 +474,7 @@
             "exits": [
               "u"
             ],
+            "utilities":[],
             "items": []
           },
           {
@@ -467,6 +488,7 @@
               "w",
               "d"
             ],
+            "utilities":[],
             "items": []
           },
           {
@@ -477,6 +499,48 @@
             "description": "Mały pokoik. Jest tu skrzynia i łóżko",
             "exits": [
               "e"
+            ],
+            "utilities":[
+              {
+                "type": "Chest",
+                "alias": [
+                  "skrzynia osobista",
+                  "skrzynia"
+                ],
+                "name": "Skrzynia osobista",
+                "description": "Mała, drewniana skrzynia zamykana na klucz",
+                "lock" : "awawawaw",
+                "opened": 0,
+                "attr": {},
+                "items": [],
+                "money": 0,
+                "actions": [
+                  "open",
+                  "search"
+                ]
+              },
+              {
+                "type": "Furniture",
+                "alias": [
+                  "łóżko jednoosobowe",
+                  "łóżko",
+                  "lozko jednoosobowe",
+                  "lozko"
+                ],
+                "name": "Łóżko jednoosobowe",
+                "description": "Zwykłe drewniane łóżko ze słomianym posłaniem, przykrytym prześcieradłem",
+                "lock" : "",
+                "opened": 0,
+                "attr": {
+                  "comfort": 60
+                },
+                "items": [],
+                "money": 0,
+                "actions": [
+                  "sleep",
+                  "sit"
+                ]
+              }
             ],
             "items": []
           },
@@ -489,6 +553,7 @@
             "exits": [
               "s"
             ],
+            "utilities":[],
             "items": []
           },
 					{
@@ -501,6 +566,7 @@
               "n",
 							"s"
             ],
+            "utilities":[],
             "items": []
           },
 					{
@@ -512,6 +578,7 @@
             "exits": [
               "n"
             ],
+            "utilities":[],
             "items": []
           },
 
@@ -524,6 +591,7 @@
             "exits": [
 							"s"
             ],
+            "utilities":[],
             "items": [
 							{
                 "type": "Tool",
@@ -549,6 +617,7 @@
 							"n",
 							"e"
             ],
+            "utilities":[],
             "items": [
 							{
                 "type": "Consumable",
@@ -589,6 +658,7 @@
 							"s",
 							"w"
             ],
+            "utilities":[],
             "items": []
           },
 					{
@@ -600,6 +670,7 @@
             "exits": [
 							"w"
             ],
+            "utilities":[],
             "items": [
 							{
                 "type": "Consumable",
@@ -626,6 +697,7 @@
 							"n",
 							"s"
             ],
+            "utilities":[],
             "items": []
           },
 					{
@@ -638,6 +710,7 @@
 							"n",
 							"s"
             ],
+            "utilities":[],
             "items": []
           },
 					{
@@ -649,6 +722,7 @@
             "exits": [
 							"e"
             ],
+            "utilities":[],
             "items": []
           },
 					{
@@ -662,6 +736,7 @@
 							"e",
 							"w"
             ],
+            "utilities":[],
             "items": []
           },
 					{
@@ -675,6 +750,7 @@
 							"s",
 							"w"
             ],
+            "utilities":[],
             "items": []
           },
 					{
@@ -687,6 +763,7 @@
 							"e",
 							"w"
             ],
+            "utilities":[],
             "items": []
           },
 					{
@@ -699,6 +776,7 @@
 							"e",
 							"s"
             ],
+            "utilities":[],
             "items": []
           },
 					{
@@ -712,6 +790,7 @@
 							"s",
 							"w"
             ],
+            "utilities":[],
             "items": []
           },
 					{
@@ -724,6 +803,7 @@
 							"n",
 							"e"
             ],
+            "utilities":[],
             "items": []
           },
 					{
@@ -736,6 +816,7 @@
 							"n",
 							"w"
             ],
+            "utilities":[],
             "items": []
           },
 
@@ -749,6 +830,7 @@
               "u",
               "d"
             ],
+            "utilities":[],
             "items": []
           },
           {
@@ -760,6 +842,7 @@
             "exits": [
               "d"
             ],
+            "utilities":[],
             "items": [
               {
                 "type": "Consumable",
@@ -790,6 +873,7 @@
               "e",
               "u"
             ],
+            "utilities":[],
             "items": []
           },
           {
@@ -802,6 +886,7 @@
               "e",
               "w"
             ],
+            "utilities":[],
             "items": []
           },
           {
@@ -814,6 +899,7 @@
               "e",
               "w"
             ],
+            "utilities":[],
             "items": []
           },
           {
@@ -826,6 +912,7 @@
               "e",
               "s"
             ],
+            "utilities":[],
             "items": []
           },
           {
@@ -838,6 +925,7 @@
               "n",
               "s"
             ],
+            "utilities":[],
             "items": []
           },
           {
@@ -850,6 +938,7 @@
               "n",
               "s"
             ],
+            "utilities":[],
             "items": []
           },
           {
@@ -862,6 +951,7 @@
               "n",
               "w"
             ],
+            "utilities":[],
             "items": []
           },
           {
@@ -875,6 +965,7 @@
               "s",
               "w"
             ],
+            "utilities":[],
             "items": []
           },
           {
@@ -887,6 +978,7 @@
               "e",
               "w"
             ],
+            "utilities":[],
             "items": []
           },
           {
@@ -898,6 +990,7 @@
             "exits": [
               "e"
             ],
+            "utilities":[],
             "items": []
           },
           {
@@ -910,6 +1003,7 @@
               "n",
               "s"
             ],
+            "utilities":[],
             "items": []
           },
           {
@@ -921,6 +1015,7 @@
             "exits": [
               "n"
             ],
+            "utilities":[],
             "items": []
           }
         ],

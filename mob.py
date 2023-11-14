@@ -144,7 +144,6 @@ class Mob:
     self.stamina_max += (s_max / endurance) if s_max < 0 else (s_max * endurance)
     
 
-
   def show_equipment(self):
     Konsola.print_item_list(self.equipment)
     print("Pieniądze: ", end='')

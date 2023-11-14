@@ -1,8 +1,9 @@
 from konsola import Konsola
 from item import Item
+from utility import Utility
 
 class Square:
-  def __init__(self, x, y, z, name, description, exits, items):
+  def __init__(self, x, y, z, name, description, exits, utilities, items):
     self.x = x
     self.y = y
     self.z = z
@@ -10,6 +11,7 @@ class Square:
     self.name = name
     self.description = description
     self.exits = exits
+    self.utilities = utilities
     self.items = items
   
   def show_square(self):
@@ -44,10 +46,12 @@ class Square:
       "name": self.name,
       "description": self.description,
       "exits": self.exits,
+      "utilities" : [utility.to_dict() for utility in self.utilities],
       "items" : [item.to_dict() for item in self.items]
     }
   
   @classmethod
   def from_dict(cls, data):
     items = [Item.from_dict(item_data) for item_data in data["items"]]
-    return cls(data["x"], data["y"], data["z"], data["name"], data["description"], data["exits"], items)
+    utilities = [Utility.from_dict(utility_data) for utility_data in data["utilities"]]
+    return cls(data["x"], data["y"], data["z"], data["name"], data["description"], data["exits"], utilities, items)
