@@ -496,7 +496,7 @@
             "y": 6,
             "z": 2,
             "name": "Pokój",
-            "description": "Mały pokoik. Jest tu skrzynia i łóżko",
+            "description": "Mały, kolorowy pokoik. Jest tu [i]skrzynia[/i] i [i]łóżko[/i]",
             "exits": [
               "e"
             ],

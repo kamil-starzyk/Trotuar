@@ -55,6 +55,9 @@ while True:
   "odpoczywaj": player.rest,
   "odpocznij":  player.rest,
   "rest":       player.rest,
+  "śpij":       player.sleep,
+  "spij":       player.sleep,
+  "sleep":      player.sleep,
 
   "oceń":       player.compare,
   "ocen":       player.compare,

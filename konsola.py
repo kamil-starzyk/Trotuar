@@ -102,10 +102,34 @@ class Konsola:
 
   @classmethod
   def wrap(cls, text_to_wrap, f=f_reset, b=b_reset):
+    """
+    This is ridiculous. I tried regex, finding index etc. But everything f**ks up. 
+    Manulat iteration shouldn't be to-go option but WHATEVER at this point. Nonetheless
+    wrap() wraps text to 100 characters wide lines, avoiding breaking words. 
+    If it encounters [i]text[/i] it highlights it.
+    """
     wrapper = textwrap.TextWrapper(width=100)
-    word_list = wrapper.wrap(text=text_to_wrap)
-    for element in word_list: 
-      cls.print(element, f, b)
+    lines_list = wrapper.wrap(text=text_to_wrap)
+    text = "\n".join(lines_list)
+    highlight = False
+    skip_letters = 0
+    for i in range(len(text)):
+      if text[i:i+3] == '[i]':
+        highlight = True
+        skip_letters = 3
+      elif text[i:i+4] == '[/i]':
+        highlight = False
+        skip_letters = 4
+
+      letter = text[i]
+
+      if skip_letters:
+        skip_letters-=1
+      else:
+        #it should be other way around but then all text is highlighted, except of important words. FML
+        fore = f if highlight else f_lwhite
+        cls.print(letter, fore, b, line_end='')
+    print('')
 
   @classmethod
   def clear(cls):

@@ -97,6 +97,10 @@ class Player(Mob):
     if item:
       item.see_more()
       return 1
+    utility = Helper.find_item(self.my_square().utilities, item_name)
+    if utility:
+      utility.see_more()
+      return 1
     mobs = self.current_location.mobs_on_square(self.my_square())
     mob = Helper.find_item(mobs, item_name)
     if mob: 
@@ -406,7 +410,7 @@ class Player(Mob):
     return how_long*3600
 
   def sleep(self, how_long=""):
-    bed = Helper.find_utility("sleep")
+    bed = Helper.find_utility(self.my_square().utilities, "sleep")
     if not bed:
       Konsola.print("Tu nie ma na czym spać", "red")
       return 0

@@ -1,5 +1,6 @@
 from konsola import Konsola
 from helper import Helper
+from item import Item
 
 # skrzynia, łóżko, palenisko, zarośla, 
 class Utility:
@@ -15,6 +16,15 @@ class Utility:
     self.money = money
     self.actions = actions
   
+  def see_more(self):
+    Konsola.print(self.name, "lcyan")
+    Konsola.print(self.description, "lwhite")
+    if self.attr:
+      Konsola.print("Atrybuty:", "lwhite")
+      for k, v in self.attr.items():
+        Konsola.print(" " + k, line_end=': ')
+        Konsola.print(v, "lwhite")
+
   def show_items(self):
     if "search" not in self.actions:
       Konsola.print("Tego się nie da przeszukać!", "red")
@@ -29,3 +39,23 @@ class Utility:
     if "comfort" in self.attr:
       return self.attr["comfort"]
     return 30
+  
+  def to_dict(self):
+    return {
+      'type': self.type,
+      'alias': self.alias,
+      'name': self.name,
+      'description': self.description,
+      'lock': self.lock,
+      'opened': self.opened,
+      'attr': self.attr,
+      'items': [item.to_dict() for item in self.items],
+      'money': self.money,
+      'actions': self.actions
+    }
+  
+  @classmethod
+  def from_dict(cls, data):
+    items = [Item.from_dict(item_data) for item_data in data["items"]]
+    return cls(data["type"], data["alias"], data["name"], data["description"], data["lock"], data["opened"], data["attr"], items, data['money'], data["actions"])
+  
