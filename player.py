@@ -345,6 +345,7 @@ class Player(Mob):
         award_money()
       if mob.exp > 0:
         award_exp()
+      mob.die()
         
     elif self.hp == 0 and mob.hp > 0:
       Konsola.print("Zostałeś pokonany przez " + mob.name, "lred")
@@ -371,26 +372,27 @@ class Player(Mob):
       "Odliczasz oddechy ślimaka, który przechodzi obok",
       "Organizujesz zawody w skakaniu kamykiem po kałuży",
       "Zbierasz niewidzialne kamyki i układasz je w piramidę",
-      "Ćwiczysz siedemnastotonową sztuczkę językową",
+      "Ćwiczysz siedemnastotomową sztuczkę językową",
       "Próbujesz złapać wiatr w swoje dłonie",
-      "Symulujesz rozmowę z imaginarnym przyjacielem",
+      "Symulujesz rozmowę ze zmyślonym przyjacielem",
       "Rozmawiasz z drzewem i udajesz, że zrozumiało twoje pytanie",
       "Organizujesz wyścigi mrówek, przyznając medal za zwycięstwo",
       "Zapraszasz mrówki na herbatę i dyskutujesz z nimi o polityce mrówkowej"
     ]
+
     start_hp = self.hp
     start_stamina = self.stamina
     try:
       how_long = int(how_long)
       for i in range(how_long):
-        self.hp += 2
-        self.adjust_stamina(10, 1)
-        for i in range(how_long):
-          Konsola.print_random(resting_stories)
-          Konsola.print_param("HP", self.hp, self.hp_max, "lred")
-          Konsola.print_param("Stamina", self.stamina, self.stamina_max, "lyellow")
-          Helper.sleep(1)
-      return how_long
+        self.hp += 3
+        self.adjust_stamina(15, 2)
+        Konsola.print_random(resting_stories)
+        print("")
+        Konsola.print_param("HP", self.hp, self.hp_max, "lred")
+        Konsola.print_param("Stamina", self.stamina, self.stamina_max, "lyellow")
+        print("")
+        Helper.sleep(1)
     except ValueError:
       print("Musisz podać ilość godzin jaką chcesz odpoczywać.") 
       return 0
@@ -401,10 +403,32 @@ class Player(Mob):
     Konsola.print("Odpoczywałeś przez " + str(how_long) + " godzin", "green")
     Konsola.print("Podczas odpoczynku odzyskałeś " + str(int(end_hp - start_hp)) + " zdrowia", "lgreen")
     Konsola.print("oraz odpocząłeś o " + str(int(end_stamina - start_stamina)) + " punktów staminy", "lyellow")
-
     return how_long*3600
 
-      
+  def sleep(self, how_long=""):
+    start_hp = self.hp
+    start_stamina = self.stamina
+    try:
+      how_long = int(how_long)
+      for i in range(how_long):
+        self.hp += 8
+        self.adjust_stamina(15, 10)
+        Konsola.print_param("HP", self.hp, self.hp_max, "lred")
+        Konsola.print_param("Stamina", self.stamina, self.stamina_max, "lyellow")
+        print("")
+        Helper.sleep(1)
+    except ValueError:
+      print("Musisz podać ilość godzin jaką chcesz spać") 
+      return 0  
+
+    end_hp = self.hp
+    end_stamina = self.stamina
+    Helper.sleep(1)
+    Konsola.print("Spałeś " + str(how_long) + " godzin", "green")
+    Konsola.print("Podczas snu odzyskałeś " + str(int(end_hp - start_hp)) + " zdrowia", "lgreen")
+    Konsola.print("oraz odpocząłeś o " + str(int(end_stamina - start_stamina)) + " punktów staminy", "lyellow")
+
+    return how_long*3600
 
   def use_passage(self, direction):
     passages = self.current_location.secret_passages

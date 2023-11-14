@@ -437,10 +437,11 @@
             "y": 6,
             "z": 1,
             "name": "Karczma pod Klonem",
-            "description": "Przeszedłeś do dalszej części jadalni. Pod oknami stoją stoły. W zachodniej części jest blat baru, a za nim przejście do kuchni. Możesz wrócić na północ.",
+            "description": "Przeszedłeś do dalszej części jadalni. Pod oknami stoją stoły. W zachodniej części jest blat baru, a za nim przejście do kuchni. Możesz wrócić na północ. Strome schody prowadzą do pokoi na piętrze.",
             "exits": [
               "n",
-              "w"
+              "w",
+              "u"
             ],
             "items": []
           },
@@ -452,6 +453,41 @@
             "description": "Zszedłeś do pomieszczenia w którym karczmarz przechowuje żywność i alkohol.",
             "exits": [
               "u"
+            ],
+            "items": []
+          },
+          {
+            "x": 5,
+            "y": 6,
+            "z": 2,
+            "name": "Poddasze karczmy",
+            "description": "Znajdujesz się nad jadalnią, do której możesz zejść po schodach. Na zachodzie i północy są drzwi do pokoi.",
+            "exits": [
+              "n",
+              "w",
+              "d"
+            ],
+            "items": []
+          },
+          {
+            "x": 4,
+            "y": 6,
+            "z": 2,
+            "name": "Pokój",
+            "description": "Mały pokoik. Jest tu skrzynia i łóżko",
+            "exits": [
+              "e"
+            ],
+            "items": []
+          },
+          {
+            "x": 5,
+            "y": 5,
+            "z": 2,
+            "name": "Pokój",
+            "description": "Mały pokoik. Jest tu skrzynia i łóżko",
+            "exits": [
+              "s"
             ],
             "items": []
           },
@@ -1392,7 +1428,7 @@
                     "options": [
                       {
                         "text": "Poradzę sobie",
-                        "response": "Nie wydaje mi się, ale zawsze możesz spróbować. Te paskudy biegają naprawdę szybko. Zabij 5 szczurów, to powinno być po problemie. Gdybyś nie mógł go znaleźćto wejście do kanałów jest tu przed wieżą. Wystarczy podnieść kratkę ściekową. ",
+                        "response": "Nie wydaje mi się, ale zawsze możesz spróbować. Te paskudy biegają naprawdę szybko. Zabij 5 szczurów, to powinno być po problemie. Gdybyś nie mógł go znaleźć to wejście do kanałów jest tu przed wieżą. Wystarczy podnieść kratkę ściekową. ",
 												"forget": "Pierwsze zadanie od kapitana",
 												"knowledge": {
 													"Wejście do kanałów": "Przed wejściem do wieży, pod murem jest kratka ściekowa, którą da się podnieść i dostać do kanałów."
@@ -1419,7 +1455,7 @@
                 },
 								{
 									"condition": "Wytępić szczury",
-                  "text": "W sprawie twojego zadania. Co mam problem z zabiciem jakiegokolwiek szczura",
+                  "text": "W sprawie twojego zadania. Mam problem z zabiciem jakiegokolwiek szczura",
                   "response": "Mówiłem Ci, że to nie będzie proste. Po pierwsze popraw swoją szybkość i zręczność. Po drugie zdobądź odpowiednią broń. Miecz nie nadaje sie do polowania na gryzonie. Dużo lepsza będzie pałka.",
                   "next_step": {
                     "options": [

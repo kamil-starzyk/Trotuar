@@ -246,8 +246,8 @@ class Mob:
     try:
       how_long = int(how_long)
       for i in range(how_long):
-        self.hp += 2
-        self.adjust_stamina(10, 1)
+        self.hp += 4
+        self.adjust_stamina(15, 2)
       return how_long
     except ValueError:
       return 0

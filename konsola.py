@@ -231,14 +231,14 @@ class Konsola:
 
   @classmethod
   def you_died(cls):
-    print("           _+_")
-    print("         _/ * \_")
-    print("/\     _/  \_/  \_     /\\")
-    print("||_&__/..-- 0 --..\__&_||")
-    print("--_______--- ---_______--")
-    cls.print(" POLEGŁEŚ NA POLU CHWAŁY", "lyellow")
-    print(" (') (') (') (') (') (') ")
-    print("  W   W   W   W   W   W ")
+    print("             _+_")
+    print("           _/ * \_")
+    print("  /\     _/  \_/  \_     /\\")
+    print("  ||_&__/..-- 0 --..\__&_||")
+    print("  --_______--- ---_______--")
+    cls.print("   POLEGŁEŚ NA POLU CHWAŁY", "lyellow")
+    print("   (') (') (') (') (') (') ")
+    print("    W   W   W   W   W   W ")
 
   @classmethod
   def direction_translator(cls, direction):
