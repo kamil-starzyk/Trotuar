@@ -233,107 +233,66 @@ class Player(Mob):
         Konsola.print("Przeciwnik wygląda jakby czuł się doskonale", "lgreen")
 
   def kill(self, mob_name):
-    if self.stamina > 10:
-      mobs = self.current_location.mobs_on_square(self.my_square())
-      mob = Helper.find_item(mobs, mob_name)
-      if mob:
+    if self.stamina <= 10:
+      print("Nie masz siły walczyć")
+      return
+    
+    mobs = self.current_location.mobs_on_square(self.my_square())
+    mob = Helper.find_item(mobs, mob_name)
 
-        def player_and_mob_params():
-          Konsola.print_param("Ja", self.hp, self.hp_max, "lred")
-          Konsola.print_param("stamina", self.stamina, self.stamina_max, "lyellow")
-          print("")
-          Konsola.print_param(mob.name, mob.hp, mob.hp_max, "red")
-          Konsola.print_param("stamina", mob.stamina, mob.stamina_max, "yellow")
+    if not mob:
+      Konsola.print("Nie ma tu kogoś takiego", "red")
+      return
 
-        mob.try_to_draw_weapon()
-        
-        print("Walczysz z " + mob.name)
-        while self.hp > 0 and mob.hp > 0 and (self.stamina > 10 or mob.stamina > 10):
-          player_and_mob_params()
-          
-          damage_given = self.hit(mob)
-          if damage_given:
-            mob.hp -= damage_given
-            Konsola.damage_given(True, mob, damage_given)
-            mob.stamina -= damage_given/2
-            mob.stamina_max -= damage_given/3
-          else:
-            print("Chybiłeś")
-            if mob.hp <= mob.hp_max/2:
-              direction = mob.try_to_escape()
-              if direction:
-                print(mob.name + " uciekł " + Konsola.direction_translator(direction))
-                break
-          self.stamina -= 5
-          self.stamina_max -= 1
+    def player_and_mob_params():
+      Konsola.print_param("Ja", self.hp, self.hp_max, "lred")
+      Konsola.print_param("stamina", self.stamina, self.stamina_max, "lyellow")
+      print("")
+      Konsola.print_param(mob.name, mob.hp, mob.hp_max, "red")
+      Konsola.print_param("stamina", mob.stamina, mob.stamina_max, "yellow")
+    
+    mob.try_to_draw_weapon()
+    print("Walczysz z " + mob.name)
+    while self.hp > 0 and mob.hp > 0 and (self.stamina > 10 or mob.stamina > 10):
+      player_and_mob_params()
+      damage_given = self.hit(mob)
+      if damage_given:
+        mob.hp -= damage_given
+        Konsola.damage_given(True, mob, damage_given)
+        mob.adjust_stamina(-damage_given/2, -damage_given/4)
+      else:
+        print("Chybiłeś")
+        if mob.hp <= mob.hp_max/2:
+          direction = mob.try_to_escape()
+          if direction:
+            print(mob.name + " uciekł " + Konsola.direction_translator(direction))
+            break
+      self.adjust_stamina(-5, -1)
 
-          if(mob.hp > 0):
-            damage_taken = mob.hit(self)
-            if damage_taken:
-              self.hp -= damage_taken
-              Konsola.damage_given(False, mob, damage_taken)
-              self.stamina -= damage_taken/2
-              self.stamina_max -= damage_taken/3
-            else:
-              print(f'{mob.name} chybia')
-            mob.stamina -= 5
-            mob.stamina_max -= 1
-          print("")
-          Helper.sleep(1)
+      if(mob.hp > 0):
+        damage_taken = mob.hit(self)
+        if damage_taken:
+          self.hp -= damage_taken
+          Konsola.damage_given(False, mob, damage_taken)
+          self.adjust_stamina(-damage_given/2, -damage_given/4)
+        else:
+          print(f'{mob.name} chybia')
+        mob.adjust_stamina(-5, -1)
+      print("")
+      Helper.sleep(1)
 
-        player_and_mob_params()
-
-        is_decided = False
-        if self.stamina > 10 and mob.stamina < 10 and mob.hp/mob.hp_max < 0.2:
-          Konsola.print("Twój przeciwnik chwieje się na nogach i nie jest w stanie walczyć. Co robisz?", "cyan")
-          print("[1] Dobij go!")      
-          print("[2] Daruj życie i pozwól odejść")      
-          print("[3] Pozwól odejść, ale ma oddać wszystkie pieniądze")      
-          print(" > ", end="")
-          choice = Konsola.int_input(1,3)
-          if choice == 1:
-            damage_given = mob.hp
-            mob.hp-=damage_given
-            Konsola.damage_given(True, mob, damage_given)
-          elif choice == 3:
-            if mob.money > 0:
-              Konsola.print("  Zdobywasz: ", line_end="")
-              Konsola.print(str(mob.money) + " złota", "lyellow")
-              self.money+=mob.money
-              mob.money = 0
-            if mob.exp > 0:
-              Konsola.print("  Zdobywasz: ", line_end="")
-              exp = int(mob.exp/2)
-              Konsola.print(str(exp) + " doświadczenia", "lyellow")
-              self.add_exp(exp)
-              mob.exp-=exp
-            mob.try_to_escape(100)
-            Konsola.print("Przeciwnik uciekł", "cyan")
-          else:
-            if mob.exp > 0:
-              Konsola.print("  Zdobywasz: ", line_end="")
-              exp = int(mob.exp*0.75)
-              Konsola.print(str(exp) + " doświadczenia", "lyellow")
-              self.add_exp(exp)
-              mob.exp-=exp
-            mob.try_to_escape(100)
-            Konsola.print("Przeciwnik uciekł dziękując za łaskę", "cyan")
-          is_decided = True
-            
-        elif self.stamina < 10 and self.hp/self.hp_max < 0.2:
-          Konsola.print("Jesteś zbyt zmęczony by walczyć", "cyan")
-          wants_to_kill_you = Helper.random()
-          if wants_to_kill_you > 60:
-            Konsola.print("Przeciwnik postanowił Cię wykończyć", "cyan")
-            damage_taken = self.hp
-            self.hp-=damage_taken
-            Konsola.damage_given(False, mob, damage_taken)
-          else:
-            Konsola.print("Przeciwnik daruje Ci życie", "cyan")
-          is_decided = True
-
-        if self.hp > 0 and mob.hp == 0:
-          Konsola.print("Pokonałeś " + mob.name, "lgreen")
+      if self.stamina > 10 and mob.stamina < 10 and mob.hp/mob.hp_max < 0.2:
+        Konsola.print("Twój przeciwnik chwieje się na nogach i nie jest w stanie walczyć. Co robisz?", "cyan")
+        print("[1] Dobij go!")      
+        print("[2] Daruj życie i pozwól odejść")      
+        print("[3] Pozwól odejść, ale ma oddać wszystkie pieniądze")      
+        print(" > ", end="")
+        choice = Konsola.int_input(1,3)
+        if choice == 1:
+          damage_given = mob.hp
+          mob.hp-=damage_given
+          Konsola.damage_given(True, mob, damage_given)
+        elif choice == 3:
           if mob.money > 0:
             Konsola.print("  Zdobywasz: ", line_end="")
             Konsola.print(str(mob.money) + " złota", "lyellow")
@@ -341,18 +300,49 @@ class Player(Mob):
             mob.money = 0
           if mob.exp > 0:
             Konsola.print("  Zdobywasz: ", line_end="")
-            Konsola.print(str(mob.exp) + " doświadczenia", "lyellow")
-            self.add_exp(mob.exp)
-          is_decided = True
-            
-        elif self.hp == 0 and mob.hp > 0:
-          Konsola.print("Zostałeś pokonany przez " + mob.name, "lred")
-          is_decided = True
+            exp = int(mob.exp/2)
+            Konsola.print(str(exp) + " doświadczenia", "lyellow")
+            self.add_exp(exp)
+            mob.exp-=exp
+          mob.try_to_escape(100)
+          Konsola.print("Przeciwnik uciekł", "cyan")
+        else:
+          if mob.exp > 0:
+            Konsola.print("  Zdobywasz: ", line_end="")
+            exp = int(mob.exp*0.75)
+            Konsola.print(str(exp) + " doświadczenia", "lyellow")
+            self.add_exp(exp)
+            mob.exp-=exp
+          mob.try_to_escape(100)
+          Konsola.print("Przeciwnik uciekł dziękując za łaskę", "cyan")
+
+      elif self.stamina < 10 and self.hp/self.hp_max < 0.2:
+        Konsola.print("Jesteś zbyt zmęczony by walczyć", "cyan")
+        wants_to_kill_you = Helper.random()
+        if wants_to_kill_you > 60:
+          Konsola.print("Przeciwnik postanowił Cię wykończyć", "cyan")
+          damage_taken = self.hp
+          self.hp-=damage_taken
+          Konsola.damage_given(False, mob, damage_taken)
+        else:
+          Konsola.print("Przeciwnik daruje Ci życie", "cyan")
+        is_decided = True
+      
+      if self.hp > 0 and mob.hp == 0:
+        Konsola.print("Pokonałeś " + mob.name, "lgreen")
+        if mob.money > 0:
+          Konsola.print("  Zdobywasz: ", line_end="")
+          Konsola.print(str(mob.money) + " złota", "lyellow")
+          self.money+=mob.money
+          mob.money = 0
+        if mob.exp > 0:
+          Konsola.print("  Zdobywasz: ", line_end="")
+          Konsola.print(str(mob.exp) + " doświadczenia", "lyellow")
+          self.add_exp(mob.exp)
+          
+      elif self.hp == 0 and mob.hp > 0:
+        Konsola.print("Zostałeś pokonany przez " + mob.name, "lred")
         
-        if not is_decided:
-          print("Pojedynek nie został rozstrzygnięty")
-    else:
-      print("Nie masz siły walczyć")
 
   def rest(self, how_long=""):
     resting_stories = [

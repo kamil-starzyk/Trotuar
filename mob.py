@@ -129,8 +129,20 @@ class Mob:
         case "d":
           self.z -= 1
       return direction
-      self.stamina_max -= 0.2
+      self.adjust_stamina(0.5, -0.2)
     return 0
+  
+  def adjust_stamina(self, s, s_max):
+    """
+    Method that changes value of stamina and stamina_max with regard to one's strength
+    Returns:
+      void
+    """
+    strength = self.stat_coefficient(self.stats["strength"])
+
+    self.stamina += (s / strength) if s < 0 else (s * strength)
+    self.stamina_max += (s_max / strength) if s_max < 0 else (s_max * strength)
+    
 
 
   def show_equipment(self):
@@ -235,8 +247,7 @@ class Mob:
       how_long = int(how_long)
       for i in range(how_long):
         self.hp += 2
-        self.stamina += 10
-        self.stamina_max += 1
+        self.adjust_stamina(10, 1)
       return how_long
     except ValueError:
       return 0
