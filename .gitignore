@@ -1,3 +1,4 @@
-/data/saves
+/data/saves/*
 /__pycache__
 /arbituary_stuff
+/.vscode
