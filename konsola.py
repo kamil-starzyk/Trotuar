@@ -111,26 +111,43 @@ class Konsola:
     """
     wrapper = textwrap.TextWrapper(width=100)
     lines_list = wrapper.wrap(text=text_to_wrap)
-    text = "\n".join(lines_list)
-    highlight = False
-    skip_letters = 0
-    for i in range(len(text)):
-      if text[i:i+3] == '[i]':
-        highlight = True
-        skip_letters = 3
-      elif text[i:i+4] == '[/i]':
-        highlight = False
-        skip_letters = 4
+    text_to_highlight = "\n".join(lines_list)
+    
+    highlighted_parts = {}
+    start_tag = "[i]"
+    end_tag = "[/i]"
+    start_index = 0
+    end_index = 0
+    
+    start_index = text_to_highlight.find(start_tag, end_index)
+    if start_index > 0:
+      normal_text = text_to_highlight[0:start_index]
+      highlighted_parts[normal_text] = False
 
-      letter = text[i]
+    while start_index != -1 and end_index != -1:
+      if start_index != -1:
+        end_index = text_to_highlight.find(end_tag, start_index + len(start_tag))
+        if end_index != -1:
+          # Extract the content between [i] and [/i]
+          highlighted_text = text_to_highlight[start_index + len(start_tag):end_index]
 
-      if skip_letters:
-        skip_letters-=1
+          highlighted_parts[highlighted_text] = True
+
+          start_index = text_to_highlight.find(start_tag, end_index)  
+
+          normal_text = text_to_highlight[end_index + len(end_tag): start_index]
+          highlighted_parts[normal_text] = False
+
+
+    for k, v in highlighted_parts.items():
+      if v:
+        cls.print(k, "lwhite", b, line_end='')
       else:
-        #it should be other way around but then all text is highlighted, except of important words. FML
-        fore = f if highlight else f_lwhite
-        cls.print(letter, fore, b, line_end='')
+        cls.print(k, "white", b, line_end='')
     print('')
+
+
+
 
   @classmethod
   def clear(cls):

@@ -13,8 +13,16 @@ class Game:
     self.player = player
     self.world = world
     self.is_playing = False
-    self.time_in_sec = time_in_sec
     self.quests = []
+    self.time = {
+      "s": 0,
+      "m": 0,
+      "h": 13,
+      "d": 1,
+      "w": 2,
+      "n": 2,
+      "y": 217 
+    }
   
   def title_screen(self):
     method_map = {
@@ -73,7 +81,95 @@ class Game:
     if are_you_sure in ("Y", "y"):
       self.is_playing = False
       exit()
-  
+  def timeProgress(self, sec):
+    # Define constants for the new time system
+    SECONDS_PER_MINUTE = 60
+    MINUTES_PER_HOUR = 60
+    HOURS_PER_DAY = 24
+    DAYS_PER_WEEK = 7
+    WEEKS_PER_SEASON = 21
+    SEASONS_PER_YEAR = 4
+
+    # Increment seconds and handle overflow
+    self.time["s"] += sec
+
+    # Update time based on seconds
+    if self.time["s"] >= SECONDS_PER_MINUTE:
+      self.time["m"] += self.time["s"] // SECONDS_PER_MINUTE
+      self.time["s"] %= SECONDS_PER_MINUTE
+
+    if self.time["m"] >= MINUTES_PER_HOUR:
+      self.time["h"] += self.time["m"] // MINUTES_PER_HOUR
+      self.time["m"] %= MINUTES_PER_HOUR
+
+    if self.time["h"] >= HOURS_PER_DAY:
+      self.time["d"] += self.time["h"] // HOURS_PER_DAY
+      self.time["h"] %= HOURS_PER_DAY
+
+    if self.time["d"] >= DAYS_PER_WEEK:
+      self.time["w"] += self.time["d"] // DAYS_PER_WEEK
+      self.time["d"] %= DAYS_PER_WEEK
+
+    if self.time["w"] >= WEEKS_PER_SEASON:
+      self.time["sn"] += self.time["w"] // WEEKS_PER_SEASON
+      self.time["w"] %= WEEKS_PER_SEASON
+
+    if self.time["sn"] >= SEASONS_PER_YEAR:
+      self.time["y"] += self.time["sn"] // SEASONS_PER_YEAR
+      self.time["sn"] %= SEASONS_PER_YEAR
+
+  class TimeHandler:
+    # ... (other methods and attributes)
+
+    def showTime(self):
+      # Define time-related translations
+      times_of_day = {
+        (0, 5): "noc",
+        (6, 9): "rano",
+        (10, 11): "przed południem",
+        (12, 12): "południe",
+        (13, 17): "po południu",
+        (18, 20): "wieczór"
+      }
+
+      days_of_week = {
+        1: "poniedziałek",
+        2: "wtorek",
+        3: "środa",
+        4: "czwartek",
+        5: "piątek",
+        6: "sobota",
+        7: "niedziela"
+      }
+
+      seasons = {
+        1: "wiosna",
+        2: "lato",
+        3: "jesień",
+        4: "zima"
+      }
+        
+
+      # Retrieve time components
+      hour = self.time["h"]
+      week_day = self.time["w_day"]
+      month = self.time["month"]
+      day = self.time["day"]
+      year = self.time["year"]
+
+      # Determine the time of day
+      time_of_day = next((value for key, value in times_of_day.items() if key[0] < hour <= key[1]), None)
+
+      # Get the day of the week, month, and construct the output
+      day_of_week = days_of_week.get(week_day)
+      month_name = months.get(month)
+
+      if time_of_day and day_of_week and month_name:
+        print("Jest {}, {}, {} {} roku {}".format(time_of_day, day_of_week, day, month_name, year))
+      else:
+        print("Time components not found.")
+
+
   def update_state(self):
     for quest in self.quests:
       if self.player.quest_id:

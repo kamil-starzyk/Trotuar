@@ -69,6 +69,8 @@ while True:
   "quests":     game.active_quests,
 
   "/" :         player.my_square().show_square,          
+  "czas" :      game.show_time,
+  "time" :      game.show_time,
   "whoami" :    player.whoami,
   "whereami" :  player.whereami,
   "help" :      Konsola.help,
