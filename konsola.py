@@ -5,6 +5,7 @@ import msvcrt
 import keyboard
 import textwrap 
 import random
+import time
 
 #czasami wyświetlało kod koloru zamiast koloru bez tej linijki
 init(convert=True) 
@@ -141,7 +142,7 @@ class Konsola:
 
   @classmethod
   def hr(cls):
-    print("-"*24)
+    print("-"*28)
 
   @classmethod
   def damage_given(cls, by_player, mob, damage):
@@ -255,14 +256,23 @@ class Konsola:
 
   @classmethod
   def you_died(cls):
-    print("             _+_")
-    print("           _/ * \_")
-    print("  /\     _/  \_/  \_     /\\")
-    print("  ||_&__/..-- 0 --..\__&_||")
-    print("  --_______--- ---_______--")
-    cls.print("   POLEGŁEŚ NA POLU CHWAŁY", "lyellow")
-    print("   (') (') (') (') (') (') ")
-    print("    W   W   W   W   W   W ")
+    picture = [
+      "             _+_",
+      "           _/ * \_",
+      "  /\     _/  \_/  \_     /\\",
+      "  ||_&__/..-- 0 --..\__&_||",
+      "  --_______--- ---_______--",
+      "   POLEGŁEŚ NA POLU CHWAŁY",
+      "   (') (') (') (') (') (') ",
+      "    W   W   W   W   W   W "
+    ]
+    time.sleep(0.8)
+    for line in picture:
+      if line == "   POLEGŁEŚ NA POLU CHWAŁY":
+        cls.print(line, "lyellow")
+      else:
+        print(line)
+      time.sleep(0.3)
 
   @classmethod
   def direction_translator(cls, direction):

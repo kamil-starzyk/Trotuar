@@ -421,7 +421,7 @@ class Player(Mob):
     try:
       how_long = int(how_long)
       for i in range(how_long):
-        self.hp += 16 * comfort_factor
+        self.hp += 10 * comfort_factor
         self.adjust_stamina(24*comfort_factor, 16*comfort_factor)
         Konsola.print_param("HP", self.hp, self.hp_max, "lred")
         Konsola.print_param("Stamina", self.stamina, self.stamina_max, "lyellow")

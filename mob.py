@@ -330,7 +330,7 @@ class Mob:
 
   @property
   def hp(self):
-    return self.params["hp"]
+    return int(self.params["hp"])
   
   @hp.setter
   def hp(self, value):
@@ -343,7 +343,7 @@ class Mob:
       
   @property
   def hp_max(self):
-    return self.params["hp_max"]
+    return int(self.params["hp_max"])
 
   @property
   def stamina(self):
@@ -375,11 +375,11 @@ class Mob:
 
   @property
   def mana(self):
-    return self.params["mana"]
+    return int(self.params["mana"])
   
   @property
   def mana_max(self):
-    return self.params["mana_max"]
+    return int(self.params["mana_max"])
   
   @mana.setter
   def mana(self, value):
@@ -392,7 +392,7 @@ class Mob:
 
   @property
   def satiation(self):
-    return self.params["satiation"]
+    return int(self.params["satiation"])
   
   @satiation.setter
   def satiation(self, value):
@@ -405,11 +405,11 @@ class Mob:
   
   @property
   def satiation_max(self):
-    return self.params["satiation_max"]
+    return int(self.params["satiation_max"])
     
   @property
   def hydration(self):
-    return self.params["hydration"]
+    return int(self.params["hydration"])
   
   @hydration.setter
   def hydration(self, value):
@@ -422,7 +422,7 @@ class Mob:
   
   @property
   def hydration_max(self):
-    return self.params["hydration_max"]
+    return int(self.params["hydration_max"])
 
 
   def to_dict(self):
