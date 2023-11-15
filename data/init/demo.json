@@ -188,7 +188,7 @@
             "y": 2,
             "z": 1,
             "name": "Kuźnia",
-            "description": "Oto warsztat miejscowego kowala. Stoi tu palenisko, a przy nim miech. Obok jest kowadło oraz brus. Wyjście jest na zachodzie.",
+            "description": "Oto warsztat miejscowego kowala. Stoi tu [i]palenisko[/i], a przy nim [i]miech[/i]. Obok jest [i]kowadło[/i] oraz [i]brus[/i]. Wyjście jest na zachodzie. [i]Radujmy się naszą Polską[/i]",
             "exits": [
               "w"
             ],
@@ -1365,8 +1365,8 @@
                 },
                 {
 									"condition": "Ukończono: Dzikie zioła",
-                  "text": "Znalazłem tę podkowę. Musialem się trochę nabiegać. Czy masz dla mnie jakieś kolejne zadanie?",
-                  "response": "Dobrze się spisałeś. Teraz muszę to tylko zagotować i miksturka gotowa. ",
+                  "text": "Zebrałem wszystkie zioła, o które prosiłaś. Musialem się trochę nabiegać. Czy masz dla mnie jakieś kolejne zadanie?",
+                  "response": "Dobrze się spisałeś. Na razie to wszystko. Teraz muszę to tylko zagotować i miksturka gotowa. ",
                   "next_step": {
                     "options": [
                       {
@@ -1380,7 +1380,8 @@
                 {
                   "condition": "Domek Chloe",
                   "text": "Dlaczego nie chciałaś wyremontować domu za darmo, kiedy miasto to oferowało",
-                  "response": "Miałam swoje powody, a Tobie wystarczy wiedzieć, że nie wolno mi nic zmieniać w tym domu, bo miałoby to tragiczne konsekwencje. Zbudował go tu mój pradziadek i jak dotąd stoi nie wymagająć ingerencji."
+                  "response": "Miałam swoje powody, a Tobie wystarczy wiedzieć, że nie wolno mi nic zmieniać w tym domu, bo miałoby to tragiczne konsekwencje. Zbudował go tu mój pradziadek i jak dotąd stoi nie wymagająć ingerencji.",
+                  "forget": "Domek Chloe"
                 },
                 {
                   "text": "Do widzenia",
