@@ -6,6 +6,7 @@ import keyboard
 import textwrap 
 import random
 import time
+#import curses keeping some lines at bottom of terminal
 
 #czasami wyświetlało kod koloru zamiast koloru bez tej linijki
 init(convert=True) 
@@ -79,6 +80,7 @@ class Konsola:
     result = []
     result.append(command[0])
     result.append(argument)
+
     return result
   
   @classmethod
@@ -120,7 +122,11 @@ class Konsola:
     end_index = 0
     
     start_index = text_to_highlight.find(start_tag, end_index)
-    if start_index > 0:
+    if start_index == -1:
+      normal_text = text_to_highlight
+      highlighted_parts[normal_text] = False
+
+    elif start_index > 0:
       normal_text = text_to_highlight[0:start_index]
       highlighted_parts[normal_text] = False
 

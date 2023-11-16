@@ -1,3 +1,6 @@
+from konsola import Konsola
+from helper import Helper
+
 class GameTime:
   def __init__(self, s, m, h, d, week_d, w, sn, y):
     self.s = s
@@ -8,7 +11,20 @@ class GameTime:
     self.w = w
     self.sn = sn
     self.y = y
+    self.time_of_day = None
+    self.times_of_day = {
+      (0, 6): "noc",
+      (6, 10): "rano",
+      (10, 12): "przed południem",
+      (12, 14): "południe",
+      (14, 18): "po południu",
+      (18, 21): "wieczór",
+      (21, 24): "noc"
+    }
   
+  def get_current_time_of_day(self):
+    return next((value for key, value in self.times_of_day.items() if key[0] <= self.h < key[1]), None)
+
   def time_progress(self, sec):
     # Define constants for the new time system
     SECONDS_PER_MINUTE = 60
@@ -20,7 +36,7 @@ class GameTime:
     SEASONS_PER_YEAR = 4
 
     # Increment seconds and handle overflow
-    self.s += sec
+    self.s += int(sec)
 
     # Update time based on seconds
     if self.s >= SECONDS_PER_MINUTE:
@@ -46,18 +62,16 @@ class GameTime:
     if self.sn >= SEASONS_PER_YEAR:
       self.y += self.sn // SEASONS_PER_YEAR
       self.sn %= SEASONS_PER_YEAR
+    
+    time_of_day = self.get_current_time_of_day()
+    if self.time_of_day != time_of_day:
+      Konsola.print("  Jest "+ time_of_day, "green")
+      self.time_of_day = time_of_day
+      Helper.sleep(0.5)
 
-  def show_time(self):
+
+  def show_time(self, exact=False):
     # Define time-related translations
-    times_of_day = {
-      (0, 5): "noc",
-      (5, 9): "rano",
-      (9, 11): "przed południem",
-      (12, 13): "południe",
-      (13, 17): "po południu",
-      (17, 20): "wieczór",
-      (20, 24): "noc"
-    }
 
     days_of_week = {
       1: "poniedziałek",
@@ -70,10 +84,10 @@ class GameTime:
     }
 
     seasons = {
-      1: "wiosna",
-      2: "lato",
-      3: "jesień",
-      4: "zima"
+      1: "wiosny",
+      2: "lata",
+      3: "jesieni",
+      4: "zimy"
     }
       
 
@@ -85,15 +99,19 @@ class GameTime:
     year = self.y
 
     # Determine the time of day
-    time_of_day = next((value for key, value in times_of_day.items() if key[0] < hour <= key[1]), None)
+    time_of_day = self.get_current_time_of_day()
 
 
 
     # Get the day of the week, month, and construct the output
     day_of_week = days_of_week.get(week_day)
     season_name = seasons.get(season)
+    
+    if not exact:
+      print("Jest {}, {}, {} dzień {} roku {}".format(time_of_day, day_of_week, day, season_name, year))
+    else:
+      print("Jest {:02d}:{:02d}:{:02d}, {}, {} dzień {} roku {}".format(self.h, self.m, self.s, day_of_week, day, season_name, year))
 
-    print("Jest {}, {}, {} {} roku {}".format(time_of_day, day_of_week, day, season_name, year))
 
   
   def to_dict(self):

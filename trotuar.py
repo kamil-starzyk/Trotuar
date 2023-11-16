@@ -82,27 +82,33 @@ while True:
   "q" :         game.end_game,
   "colorama" :  Konsola.test_colorama
 }
-
+  
   while game.is_playing:
     prompt = Konsola.prompt(game.player)
     command = prompt[0]
     argument = prompt[1]
 
+    seconds = 0
+
     if command in command_mapping:
       action = command_mapping[command]
       if isinstance(action, tuple):
-        action[0](action[1])
+        seconds = action[0](action[1])
       elif argument:
         try:
-          action(argument)
+          seconds = action(argument)
         except TypeError:
           Konsola.print("To polecenie jest jednowyrazowe!", "red")
       else: 
         try:
-          action()
+          seconds = action()
         except TypeError:
           Konsola.print("To polecenie wymaga więcej informacji!", "red")
-        
-          
-    
+    try:  
+      int(seconds)
+    except TypeError:
+      seconds = 0
+      
+    game.time.time_progress(seconds)
+    game.time.show_time(True)
     game.update_state()

@@ -4,6 +4,10 @@ from mob import Mob
 from item import Item
 
 class Player(Mob):
+  TIME_OF_MOVEMENT = 60
+  TIME_OF_ITEM_INTERACTION = 30
+  TIME_OF_CONVERSATION = 90
+  TIME_OF_EXCHANGING_BLOWS = 30
   def __init__(self, x, y, z, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge):
     super(Player, self).__init__(x, y, z, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge)
     self.quest_id = None
@@ -39,7 +43,11 @@ class Player(Mob):
   def move_in_direction(self, direction):
     if super().move_in_direction(direction):
       self.my_square().show_square()
-    else: print("Nie możesz tam przejść")
+      return Player.TIME_OF_MOVEMENT/self.stat_coefficient(self.speed)
+
+    print("Nie możesz tam przejść")
+    return 0
+
   
   def pick_up(self, item_name):
     item = super().pick_up(item_name)
@@ -47,8 +55,10 @@ class Player(Mob):
       self.picked_item = item
       Konsola.print("Podniosłeś ", line_end='')
       Konsola.print(item.name, "lwhite")
-    else:
-      Konsola.print("Nie ma tu takiej rzeczy", "red")
+      return Player.TIME_OF_ITEM_INTERACTION
+
+    Konsola.print("Nie ma tu takiej rzeczy", "red")
+    return 0
   
   def drop(self, item_name):
     item = super().drop(item_name)
@@ -56,8 +66,11 @@ class Player(Mob):
       self.droped_item = item
       Konsola.print("Upuściłeś ", line_end='')
       Konsola.print(item.name, "lwhite")
-    else:
-      Konsola.print("Nie masz takiej rzeczy w ekwipunku", "red")
+      return Player.TIME_OF_ITEM_INTERACTION
+    
+    Konsola.print("Nie masz takiej rzeczy w ekwipunku", "red")
+    return 0
+
   
   def give(self, item_name):
     item = Helper.find_item(self.equipment, item_name)
@@ -84,9 +97,12 @@ class Player(Mob):
         mob.equipment.append(item)
         self.item_receiver = mob
         self.given_item = item
-        return item
-      else:
-        Konsola.print("Nie udało się przekazać przedmiotu", "red")
+        return Player.TIME_OF_ITEM_INTERACTION
+      
+      Konsola.print("Nie udało się przekazać przedmiotu", "red")
+      return 0
+    Konsola.print("Nie masz takiej rzeczy w ekwipunku", "red")
+    return 0
 
   def see(self, item_name):
     item = Helper.find_item(self.equipment, item_name)
@@ -112,22 +128,27 @@ class Player(Mob):
     item = super().equip(item_name)
     if item:
       print("Założyłeś " + item.name)
-    else:
-      Konsola.print("Nie masz takiej rzeczy w ekwipunku", "red")
+      return Player.TIME_OF_ITEM_INTERACTION
+    
+    Konsola.print("Nie masz takiej rzeczy w ekwipunku", "red")
+    return 0
   
   def unequip(self, item_name):
     item = super().unequip(item_name)
     if item:
       print("Zdjąłeś " + item.name)
-    else:
-      Konsola.print("Nie masz takiej rzeczy na sobie", "red")
+      return Player.TIME_OF_ITEM_INTERACTION
+    
+    Konsola.print("Nie masz takiej rzeczy na sobie", "red")
+    return 0
   
   def outfit(self):
     Konsola.print("Twoje wyposarzenie", "lcyan")
     super().outfit()
+    return 0
 
 
-  def navigate_conversation(self, current_step):
+  def navigate_conversation(self, current_step, total_time=0):
     options = []
     for option in current_step.get("options", []):
       condition = option.get("condition")
@@ -135,7 +156,7 @@ class Player(Mob):
         options.append(option)
 
     if not options:
-      return
+      return time
     
     number = 1
     for option in options:
@@ -161,14 +182,17 @@ class Player(Mob):
       Helper.sleep(1)
       next_step = selected_option.get("next_step")
       if next_step:
-        self.navigate_conversation(next_step)
+        total_time += self.navigate_conversation(next_step)
       elif choice == len(options):
-        return
+        return total_time
       else:
         self.navigate_conversation(current_step)
     else:
       print("Błędny wybór")
       self.navigate_conversation(current_step)
+    
+    return total_time + Player.TIME_OF_CONVERSATION
+
 
   def talk_to(self, mob_name):
     mobs = self.current_location.mobs_on_square(self.my_square())
@@ -176,9 +200,13 @@ class Player(Mob):
     if mob: 
       if mob.conversations:
         Konsola.print(mob.conversations["greeting"], "lwhite")
-        self.navigate_conversation(mob.conversations)
-      else:
-        print(mob.name + " nie ma Ci nic do powiedzenia")
+        conv_time = self.navigate_conversation(mob.conversations)
+        return conv_time
+      print(mob.name + " nie ma Ci nic do powiedzenia")
+      return 0
+    Konsola.print("Nie ma tu kogoś takiego", "red")
+    return 0
+    
 
   def compare(self, mob_name):
     mobs = self.current_location.mobs_on_square(self.my_square())
@@ -239,14 +267,14 @@ class Player(Mob):
   def kill(self, mob_name):
     if self.stamina <= 10:
       print("Nie masz siły walczyć")
-      return
+      return 0
     
     mobs = self.current_location.mobs_on_square(self.my_square())
     mob = Helper.find_item(mobs, mob_name)
 
     if not mob:
       Konsola.print("Nie ma tu kogoś takiego", "red")
-      return
+      return 0
 
     def player_and_mob_params():
       Konsola.print_param("Ja", self.hp, self.hp_max, "lred")
@@ -267,7 +295,7 @@ class Player(Mob):
       Konsola.print(str(mob.money) + " złota", "lyellow")
       self.money+=mob.money
       mob.money = 0
-    
+    time_of_fight = 0
     mob.try_to_draw_weapon()
     print("Walczysz z " + mob.name)
     while self.hp > self.hp_max/10 and mob.hp > mob.hp_max/10:
@@ -287,7 +315,7 @@ class Player(Mob):
             direction = mob.try_to_escape()
             if direction:
               print(mob.name + " uciekł " + Konsola.direction_translator(direction))
-              return
+              return time_of_fight
         self.adjust_stamina(-5, -1)
 
       if mob.hp > mob.hp_max/10:
@@ -303,6 +331,8 @@ class Player(Mob):
           else:
             print(f'{mob.name} chybia')
           mob.adjust_stamina(-5, -1)
+      
+      time_of_fight += Player.TIME_OF_EXCHANGING_BLOWS
       Helper.sleep(1)
       Konsola.clear()
 
@@ -323,13 +353,13 @@ class Player(Mob):
           award_exp(0.5)
         direction = mob.try_to_escape()
         Konsola.print("Przeciwnik uciekł" + Konsola.direction_translator(direction), "cyan")
-        return
+        return time_of_fight
       else:
         if mob.exp > 0:
           award_exp(0.75)
         mob.try_to_escape(100)
         Konsola.print("Przeciwnik uciekł dziękując za łaskę", "cyan")
-        return
+        return time_of_fight
 
     elif 0 < self.hp < self.hp_max/5 and mob.hp > mob.hp_max/5:
       Konsola.print("Jesteś zbyt pobity by walczyć", "cyan")
@@ -357,9 +387,11 @@ class Player(Mob):
     else:
       Konsola.print("Obaj jesteście u kresu życia, żaden nie jest w stanie rozstrzygnąć walki.", "cyan")
       award_exp(0.5)
+    
+    return time_of_fight
         
 
-  def rest(self, how_long=""):
+  def rest(self, hours=""):
     resting_stories = [
       "Patrzysz na przelatujące obłoczki",
       "Drapiesz się po tyłku",
@@ -387,8 +419,8 @@ class Player(Mob):
     start_hp = self.hp
     start_stamina = self.stamina
     try:
-      how_long = int(how_long)
-      for i in range(how_long):
+      hours = int(hours)
+      for i in range(hours):
         self.hp += 3
         self.adjust_stamina(15, 2)
         Konsola.print_random(resting_stories)
@@ -404,12 +436,12 @@ class Player(Mob):
     end_hp = self.hp
     end_stamina = self.stamina
     Helper.sleep(1)
-    Konsola.print("Odpoczywałeś przez " + str(how_long) + " godzin", "green")
+    Konsola.print("Odpoczywałeś przez " + str(hours) + " godzin", "green")
     Konsola.print("Podczas odpoczynku odzyskałeś " + str(int(end_hp - start_hp)) + " zdrowia", "lgreen")
     Konsola.print("oraz odpocząłeś o " + str(int(end_stamina - start_stamina)) + " punktów staminy", "lyellow")
-    return how_long*3600
+    return hours*3600
 
-  def sleep(self, how_long=""):
+  def sleep(self, hours=""):
     bed = Helper.find_utility(self.my_square().utilities, "sleep")
     if not bed:
       Konsola.print("Tu nie ma na czym spać", "red")
@@ -419,8 +451,8 @@ class Player(Mob):
     start_stamina = self.stamina
     comfort_factor = bed.attr["comfort"]/100
     try:
-      how_long = int(how_long)
-      for i in range(how_long):
+      hours = int(hours)
+      for i in range(hours):
         self.hp += 10 * comfort_factor
         self.adjust_stamina(24*comfort_factor, 16*comfort_factor)
         Konsola.print_param("HP", self.hp, self.hp_max, "lred")
@@ -434,11 +466,11 @@ class Player(Mob):
     end_hp = self.hp
     end_stamina = self.stamina
     Helper.sleep(1)
-    Konsola.print("Spałeś " + str(how_long) + " godzin", "green")
+    Konsola.print("Spałeś " + str(hours) + " godzin", "green")
     Konsola.print("Podczas snu odzyskałeś " + str(int(end_hp - start_hp)) + " zdrowia", "lgreen")
     Konsola.print("oraz odpocząłeś o " + str(int(end_stamina - start_stamina)) + " punktów staminy", "lyellow")
 
-    return how_long*3600
+    return hours*3600
 
   def use_passage(self, direction):
     passages = self.current_location.secret_passages
@@ -461,8 +493,9 @@ class Player(Mob):
           print("Skorzystałeś z tajnego przejścia")
           Helper.sleep(1)
           self.my_square().show_square()
-          return
+          return Player.TIME_OF_MOVEMENT/self.stat_coefficient(self.speed)
     print("Chyba nie tędy droga...")
+    return 0
       
 
   def to_dict(self):
