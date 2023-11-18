@@ -1,9 +1,11 @@
 {
   "gameplay": 2,
   "player": {
+    "mob_id": 1,
     "x": 6,
     "y": 2,
     "z": 1,
+    "base_name": "Alwer",
     "name": "Alwer",
     "alias": [
       "alwer",
@@ -83,7 +85,14 @@
 			"Pierwsze zadanie od kowala": "Nie byłem jeszcze u kowala, może ma dla mnie jakieś ciekawe zadanie.",
 			"Pierwsze zadanie od zielarki": "Nie byłem jeszcze u zielarki, może ma dla mnie jakieś ciekawe zadanie.",
 			"Pierwsze zadanie od kapitana": "Nie byłem jeszcze u kapitana, może ma dla mnie jakieś ciekawe zadanie."
-		}
+		},
+    "killable": true,
+    "can_duel": true,
+    "is_aggressive": true,
+    "can_ally": true,
+    "affiliation": [
+      "Torenerg"
+    ]
   },
   "world": {
     "locations": [
@@ -1021,9 +1030,11 @@
         ],
         "mobs": [
           {
+            "mob_id": 2,
             "x": 6,
             "y": 2,
             "z": 1,
+            "base_name": "Kowal",
             "name": "Kowal Ben",
             "alias": [
               "kowal",
@@ -1211,12 +1222,21 @@
               ],
               "farewell": "Do miłego zobaczenia"
             },
-            "knowledge": {}
+            "knowledge": {},
+            "killable": false,
+            "can_duel": false,
+            "is_aggressive": false,
+            "can_ally": true,
+            "affiliation": [
+              "Torenerg"
+            ]
           },
           {
+            "mob_id": 3,
             "x": 6,
             "y": 1,
             "z": 1,
+            "base_name": "Zielarka",
             "name": "Zielarka Chloe",
             "alias": [
               "zielarka",
@@ -1390,12 +1410,21 @@
               ],
               "farewell": "Do miłego zobaczenia"
             },
-            "knowledge": {}
+            "knowledge": {},
+            "killable": false,
+            "can_duel": false,
+            "is_aggressive": false,
+            "can_ally": true,
+            "affiliation": [
+              "Torenerg"
+            ]
           },
           {
+            "mob_id": 4,
             "x": 4,
             "y": 0,
             "z": 1,
+            "base_name": "Kapitan",
             "name": "Kapitan Rodgier",
             "alias": [
               "kapitan rodgier",
@@ -1595,12 +1624,21 @@
               ],
               "farewell": "Do miłego zobaczenia"
             },
-            "knowledge": {}
+            "knowledge": {},
+            "killable": false,
+            "can_duel": true,
+            "is_aggressive": false,
+            "can_ally": true,
+            "affiliation": [
+              "Torenerg"
+            ]
           },
           {
+            "mob_id": 5,
             "x": 1,
             "y": 5,
             "z": 1,
+            "base_name": "Łotrzyk",
             "name": "Łotrzyk Uzjel",
             "alias": [
               "łotrzyk uzjel",
@@ -1744,12 +1782,19 @@
               ],
               "farewell": "Spadaj"
             },
-            "knowledge": {}
+            "knowledge": {},
+            "killable": true,
+            "can_duel": true,
+            "is_aggressive": true,
+            "can_ally": true,
+            "affiliation": []
           },
           {
+            "mob_id": 6,
             "x": 6,
             "y": 6,
             "z": 1,
+            "base_name": "Szczur",
             "name": "Szczur",
             "alias": [
               "szczur"
@@ -1792,7 +1837,71 @@
               "neck": {}
             },
             "conversations": {},
-            "knowledge": {}
+            "knowledge": {},
+            "killable": true,
+            "can_duel": true,
+            "is_aggressive": true,
+            "can_ally": true,
+            "affiliation": [
+              "szczury"
+            ]
+          },
+          {
+            "mob_id": 7,
+            "x": 6,
+            "y": 6,
+            "z": 1,
+            "base_name": "Szczur",
+            "name": "Szczur",
+            "alias": [
+              "szczur"
+            ],
+            "description": "Mały paskudny szczur.",
+            "lvl": 1,
+            "exp": 10,
+            "weight": 2,
+            "money": 0,
+            "race": "Szczur",
+            "proficiency": "gryzoń",
+            "params": {
+              "hp": 30,
+              "hp_max": 30,
+              "stamina": 100,
+              "stamina_max":100,
+              "stamina_total":200,
+              "mana": 0,
+              "mana_max": 0,
+              "satiation": 20,
+              "satiation_max": 25,
+              "hydration": 25,
+              "hydration_max": 25
+            },
+            "stats": {
+              "strength": 3,
+              "attack": 5,
+              "defence": 15,
+              "speed": 40,
+              "dexterity": 5,
+              "endurance": 30
+            },
+            "equipment": [],
+            "slots": {
+              "first_hand": {},
+              "second_hand": {},
+              "head": {},
+              "body": {},
+              "finger": {},
+              "neck": {}
+            },
+            "conversations": {},
+            "knowledge": {},
+            "killable": true,
+            "can_duel": true,
+            "is_aggressive": true,
+            "can_ally": true,
+            "affiliation": [
+              "szczury"
+            ]
           }
           
         ],

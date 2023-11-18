@@ -8,8 +8,8 @@ class Player(Mob):
   TIME_OF_ITEM_INTERACTION = 30
   TIME_OF_CONVERSATION = 90
   TIME_OF_EXCHANGING_BLOWS = 30
-  def __init__(self, x, y, z, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge):
-    super(Player, self).__init__(x, y, z, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge)
+  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, killable, can_duel, is_aggressive, can_ally, affiliation):
+    super(Player, self).__init__(mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, killable, can_duel, is_aggressive, can_ally, affiliation)
     self.quest_id = None
     self.picked_item = None
     self.droped_item = None
@@ -276,6 +276,7 @@ class Player(Mob):
       Konsola.print("Nie ma tu kogoś takiego", "red")
       return 0
 
+
     def player_and_mob_params():
       Konsola.print_param("Ja", self.hp, self.hp_max, "lred")
       Konsola.print_param("stamina", self.stamina, self.stamina_max, "lyellow")
@@ -504,6 +505,10 @@ class Player(Mob):
   
   @classmethod
   def from_dict(cls, data):
+    mob_id = data["mob_id"]
+    if mob_id in Mob.ids:
+      raise ValueError(f"Duplicate mob ID found: {mob_id}")
+    cls.ids[mob_id] = data["name"]
     eq = [Item.from_dict(item_data) for item_data in data["equipment"]]
     slots = data["slots"]
     for key in slots:
@@ -512,4 +517,4 @@ class Player(Mob):
       else:
         slots[key] = Item.from_dict(slots[key])
     
-    return cls(data["x"], data["y"], data["z"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"],data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"])
+    return cls(data["mob_id"], data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"],data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"], data["killable"], data["can_duel"], data["is_aggressive"], data["can_ally"], data["affiliation"])

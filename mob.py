@@ -5,12 +5,14 @@ import math #ceil damage
 import random #for escape
 
 class Mob:
-  
-  def __init__(self, x, y, z, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge):
+  ids = {}
+  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, killable, can_duel, is_aggressive, can_ally, affiliation):
+    self.mob_id = mob_id
     self.x = x
     self.y = y
     self.z = z
     self.current_location = None
+    self.base_name = base_name
     self.name = name
     self.alias = alias
     self.description = description
@@ -27,6 +29,11 @@ class Mob:
     self.conversations = conversations
     self.knowledge = knowledge
 
+    self.killable = killable
+    self.can_duel = can_duel
+    self.is_aggressive = is_aggressive
+    self.can_ally = can_ally
+    self.affiliation = affiliation
     self.direction_history = {
       "n": 0,
       "s": 0,
@@ -499,9 +506,11 @@ class Mob:
         slots_dict[key] = value.to_dict()
     
     return {
+      "mob_id": self.mob_id,
       "x": self.x, 
       "y": self.y,
       "z": self.z,
+      "base_name": self.base_name,
       "name": self.name,
       "alias": self.alias,
       "description": self.description,
@@ -516,11 +525,22 @@ class Mob:
       "equipment": [item.to_dict() for item in self.equipment],
       "slots": slots_dict,
       "conversations": self.conversations,
-      "knowledge": self.knowledge
+      "knowledge": self.knowledge,
+      "killable": self.killable,
+      "can_duel": self.can_duel,
+      "is_aggressive": self.is_aggressive,
+      "can_ally": self.can_ally,
+      "affiliation": self.affiliation
     }
 
   @classmethod
   def from_dict(cls, data):
+    mob_id = data["mob_id"]
+    if mob_id in cls.ids:
+      raise ValueError(f"Duplicate mob ID found: {mob_id}")
+    cls.ids[mob_id] = data["name"]
+
+
     eq = [Item.from_dict(item_data) for item_data in data["equipment"]]
     slots = data["slots"]
     for key in slots:
@@ -530,7 +550,7 @@ class Mob:
         slots[key] = Item.from_dict(slots[key])
     
     try:
-      mob = cls(data["x"], data["y"], data["z"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"])
+      mob = cls(mob_id, data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"], data["killable"], data["can_duel"],data["is_aggressive"], data["can_ally"], data["affiliation"])
       return mob
     except TypeError:
       print("Nie udało się wczytać danych.")
