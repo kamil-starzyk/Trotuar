@@ -153,6 +153,10 @@ class Game:
       if choice == 2:
         exit()
       
+    # szczur = Helper.find_item(self.world.locations[0].mobs, "szczur")
+    # for i in range(int(self.time.time_passed/60)):
+    #   if szczur.random_walk():
+    #     szczur.my_square().show_square()
     
 
 

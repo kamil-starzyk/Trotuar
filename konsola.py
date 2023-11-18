@@ -67,7 +67,7 @@ class Konsola:
   def prompt(cls, player):
     command = []
     while not command:
-      print(f_lmagenta, end="")
+      print(f_lgreen, end="")
       print("<HP: {}/{} Mana: {}/{}> ".format(player.hp, player.hp_max, player.mana, player.mana_max), end="")
       print(c_reset, end="")
 

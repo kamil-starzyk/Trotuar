@@ -17,7 +17,7 @@ class Square:
   def show_square(self):
     Konsola.print(self.name, "lyellow")
     Konsola.wrap(self.description, "lwhite")
-    Konsola.print("Wyjścia: ", "red", line_end=" ")
+    Konsola.print("Wyjścia: ", "lred", line_end=" ")
     for e in self.exits:
       print(e, end=" ")
     print('')
@@ -27,9 +27,10 @@ class Square:
       if mob.x == self.x and mob.y == self.y and mob.z == self.z:
         mobs.append(mob)
     if len(mobs) > 0:
-      Konsola.print("Istoty: ", "lgreen")
+      Konsola.print("Istoty: ", "lmagenta")
       for mob in mobs:
         print("  "+mob.name)
+        pass
 
     if len(self.items) > 0:
       Konsola.print("Przedmioty: ", "lcyan")

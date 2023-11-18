@@ -27,6 +27,17 @@ class Mob:
     self.conversations = conversations
     self.knowledge = knowledge
 
+    self.direction_history = {
+      "n": 0,
+      "s": 0,
+      "e": 0,
+      "w": 0,
+      "u": 0,
+      "d": 0,
+    }
+    self.still_count = 1
+  
+
   def see_more(self):
     Konsola.print(self.name, "lcyan")
     Konsola.print(self.description, "lwhite")
@@ -185,6 +196,60 @@ class Mob:
         damage = self.damage(mob)
 
     return damage
+  
+  def random_walk(self):
+    exits = self.my_square().exits
+    #im dłużej stoi tym większa szansa, że się ruszy
+    is_moving = any(count > 0 for count in self.direction_history.values())
+
+    if self.still_count > 0:
+      wants_to_move = random.randint(0,10)
+      if wants_to_move + self.still_count > 10:
+        self.still_count = 0
+        e = random.choice(exits)
+        self.direction_history[e] = 10
+        print("    Mob decided to move "+ e)
+        self.move_in_direction(e)
+        return 1
+      else:
+        self.still_count+=1
+        print("    Mob stays still")
+        
+    
+    
+
+    elif is_moving:
+      direction = max(self.direction_history, key=self.direction_history.get)
+      wants_to_stop = random.randint(0,10) + self.direction_history[direction]
+      wants_to_change_direction = random.randint(0,10) + self.direction_history[direction]
+      if direction not in exits:
+        wants_to_change_direction = 100 + random.randint(-1,1)
+        wants_to_stop = 100
+        direction = random.choice(exits)
+      
+      
+      if wants_to_change_direction > wants_to_stop and wants_to_change_direction > 13:
+        e = direction
+        while e==direction and len(exits) > 1:
+          e = random.choice(exits)
+        self.direction_history[direction] = 0
+        self.direction_history[e] = 1
+        print("    Mob decided to switch direction to "+ e)
+        self.move_in_direction(e)
+        return 1
+        
+      elif wants_to_stop >= wants_to_change_direction and wants_to_stop > 13:
+        self.direction_history[direction] = 0
+        self.still_count+=1
+        print("    Mob decided to stop ")
+        
+
+      else:
+        print("    Mob keeps moving "+ direction)
+        self.direction_history[direction] +=1
+        self.move_in_direction(direction)
+        return 1
+        
 
   def damage_multiplier(self):
     min_range = int(30 + 15*(self.dexterity / 50))

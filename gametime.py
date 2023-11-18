@@ -11,6 +11,8 @@ class GameTime:
     self.w = w
     self.sn = sn
     self.y = y
+
+    self.time_passed = 0
     self.time_of_day = None
     self.times_of_day = {
       (0, 6): "noc",
@@ -36,7 +38,9 @@ class GameTime:
     SEASONS_PER_YEAR = 4
 
     # Increment seconds and handle overflow
+    self.time_passed = int(sec)
     self.s += int(sec)
+
 
     # Update time based on seconds
     if self.s >= SECONDS_PER_MINUTE:
