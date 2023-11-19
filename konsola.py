@@ -298,18 +298,31 @@ class Konsola:
       time.sleep(0.3)
 
   @classmethod
-  def direction_translator(cls, direction):
+  def direction_translator(cls, direction, opposite=False):
     direction_map = {
       ("n", "north"): "na północ",
       ("e", "east"): "na wschód",
       ("s", "south"): "na południe",
       ("w", "west"): "na zachód",
       ("u", "up"): "w górę",
-      ("d", "down"): "w górę",
+      ("d", "down"): "w dół",
     }
-    for d in direction_map:
-      if direction in d:
-        return direction_map[d]
+    opposite_map = {
+      ("n", "north"): "z południa",
+      ("e", "east"): "z zachodu",
+      ("s", "south"): "z północy",
+      ("w", "west"): "ze wschodu",
+      ("u", "up"): "z dołu",
+      ("d", "down"): "z góry",
+    }
+    if opposite:
+      for d in opposite_map:
+        if direction in d:
+          return opposite_map[d]
+    else:
+      for d in direction_map:
+        if direction in d:
+          return direction_map[d]
   @classmethod
   def color_parser(cls, f, b):
     if f != "reset":

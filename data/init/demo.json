@@ -1852,20 +1852,20 @@
             "y": 6,
             "z": 1,
             "base_name": "Szczur",
-            "name": "Szczur",
+            "name": "Duży Szczur",
             "alias": [
               "szczur"
             ],
             "description": "Mały paskudny szczur.",
             "lvl": 1,
-            "exp": 10,
-            "weight": 2,
+            "exp": 15,
+            "weight": 3,
             "money": 0,
             "race": "Szczur",
             "proficiency": "gryzoń",
             "params": {
-              "hp": 30,
-              "hp_max": 30,
+              "hp": 40,
+              "hp_max": 40,
               "stamina": 100,
               "stamina_max":100,
               "stamina_total":200,
@@ -1877,12 +1877,12 @@
               "hydration_max": 25
             },
             "stats": {
-              "strength": 3,
-              "attack": 5,
+              "strength": 5,
+              "attack": 7,
               "defence": 15,
-              "speed": 40,
+              "speed": 30,
               "dexterity": 5,
-              "endurance": 30
+              "endurance": 35
             },
             "equipment": [],
             "slots": {

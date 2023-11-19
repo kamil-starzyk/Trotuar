@@ -52,8 +52,8 @@ class Mob:
     self.outfit()
 
 
-  def pick_up(self, item_name):
-    item = Helper.find_item(self.my_square().items, item_name)
+  def pick_up(self, item_name, player=False):
+    item = Helper.find_item(self.my_square().items, item_name, player)
     if item:
       self.my_square().items.remove(item)
       item_in_eq = Helper.is_item_in_list(item, self.equipment)
@@ -64,8 +64,8 @@ class Mob:
       return item
     return 0
   
-  def drop(self, item_name):
-    item = Helper.find_item(self.equipment, item_name)
+  def drop(self, item_name, player=False):
+    item = Helper.find_item(self.equipment, item_name, player)
     if item:
       if item.stackable() and item.amount > 1:
         print("Jaką ilość chcesz wyrzucić? (max: " + str(item.amount) + ")")
@@ -85,20 +85,20 @@ class Mob:
       return item
     return 0
 
-  def use(self, item_name):
+  def use(self, item_name, player=False):
     pass
   
-  def equip(self, item_name):
-    item = Helper.find_item(self.equipment, item_name)
+  def equip(self, item_name, player=False):
+    item = Helper.find_item(self.equipment, item_name, player)
     if item and 'body_part' in item.attr:
       self.slots[item.attr['body_part']] = item
       self.equipment.remove(item)
       return item
     return 0
   
-  def unequip(self, item_name):
+  def unequip(self, item_name, player=False):
     items = [item for item in self.slots.values() if item is not None]
-    item = Helper.find_item(items, item_name)
+    item = Helper.find_item(items, item_name, player)
     if item:
       self.slots[item.attr['body_part']] = None
       self.equipment.append(item)
@@ -215,12 +215,12 @@ class Mob:
         self.still_count = 0
         e = random.choice(exits)
         self.direction_history[e] = 10
-        print("    Mob decided to move "+ e)
+        # print("    Mob decided to move "+ e)
         self.move_in_direction(e)
-        return 1
+        return e
       else:
         self.still_count+=1
-        print("    Mob stays still")
+        # print("    Mob stays still")
         
     
     
@@ -241,21 +241,21 @@ class Mob:
           e = random.choice(exits)
         self.direction_history[direction] = 0
         self.direction_history[e] = 1
-        print("    Mob decided to switch direction to "+ e)
+        # print("    Mob decided to switch direction to "+ e)
         self.move_in_direction(e)
-        return 1
+        return e
         
       elif wants_to_stop >= wants_to_change_direction and wants_to_stop > 13:
         self.direction_history[direction] = 0
         self.still_count+=1
-        print("    Mob decided to stop ")
+        # print("    Mob decided to stop ")
         
 
       else:
-        print("    Mob keeps moving "+ direction)
+        # print("    Mob keeps moving "+ direction)
         self.direction_history[direction] +=1
         self.move_in_direction(direction)
-        return 1
+        return direction
         
 
   def damage_multiplier(self):

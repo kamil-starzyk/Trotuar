@@ -35,6 +35,7 @@ class Game:
   def load_game(self, path):
     data = MyJson.load_json("data/saves/"+path)
     self.player = Player.from_dict(data["player"])
+    self.player.game = self
     self.world = World.from_dict(data["world"])
     self.time = GameTime.from_dict(data["time"])
     self.quests = [Quest.from_dict(data) for data in data["quests"]] 
@@ -48,6 +49,7 @@ class Game:
   def demo(self):
     data = MyJson.load_json("data/init/demo.json")
     self.player = Player.from_dict(data["player"])
+    self.player.game = self
     self.world = World.from_dict(data["world"])
     self.time = GameTime.from_dict(data["time"])
     self.quests = [Quest.from_dict(data) for data in data["quests"]]
@@ -79,7 +81,7 @@ class Game:
 
 
 
-  def update_state(self):
+  def update_state(self, sec):
     for quest in self.quests:
       if self.player.quest_id:
         if quest.id == self.player.quest_id:
@@ -152,11 +154,35 @@ class Game:
       choice = Konsola.int_input(1,2)
       if choice == 2:
         exit()
-      
-    # szczur = Helper.find_item(self.world.locations[0].mobs, "szczur")
-    # for i in range(int(self.time.time_passed/60)):
-    #   if szczur.random_walk():
-    #     szczur.my_square().show_square()
+    
+    # docelowo tu będą moby, które są nota bene mobilne. Na razie to są tylko szczury
+    rats = [mob for mob in self.player.current_location.mobs if mob.base_name == "Szczur"]
+
+    seconds = int(sec)
+    minutes = seconds // 60
+    def loop_body():
+      for rat in rats:
+        is_mob_on_square = True if rat.my_square() == self.player.my_square() else False
+
+        #direction = rat.random_walk()
+        direction = None
+        if is_mob_on_square and direction:
+          direction = Konsola.direction_translator(direction)
+          Konsola.print("  " + rat.name + " odszedł " + direction, "magenta")
+        if direction and rat.my_square() == self.player.my_square():
+          direction = Konsola.direction_translator(direction, True)
+          Konsola.print("  " + rat.name + " przyszedł " + direction, "lmagenta")
+
+    for _ in range(minutes):
+      loop_body()
+
+      self.time.time_progress(60)
+      seconds -= 60
+    
+    if seconds > 0:
+      loop_body()
+      self.time.time_progress(seconds)
+
     
 
 

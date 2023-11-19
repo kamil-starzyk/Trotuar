@@ -109,6 +109,4 @@ while True:
     except TypeError:
       seconds = 0
       
-    game.time.time_progress(seconds)
-    game.time.show_time(True)
-    game.update_state()
+    game.update_state(seconds)

@@ -43,7 +43,7 @@ class Helper:
     return next((i for i in list if i.name == item.name), False)
     
   @classmethod
-  def find_item(cls, item_list, item_name):
+  def find_item(cls, item_list, item_name, player_decide=False):
     hit = []
     for i in item_list:
       if item_name in i.alias:
@@ -51,9 +51,11 @@ class Helper:
     
     if len(hit) == 1:
       return hit[0]
-    elif len(hit) > 1:
+    elif len(hit) > 1 and player_decide:
       print("O co Ci dokładnie chodzi?")
       return cls.chose_one_item(hit)
+    elif len(hit) > 1:
+      return random.choice(hit)
     else:
       return 0
   
