@@ -72,9 +72,17 @@ class Player(Mob):
     Konsola.print("Nie masz takiej rzeczy w ekwipunku", "red")
     return 0
 
+  def use(self, item_name):
+    item, effects = super().use(item_name, True)
+    if effects:
+      Konsola.print("Zużyłeś ", line_end='')
+      Konsola.print(item.name, "lwhite")
+      print("Efekty: ")
+      for e in effects:
+        print(e + ": +" +str(effects[e]))
   
   def give(self, item_name):
-    item = Helper.find_item(self.equipment, item_name)
+    item = Helper.find_item(self.equipment, item_name, True)
     if item:
       mobs = self.current_location.mobs_on_square(self.my_square())
       mob = None
@@ -83,7 +91,7 @@ class Player(Mob):
       else:
         Konsola.print("Komu chcesz przekazać " + item.name +"?", "lcyan", line_end=' ')
         mob_name = input()
-        mob = Helper.find_item(mobs, mob_name)
+        mob = Helper.find_item(mobs, mob_name, True)
       if mob:
         if item.stackable() and item.amount > 1:
           print("Jaką ilość chcesz podarować? (max: " + str(item.amount) + ")")
@@ -106,25 +114,32 @@ class Player(Mob):
     return 0
 
   def see(self, item_name):
-    item = Helper.find_item(self.equipment, item_name)
+    item = Helper.find_item(self.equipment, item_name, True)
     if item:
       item.see_more()
       return 1
-    item = Helper.find_item(self.my_square().items, item_name)
+    item = Helper.find_item(self.my_square().items, item_name, True)
     if item:
       item.see_more()
       return 1
-    utility = Helper.find_item(self.my_square().utilities, item_name)
+    utility = Helper.find_item(self.my_square().utilities, item_name, True)
     if utility:
       utility.see_more()
       return 1
     mobs = self.current_location.mobs_on_square(self.my_square())
-    mob = Helper.find_item(mobs, item_name)
+    mob = Helper.find_item(mobs, item_name, True)
     if mob: 
       mob.see_more()
       return 1
     Konsola.print("Nie ma tu takiej rzeczy, ani nie masz jej w ekwipunku. Nie ma tu także takiej osoby.", "red")
   
+  def search_utility(self, item_name):
+    utility = Helper.find_item(self.my_square().utilities, item_name, True)
+    if utility:
+      utility.show_items()
+      return 1
+    Konsola.print("Nie ma tu takiej rzeczy.", "red")
+
   def equip(self, item_name):
     item = super().equip(item_name, True)
     if item:
@@ -197,7 +212,7 @@ class Player(Mob):
 
   def talk_to(self, mob_name):
     mobs = self.current_location.mobs_on_square(self.my_square())
-    mob = Helper.find_item(mobs, mob_name)
+    mob = Helper.find_item(mobs, mob_name, True)
     if mob: 
       if mob.conversations:
         Konsola.print(mob.conversations["greeting"], "lwhite")
@@ -211,7 +226,7 @@ class Player(Mob):
 
   def compare(self, mob_name):
     mobs = self.current_location.mobs_on_square(self.my_square())
-    mob = Helper.find_item(mobs, mob_name)
+    mob = Helper.find_item(mobs, mob_name, True)
     if mob: 
       Konsola.print("Porównujesz się z " + mob.name, "lwhite")
       Konsola.hr()
@@ -265,13 +280,14 @@ class Player(Mob):
       else:
         Konsola.print("Przeciwnik wygląda jakby czuł się doskonale", "lgreen")
 
+
   def kill(self, mob_name):
     if self.stamina <= 10:
       print("Nie masz siły walczyć")
       return 0
     
     mobs = self.current_location.mobs_on_square(self.my_square())
-    mob = Helper.find_item(mobs, mob_name)
+    mob = Helper.find_item(mobs, mob_name, True)
 
     if not mob:
       Konsola.print("Nie ma tu kogoś takiego", "red")
@@ -279,15 +295,18 @@ class Player(Mob):
 
     enemies = []
     enemies.append(mob)
+    current_enemy_index = 0
 
     def player_and_mob_params():
+      Konsola.clear()
       Konsola.print_param("Ja", self.hp, self.hp_max, "lred")
       Konsola.print_param("stamina", self.stamina, self.stamina_max, "lyellow")
       Konsola.print_param("mana", self.mana, self.mana_max, "lblue")
       for mob in enemies:
-        print("")
-        Konsola.print_param(mob.name, mob.hp, mob.hp_max, "red")
-        Konsola.print_param("stamina", mob.stamina, mob.stamina_max, "yellow")
+        if mob.hp > 0:
+          print("")
+          Konsola.print_param(mob.name, mob.hp, mob.hp_max, "red")
+          Konsola.print_param("stamina", mob.stamina, mob.stamina_max, "yellow")
     
     def award_exp(mob, fraction=1):
       Konsola.print("  Zdobywasz: ", line_end="")
@@ -301,6 +320,18 @@ class Player(Mob):
       Konsola.print(str(mob.money) + " złota", "lyellow")
       self.money+=mob.money
       mob.money = 0
+    
+    def check_for_more_enemies():
+      if len(enemies) > 0:
+        mobs = self.current_location.mobs_on_square(self.my_square())
+        rats = [mob for mob in mobs if mob.base_name == "Szczur"]
+        for rat in rats:
+          if rat not in enemies and any(affiliation in rat.affiliation for affiliation in enemies[0].affiliation):
+            enemies.append(rat)
+            print('')
+            Konsola.print(rat.name + " dołączył do walki", "lred")
+            rat.try_to_draw_weapon()
+            Helper.sleep(0.5)
       
     mob.try_to_draw_weapon()
     print("Walczysz z " + mob.name)
@@ -310,22 +341,59 @@ class Player(Mob):
         Konsola.print("Odpocznij!!!", "lred")
         self.adjust_stamina(5, 0.5)
       else:
-        damage_given = self.hit(mob)
-        if damage_given:
-          mob.hp -= damage_given
-          Konsola.damage_given(True, mob, damage_given)
-          mob.adjust_stamina(-damage_given/2, -damage_given/4)
-        else:
-          print("Chybiłeś")
-          if mob.hp <= mob.hp_max/2:
-            direction = mob.try_to_escape()
-            if direction:
-              print(mob.name + " uciekł " + Konsola.direction_translator(direction))
-              return 0
-          self.adjust_stamina(-5, -1)
+        choice = Konsola.dynamic_prompt()
+
+        
+        if choice in ("next", "n"):
+          current_enemy_index = (current_enemy_index + 1) % len(enemies)
+          mob = enemies[current_enemy_index]
+          Konsola.print("  Teraz atakujesz " + mob.name, "yellow")
+          choice = Konsola.dynamic_prompt()
+          
+        elif choice in ("prev", "p"):
+          current_enemy_index = (current_enemy_index - 1) % len(enemies)
+          mob = enemies[current_enemy_index]
+          Konsola.print("  Teraz atakujesz " + mob.name, "yellow")
+          choice = Konsola.dynamic_prompt()
+        
+        if choice in ("/", "?"):
+          combat_actions = {
+            ("next", "n"): "Następny przeciwnik",
+            ("prev", "p"): "Poprzedni przeciwnik",
+            ("cios", "c"): "Prosty cios",
+            ("garda", "g"): "Czekaj",
+          }
+          for c in combat_actions:
+            print(c , end=' - ')
+            print(combat_actions[c])
+          input("Kontynuuj walkę")
+
+        elif choice in ("garda", "g"):
+          Konsola.print("Czekasz", "lred")
+          self.adjust_stamina(5, 0.5)
+
+        elif choice in ("cios", "c") or 1:
+          damage_given = self.hit(mob)
+          if damage_given:
+            mob.hp -= damage_given
+            Konsola.damage_given(True, mob, damage_given)
+            mob.adjust_stamina(-damage_given/2, -damage_given/4)
+          else:
+            print("Chybiłeś")
+            if mob.hp <= mob.hp_max/2:
+              direction = mob.try_to_escape()
+              if direction:
+                Konsola.print("  " + mob.name + " uciekł " + Konsola.direction_translator(direction), "cyan")
+                Helper.sleep(0.5)
+                enemies.remove(mob)
+            self.adjust_stamina(-5, -1)
+
+        
         time_of_action = Player.TIME_OF_EXCHANGING_BLOWS/self.stat_coefficient(self.speed)
         self.game.time.time_progress(time_of_action)
         Helper.sleep(0.5)
+
+
       for mob in enemies:
         if mob.hp > mob.hp_max/10:
           if mob.stamina <= 11:
@@ -343,18 +411,19 @@ class Player(Mob):
             time_of_action = Player.TIME_OF_EXCHANGING_BLOWS/self.stat_coefficient(self.speed)
             self.game.time.time_progress(time_of_action)
             Helper.sleep(0.5)
+
+        elif 0 < mob.hp <= mob.hp_max/10 and len(enemies)>1:
+          direction = mob.try_to_escape(100)
+          if direction:
+            Konsola.print("  " + mob.name + " uciekł " + Konsola.direction_translator(direction), "cyan")
+            Helper.sleep(0.5)
+            enemies.remove(mob)
       
-      mobs = self.current_location.mobs_on_square(self.my_square())
-      rats = [mob for mob in mobs if mob.base_name == "Szczur"]
-      for rat in rats:
-        if rat not in enemies and any(affiliation in rat.affiliation for affiliation in enemies[0].affiliation):
-          enemies.append(rat)
-          Konsola.print(rat.name + " dołączył do walki", "lred")
+      check_for_more_enemies()
 
       Helper.sleep(0.5)
-      Konsola.clear()
 
-    if 0 < mob.hp < mob.hp_max/5 and self.hp > self.hp_max/5:
+    if 0 < mob.hp < mob.hp_max/10 and self.hp > self.hp_max/10:
       Konsola.print("Twój przeciwnik chwieje się na nogach i nie jest w stanie walczyć. Co robisz?", "cyan")
       print("[1] Dobij go!")      
       print("[2] Daruj życie i pozwól odejść")      
@@ -369,7 +438,7 @@ class Player(Mob):
           award_money(mob)
         if mob.exp > 0:
           award_exp(mob, 0.5)
-        direction = mob.try_to_escape()
+        direction = mob.try_to_escape(100)
         Konsola.print("Przeciwnik uciekł" + Konsola.direction_translator(direction), "cyan")
         return 0
       else:
@@ -379,7 +448,7 @@ class Player(Mob):
         Konsola.print("Przeciwnik uciekł dziękując za łaskę", "cyan")
         return 0
 
-    elif 0 < self.hp < self.hp_max/5 and mob.hp > mob.hp_max/5:
+    elif 0 < self.hp < self.hp_max/10 and mob.hp > mob.hp_max/10:
       Konsola.print("Jesteś zbyt pobity by walczyć", "cyan")
       wants_to_kill_you = Helper.random()
       if wants_to_kill_you > 60:
@@ -390,21 +459,23 @@ class Player(Mob):
       else:
         Konsola.print("Przeciwnik daruje Ci życie", "cyan")
     
-
-    if self.hp > 0 and mob.hp == 0:
-      Konsola.print("Pokonałeś " + mob.name, "lgreen")
-      if mob.money > 0:
-        award_money(mob)
-      if mob.exp > 0:
-        award_exp(mob)
-      mob.die()
+    if self.hp > 0:
+      for mob in enemies:
+        if mob.hp == 0:
+          Konsola.print("Pokonałeś " + mob.name, "lgreen")
+          if mob.money > 0:
+            award_money(mob)
+          if mob.exp > 0:
+            award_exp(mob)
+          mob.die()
         
     elif self.hp == 0 and mob.hp > 0:
       Konsola.print("Zostałeś pokonany przez " + mob.name, "lred")
     
     else:
-      Konsola.print("Obaj jesteście u kresu życia, żaden nie jest w stanie rozstrzygnąć walki.", "cyan")
+      Konsola.print("Nie jesteście w stanie rozstrzygnąć walki.", "cyan")
       award_exp(mob, 0.5)
+    
     
     return 0
         

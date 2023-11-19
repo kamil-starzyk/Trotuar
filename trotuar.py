@@ -38,6 +38,12 @@ while True:
   "podnieś" :   player.pick_up,
   "upuść" :     player.drop,
   "upusc" :     player.drop,
+  "zjedz" :     player.use,
+  "wypij" :     player.use,
+  "zużyj" :     player.use,
+  "użyj" :      player.use,
+  "zuzyj" :     player.use,
+  "uzyj" :      player.use,
   "zobacz" :    player.see,
   "załóż" :     player.equip,
   "zaloz" :     player.equip,
@@ -47,6 +53,8 @@ while True:
   "outfit" :    player.outfit,
   "ubiór" :     player.outfit,
   "ubior" :     player.outfit,
+  "przeszukaj": player.search_utility,
+  "search":     player.search_utility,
 
   "stats":      player.show_stats,
   "statystyki": player.show_stats,
@@ -95,10 +103,9 @@ while True:
       if isinstance(action, tuple):
         seconds = action[0](action[1])
       elif argument:
-        try:
+        
           seconds = action(argument)
-        except TypeError:
-          Konsola.print("To polecenie jest jednowyrazowe!", "red")
+        
       else: 
         try:
           seconds = action()

@@ -1,6 +1,7 @@
 from helper import Helper
 from konsola import Konsola
 from item import Item
+from utility import Utility
 import math #ceil damage
 import random #for escape
 
@@ -86,7 +87,18 @@ class Mob:
     return 0
 
   def use(self, item_name, player=False):
-    pass
+    item = Helper.find_item(self.equipment, item_name, player)
+    effects = {}
+    if item and item.type == "Consumable":
+      consumable_attr = ["hp", "stamina", "mana", "satiation", "hydration"]
+      for attr_name, attr_value in item.attr.items():
+        
+        if attr_name in consumable_attr:
+          setattr(self, attr_name, getattr(self, attr_name) + attr_value)
+          effects[attr_name] = attr_value
+        
+    return item, effects
+
   
   def equip(self, item_name, player=False):
     item = Helper.find_item(self.equipment, item_name, player)
@@ -305,13 +317,18 @@ class Mob:
     return coefficient 
 
   def die(self):
-    for i in self.equipment:
-      self.equipment.remove(i)
-      self.my_square().items.append(i)
     for k, v in self.slots.items():
-      self.my_square().items.append(v)
-      self.slots[k] = None
-    dead_body = Item("Corpse", ["trup", "ciało", "cialo"], "Ciało "+self.name, self.description, )
+      if v:
+        self.my_square().items.append(v)
+        self.slots[k] = None
+    aliases = ["trup", "ciało", "cialo", "martwy "+self.name]
+    aliases = aliases + self.alias
+    dead_body = Utility("Corpse", aliases, "Martwy "+self.name, self.description, 0, 1, {}, self.equipment, 0, {"search": "Przeszukaj"})
+    self.my_square().utilities.append(dead_body)
+    self.my_square().description += " Leży tu [i]martwy " + self.name +"[/i]. "
+    self.x=0
+    self.y=0
+    self.z=0
   
   def rest(self, how_long):
     try:

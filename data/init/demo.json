@@ -33,7 +33,7 @@
     },
     "stats": {
       "strength": 10,
-      "attack": 15,
+      "attack": 10,
       "defence": 10,
       "speed": 10,
       "dexterity": 15,
@@ -124,7 +124,7 @@
                   "naszyjnik"
                 ],
                 "name": "Naszyjnik z Kandoru",
-                "description": "Piękny, złoty naszyjnik stworzony z kilku nakładających się na siebie łańcuszków",
+                "description": "Piękny, złoty naszyjnik stworzony z kilku nakładających się na siebie łańcuszków.",
                 "weight": 0.5,
                 "price": 220,
                 "attr": {
@@ -197,7 +197,7 @@
             "y": 2,
             "z": 1,
             "name": "Kuźnia",
-            "description": "Oto warsztat miejscowego kowala. Stoi tu [i]palenisko[/i], a przy nim [i]miech[/i]. Obok jest [i]kowadło[/i] oraz [i]brus[/i]. Wyjście jest na zachodzie. [i]Radujmy się naszą Polską[/i]",
+            "description": "Oto warsztat miejscowego kowala. Stoi tu [i]palenisko[/i], a przy nim [i]miech[/i]. Obok jest [i]kowadło[/i] oraz [i]brus[/i]. Wyjście jest na zachodzie. [i]Radujmy się naszą Polską[/i].",
             "exits": [
               "w"
             ],
@@ -264,7 +264,7 @@
             "y": 1,
             "z": 1,
             "name": "Ulica",
-            "description": "Przechadzasz się ulicami miasta",
+            "description": "Przechadzasz się ulicami miasta.",
             "exits": [
               "e",
               "s",
@@ -278,7 +278,7 @@
             "y": 1,
             "z": 1,
             "name": "Ulica",
-            "description": "Przechadzasz się ulicami miasta. Na północy widzisz wejście do małego domku",
+            "description": "Przechadzasz się ulicami miasta. Na północy widzisz wejście do małego domku.",
             "exits": [
               "n",
               "e",
@@ -292,7 +292,7 @@
             "y": 1,
             "z": 1,
             "name": "Ulica",
-            "description": "Przechadzasz się ulicami miasta",
+            "description": "Przechadzasz się ulicami miasta.",
             "exits": [
               "s",
               "w"
@@ -319,7 +319,7 @@
             "y": 2,
             "z": 1,
             "name": "Ulica",
-            "description": "Przechadzasz się ulicami miasta",
+            "description": "Przechadzasz się ulicami miasta.",
             "exits": [
               "n",
               "s"
@@ -332,7 +332,7 @@
             "y": 3,
             "z": 1,
             "name": "Ulica",
-            "description": "Przechadzasz się ulicami miasta",
+            "description": "Przechadzasz się ulicami miasta.",
             "exits": [
               "n",
 							"s"
@@ -345,7 +345,7 @@
             "y": 3,
             "z": 1,
             "name": "Ulica",
-            "description": "Przechadzasz się ulicami miasta",
+            "description": "Przechadzasz się ulicami miasta.",
             "exits": [
               "n",
 							"s"
@@ -387,7 +387,7 @@
             "y": 4,
             "z": 1,
             "name": "Główna ulica",
-            "description": "Przechadzasz się główną ulicą. ",
+            "description": "Przechadzasz się główną ulicą.",
             "exits": [
               "e",
               "s",
@@ -401,7 +401,7 @@
             "y": 4,
             "z": 1,
             "name": "Główna ulica",
-            "description": "Przechadzasz się główną ulicą. ",
+            "description": "Przechadzasz się główną ulicą.",
             "exits": [
               "n",
               "w"
@@ -505,7 +505,7 @@
             "y": 6,
             "z": 2,
             "name": "Pokój",
-            "description": "Mały, kolorowy pokoik. Jest tu [i]skrzynia[/i] i [i]łóżko[/i]",
+            "description": "Mały, kolorowy pokoik. Jest tu [i]skrzynia[/i] i [i]łóżko[/i].",
             "exits": [
               "e"
             ],
@@ -523,10 +523,10 @@
                 "attr": {},
                 "items": [],
                 "money": 0,
-                "actions": [
-                  "open",
-                  "search"
-                ]
+                "actions": {
+                  "open": "Otwórz",
+                  "search": "Przeszukaj"
+                }
               },
               {
                 "type": "Furniture",
@@ -545,10 +545,10 @@
                 },
                 "items": [],
                 "money": 0,
-                "actions": [
-                  "sleep",
-                  "sit"
-                ]
+                "actions": {
+                  "sleep": "Śpij",
+                  "sit": "Usiądź"
+                }
               }
             ],
             "items": []
@@ -558,7 +558,7 @@
             "y": 5,
             "z": 2,
             "name": "Pokój",
-            "description": "Mały pokoik. Jest tu skrzynia i łóżko",
+            "description": "Mały pokoik. Jest tu skrzynia i łóżko.",
             "exits": [
               "s"
             ],
@@ -570,7 +570,7 @@
             "y": 5,
             "z": 1,
             "name": "Ulica",
-            "description": "Przechadzasz się ulicami miasta",
+            "description": "Przechadzasz się ulicami miasta.",
             "exits": [
               "n",
 							"s"
@@ -583,7 +583,7 @@
             "y": 6,
             "z": 1,
             "name": "Ulica",
-            "description": "Przechadzasz się ulicami miasta",
+            "description": "Przechadzasz się ulicami miasta.",
             "exits": [
               "n"
             ],
@@ -834,7 +834,7 @@
             "y": 0,
             "z": 2,
             "name": "Wieża",
-            "description": "Idziesz po krętych schodach wewnątrz kamiennej wieży. Odrobina światła wpada do środka przez świetliki w ścianach. Schody prowadzą do klapy w drewnianym suficie oraz w dół na parter",
+            "description": "Idziesz po krętych schodach wewnątrz kamiennej wieży. Odrobina światła wpada do środka przez świetliki w ścianach. Schody prowadzą do klapy w drewnianym suficie oraz w dół na parter.",
             "exits": [
               "u",
               "d"
@@ -877,7 +877,7 @@
             "y": 1,
             "z": 0,
             "name": "Wejście do kanałów",
-            "description": "Jestś na początku kanałów odprowadzających nieczystości z miasta. Uderza Cię w nozdrza przykry zapach. Ściek ciągnie się na wschód",
+            "description": "Jestś na początku kanałów odprowadzających nieczystości z miasta. Uderza Cię w nozdrza przykry zapach. Ściek ciągnie się na wschód.",
             "exits": [
               "e",
               "u"
@@ -916,7 +916,7 @@
             "y": 1,
             "z": 0,
             "name": "Kanały",
-            "description": "Poruszasz się cuchnącymi kanałami. Droga tu zakręca. Na południu sufit jest trochę niżej",
+            "description": "Poruszasz się cuchnącymi kanałami. Droga tu zakręca. Na południu sufit jest trochę niżej.",
             "exits": [
               "e",
               "s"
@@ -955,7 +955,7 @@
             "y": 4,
             "z": 0,
             "name": "Kanały",
-            "description": "Kanał biegnący z północy wpada tu do dużo szerszego, który biegnie ze wschodu za zachód, gdzie przejście uniemożliwiają grube kraty. ",
+            "description": "Kanał biegnący z północy wpada tu do dużo szerszego, który biegnie ze wschodu za zachód, gdzie przejście uniemożliwiają grube kraty.",
             "exits": [
               "n",
               "w"
@@ -995,7 +995,7 @@
             "y": 4,
             "z": 0,
             "name": "Kanały",
-            "description": "Dotarłeś na sam koniec. Powietrze jest tu trochę bardziej znośne. Na zachodzie ścieki wypływają pod kratą w murze. ",
+            "description": "Dotarłeś na sam koniec. Powietrze jest tu trochę bardziej znośne. Na zachodzie ścieki wypływają pod kratą w murze.",
             "exits": [
               "e"
             ],

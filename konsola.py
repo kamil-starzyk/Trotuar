@@ -1,7 +1,7 @@
 from colorama import init, Fore, Back, Style
 import math
 import os
-import msvcrt
+import msvcrt #dynamic_prompt
 import keyboard
 import textwrap 
 import random
@@ -82,6 +82,35 @@ class Konsola:
     result.append(argument)
 
     return result
+
+  @classmethod
+  def dynamic_prompt(cls):
+    #flush waiting characters
+    # while msvcrt.kbhit():
+    #   msvcrt.getch()
+      
+    print(" > ", end='')
+    timeout = 1
+    startTime = time.time()
+    inputText = ''
+    enter = False
+    while True:
+      if msvcrt.kbhit():
+        byte_arr = msvcrt.getche()
+        if ord(byte_arr) == 13: # enter_key
+          enter=True
+          break
+        elif ord(byte_arr) >= 32: #space_char
+          inputText += "".join(map(chr,byte_arr))
+          startTime = time.time()
+    
+      if (time.time() - startTime) > timeout:break
+        
+    print('')  # needed to move to next line
+    if len(inputText) > 0:
+      return inputText
+    else:
+      return 0
   
   @classmethod
   def int_input(cls, min_val=None, max_val=None):

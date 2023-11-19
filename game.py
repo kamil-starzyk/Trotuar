@@ -180,7 +180,9 @@ class Game:
       seconds -= 60
     
     if seconds > 0:
-      loop_body()
+      chance = Helper.random(0, 60)
+      if chance + seconds > 60:
+        loop_body()
       self.time.time_progress(seconds)
 
     

@@ -24,6 +24,11 @@ class Utility:
       for k, v in self.attr.items():
         Konsola.print(" " + k, line_end=': ')
         Konsola.print(v, "lwhite")
+    if self.actions:
+      Konsola.print("Możliwe działania:", "lwhite")
+      for k, v in self.actions.items():
+        Konsola.print(" " + k, line_end=': ')
+        Konsola.print(v, "lwhite")
 
   def show_items(self):
     if "search" not in self.actions:
