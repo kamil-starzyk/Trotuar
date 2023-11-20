@@ -146,6 +146,7 @@ class Player(Mob):
     if item:
       print("Założyłeś " + item.name)
       return Player.TIME_OF_ITEM_INTERACTION
+      #TODO zmiana na tym samym slocie
     
     Konsola.print("Nie masz takiej rzeczy w ekwipunku", "red")
     return 0
@@ -173,7 +174,7 @@ class Player(Mob):
         options.append(option)
 
     if not options:
-      return time
+      return total_time
     
     number = 1
     for option in options:
@@ -192,8 +193,6 @@ class Player(Mob):
         key = selected_option.get("forget")
         if key in self.knowledge:
           del self.knowledge[key]
-      if selected_option.get("talk_to_npc"):
-          self.talk_to_npc = selected_option["talk_to_npc"]
 
            
       if "quest_id" in selected_option:

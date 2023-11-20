@@ -71,12 +71,13 @@ while True:
   "ocen":       player.compare,
   "compare":    player.compare,
   "rozmawiaj":  player.talk_to,
+  "porozmawiaj":player.talk_to,
   "zabij":      player.kill,
   "podaruj":    player.give,
   "zadania":    game.active_quests,
   "quests":     game.active_quests,
-
-  "/" :         player.my_square().show_square,          
+  
+  "/" :         player.my_square.show_square,          
   "czas" :      game.time.show_time,
   "time" :      game.time.show_time,
   "whoami" :    player.whoami,

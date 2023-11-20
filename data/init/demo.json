@@ -1617,20 +1617,17 @@
                   }
                 },
 								{
-									"condition": "Zabiłem 5 szczurów",
+									"condition": "Ukończono: Wytępić szczury",
                   "text": "Miasto jest już wolne od tych zmór. Czy masz dla mnie jakieś kolejne zadanie?",
                   "response": "Jestem Ci bardzo wdzięczny. Może potem coś będę miał.",
                   "forget": "Wytępić szczury",
-                  "quest_task": "Kapitan Rodgier",
                   "next_step": {
                     "options": [
                       {
                         "text": "Chronić i służyć!",
                         "response": "Tak jest",
-                        "forget": "Zabiłem 5 szczurów",
-												"knowledge": {
-                          "Ukończono: Wytępić szczury": "Poradziłem sobie ze szczurami"
-                        }
+                        "forget": "Ukończono: Wytępić szczury",
+												"knowledge": {}
                       }
                     ]
                   }
@@ -2209,16 +2206,8 @@
           "type": "mobs_killed",
           "name": "Zabij 5 szczurów",
           "npc": "Szczur",
-          "progress": 0,
-          "amount": 5,
-          "knowledge_entry": "Zabiłem 5 szczurów"
-        },
-        {
-          "type": "talk_to_npc",
-          "name": "Zamelduj do kapitana rodgiera",
-          "npc": "Kapitan Rodgier",
-          "progress": 0,
-          "amount": 1
+          "progress": 4,
+          "amount": 5
         }
       ],
       "reward": {

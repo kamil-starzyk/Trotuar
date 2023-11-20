@@ -147,8 +147,7 @@ class Game:
         key = quest.name
         if key in self.player.knowledge:
           del self.player.knowledge[key]
-        
-
+        self.player.knowledge[quest.knowledge_entry] = "Benc"
     self.player.quest_id = None
     self.player.picked_item = None
     self.player.droped_item = None
