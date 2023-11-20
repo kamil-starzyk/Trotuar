@@ -54,9 +54,9 @@ class Mob:
 
 
   def pick_up(self, item_name, player=False):
-    item = Helper.find_item(self.my_square().items, item_name, player)
+    item = Helper.find_item(self.my_square.items, item_name, player)
     if item:
-      self.my_square().items.remove(item)
+      self.my_square.items.remove(item)
       item_in_eq = Helper.is_item_in_list(item, self.equipment)
       if item.stackable() and item_in_eq:
         item_in_eq.amount += item.amount
@@ -78,11 +78,11 @@ class Mob:
       else:
         self.equipment.remove(item)
 
-      item_on_square = Helper.is_item_in_list(item, self.my_square().items)
+      item_on_square = Helper.is_item_in_list(item, self.my_square.items)
       if item.stackable() and item_on_square:
         item_on_square.amount += item.amount
       else:
-        self.my_square().items.append(item)
+        self.my_square.items.append(item)
       return item
     return 0
 
@@ -136,7 +136,7 @@ class Mob:
     chance = Helper.random(0+self.speed, 50+self.speed)
     chance += speed_bonus
     if chance >= 50:
-      exits = self.my_square().exits
+      exits = self.my_square.exits
       e = random.choice(exits)
       self.move_in_direction(e)
       return e
@@ -144,7 +144,7 @@ class Mob:
 
 
   def move_in_direction(self, direction):
-    if direction in self.my_square().exits:
+    if direction in self.my_square.exits:
       match direction:
         case "n":
           self.y -= 1
@@ -188,7 +188,7 @@ class Mob:
     if not mob_name:
       Konsola.print_stats(self)
     else:
-      mobs = self.current_location.mobs_on_square(self.my_square())
+      mobs = self.current_location.mobs_on_square(self.my_square)
       mob = Helper.find_item(mobs, mob_name)
       if mob: 
         Konsola.print_stats(mob)
@@ -196,8 +196,6 @@ class Mob:
   def show_params(self):
     Konsola.print_params(self)
 
-  def my_square(self):
-    return self.current_location.find_square(self.x, self.y, self.z)
   
   def hit(self, mob):
     chance = Helper.random()
@@ -217,7 +215,7 @@ class Mob:
     return damage
   
   def random_walk(self):
-    exits = self.my_square().exits
+    exits = self.my_square.exits
     #im dłużej stoi tym większa szansa, że się ruszy
     is_moving = any(count > 0 for count in self.direction_history.values())
 
@@ -319,13 +317,13 @@ class Mob:
   def die(self):
     for k, v in self.slots.items():
       if v:
-        self.my_square().items.append(v)
+        self.my_square.items.append(v)
         self.slots[k] = None
     aliases = ["trup", "ciało", "cialo", "martwy "+self.name]
     aliases = aliases + self.alias
     dead_body = Utility("Corpse", aliases, "Martwy "+self.name, self.description, 0, 1, {}, self.equipment, 0, {"search": "Przeszukaj"})
-    self.my_square().utilities.append(dead_body)
-    self.my_square().description += " Leży tu [i]martwy " + self.name +"[/i]. "
+    self.my_square.utilities.append(dead_body)
+    self.my_square.description += " Leży tu [i]martwy " + self.name +"[/i]. "
     self.x=0
     self.y=0
     self.z=0
@@ -512,6 +510,10 @@ class Mob:
   @property
   def hydration_max(self):
     return int(self.params["hydration_max"])
+
+  @property
+  def my_square(self):
+    return self.current_location.find_square(self.x, self.y, self.z)
 
 
   def to_dict(self):

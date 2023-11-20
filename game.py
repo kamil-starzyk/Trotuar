@@ -81,6 +81,11 @@ class Game:
 
 
 
+
+  def show_current_square(self):
+    self.player.my_square.show_square()
+
+
   def update_state(self, sec):
     for quest in self.quests:
       if self.player.quest_id:
@@ -125,7 +130,7 @@ class Game:
       
       if self.player.talk_to_npc:
         for obj in quest.objectives:
-            if obj["type"] == "talk_to+npc" and obj["npc"] == self.player.talk_to_npc:
+            if obj["type"] == "talk_to_npc" and obj["npc"] == self.player.talk_to_npc:
               obj["progress"] += 1
               if obj["progress"] <= obj["amount"]:
                 Konsola.print(" Postęp w zadaniu: ", line_end="")
@@ -174,7 +179,7 @@ class Game:
     minutes = seconds // 60
     def loop_body():
       for rat in rats:
-        is_mob_on_square = True if rat.my_square() == self.player.my_square() else False
+        is_mob_on_square = True if rat.my_square == self.player.my_square else False
         try:
           direction = rat.random_walk()
         except AttributeError:
@@ -184,7 +189,7 @@ class Game:
         if is_mob_on_square and direction:
           direction = Konsola.direction_translator(direction)
           Konsola.print("  " + rat.name + " odszedł " + direction, "magenta")
-        if direction and rat.my_square() == self.player.my_square():
+        if direction and rat.my_square == self.player.my_square:
           direction = Konsola.direction_translator(direction, True)
           Konsola.print("  " + rat.name + " przyszedł " + direction, "lmagenta")
 

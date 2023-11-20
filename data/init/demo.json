@@ -1626,8 +1626,7 @@
                       {
                         "text": "Chronić i służyć!",
                         "response": "Tak jest",
-                        "forget": "Ukończono: Wytępić szczury",
-												"knowledge": {}
+                        "forget": "Ukończono: Wytępić szczury"
                       }
                     ]
                   }

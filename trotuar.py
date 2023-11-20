@@ -10,7 +10,7 @@ while True:
   game.title_screen()
   player = game.player
 
-  player.my_square().show_square()
+  player.my_square.show_square()
 
   command_mapping = {
   "n" :         (player.move_in_direction, "n"),
@@ -77,7 +77,7 @@ while True:
   "zadania":    game.active_quests,
   "quests":     game.active_quests,
   
-  "/" :         player.my_square.show_square,          
+  "/" :         game.show_current_square,       
   "czas" :      game.time.show_time,
   "time" :      game.time.show_time,
   "whoami" :    player.whoami,

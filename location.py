@@ -22,7 +22,7 @@ class Location:
   def mobs_on_square(self, square):
     mob_list = []
     for mob in self.mobs:
-      if mob.my_square() == square:
+      if mob.my_square == square:
         mob_list.append(mob)
     return mob_list
 

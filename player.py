@@ -44,7 +44,7 @@ class Player(Mob):
 
   def move_in_direction(self, direction):
     if super().move_in_direction(direction):
-      self.my_square().show_square()
+      self.my_square.show_square()
       return Player.TIME_OF_MOVEMENT/self.stat_coefficient(self.speed)
 
     print("Nie możesz tam przejść")
@@ -85,7 +85,7 @@ class Player(Mob):
   def give(self, item_name):
     item = Helper.find_item(self.equipment, item_name, True)
     if item:
-      mobs = self.current_location.mobs_on_square(self.my_square())
+      mobs = self.current_location.mobs_on_square(self.my_square)
       mob = None
       if len(mobs) == 1:
         mob = mobs[0]
@@ -119,15 +119,15 @@ class Player(Mob):
     if item:
       item.see_more()
       return 1
-    item = Helper.find_item(self.my_square().items, item_name, True)
+    item = Helper.find_item(self.my_square.items, item_name, True)
     if item:
       item.see_more()
       return 1
-    utility = Helper.find_item(self.my_square().utilities, item_name, True)
+    utility = Helper.find_item(self.my_square.utilities, item_name, True)
     if utility:
       utility.see_more()
       return 1
-    mobs = self.current_location.mobs_on_square(self.my_square())
+    mobs = self.current_location.mobs_on_square(self.my_square)
     mob = Helper.find_item(mobs, item_name, True)
     if mob: 
       mob.see_more()
@@ -135,7 +135,7 @@ class Player(Mob):
     Konsola.print("Nie ma tu takiej rzeczy, ani nie masz jej w ekwipunku. Nie ma tu także takiej osoby.", "red")
   
   def search_utility(self, item_name):
-    utility = Helper.find_item(self.my_square().utilities, item_name, True)
+    utility = Helper.find_item(self.my_square.utilities, item_name, True)
     if utility:
       utility.show_items()
       return 1
@@ -214,7 +214,7 @@ class Player(Mob):
 
 
   def talk_to(self, mob_name):
-    mobs = self.current_location.mobs_on_square(self.my_square())
+    mobs = self.current_location.mobs_on_square(self.my_square)
     mob = Helper.find_item(mobs, mob_name, True)
     if mob: 
       if mob.conversations:
@@ -228,7 +228,7 @@ class Player(Mob):
     
 
   def compare(self, mob_name):
-    mobs = self.current_location.mobs_on_square(self.my_square())
+    mobs = self.current_location.mobs_on_square(self.my_square)
     mob = Helper.find_item(mobs, mob_name, True)
     if mob: 
       Konsola.print("Porównujesz się z " + mob.name, "lwhite")
@@ -289,7 +289,7 @@ class Player(Mob):
       print("Nie masz siły walczyć")
       return 0
     
-    mobs = self.current_location.mobs_on_square(self.my_square())
+    mobs = self.current_location.mobs_on_square(self.my_square)
     mob = Helper.find_item(mobs, mob_name, True)
 
     if not mob:
@@ -326,7 +326,7 @@ class Player(Mob):
     
     def check_for_more_enemies():
       if len(enemies) > 0:
-        mobs = self.current_location.mobs_on_square(self.my_square())
+        mobs = self.current_location.mobs_on_square(self.my_square)
         rats = [mob for mob in mobs if mob.base_name == "Szczur"]
         for rat in rats:
           if rat not in enemies and any(affiliation in rat.affiliation for affiliation in enemies[0].affiliation):
@@ -535,7 +535,7 @@ class Player(Mob):
     return hours*3600
 
   def sleep(self, hours=""):
-    bed = Helper.find_utility(self.my_square().utilities, "sleep")
+    bed = Helper.find_utility(self.my_square.utilities, "sleep")
     if not bed:
       Konsola.print("Tu nie ma na czym spać", "red")
       return 0
@@ -585,7 +585,7 @@ class Player(Mob):
               self.z -= 1
           print("Skorzystałeś z tajnego przejścia")
           Helper.sleep(1)
-          self.my_square().show_square()
+          self.my_square.show_square()
           return Player.TIME_OF_MOVEMENT/self.stat_coefficient(self.speed)
     print("Chyba nie tędy droga...")
     return 0
