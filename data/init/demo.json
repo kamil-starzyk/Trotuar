@@ -105,6 +105,30 @@
         "ground_level": 0,
         "squares": [
           {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "name": "Komnata pamięci",
+            "description": "Znalazłeś się w ciemnym ale przestronnym pomieszczeniu. Zdecydowanie nie powinno Cię tu być, ponieważ żyjesz, a to miejsce dla tych, których odesłałeś z tego świata. Na ścianie widzisz [i]inskrypcje[/i] w nieznanym języku.",
+            "exits": [
+              "s"
+            ],
+            "utilities":[],
+            "items": []
+          },
+          {
+            "x": 0,
+            "y": 1,
+            "z": 0,
+            "name": "Pokój do zawracania",
+            "description": "Skoro już tu jesteś to zdradzę Ci, że musiałem dodać ten pokój, bo komnata bez żadnego wyjścia wysypywała grę. Dlatego ma wyjście na południe, a biegający mob może tu zawrócić i mieć gdzie pójść.",
+            "exits": [
+              "n"
+            ],
+            "utilities":[],
+            "items": []
+          },
+          {
             "x": 4,
             "y": 0,
             "z": 1,
@@ -129,7 +153,8 @@
                 "price": 220,
                 "attr": {
                   "body_part": "neck",
-                  "speed": 2,
+                  "speed": 10,
+                  "dexterity": 10,
                   "mana_max": 5
                 }
               }
@@ -918,7 +943,7 @@
             "name": "Kanały",
             "description": "Poruszasz się cuchnącymi kanałami. Droga tu zakręca. Na południu sufit jest trochę niżej.",
             "exits": [
-              "e",
+              "w",
               "s"
             ],
             "utilities":[],
@@ -1553,7 +1578,7 @@
                     "options": [
                       {
                         "text": "Poradzę sobie",
-                        "response": "Nie wydaje mi się, ale zawsze możesz spróbować. Te paskudy biegają naprawdę szybko. Zabij 5 szczurów, to powinno być po problemie. Gdybyś nie mógł go znaleźć to wejście do kanałów jest tu przed wieżą. Wystarczy podnieść kratkę ściekową. ",
+                        "response": "Nie wydaje mi się, ale zawsze możesz spróbować. Te paskudy biegają naprawdę szybko. Zabij 5 szczurów, to powinno być po problemie. Gdybyś nie mógł go znaleźć to wejście do kanałów jest tu przed wieżą. Wystarczy podnieść kratkę ściekową. \n  [i]Podpowiedź![/i] Żeby skorzystać z tajnego przejścia musisz po pierwsze zdobyć o nim informację od kogoś, a następnie kiedy będziesz w odpowiednim miejscu skorzystać z komendy [i]przejdź k[/i] gdzie k to kierunek np. down.",
 												"forget": "Pierwsze zadanie od kapitana",
 												"knowledge": {
 													"Wejście do kanałów": "Przed wejściem do wieży, pod murem jest kratka ściekowa, którą da się podnieść i dostać do kanałów."
@@ -1592,15 +1617,20 @@
                   }
                 },
 								{
-									"condition": "Ukończono: Wytępić szczury",
+									"condition": "Zabiłem 5 szczurów",
                   "text": "Miasto jest już wolne od tych zmór. Czy masz dla mnie jakieś kolejne zadanie?",
                   "response": "Jestem Ci bardzo wdzięczny. Może potem coś będę miał.",
+                  "forget": "Wytępić szczury",
+                  "quest_task": "Kapitan Rodgier",
                   "next_step": {
                     "options": [
                       {
                         "text": "Chronić i służyć!",
                         "response": "Tak jest",
-												"forget": "Ukończono: Wytępić szczury"
+                        "forget": "Zabiłem 5 szczurów",
+												"knowledge": {
+                          "Ukończono: Wytępić szczury": "Poradziłem sobie ze szczurami"
+                        }
                       }
                     ]
                   }
@@ -1791,9 +1821,9 @@
           },
           {
             "mob_id": 6,
-            "x": 6,
-            "y": 6,
-            "z": 1,
+            "x": 4,
+            "y": 1,
+            "z": 0,
             "base_name": "Szczur",
             "name": "Szczur",
             "alias": [
@@ -1848,15 +1878,186 @@
           },
           {
             "mob_id": 7,
-            "x": 6,
-            "y": 6,
-            "z": 1,
+            "x": 7,
+            "y": 1,
+            "z": 0,
+            "base_name": "Szczur",
+            "name": "Szczur",
+            "alias": [
+              "szczur"
+            ],
+            "description": "Mały paskudny szczur.",
+            "lvl": 1,
+            "exp": 10,
+            "weight": 2,
+            "money": 0,
+            "race": "Szczur",
+            "proficiency": "gryzoń",
+            "params": {
+              "hp": 30,
+              "hp_max": 30,
+              "stamina": 100,
+              "stamina_max":100,
+              "stamina_total":200,
+              "mana": 0,
+              "mana_max": 0,
+              "satiation": 20,
+              "satiation_max": 25,
+              "hydration": 25,
+              "hydration_max": 25
+            },
+            "stats": {
+              "strength": 3,
+              "attack": 5,
+              "defence": 15,
+              "speed": 40,
+              "dexterity": 5,
+              "endurance": 30
+            },
+            "equipment": [],
+            "slots": {
+              "first_hand": {},
+              "second_hand": {},
+              "head": {},
+              "body": {},
+              "finger": {},
+              "neck": {}
+            },
+            "conversations": {},
+            "knowledge": {},
+            "killable": true,
+            "can_duel": true,
+            "is_aggressive": true,
+            "can_ally": true,
+            "affiliation": [
+              "szczury"
+            ]
+          },
+          {
+            "mob_id": 8,
+            "x": 7,
+            "y": 4,
+            "z": 0,
+            "base_name": "Szczur",
+            "name": "Szczur",
+            "alias": [
+              "szczur"
+            ],
+            "description": "Mały paskudny szczur.",
+            "lvl": 1,
+            "exp": 10,
+            "weight": 2,
+            "money": 0,
+            "race": "Szczur",
+            "proficiency": "gryzoń",
+            "params": {
+              "hp": 30,
+              "hp_max": 30,
+              "stamina": 100,
+              "stamina_max":100,
+              "stamina_total":200,
+              "mana": 0,
+              "mana_max": 0,
+              "satiation": 20,
+              "satiation_max": 25,
+              "hydration": 25,
+              "hydration_max": 25
+            },
+            "stats": {
+              "strength": 3,
+              "attack": 5,
+              "defence": 15,
+              "speed": 40,
+              "dexterity": 5,
+              "endurance": 30
+            },
+            "equipment": [],
+            "slots": {
+              "first_hand": {},
+              "second_hand": {},
+              "head": {},
+              "body": {},
+              "finger": {},
+              "neck": {}
+            },
+            "conversations": {},
+            "knowledge": {},
+            "killable": true,
+            "can_duel": true,
+            "is_aggressive": true,
+            "can_ally": true,
+            "affiliation": [
+              "szczury"
+            ]
+          },
+          {
+            "mob_id": 9,
+            "x": 4,
+            "y": 4,
+            "z": 0,
             "base_name": "Szczur",
             "name": "Duży Szczur",
             "alias": [
               "szczur"
             ],
-            "description": "Mały paskudny szczur.",
+            "description": "Duży, nieprzyjemnie wyglądający szczur szczur.",
+            "lvl": 1,
+            "exp": 15,
+            "weight": 3,
+            "money": 0,
+            "race": "Szczur",
+            "proficiency": "gryzoń",
+            "params": {
+              "hp": 40,
+              "hp_max": 40,
+              "stamina": 100,
+              "stamina_max":100,
+              "stamina_total":200,
+              "mana": 0,
+              "mana_max": 0,
+              "satiation": 20,
+              "satiation_max": 25,
+              "hydration": 25,
+              "hydration_max": 25
+            },
+            "stats": {
+              "strength": 5,
+              "attack": 7,
+              "defence": 15,
+              "speed": 30,
+              "dexterity": 5,
+              "endurance": 35
+            },
+            "equipment": [],
+            "slots": {
+              "first_hand": {},
+              "second_hand": {},
+              "head": {},
+              "body": {},
+              "finger": {},
+              "neck": {}
+            },
+            "conversations": {},
+            "knowledge": {},
+            "killable": true,
+            "can_duel": true,
+            "is_aggressive": true,
+            "can_ally": true,
+            "affiliation": [
+              "szczury"
+            ]
+          },
+          {
+            "mob_id": 10,
+            "x": 6,
+            "y": 5,
+            "z": 0,
+            "base_name": "Szczur",
+            "name": "Duży Szczur",
+            "alias": [
+              "szczur"
+            ],
+            "description": "Duży, nieprzyjemnie wyglądający szczur szczur.",
             "lvl": 1,
             "exp": 15,
             "weight": 3,
@@ -2009,7 +2210,8 @@
           "name": "Zabij 5 szczurów",
           "npc": "Szczur",
           "progress": 0,
-          "amount": 5
+          "amount": 5,
+          "knowledge_entry": "Zabiłem 5 szczurów"
         },
         {
           "type": "talk_to_npc",

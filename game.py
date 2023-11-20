@@ -114,10 +114,22 @@ class Game:
             else:
               obj["progress"] = 0
       
-      if self.player.mob_killed:
+      if self.player.mobs_killed:
         for obj in quest.objectives:
-          if obj["type"] == "mobs_killed" and obj["npc"] == self.player.mob_killed.name:
-            obj["progress"] += 1
+          for mob in self.player.mobs_killed:
+            if obj["type"] == "mobs_killed" and obj["npc"] == mob.base_name:
+              obj["progress"] += 1
+              if obj["progress"] <= obj["amount"]:
+                Konsola.print(" Postęp w zadaniu: ", line_end="")
+                Konsola.print(quest.name, "lyellow")
+      
+      if self.player.talk_to_npc:
+        for obj in quest.objectives:
+            if obj["type"] == "talk_to+npc" and obj["npc"] == self.player.talk_to_npc:
+              obj["progress"] += 1
+              if obj["progress"] <= obj["amount"]:
+                Konsola.print(" Postęp w zadaniu: ", line_end="")
+                Konsola.print(quest.name, "lyellow")
       
       if quest.is_finished():
         quest.status = 2
@@ -142,6 +154,7 @@ class Game:
     self.player.droped_item = None
     self.player.given_item = None
     self.player.item_receiver = None
+    self.player.mobs_killed = []
 
     if self.player.hp == 0:
       self.is_playing = False
@@ -163,8 +176,11 @@ class Game:
     def loop_body():
       for rat in rats:
         is_mob_on_square = True if rat.my_square() == self.player.my_square() else False
-
-        #direction = rat.random_walk()
+        try:
+          direction = rat.random_walk()
+        except AttributeError:
+          print(rat.mob_id)
+          print(f'{rat.x} : {rat.y} : {rat.z}')
         direction = None
         if is_mob_on_square and direction:
           direction = Konsola.direction_translator(direction)

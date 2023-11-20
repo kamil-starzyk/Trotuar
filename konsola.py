@@ -140,7 +140,7 @@ class Konsola:
     wrap() wraps text to 100 characters wide lines, avoiding breaking words. 
     If it encounters [i]text[/i] it highlights it.
     """
-    wrapper = textwrap.TextWrapper(width=100)
+    wrapper = textwrap.TextWrapper(width=100, replace_whitespace=False)
     lines_list = wrapper.wrap(text=text_to_wrap)
     text_to_highlight = "\n".join(lines_list)
     

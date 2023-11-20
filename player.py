@@ -16,7 +16,8 @@ class Player(Mob):
     self.droped_item = None
     self.given_item = None
     self.item_receiver = None
-    self.mob_killed= None
+    self.talk_to_npc = None
+    self.mobs_killed= []
 
   def whoami(self):
     print("Jestem " + self.name + ", rasa: " + self.race + "\n" + self.description)
@@ -191,7 +192,10 @@ class Player(Mob):
         key = selected_option.get("forget")
         if key in self.knowledge:
           del self.knowledge[key]
-          
+      if selected_option.get("talk_to_npc"):
+          self.talk_to_npc = selected_option["talk_to_npc"]
+
+           
       if "quest_id" in selected_option:
         quest_id = selected_option["quest_id"]
         self.quest_id = quest_id
@@ -468,6 +472,7 @@ class Player(Mob):
           if mob.exp > 0:
             award_exp(mob)
           mob.die()
+          self.mobs_killed.append(mob)
         
     elif self.hp == 0 and mob.hp > 0:
       Konsola.print("Zostałeś pokonany przez " + mob.name, "lred")
