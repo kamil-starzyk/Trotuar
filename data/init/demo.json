@@ -1817,7 +1817,7 @@
           },
           {
             "mob_id": 6,
-            "x": 4,
+            "x": 5,
             "y": 1,
             "z": 0,
             "base_name": "Szczur",
@@ -1874,7 +1874,7 @@
           },
           {
             "mob_id": 7,
-            "x": 7,
+            "x": 5,
             "y": 1,
             "z": 0,
             "base_name": "Szczur",
@@ -1988,8 +1988,8 @@
           },
           {
             "mob_id": 9,
-            "x": 4,
-            "y": 4,
+            "x": 5,
+            "y": 1,
             "z": 0,
             "base_name": "Szczur",
             "name": "Duży Szczur",

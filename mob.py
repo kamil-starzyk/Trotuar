@@ -200,7 +200,7 @@ class Mob:
   def hit(self, mob):
     chance = Helper.random()
     chance += self.dexterity + self.attack/2 - (mob.speed + mob.defence/2)
-    Konsola.print("Atakuje: " + self.name, "lyellow")
+    Konsola.print(self.name + " atakuje -> " + mob.name, "lyellow")
     damage = 0
     if chance >= 50:
       try:
@@ -214,6 +214,36 @@ class Mob:
 
     return damage
   
+  def swing(self, mobs):
+    chance = Helper.random()
+    chance += self.dexterity + self.attack/2 - (mobs[0].speed + mobs[0].defence/2)
+    Konsola.print(self.name + " wykonuje zamach", "lyellow")
+    damage_sum = 0
+    enemies_hit = []
+    if chance >= 60:
+      for mob in mobs:
+        chance = Helper.random()
+        chance += self.attack
+        if chance >= 40:
+          enemies_hit.append(mob)
+      
+      for enemy in enemies_hit:
+        try:
+          weapon = self.slots["first_hand"]
+          weapon_damage = weapon.attr["damage"]
+          damage = self.damage(mob, weapon_damage)
+        except AttributeError:
+          damage = self.damage(mob)
+        except KeyError:
+          damage = self.damage(mob)
+        enemy.hp -= damage
+        damage_sum += damage
+        enemy.adjust_stamina(-damage/2, -damage/4)
+    
+    return len(enemies_hit), damage_sum
+        
+
+
   def random_walk(self):
     exits = self.my_square.exits
     #im dłużej stoi tym większa szansa, że się ruszy
@@ -283,7 +313,7 @@ class Mob:
     Method calculates damage given during a blow. If item damage is specified then it will calculate result for it
     otherwise damage will be calcualted for bare hands, which have base damage 5
     Returns:
-        float: coefficient calculated with quadratic function
+        int: damage ceiled up
     """
     s_attack = self.stat_coefficient(self.stats["attack"])
     s_dexterity = self.stat_coefficient(self.stats["dexterity"])/2

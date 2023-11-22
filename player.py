@@ -1,3 +1,4 @@
+from random import shuffle
 from konsola import Konsola
 from helper import Helper
 from mob import Mob
@@ -246,7 +247,7 @@ class Player(Mob):
         offensive_score += mob.stats["speed"]/3
         offensive_score += mob.stats["dexterity"]/2
         return offensive_score
-        
+
       def calculate_defensive_score(mob):
         defensive_score = 0
         defensive_score += mob.stats["defence"]
@@ -334,7 +335,10 @@ class Player(Mob):
             Konsola.print(rat.name + " dołączył do walki", "lred")
             rat.try_to_draw_weapon()
             Helper.sleep(0.5)
-      
+            return
+    
+    player_resulting_speed = self.stat_coefficient(self.speed)
+
     mob.try_to_draw_weapon()
     print("Walczysz z " + mob.name)
     while self.hp > self.hp_max/10 and any(mob.hp > mob.hp_max/10 for mob in enemies):
@@ -374,6 +378,13 @@ class Player(Mob):
           Konsola.print("Czekasz", "lred")
           self.adjust_stamina(5, 0.5)
 
+        elif choice in ("zamach", "z"):
+          enemies_hit, damage_sum = self.swing(enemies)
+          if enemies_hit:
+            Konsola.print(f'Wykonałeś skuteczny zamach! Trafiłeś {enemies_hit} przeciwników, zadając w sumie {damage_sum} obrażeń', "lwhite")
+          else:
+            Konsola.print(f'Straciłeś równowagę próbując się zamachnąć')
+            self.adjust_stamina(-5, -1)
         elif choice in ("cios", "c") or 1:
           damage_given = self.hit(mob)
           if damage_given:
@@ -395,31 +406,47 @@ class Player(Mob):
         self.game.time.time_progress(time_of_action)
         Helper.sleep(0.5)
 
-
-      for mob in enemies:
-        if mob.hp > mob.hp_max/10:
-          if mob.stamina <= 11:
-            Konsola.print("Przeciwnik czeka", "red")
-            mob.adjust_stamina(5, 0.5)
-          else:
-            damage_taken = mob.hit(self)
-            if damage_taken:
-              self.hp -= damage_taken
-              Konsola.damage_given(False, mob, damage_taken)
-              self.adjust_stamina(-damage_given/2, -damage_given/4)
+      enemies_actions = []
+      if enemies:
+        for i in range(len(enemies)):
+          mob = enemies[i]
+          if mob.hp > mob.hp_max/10:
+            if mob.stamina <= 11:
+              Konsola.print(mob.name + " czeka", "red")
+              mob.adjust_stamina(5, 0.5)
             else:
-              print(f'{mob.name} chybia')
-              mob.adjust_stamina(-5, -1)
-            time_of_action = Player.TIME_OF_EXCHANGING_BLOWS/self.stat_coefficient(self.speed)
-            self.game.time.time_progress(time_of_action)
-            Helper.sleep(0.5)
+              mob_resulting_speed = self.stat_coefficient(mob.speed)
+              speed_advantage = mob_resulting_speed / player_resulting_speed
+              mob_hits = Helper.probabilistic_round(speed_advantage)
+              for _ in range(mob_hits):
+                action = []
+                action.append(mob)
+                action.append(mob.hit)
+                enemies_actions.append(action)
+              
 
-        elif 0 < mob.hp <= mob.hp_max/10 and len(enemies)>1:
-          direction = mob.try_to_escape(100)
-          if direction:
-            Konsola.print("  " + mob.name + " uciekł " + Konsola.direction_translator(direction), "cyan")
-            Helper.sleep(0.5)
-            enemies.remove(mob)
+          elif 0 < mob.hp <= mob.hp_max/10 and len(enemies)>1:
+            direction = mob.try_to_escape(100)
+            if direction:
+              Konsola.print("  " + mob.name + " uciekł " + Konsola.direction_translator(direction), "cyan")
+              Helper.sleep(0.5)
+              enemies.remove(mob)
+
+      shuffle(enemies_actions)
+      for a in enemies_actions:
+        mob = a[0]
+        action = a[1]
+        damage_taken = action(self)
+        if damage_taken:
+          self.hp -= damage_taken
+          Konsola.damage_given(False, mob, damage_taken)
+          self.adjust_stamina(-damage_taken/2, -damage_taken/4)
+        else:
+          print(f'{mob.name} chybia')
+          mob.adjust_stamina(-5, -1)
+        time_of_action = Player.TIME_OF_EXCHANGING_BLOWS/self.stat_coefficient(mob.speed)
+        self.game.time.time_progress(time_of_action)
+        Helper.sleep(0.5)
       
       check_for_more_enemies()
 
