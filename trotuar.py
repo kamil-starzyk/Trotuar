@@ -89,7 +89,9 @@ while True:
   "exit" :      game.end_game,
   "quit" :      game.end_game,
   "q" :         game.end_game,
-  "colorama" :  Konsola.test_colorama
+  "colorama" :  Konsola.test_colorama,
+
+  "exp":        player.add_exp
 }
   
   while game.is_playing:

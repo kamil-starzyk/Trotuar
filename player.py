@@ -34,9 +34,10 @@ class Player(Mob):
     if level == 1:
       return 30
     else:
-      return self.max_exp_for_level(level - 1) + 10 * (level - 1)
+      return self.max_exp_for_level(level - 1) + 10 * (level+2)
     
   def add_exp(self, exp):
+    exp = int(exp)
     self.exp += exp
     while self.exp >= self.max_exp_for_level(self.lvl):
       self.lvl += 1
@@ -385,6 +386,7 @@ class Player(Mob):
           else:
             Konsola.print(f'Straciłeś równowagę próbując się zamachnąć')
             self.adjust_stamina(-5, -1)
+
         elif choice in ("cios", "c") or 1:
           damage_given = self.hit(mob)
           if damage_given:
