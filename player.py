@@ -84,35 +84,40 @@ class Player(Mob):
   
   def give(self, item_name):
     item = Helper.find_item(self.equipment, item_name, True)
-    if item:
-      mobs = self.current_location.mobs_on_square(self.my_square)
-      mob = None
-      if len(mobs) == 1:
-        mob = mobs[0]
-      else:
-        Konsola.print("Komu chcesz przekazać " + item.name +"?", "lcyan", line_end=' ')
-        mob_name = input()
-        mob = Helper.find_item(mobs, mob_name, True)
-      if mob:
-        if item.stackable() and item.amount > 1:
-          print("Jaką ilość chcesz podarować? (max: " + str(item.amount) + ")")
-          amount_to_give = Konsola.int_input(1, item.amount)
-          if amount_to_give == item.amount:
-            self.equipment.remove(item)
-          else:
-            item = Item.unstack(item, amount_to_give)
-        else:
-          self.equipment.remove(item)
+    if not item:
+      Konsola.print("Nie masz takiej rzeczy w ekwipunku", "red")
+      return 0
 
-        mob.equipment.append(item)
-        self.item_receiver = mob
-        self.given_item = item
-        return Player.TIME_OF_ITEM_INTERACTION
-      
+    mobs = self.current_location.mobs_on_square(self.my_square)
+    mob = None
+    if len(mobs) == 1:
+      mob = mobs[0]
+    else:
+      Konsola.print("Komu chcesz przekazać " + item.name +"?", "lcyan", line_end=' ')
+      mob_name = input()
+      mob = Helper.find_item(mobs, mob_name, True)
+
+    if not mob:
       Konsola.print("Nie udało się przekazać przedmiotu", "red")
       return 0
-    Konsola.print("Nie masz takiej rzeczy w ekwipunku", "red")
-    return 0
+
+    if item.stackable() and item.amount > 1:
+      print("Jaką ilość chcesz podarować? (max: " + str(item.amount) + ")")
+      amount_to_give = Konsola.int_input(1, item.amount)
+      if amount_to_give == item.amount:
+        self.equipment.remove(item)
+      else:
+        item = Item.unstack(item, amount_to_give)
+    else:
+      self.equipment.remove(item)
+
+    mob.equipment.append(item)
+    self.item_receiver = mob
+    self.given_item = item
+    return Player.TIME_OF_ITEM_INTERACTION
+    
+    
+    
 
   def see(self, item_name):
     item = Helper.find_item(self.equipment, item_name, True)
@@ -234,31 +239,27 @@ class Player(Mob):
       Konsola.print("Porównujesz się z " + mob.name, "lwhite")
       Konsola.hr()
 
-      mob_offensive_score = 0
-      mob_offensive_score += mob.stats["attack"]
-      mob_offensive_score += mob.stats["strength"]
-      mob_offensive_score += mob.stats["speed"]/3
-      mob_offensive_score += mob.stats["dexterity"]/2
+      def calculate_offensive_score(mob):
+        offensive_score = 0
+        offensive_score += mob.stats["attack"]
+        offensive_score += mob.stats["strength"]
+        offensive_score += mob.stats["speed"]/3
+        offensive_score += mob.stats["dexterity"]/2
+        return offensive_score
+        
+      def calculate_defensive_score(mob):
+        defensive_score = 0
+        defensive_score += mob.stats["defence"]
+        defensive_score += mob.stats["speed"]
+        defensive_score += mob.stats["dexterity"]/2
+        return defensive_score
 
-      my_offensive_score = 0
-      my_offensive_score += self.stats["attack"]
-      my_offensive_score += self.stats["strength"]
-      my_offensive_score += self.stats["speed"]/3
-      my_offensive_score += self.stats["dexterity"]/2
-
-      mob_defensive_score = 0
-      mob_defensive_score += mob.stats["defence"]
-      mob_defensive_score += mob.stats["speed"]
-      mob_defensive_score += mob.stats["dexterity"]/2
-
-      my_defensive_score = 0
-      my_defensive_score += self.stats["defence"]
-      my_defensive_score += self.stats["speed"]
-      my_defensive_score += self.stats["dexterity"]/2
+      mob_offensive_score = calculate_offensive_score(mob)
+      my_offensive_score = calculate_offensive_score(self)
+      mob_defensive_score = calculate_defensive_score(mob)
+      my_defensive_score = calculate_defensive_score(self)
 
       off_result = mob_offensive_score / my_offensive_score
-      # print(f"(Atak) {mob.name}: {mob_offensive_score}")
-      # print(f"(Atak) {self.name}: {my_offensive_score}")
       if off_result < 0.8:
         Konsola.print("Twój przeciwnik jest słabszy od Ciebie w ataku", "green")
       elif 0.8 <= off_result < 1.2 :
@@ -267,8 +268,6 @@ class Player(Mob):
         Konsola.print("Twój przeciwnik jest silniejszy od Ciebie w ataku", "red")
 
       def_result = mob_defensive_score / my_defensive_score
-      # print(f"(Obrona) {mob.name}: {mob_defensive_score}")
-      # print(f"(Obrona) {self.name}: {my_defensive_score}")
       if def_result < 0.8:
         Konsola.print("Twój przeciwnik jest słabszy od Ciebie w obronie", "green")
       elif 0.8 <= def_result < 1.2 :

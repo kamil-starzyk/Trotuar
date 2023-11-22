@@ -62,6 +62,7 @@ class Konsola:
     print("[2] Wczytaj")
     print("[3] Demo")
     print("[5] Wyjdź z gry")
+    print()
   
   @classmethod
   def prompt(cls, player):

@@ -19,19 +19,25 @@ class Game:
   
   def title_screen(self):
     method_map = {
+      "1": self.new_game,
       "2": self.choose_save,
       "3": self.demo,
       "5": self.end_game,
+      "q": self.end_game,
     }
 
     Konsola.show_title_screen(self.version)
     while not self.is_playing:
-      choice = input(" > ")
+      choice = input("Wybierz tryb gry: ")
       if choice in method_map:
         method_map[choice]()
       else:
-        print("Wprowadź poprawny wybór")
+        Konsola.print("Wprowadź poprawny wybór", "red")
 
+  def new_game(self):
+    Konsola.print("Ten tryb jeszcze nie jest dostępny :(", "red")
+    Konsola.print("Aby poczuć przedsmak pełnej rozgrywki spróbuj zagrać w ", line_end="")
+    Konsola.print("DEMO", "lwhite")
   def load_game(self, path):
     data = MyJson.load_json("data/saves/"+path)
     self.player = Player.from_dict(data["player"])
@@ -265,19 +271,23 @@ class Game:
       return
     
     number = 1
+    Konsola.print("  Dostępne zapisy:  ", "black", "green")
     for path in saves:
       path = path.rsplit( ".", 1 )[ 0 ] #usuwa json
       print(str(number) + ". ", end="")
       Konsola.print(path, "lwhite")
       number+=1
-
-    Konsola.print("Wybierz zapis: ", "lgreen", line_end='')
+    print("")
+    
     correct = False
     while not correct:
+      Konsola.print("Wybierz zapis: ", "lgreen", line_end='')
       choice = input()
       try:
         choice = int(choice)
       except:
+        if choice == "q":
+          return
         print("Podaj liczbę ")
         continue
       if 0 < choice <= len(saves):
