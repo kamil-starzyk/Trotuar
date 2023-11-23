@@ -30,6 +30,7 @@ class Mob:
     self.conversations = conversations
     self.knowledge = knowledge
 
+    self.chance_bonus = 0
     self.killable = killable
     self.can_duel = can_duel
     self.is_aggressive = is_aggressive
@@ -200,6 +201,9 @@ class Mob:
   def hit(self, mob):
     chance = Helper.random()
     chance += self.dexterity + self.attack/2 - (mob.speed + mob.defence/2)
+    chance += self.chance_bonus
+    if(self.name == "Alwer"):
+      print(f'szansa_bonus: {self.chance_bonus}, szansa: {chance}')
     Konsola.print(self.name + " atakuje -> " + mob.name, "lyellow")
     damage = 0
     if chance >= 50:

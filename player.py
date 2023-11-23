@@ -18,7 +18,7 @@ class Player(Mob):
     self.given_item = None
     self.item_receiver = None
     self.talk_to_npc = None
-    self.mobs_killed= []
+    self.mobs_killed = []
 
   def whoami(self):
     print("Jestem " + self.name + ", rasa: " + self.race + "\n" + self.description)
@@ -378,13 +378,16 @@ class Player(Mob):
         elif choice in ("garda", "g"):
           Konsola.print("Czekasz", "lred")
           self.adjust_stamina(5, 0.5)
+          self.chance_bonus += 15
 
         elif choice in ("zamach", "z"):
           enemies_hit, damage_sum = self.swing(enemies)
           if enemies_hit:
             Konsola.print(f'Wykonałeś skuteczny zamach! Trafiłeś {enemies_hit} przeciwników, zadając w sumie {damage_sum} obrażeń', "lwhite")
+            self.chance_bonus = 0
           else:
             Konsola.print(f'Straciłeś równowagę próbując się zamachnąć')
+            self.chance_bonus -= 5
             self.adjust_stamina(-5, -1)
 
         elif choice in ("cios", "c") or 1:
@@ -393,8 +396,10 @@ class Player(Mob):
             mob.hp -= damage_given
             Konsola.damage_given(True, mob, damage_given)
             mob.adjust_stamina(-damage_given/2, -damage_given/4)
+            self.chance_bonus = 0
           else:
             print("Chybiłeś")
+            self.chance_bonus += 8
             if mob.hp <= mob.hp_max/2:
               direction = mob.try_to_escape()
               if direction:
