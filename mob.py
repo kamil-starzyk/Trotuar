@@ -30,6 +30,7 @@ class Mob:
     self.conversations = conversations
     self.knowledge = knowledge
 
+    
     self.chance_bonus = 0
     self.killable = killable
     self.can_duel = can_duel
