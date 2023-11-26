@@ -46,14 +46,14 @@ class Mob:
     print("There is no square with this coordinates")
     return 0
 
-  def recursive_pathfinder(self, current_x, current_y, visited, path):
+  def recursive_pathfinder(self, current_x, current_y, visited):
     x = current_x
     y = current_y
 
     if (x, y) in visited:
       return 0
     if (x, y) == (self.dest_x, self.dest_y):
-      return 1
+      return []
 
     visited.append((x, y))
     square = self.map.get_square_at(x, y)
@@ -61,21 +61,25 @@ class Mob:
       exits = square.exits
       for direction in exits:
         if direction == "n":
-          if self.recursive_pathfinder(x, y-1, visited, path):
+          path = self.recursive_pathfinder(x, y-1, visited)
+          if isinstance(path, list):
             path.append(direction)
-            return 1
+            return path
         if direction == "e":
-          if self.recursive_pathfinder(x+1, y, visited, path):
+          path = self.recursive_pathfinder(x+1, y, visited)
+          if isinstance(path, list):
             path.append(direction)
-            return 1
+            return path
         if direction == "s":
-          if self.recursive_pathfinder(x, y+1, visited, path):
+          path = self.recursive_pathfinder(x, y+1, visited)
+          if isinstance(path, list):
             path.append(direction)
-            return 1
+            return path
         if direction == "w":
-          if self.recursive_pathfinder(x-1, y, visited, path):
+          path = self.recursive_pathfinder(x-1, y, visited)
+          if isinstance(path, list):
             path.append(direction)
-            return 1
+            return path
       return 0
 
     else:
@@ -222,11 +226,11 @@ mob = Mob("P", 0, 0, mapa)
 
 mapa.draw_map(mob)
 
-x = int_input("Podaj X postaci: ", 0, mapa.size_x-1)
-y = int_input("Podaj Y postaci: ", 0, mapa.size_y-1)
+mobx = int_input("Podaj X postaci: ", 0, mapa.size_x-1)
+moby = int_input("Podaj Y postaci: ", 0, mapa.size_y-1)
 
-mob.x = x
-mob.y = y
+mob.x = mobx
+mob.y = moby
 
 mapa.draw_map(mob)
 
@@ -234,17 +238,40 @@ x = int_input("Podaj X celu: ", 0, mapa.size_x-1)
 y = int_input("Podaj Y celu: ", 0, mapa.size_y-1)
 
 mob.add_destination(x,y)
-path = []
-mob.recursive_pathfinder(mob.x, mob.y, [], path)
-path.reverse()
+visited = []
+paths = []
+path = 1
+while path:
+  mob.x = mobx
+  mob.y = moby
+  if (mob.x, mob.y) in visited:
+    visited.remove((mob.x, mob.y)) 
+  path = mob.recursive_pathfinder(mob.x, mob.y, visited)
+  if path in paths:
+    path = 0
+  if isinstance(path, list):
+    path.reverse()
+    paths.append(path)
 
-for step in path:
-  mob.move_in_direction(step)
-  mapa.draw_map(mob)
-  time.sleep(0.3)
+
+if len(paths) == 0:
+  print("Nie ma ścieżki do tego celu")
+  exit()
+for path in paths:
+  mob.x = mobx
+  mob.y = moby
+  print(path)
+  time.sleep(1)
+  for step in path:
+    mob.move_in_direction(step)
+    mapa.draw_map(mob)
+    time.sleep(0.3)
+
+shortest_path = min(paths, key=len)
+print("Najkrótsza ścieżka to: ", end='')
+print(shortest_path)
 
 
 
-print(path)
 
 
