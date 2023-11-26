@@ -93,7 +93,12 @@ while True:
 
   "exp":        player.add_exp
 }
-  
+  player.go_to_coordinates(5, 6, 1)
+  Helper.sleep(1)
+  player.go_to_coordinates(1, 5, 1)
+  Helper.sleep(1)
+  player.go_to_coordinates(4, 0, 3)
+
   while game.is_playing:
     prompt = Konsola.prompt(game.player)
     command = prompt[0]

@@ -30,6 +30,10 @@ class Mob:
     self.conversations = conversations
     self.knowledge = knowledge
 
+    self.dest_x = None
+    self.dest_y = None
+    self.dest_z = None
+    self.is_searching_for_route = False
     
     self.chance_bonus = 0
     self.killable = killable
@@ -144,26 +148,6 @@ class Mob:
       return e
     return 0
 
-
-  def move_in_direction(self, direction):
-    if direction in self.my_square.exits:
-      match direction:
-        case "n":
-          self.y -= 1
-        case "e":
-          self.x += 1
-        case "s":
-          self.y += 1
-        case "w":
-          self.x -= 1
-        case "u":
-          self.z += 1
-        case "d":
-          self.z -= 1
-      return direction
-      self.adjust_stamina(0.5, -0.2)
-    return 0
-  
   def adjust_stamina(self, s, s_max):
     """
     Method that changes value of stamina and stamina_max with regard to one's endurance
@@ -205,6 +189,7 @@ class Mob:
     chance += self.chance_bonus
     if(self.name == "Alwer"):
       print(f'szansa_bonus: {self.chance_bonus}, szansa: {chance}')
+  
     Konsola.print(self.name + " atakuje -> " + mob.name, "lyellow")
     damage = 0
     if chance >= 50:
@@ -246,7 +231,113 @@ class Mob:
         enemy.adjust_stamina(-damage/2, -damage/4)
     
     return len(enemies_hit), damage_sum
-        
+
+
+
+  def add_destination(self, x, y, z):
+    if self.current_location.find_square(x, y, z):
+      self.dest_x = x
+      self.dest_y = y
+      self.dest_z = z
+      self.is_searching_for_route = True
+      return True
+    print("There is no square with this coordinates")
+    return 0
+  
+  def move_in_direction(self, direction):
+    if direction in self.my_square.exits:
+      match direction:
+        case "n":
+          self.y -= 1
+        case "e":
+          self.x += 1
+        case "s":
+          self.y += 1
+        case "w":
+          self.x -= 1
+        case "u":
+          self.z += 1
+        case "d":
+          self.z -= 1
+      return direction
+      self.adjust_stamina(0.5, -0.2)
+    return 0
+     
+  def is_on_square(self, x, y, z):
+    if self.x == x and self.y == y and self.z == z:
+      return True
+    return False
+
+  def recursive_pathfinder(self, x, y, z, visited):
+    if (x, y, z) in visited:
+      return 0
+    if (x, y, z) == (self.dest_x, self.dest_y, self.dest_z):
+      return []
+
+    visited.append((x, y, z))
+    square = self.current_location.find_square(x, y, z)
+    if square:
+      exits = square.exits
+      for direction in exits:
+        if direction == "n":
+          path = self.recursive_pathfinder(x, y-1, z, visited)
+          if isinstance(path, list):
+            path.append(direction)
+            return path
+        elif direction == "e":
+          path = self.recursive_pathfinder(x+1, y, z, visited)
+          if isinstance(path, list):
+            path.append(direction)
+            return path
+        elif direction == "s":
+          path = self.recursive_pathfinder(x, y+1, z, visited)
+          if isinstance(path, list):
+            path.append(direction)
+            return path
+        elif direction == "w":
+          path = self.recursive_pathfinder(x-1, y, z, visited)
+          if isinstance(path, list):
+            path.append(direction)
+            return path
+        elif direction == "u":
+          path = self.recursive_pathfinder(x, y, z+1, visited)
+          if isinstance(path, list):
+            path.append(direction)
+            return path
+        elif direction == "d":
+          path = self.recursive_pathfinder(x, y, z-1, visited)
+          if isinstance(path, list):
+            path.append(direction)
+            return path
+      return 0
+
+    else:
+      return 0
+
+
+  def go_to_coordinates(self, x, y, z):
+    self.add_destination(x,y,z)
+    visited = []
+    paths = []
+    path = 1
+    while path:
+      x = self.x
+      y = self.y
+      z = self.z
+      if (x, y, z) in visited:
+        visited.remove((x, y, z)) 
+      path = self.recursive_pathfinder(x, y, z, visited)
+      if path in paths:
+        path = 0
+      if isinstance(path, list):
+        path.reverse()
+        paths.append(path)
+    shortest_path = None
+    if len(paths) > 0:
+      shortest_path = min(paths, key=len)
+    for step in shortest_path:
+      self.move_in_direction(step)
+
 
 
   def random_walk(self):
