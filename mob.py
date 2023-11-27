@@ -7,7 +7,7 @@ import random #for escape
 
 class Mob:
   ids = {}
-  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, killable, can_duel, is_aggressive, can_ally, affiliation):
+  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, path, killable, can_duel, is_aggressive, can_ally, affiliation):
     self.mob_id = mob_id
     self.x = x
     self.y = y
@@ -34,6 +34,7 @@ class Mob:
     self.dest_y = None
     self.dest_z = None
     self.is_searching_for_route = False
+    self.path_to_dest = path
     
     self.chance_bonus = 0
     self.killable = killable
@@ -315,7 +316,7 @@ class Mob:
       return 0
 
 
-  def go_to_coordinates(self, x, y, z):
+  def find_path_to_coordinates(self, x, y, z):
     self.add_destination(x,y,z)
     visited = []
     paths = []
@@ -335,10 +336,40 @@ class Mob:
     shortest_path = None
     if len(paths) > 0:
       shortest_path = min(paths, key=len)
-    for step in shortest_path:
+    self.path_to_dest = shortest_path
+
+  def follow_path(self):
+    if self.path_to_dest and len(self.path_to_dest) > 0:
+      step = self.path_to_dest.pop()
       self.move_in_direction(step)
+      return step
+    
+    self.is_searching_for_route = False
+    return None
 
-
+  def call_for_help(self):
+    allies = self.find_mobs_in_radius(5, affiliation=self.affiliation[0])
+    for a in allies:
+      a.find_path_to_coordinates(self.z, self.y, self.z)
+    return len(allies)
+  def calculate_distance(self, x, y, z):
+    a = self.x - x
+    b = self.y - y
+    c = self.z - z
+    diagonal_ab = math.sqrt(a**2 + b**2)
+    diagonal_ac = math.sqrt(diagonal_ab**2 + c**2)
+    return diagonal_ac
+  
+  def find_mobs_in_radius(self, r, base_name="", affiliation=""):
+    mobs = []
+    if base_name:
+      mobs = [mob for mob in self.current_location.mobs if mob.base_name == base_name]
+    elif affiliation:
+      mobs = [mob for mob in self.current_location.mobs if affiliation in mob.affiliation]
+    
+    mobs_in_radius = [mob for mob in mobs if mob.calculate_distance(self.x, self.y, self.z) <= r]
+    
+    return mobs_in_radius
 
   def random_walk(self):
     exits = self.my_square.exits
@@ -671,6 +702,7 @@ class Mob:
       "slots": slots_dict,
       "conversations": self.conversations,
       "knowledge": self.knowledge,
+      "path": self.path_to_dest,
       "killable": self.killable,
       "can_duel": self.can_duel,
       "is_aggressive": self.is_aggressive,
@@ -695,7 +727,7 @@ class Mob:
         slots[key] = Item.from_dict(slots[key])
     
     try:
-      mob = cls(mob_id, data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"], data["killable"], data["can_duel"],data["is_aggressive"], data["can_ally"], data["affiliation"])
+      mob = cls(mob_id, data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"], data["path"], data["killable"], data["can_duel"],data["is_aggressive"], data["can_ally"], data["affiliation"])
       return mob
     except TypeError:
       print("Nie udało się wczytać danych.")

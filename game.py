@@ -187,7 +187,10 @@ class Game:
       for rat in rats:
         is_mob_on_square = True if rat.my_square == self.player.my_square else False
         try:
-          #direction = rat.random_walk()
+          
+          direction = rat.follow_path()
+          if not direction:
+            direction = rat.random_walk()
           direction = None
         except AttributeError:
           print(rat.mob_id)
