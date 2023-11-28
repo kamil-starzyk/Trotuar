@@ -350,8 +350,9 @@ class Mob:
   def call_for_help(self):
     allies = self.find_mobs_in_radius(5, affiliation=self.affiliation[0])
     for a in allies:
-      a.find_path_to_coordinates(self.z, self.y, self.z)
+      a.find_path_to_coordinates(self.x, self.y, self.z)
     return len(allies)
+    
   def calculate_distance(self, x, y, z):
     a = self.x - x
     b = self.y - y

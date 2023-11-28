@@ -185,22 +185,23 @@ class Game:
     minutes = seconds // 60
     def loop_body():
       for rat in rats:
+        
         is_mob_on_square = True if rat.my_square == self.player.my_square else False
         try:
           
           direction = rat.follow_path()
           if not direction:
             direction = rat.random_walk()
-          direction = None
+          #direction = None
         except AttributeError:
           print(rat.mob_id)
           print(f'{rat.x} : {rat.y} : {rat.z}')
         if is_mob_on_square and direction:
-          direction = Konsola.direction_translator(direction)
-          Konsola.print("  " + rat.name + " odszedł " + direction, "magenta")
+          to_direction = Konsola.direction_translator(direction)
+          Konsola.print("  " + rat.name + " odszedł " + to_direction, "magenta")
         if direction and rat.my_square == self.player.my_square:
-          direction = Konsola.direction_translator(direction, True)
-          Konsola.print("  " + rat.name + " przyszedł " + direction, "lmagenta")
+          from_direction = Konsola.direction_translator(direction, True)
+          Konsola.print("  " + rat.name + " przyszedł " + from_direction, "lmagenta")
 
     for _ in range(minutes):
       loop_body()
