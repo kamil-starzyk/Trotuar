@@ -417,7 +417,8 @@ class Player(Mob):
 
         
         time_of_action = Player.TIME_OF_EXCHANGING_BLOWS/self.stat_coefficient(self.speed)
-        self.game.time.time_progress(time_of_action)
+        #self.game.time.time_progress(time_of_action)
+        self.game.update_state(time_of_action)
         Helper.sleep(0.5)
 
       enemies_actions = []
