@@ -246,6 +246,7 @@ class Mob:
     return 0
   
   def move_in_direction(self, direction):
+    
     if direction in self.my_square.exits:
       match direction:
         case "n":

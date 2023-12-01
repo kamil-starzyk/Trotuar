@@ -345,8 +345,8 @@ class Player(Mob):
 
     call_for_help = mob.call_for_help()
     if call_for_help:
-      print("Szczur głośno zapiszczał")
-      Helper.sleep(0.5)
+      print(mob.name + " głośno zapiszczał")
+      Helper.sleep(1)
 
     while self.hp > self.hp_max/10 and any(mob.hp > mob.hp_max/10 for mob in enemies):
       player_and_mob_params()
@@ -417,7 +417,6 @@ class Player(Mob):
 
         
         time_of_action = Player.TIME_OF_EXCHANGING_BLOWS/self.stat_coefficient(self.speed)
-        #self.game.time.time_progress(time_of_action)
         self.game.update_state(time_of_action)
         Helper.sleep(0.5)
 
