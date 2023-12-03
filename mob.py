@@ -7,7 +7,7 @@ import random #for escape
 
 class Mob:
   ids = {}
-  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, path, killable, can_duel, is_aggressive, can_ally, affiliation):
+  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, path, killable, can_duel, is_aggressive, can_ally, affiliation, area=""):
     self.mob_id = mob_id
     self.x = x
     self.y = y
@@ -30,6 +30,7 @@ class Mob:
     self.conversations = conversations
     self.knowledge = knowledge
 
+    self.area = area
     self.dest_x = None
     self.dest_y = None
     self.dest_z = None
@@ -245,24 +246,36 @@ class Mob:
     print("There is no square with this coordinates")
     return 0
   
+  def calculate_next_position(self, direction):
+    # Extract logic for calculating next coordinates based on direction
+    next_x, next_y, next_z = self.x, self.y, self.z
+
+    if direction == "n":
+        next_y -= 1
+    elif direction == "e":
+        next_x += 1
+    elif direction == "s":
+        next_y += 1
+    elif direction == "w":
+        next_x -= 1
+    elif direction == "u":
+        next_z += 1
+    elif direction == "d":
+        next_z -= 1
+
+    return next_x, next_y, next_z
+
   def move_in_direction(self, direction):
-    
+    next_x, next_y, next_z = self.calculate_next_position(direction)
+
+    # Check if the next coordinates are within the allowed area before moving
+    # if self.area and {"x": next_x, "y": next_y, "z": next_z} in self.area.squares:
     if direction in self.my_square.exits:
-      match direction:
-        case "n":
-          self.y -= 1
-        case "e":
-          self.x += 1
-        case "s":
-          self.y += 1
-        case "w":
-          self.x -= 1
-        case "u":
-          self.z += 1
-        case "d":
-          self.z -= 1
-      return direction
+      self.x = next_x
+      self.y = next_y
+      self.z = next_z
       self.adjust_stamina(0.5, -0.2)
+      return direction
     return 0
      
   def is_on_square(self, x, y, z):
@@ -374,7 +387,14 @@ class Mob:
     return mobs_in_radius
 
   def random_walk(self):
-    exits = self.my_square.exits
+    exits = []
+    for e in self.my_square.exits:
+      next_x, next_y, next_z = self.calculate_next_position(e)
+
+      # Check if the next coordinates are within the allowed area before moving
+      if self.area and {"x": next_x, "y": next_y, "z": next_z} in self.area.squares:
+        exits.append(e)
+
     #im dłużej stoi tym większa szansa, że się ruszy
     is_moving = any(count > 0 for count in self.direction_history.values())
 
@@ -391,9 +411,6 @@ class Mob:
         self.still_count+=1
         # print("    Mob stays still")
         
-    
-    
-
     elif is_moving:
       direction = max(self.direction_history, key=self.direction_history.get)
       wants_to_stop = random.randint(0,10) + self.direction_history[direction]
@@ -402,8 +419,7 @@ class Mob:
         wants_to_change_direction = 100 + random.randint(-1,1)
         wants_to_stop = 100
         direction = random.choice(exits)
-      
-      
+    
       if wants_to_change_direction > wants_to_stop and wants_to_change_direction > 13:
         e = direction
         while e==direction and len(exits) > 1:
@@ -419,14 +435,12 @@ class Mob:
         self.still_count+=1
         # print("    Mob decided to stop ")
         
-
       else:
         # print("    Mob keeps moving "+ direction)
         self.direction_history[direction] +=1
         self.move_in_direction(direction)
         return direction
         
-
   def damage_multiplier(self):
     min_range = int(30 + 15*(self.dexterity / 50))
     max_range = int(70 - 15*(self.dexterity / 50))
@@ -683,6 +697,11 @@ class Mob:
       else:
         slots_dict[key] = value.to_dict()
     
+    area_name = ''
+    if hasattr(self.area, 'name'):
+      area_name = self.area.name
+
+    
     return {
       "mob_id": self.mob_id,
       "x": self.x, 
@@ -704,6 +723,7 @@ class Mob:
       "slots": slots_dict,
       "conversations": self.conversations,
       "knowledge": self.knowledge,
+      "area": area_name,
       "path": self.path_to_dest,
       "killable": self.killable,
       "can_duel": self.can_duel,
@@ -729,7 +749,7 @@ class Mob:
         slots[key] = Item.from_dict(slots[key])
     
     try:
-      mob = cls(mob_id, data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"], data["path"], data["killable"], data["can_duel"],data["is_aggressive"], data["can_ally"], data["affiliation"])
+      mob = cls(mob_id, data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"], data["path"], data["killable"], data["can_duel"],data["is_aggressive"], data["can_ally"], data["affiliation"], data["area"])
       return mob
     except TypeError:
       print("Nie udało się wczytać danych.")
