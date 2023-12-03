@@ -46,6 +46,7 @@ class Game:
     self.time = GameTime.from_dict(data["time"])
     self.quests = [Quest.from_dict(data) for data in data["quests"]] 
     self.player.current_location = self.world.locations[0]
+    self.player.area = self.world.locations[0].areas[0]
     self.is_playing = True
     Konsola.clear()
     Konsola.print("Udało Ci się wczytać grę", "lwhite")
@@ -60,6 +61,7 @@ class Game:
     self.time = GameTime.from_dict(data["time"])
     self.quests = [Quest.from_dict(data) for data in data["quests"]]
     self.player.current_location = self.world.locations[0]
+    self.player.area = self.world.locations[0].areas[0]
     self.is_playing = True
     Konsola.clear()
     Konsola.print("Rozpocząłeś grę demonstracyjną", "lwhite")

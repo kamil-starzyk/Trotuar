@@ -9,8 +9,8 @@ class Player(Mob):
   TIME_OF_ITEM_INTERACTION = 30
   TIME_OF_CONVERSATION = 90
   TIME_OF_EXCHANGING_BLOWS = 30
-  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, path, killable, can_duel, is_aggressive, can_ally, affiliation):
-    super(Player, self).__init__(mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, killable, path, can_duel, is_aggressive, can_ally, affiliation)
+  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, area,  path, killable, can_duel, is_aggressive, can_ally, affiliation):
+    super(Player, self).__init__(mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, area, killable, path, can_duel, is_aggressive, can_ally, affiliation)
     self.game = None
     self.quest_id = None
     self.picked_item = None
@@ -649,4 +649,4 @@ class Player(Mob):
       else:
         slots[key] = Item.from_dict(slots[key])
     
-    return cls(data["mob_id"], data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"],data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"], data["killable"], data["path"], data["can_duel"], data["is_aggressive"], data["can_ally"], data["affiliation"])
+    return cls(data["mob_id"], data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"],data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"], data["killable"], data["path"], data["can_duel"], data["is_aggressive"], data["can_ally"], data["affiliation"], data["area"])

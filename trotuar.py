@@ -93,11 +93,9 @@ while True:
 
   "exp":        player.add_exp
 }
-  # player.go_to_coordinates(5, 6, 1)
-  # Helper.sleep(1)
-  # player.go_to_coordinates(1, 5, 1)
-  # Helper.sleep(1)
-  # player.go_to_coordinates(4, 0, 3)
+  
+  for _ in range(20):
+    player.random_walk()
 
   while game.is_playing:
     prompt = Konsola.prompt(game.player)
