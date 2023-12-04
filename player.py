@@ -9,8 +9,8 @@ class Player(Mob):
   TIME_OF_ITEM_INTERACTION = 30
   TIME_OF_CONVERSATION = 90
   TIME_OF_EXCHANGING_BLOWS = 30
-  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, area,  path, killable, can_duel, is_aggressive, can_ally, affiliation):
-    super(Player, self).__init__(mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, area, killable, path, can_duel, is_aggressive, can_ally, affiliation)
+  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, area,  path, can_trade, killable, can_duel, is_aggressive, can_ally, affiliation):
+    super(Player, self).__init__(mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, area, killable, path, can_trade, can_duel, is_aggressive, can_ally, affiliation)
     self.game = None
     self.quest_id = None
     self.picked_item = None
@@ -232,6 +232,20 @@ class Player(Mob):
       return 0
     Konsola.print("Nie ma tu kogoś takiego", "red")
     return 0
+  
+  def trade(self, mob_name):
+    mobs = self.current_location.mobs_on_square(self.my_square)
+    mob = Helper.find_item(mobs, mob_name, True)
+    if not mob: 
+      Konsola.print("Nie ma tu kogoś takiego", "red")
+      return 0
+    if not mob.can_trade:
+      Konsola.print(mob.name + " nie będzie z tobą handlować", "red")
+      return 0
+    Konsola.print("Możesz kupić: ", "lyellow")
+    Konsola.print_item_list(mob.equipment)
+    
+    
     
 
   def compare(self, mob_name):
@@ -649,4 +663,4 @@ class Player(Mob):
       else:
         slots[key] = Item.from_dict(slots[key])
     
-    return cls(data["mob_id"], data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"],data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"], data["killable"], data["path"], data["can_duel"], data["is_aggressive"], data["can_ally"], data["affiliation"], data["area"])
+    return cls(data["mob_id"], data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"],data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"], data["killable"], data["path"], data["can_trade"], data["can_duel"], data["is_aggressive"], data["can_ally"], data["affiliation"], data["area"])

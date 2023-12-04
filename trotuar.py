@@ -74,6 +74,8 @@ while True:
   "porozmawiaj":player.talk_to,
   "zabij":      player.kill,
   "podaruj":    player.give,
+  "handel":     player.trade,
+  "trade":      player.trade,
   "zadania":    game.active_quests,
   "quests":     game.active_quests,
   
@@ -93,9 +95,6 @@ while True:
 
   "exp":        player.add_exp
 }
-  
-  for _ in range(20):
-    player.random_walk()
 
   while game.is_playing:
     prompt = Konsola.prompt(game.player)
