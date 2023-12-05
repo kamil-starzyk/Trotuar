@@ -89,6 +89,8 @@
     "area": "",
     "path": [],
     "can_trade": true,
+    "items_to_sell": [],
+    "wants_buy": [],
     "killable": true,
     "can_duel": true,
     "is_aggressive": true,
@@ -248,41 +250,6 @@
                   "strength": -10,
                   "dexterity": -3,
                   "body_part": "first_hand"
-                }
-              },
-              {
-                "type": "Weapon",
-                "alias": [
-                  "miecz strudzonych",
-                  "miecz"
-                ],
-                "name": "Miecz strudzonych",
-                "description": "Prosty, lekki miecz. Idealny na początek",
-                "weight": 4,
-                "price": 60,
-                "attr": {
-                  "body_part": "first_hand",
-                  "damage": 12,
-                  "strength": -5,
-                  "dexterity": -5
-                }
-              },
-              {
-                "type": "Weapon",
-                "alias": [
-                  "miecz synthion",
-                  "miecz",
-                  "synthion"
-                ],
-                "name": "Miecz Synthion",
-                "description": "Lśniący miecz. Na gardzie widać jakieś runiczne zapiski.",
-                "weight": 3,
-                "price": 250,
-                "attr": {
-                  "body_part": "first_hand",
-                  "damage": 40,
-                  "strength": -15,
-                  "dexterity": -15
                 }
               }
             ]
@@ -1253,7 +1220,45 @@
             "knowledge": {},
             "area": "Torenberg",
             "path": [],
-    "can_trade": true,
+            "can_trade": true,
+            "items_to_sell": [
+              {
+                "type": "Weapon",
+                "alias": [
+                  "miecz strudzonych",
+                  "miecz"
+                ],
+                "name": "Miecz strudzonych",
+                "description": "Prosty, lekki miecz. Idealny na początek",
+                "weight": 4,
+                "price": 60,
+                "attr": {
+                  "body_part": "first_hand",
+                  "damage": 12,
+                  "strength": -5,
+                  "dexterity": -5
+                }
+              },
+              {
+                "type": "Weapon",
+                "alias": [
+                  "miecz synthion",
+                  "miecz",
+                  "synthion"
+                ],
+                "name": "Miecz Synthion",
+                "description": "Lśniący miecz. Na gardzie widać jakieś runiczne zapiski.",
+                "weight": 3,
+                "price": 250,
+                "attr": {
+                  "body_part": "first_hand",
+                  "damage": 40,
+                  "strength": -15,
+                  "dexterity": -15
+                }
+              }
+            ],
+            "wants_buy": [],
             "killable": false,
             "can_duel": false,
             "is_aggressive": false,
@@ -1445,6 +1450,8 @@
             "area": "Torenberg",
             "path": [],
     "can_trade": true,
+    "items_to_sell": [],
+    "wants_buy": [],
             "killable": false,
             "can_duel": false,
             "is_aggressive": false,
@@ -1663,6 +1670,8 @@
             "area": "Torenberg",
             "path": [],
     "can_trade": true,
+    "items_to_sell": [],
+    "wants_buy": [],
             "killable": false,
             "can_duel": true,
             "is_aggressive": false,
@@ -1824,6 +1833,8 @@
             "area": "",
             "path": [],
     "can_trade": true,
+    "items_to_sell": [],
+    "wants_buy": [],
             "killable": true,
             "can_duel": true,
             "is_aggressive": true,
@@ -1882,6 +1893,8 @@
             "area": "Kanały",
             "path": [],
     "can_trade": false,
+    "items_to_sell": [],
+    "wants_buy": [],
             "killable": true,
             "can_duel": true,
             "is_aggressive": true,
@@ -1942,6 +1955,8 @@
             "area": "Kanały",
             "path": [],
     "can_trade": false,
+    "items_to_sell": [],
+    "wants_buy": [],
             "killable": true,
             "can_duel": true,
             "is_aggressive": true,
@@ -2002,6 +2017,8 @@
             "area": "Kanały",
             "path": [],
     "can_trade": false,
+    "items_to_sell": [],
+    "wants_buy": [],
             "killable": true,
             "can_duel": true,
             "is_aggressive": true,
@@ -2064,6 +2081,8 @@
             "area": "Kanały",
             "path": [],
     "can_trade": false,
+    "items_to_sell": [],
+    "wants_buy": [],
             "killable": true,
             "can_duel": true,
             "is_aggressive": true,
@@ -2126,6 +2145,8 @@
             "area": "Kanały",
             "path": [],
     "can_trade": false,
+    "items_to_sell": [],
+    "wants_buy": [],
             "killable": true,
             "can_duel": true,
             "is_aggressive": true,
