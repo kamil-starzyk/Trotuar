@@ -9,8 +9,8 @@ class Player(Mob):
   TIME_OF_ITEM_INTERACTION = 30
   TIME_OF_CONVERSATION = 90
   TIME_OF_EXCHANGING_BLOWS = 30
-  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, area,  path, can_trade, items_to_sell, wants_buy, killable, can_duel, is_aggressive, can_ally, affiliation):
-    super(Player, self).__init__(mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, area, killable, path, can_trade, items_to_sell, wants_buy, can_duel, is_aggressive, can_ally, affiliation)
+  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, area,  path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, affiliation):
+    super(Player, self).__init__(mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, area, killable, path, can_trade, items_to_sell, wants_to_buy, can_duel, is_aggressive, can_ally, affiliation)
     self.game = None
     self.quest_id = None
     self.picked_item = None
@@ -23,6 +23,7 @@ class Player(Mob):
   def whoami(self):
     print("Jestem " + self.name + ", rasa: " + self.race + "\n" + self.description)
     print("Poziom: " + str(self.lvl) + " ( " + str(self.exp) + " / " + str(self.max_exp_for_level(self.lvl)) + " )")
+    print("Mam " + str(self.money) + " pieniędzy")
 
   def whereami(self):
     print("Znajduję się w "+self.current_location.name + ". Moje współrzędne to:")
@@ -119,8 +120,6 @@ class Player(Mob):
     return Player.TIME_OF_ITEM_INTERACTION
     
     
-    
-
   def see(self, item_name):
     item = Helper.find_item(self.equipment, item_name, True)
     if item:
@@ -219,7 +218,6 @@ class Player(Mob):
     
     return total_time + Player.TIME_OF_CONVERSATION
 
-
   def talk_to(self, mob_name):
     mobs = self.current_location.mobs_on_square(self.my_square)
     mob = Helper.find_item(mobs, mob_name, True)
@@ -239,25 +237,35 @@ class Player(Mob):
     if not mob: 
       Konsola.print("Nie ma tu kogoś takiego", "red")
       return 0
-    if not mob.can_trade:
+    if not mob.can_trade or len(mob.items_to_sell) == 0:
       Konsola.print(mob.name + " nie będzie z tobą handlować", "red")
       return 0
-    Konsola.print("Możesz kupić: ", "lyellow")
-    Konsola.print_item_list(mob.items_to_sell)
-    Konsola.print("Podaj numer przedmiotu lub jego nazwę aby zobaczyć szczegóły.", "yellow")
-    Konsola.print("Aby nabyć przedmiot musisz napisać \"kup\" i nazwę przedmiotu albo jego numer", "lyellow")
-    Konsola.print("Aby ponownie wyświetlić listę przedmiotów napisz \"lista\". Aby zakończyć handel napisz \"konies\".", "yellow")
+    def print_items(items):
+      Konsola.clear()
+      Konsola.print("Twoje pieniądze: ", line_end='')
+      Konsola.print(self.money, "lyellow")
+      Konsola.print("Przedmioty na sprzedaż: ", "yellow")
+      Konsola.print_item_list(items)
+      Konsola.print("Podaj numer przedmiotu lub jego nazwę aby zobaczyć szczegóły.", "yellow")
+      Konsola.print("Aby nabyć przedmiot musisz napisać \"kup\" i nazwę przedmiotu albo jego numer", "lyellow")
+      Konsola.print("Aby ponownie wyświetlić listę przedmiotów napisz \"lista\". Aby zakończyć handel napisz \"koniec\".", "yellow")
+    
+    time_of_trade = 30
+    print_items(mob.items_to_sell)
     while True:
       is_buying = False
+      Konsola.hr()
       choice = input(" > ")
       if choice == "lista":
-        Konsola.print_item_list(mob.items_to_sell)
+        print_items(mob.items_to_sell)
         continue
       elif choice == "koniec":
         Konsola.print("Tylko się rozglądałem. Do zobaczenia.")
-      elif choice.startswith("buy "):
-        choice = choice.replace("buy ", "", 1)
+        break
+      elif choice.startswith("kup "):
+        choice = choice.replace("kup ", "", 1)
         is_buying = True
+
       try:
         item_index = int(choice) -1
       except ValueError:
@@ -265,25 +273,30 @@ class Player(Mob):
       item = None
       if item_index >= 0 and item_index < len(mob.items_to_sell):
         item = mob.items_to_sell[item_index]
-      elif item_index > len(mob.items_to_sell):
+      elif item_index >= len(mob.items_to_sell):
         Konsola.print("Niewłaściwy numer", "red")
         continue
       else:
-        for i in mob.items_to_sell:
-          if choice in i.alias:
-            item = i
+        item = Helper.find_item(mob.items_to_sell, choice, True)
       if item and not is_buying:
         item.see_more()
       elif item and is_buying:
-        Konsola.print("Kupiłeś " + item.name, "lgreen")
-        # implement buinyg logic
-        return
+        if self.money < item.price:
+          Konsola.print("Nie stać Cię!", "red")
+          continue
+        mob.items_to_sell.remove(item)
+        self.equipment.append(item)
+        self.money -= item.price
+        mob.money += item.price
+
+        Konsola.print("Kupiłeś " + item.name + " za ", "lgreen", line_end='')
+        Konsola.print(item.price, "lyellow")
+        break
       else:
         Konsola.print("Nie ma takiego przedmiotu", "red")
-
-    
-    
-    
+      
+      time_of_trade += 60
+    return time_of_trade
 
   def compare(self, mob_name):
     mobs = self.current_location.mobs_on_square(self.my_square)
@@ -334,7 +347,6 @@ class Player(Mob):
         Konsola.print("Wygląda na to, że przeciwnik w dobrym stanie", "lblue")
       else:
         Konsola.print("Przeciwnik wygląda jakby czuł się doskonale", "lgreen")
-
 
   def kill(self, mob_name):
     if self.stamina <= 10:

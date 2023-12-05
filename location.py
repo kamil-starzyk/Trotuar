@@ -39,7 +39,7 @@ class Location:
       "squares": [square.to_dict() for square in self.squares],
       "mobs": [mob.to_dict() for mob in self.mobs],
       "secret_passages": self.secret_passages,
-      "areas": self.areas
+      "areas": [area.to_dict() for area in self.areas]
     }
    
   @classmethod

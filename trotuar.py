@@ -75,6 +75,7 @@ while True:
   "zabij":      player.kill,
   "podaruj":    player.give,
   "handel":     player.trade,
+  "handluj":    player.trade,
   "trade":      player.trade,
   "zadania":    game.active_quests,
   "quests":     game.active_quests,
@@ -108,9 +109,10 @@ while True:
       if isinstance(action, tuple):
         seconds = action[0](action[1])
       elif argument:
-        
+        try:
           seconds = action(argument)
-        
+        except TypeError:
+          Konsola.print("To polecenie jest jednowyrazowe", "red")
       else: 
         try:
           seconds = action()

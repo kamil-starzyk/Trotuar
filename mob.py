@@ -7,7 +7,7 @@ import random #for escape
 
 class Mob:
   ids = {}
-  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, path, can_trade, items_to_sell, wants_buy, killable, can_duel, is_aggressive, can_ally, affiliation, area=""):
+  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, affiliation, area=""):
     self.mob_id = mob_id
     self.x = x
     self.y = y
@@ -39,7 +39,7 @@ class Mob:
     
     self.can_trade = can_trade
     self.items_to_sell = items_to_sell
-    self.want_buy = wants_buy
+    self.wants_to_buy = wants_to_buy
     self.chance_bonus = 0
     self.killable = killable
     self.can_duel = can_duel
@@ -730,7 +730,7 @@ class Mob:
       "path": self.path_to_dest,
       "can_trade": self.can_trade,
       "items_to_sell": [item.to_dict() for item in self.items_to_sell],
-      "wants_buy": self.wants_buy,
+      "wants_to_buy": self.wants_to_buy,
       "killable": self.killable,
       "can_duel": self.can_duel,
       "is_aggressive": self.is_aggressive,
@@ -755,7 +755,7 @@ class Mob:
         slots[key] = Item.from_dict(slots[key])
     items_to_sell = [Item.from_dict(item_data) for item_data in data["items_to_sell"]]
     try:
-      mob = cls(mob_id, data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"], data["path"], data["can_trade"], items_to_sell, data["wants_buy"], data["killable"], data["can_duel"], data["is_aggressive"], data["can_ally"], data["affiliation"], data["area"])
+      mob = cls(mob_id, data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"], data["path"], data["can_trade"], items_to_sell, data["wants_to_buy"], data["killable"], data["can_duel"], data["is_aggressive"], data["can_ally"], data["affiliation"], data["area"])
       return mob
     except TypeError:
       print("Nie udało się wczytać danych.")
