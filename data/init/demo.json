@@ -15,7 +15,7 @@
     "lvl": 1,
     "exp": 0,
     "weight": 80,
-    "money": 70,
+    "money": 20,
     "race": "Człowiek",
     "proficiency": "wojownik",
     "params": {
@@ -53,6 +53,22 @@
         "attr": {
           "satiation": 15,
           "hp": 5
+        }
+      },
+      {
+        "type": "Consumable",
+        "alias": [
+          "butelka wody",
+          "butelka",
+          "woda"
+        ],
+        "name": "Butelka wody",
+        "description": "Szklana, przezroczysta butelka, a w środku orzeźwiająca woda",
+        "weight": 0.7,
+        "price": 2,
+        "attr": {
+          "hydration": 45,
+          "hp": 1
         }
       }
     ],

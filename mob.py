@@ -107,7 +107,8 @@ class Mob:
         if attr_name in consumable_attr:
           setattr(self, attr_name, getattr(self, attr_name) + attr_value)
           effects[attr_name] = attr_value
-        
+      
+      self.equipment.remove(item)  
     return item, effects
 
   
