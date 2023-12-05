@@ -243,7 +243,44 @@ class Player(Mob):
       Konsola.print(mob.name + " nie będzie z tobą handlować", "red")
       return 0
     Konsola.print("Możesz kupić: ", "lyellow")
-    Konsola.print_item_list(mob.equipment)
+    Konsola.print_item_list(mob.items_to_sell)
+    Konsola.print("Podaj numer przedmiotu lub jego nazwę aby zobaczyć szczegóły.", "yellow")
+    Konsola.print("Aby nabyć przedmiot musisz napisać \"kup\" i nazwę przedmiotu albo jego numer", "lyellow")
+    Konsola.print("Aby ponownie wyświetlić listę przedmiotów napisz \"lista\". Aby zakończyć handel napisz \"konies\".", "yellow")
+    while True:
+      is_buying = False
+      choice = input(" > ")
+      if choice == "lista":
+        Konsola.print_item_list(mob.items_to_sell)
+        continue
+      elif choice == "koniec":
+        Konsola.print("Tylko się rozglądałem. Do zobaczenia.")
+      elif choice.startswith("buy "):
+        choice = choice.replace("buy ", "", 1)
+        is_buying = True
+      try:
+        item_index = int(choice) -1
+      except ValueError:
+        item_index = -1
+      item = None
+      if item_index >= 0 and item_index < len(mob.items_to_sell):
+        item = mob.items_to_sell[item_index]
+      elif item_index > len(mob.items_to_sell):
+        Konsola.print("Niewłaściwy numer", "red")
+        continue
+      else:
+        for i in mob.items_to_sell:
+          if choice in i.alias:
+            item = i
+      if item and not is_buying:
+        item.see_more()
+      elif item and is_buying:
+        Konsola.print("Kupiłeś " + item.name, "lgreen")
+        # implement buinyg logic
+        return
+      else:
+        Konsola.print("Nie ma takiego przedmiotu", "red")
+
     
     
     
