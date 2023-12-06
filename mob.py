@@ -188,56 +188,45 @@ class Mob:
   def show_params(self):
     Konsola.print_params(self)
 
-  
-  def hit(self, mob):
+  def perform_attack(self, target, attack_type="hit"):
     chance = Helper.random()
-    chance += self.dexterity + self.attack/2 - (mob.speed + mob.defence/2)
-    chance += self.chance_bonus
-    if(self.name == "Alwer"):
-      print(f'szansa_bonus: {self.chance_bonus}, szansa: {chance}')
-  
-    Konsola.print(self.name + " atakuje -> " + mob.name, "lyellow")
-    damage = 0
-    if chance >= 50:
-      try:
-        weapon = self.slots["first_hand"]
-        weapon_damage = weapon.attr["damage"]
-        damage = self.damage(mob, weapon_damage)
-      except AttributeError:
-        damage = self.damage(mob)
-      except KeyError:
-        damage = self.damage(mob)
-
-    return damage
-  
-  def swing(self, mobs):
-    chance = Helper.random()
-    chance += self.dexterity + self.attack/2 - (mobs[0].speed + mobs[0].defence/2)
-    Konsola.print(self.name + " wykonuje zamach", "lyellow")
+    if attack_type == "hit":
+      chance += self.dexterity + self.attack / 2 - (target.speed + target.defence / 2)
+      Konsola.print(self.name + " atakuje -> " + target.name, "lyellow")
+    elif attack_type == "swing":
+      chance += self.dexterity + self.attack / 2 - (target[0].speed + target[0].defence / 2)
+      Konsola.print(self.name + " wykonuje zamach", "lyellow")
+    
     damage_sum = 0
     enemies_hit = []
-    if chance >= 60:
-      for mob in mobs:
-        chance = Helper.random()
-        chance += self.attack
-        if chance >= 40:
-          enemies_hit.append(mob)
+
+    if chance >= 50 if attack_type == "hit" else 60:
+      if attack_type == "hit":
+        target = [target]
+      
+      if len(target) == 1:
+        enemies_hit.append(target[0])
+      else:
+        for mob in target:
+          chance = Helper.random()
+          chance += self.attack
+          
+          if chance >= 40:
+            enemies_hit.append(mob)
       
       for enemy in enemies_hit:
         try:
           weapon = self.slots["first_hand"]
           weapon_damage = weapon.attr["damage"]
-          damage = self.damage(mob, weapon_damage)
-        except AttributeError:
-          damage = self.damage(mob)
-        except KeyError:
-          damage = self.damage(mob)
+          damage = self.damage(enemy, weapon_damage)
+        except (AttributeError, KeyError):
+          damage = self.damage(enemy)
+        
         enemy.hp -= damage
         damage_sum += damage
-        enemy.adjust_stamina(-damage/2, -damage/4)
-    
-    return len(enemies_hit), damage_sum
-
+        enemy.adjust_stamina(-damage / 2, -damage / 4)
+      
+    return enemies_hit, damage_sum
 
 
   def add_destination(self, x, y, z):
