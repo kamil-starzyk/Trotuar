@@ -149,6 +149,8 @@ class Mob:
     chance += speed_bonus
     if chance >= 50:
       exits = self.my_square.exits
+      if not exits:
+        return 0
       e = random.choice(exits)
       self.move_in_direction(e)
       return e
@@ -387,7 +389,9 @@ class Mob:
       # Check if the next coordinates are within the allowed area before moving
       if self.area and {"x": next_x, "y": next_y, "z": next_z} in self.area.squares:
         exits.append(e)
-
+    if not exits:
+      return
+    
     #im dłużej stoi tym większa szansa, że się ruszy
     is_moving = any(count > 0 for count in self.direction_history.values())
 

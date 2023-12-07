@@ -354,65 +354,66 @@ class Player(Mob):
       return 0
     
     mobs = self.current_location.mobs_on_square(self.my_square)
-    mob = Helper.find_item(mobs, mob_name, True)
+    current_enemy = Helper.find_item(mobs, mob_name, True)
 
-    if not mob:
+    if not current_enemy:
       Konsola.print("Nie ma tu kogoś takiego", "red")
       return 0
 
     enemies = []
-    enemies.append(mob)
+    enemies.append(current_enemy)
     current_enemy_index = 0
 
-    def player_and_mob_params():
+    def player_and_enemies_params():
       Konsola.clear()
       Konsola.print_param("Ja", self.hp, self.hp_max, "lred")
       Konsola.print_param("stamina", self.stamina, self.stamina_max, "lyellow")
       Konsola.print_param("mana", self.mana, self.mana_max, "lblue")
-      for mob in enemies:
-        if mob.hp > 0:
+      for enemy in enemies:
+        if enemy.hp > 0:
           print("")
-          Konsola.print_param(mob.name, mob.hp, mob.hp_max, "red")
-          Konsola.print_param("stamina", mob.stamina, mob.stamina_max, "yellow")
+          Konsola.print_param(enemy.name, enemy.hp, enemy.hp_max, "red")
+          Konsola.print_param("stamina", enemy.stamina, enemy.stamina_max, "yellow")
     
-    def award_exp(mob, fraction=1):
+    def award_exp(enemy, fraction=1):
       Konsola.print("  Zdobywasz: ", line_end="")
-      exp = int(mob.exp*fraction)
+      exp = int(enemy.exp*fraction)
       Konsola.print(str(exp) + " doświadczenia", "lyellow")
       self.add_exp(exp)
-      mob.exp-=exp
+      enemy.exp-=exp
     
-    def award_money(mob):
+    def award_money(enemy):
       Konsola.print("  Zdobywasz: ", line_end="")
-      Konsola.print(str(mob.money) + " złota", "lyellow")
-      self.money+=mob.money
-      mob.money = 0
+      Konsola.print(str(enemy.money) + " złota", "lyellow")
+      self.money+=enemy.money
+      enemy.money = 0
     
     def check_for_more_enemies():
       if len(enemies) > 0:
-        mobs = self.current_location.mobs_on_square(self.my_square)
-        rats = [mob for mob in mobs if mob.base_name == "Szczur"]
-        for rat in rats:
-          if rat not in enemies and any(affiliation in rat.affiliation for affiliation in enemies[0].affiliation):
-            enemies.append(rat)
+        potential_enemies = self.current_location.mobs_on_square(self.my_square)
+        for being in potential_enemies:
+          if being not in enemies and any(affiliation in being.affiliation for affiliation in enemies[0].affiliation):
+            enemies.append(being)
             print('')
-            Konsola.print(rat.name + " dołączył do walki", "lred")
-            rat.try_to_draw_weapon()
+            Konsola.print(being.name + " dołączył do walki", "lred")
+            being.try_to_draw_weapon()
             Helper.sleep(0.5)
             return
     
     def switch_enemy(value):
+      nonlocal current_enemy
+      nonlocal current_enemy_index
       current_enemy_index = (current_enemy_index + value) % len(enemies)
-      mob = enemies[current_enemy_index]
-      Konsola.print("  Teraz atakujesz " + mob.name, "yellow")
-      choice = Konsola.dynamic_prompt()
+      current_enemy = enemies[current_enemy_index]
+      Konsola.print("  Teraz atakujesz " + current_enemy.name, "yellow")
     
     def remove_enemy(enemy, direction):
+      nonlocal current_enemy
       Konsola.print("  " + enemy.name + " uciekł " + Konsola.direction_translator(direction), "cyan")
       Helper.sleep(0.5)
       enemies.remove(enemy)
       if len(enemies) > 0:
-        mob = enemies[0]
+        current_enemy = enemies[0]
     
     def enemies_try_to_escape(mob = None):
       enemies_to_escape = [mob] if mob else enemies
@@ -449,8 +450,8 @@ class Player(Mob):
       Konsola.print("Czekasz", "lred")
       self.adjust_stamina(5, 0.5)
       self.chance_bonus += 15
-      for mob in enemies:
-        mob.chance_bonus -= 5
+      for enemy in enemies:
+        enemy.chance_bonus -= 5
     
     def attack_swing():
       enemies_hit, damage_sum = self.perform_attack(enemies, "swing")
@@ -464,168 +465,163 @@ class Player(Mob):
         self.adjust_stamina(-5, -1)
     
     def attack_hit():
-      _, damage_given = self.perform_attack(mob, "hit")
+      _, damage_given = self.perform_attack(current_enemy, "hit")
       if damage_given:
-        Konsola.damage_given(True, mob, damage_given)
-        mob.adjust_stamina(-damage_given/2, -damage_given/4)
+        Konsola.damage_given(True, current_enemy, damage_given)
+        current_enemy.adjust_stamina(-damage_given/2, -damage_given/4)
         self.chance_bonus = 0
       else:
         print("Chybiłeś")
-        enemies_try_to_escape(mob)
+        enemies_try_to_escape(current_enemy)
         self.chance_bonus += 8
-        
-
-
-    def combat_loop():
-      while self.hp > self.hp_max/10 and any(mob.hp > mob.hp_max/10 for mob in enemies):
-        player_and_mob_params()
-        if self.stamina <= 11:
-          Konsola.print("Odpocznij!!!", "lred")
-          self.adjust_stamina(5, 0.5)
-        else:
-          choice = Konsola.dynamic_prompt()
-
-          choice_map = {
-            "next":   next_enemy,
-            "n":      next_enemy,
-            "prev":   previous_enemy,
-            "p":      previous_enemy,
-            "/":      combat_help,
-            "?":      combat_help,
-            "garda":  hold_guard,
-            "g":      hold_guard,
-            "zamach": attack_swing,
-            "z":      attack_swing,
-            "cios":   attack_hit,
-            "c":      attack_hit
-          }
-          if choice in choice_map:
-            action = choice_map[choice]
-          else:
-            action = attack_hit
-            self.chance_bonus -= 2 #kara za nie wciskanie c :p
-          # there it all happens
-          # vvvvvvvv
-            action()
-
-
-          time_of_action = Player.TIME_OF_EXCHANGING_BLOWS/self.stat_coefficient(self.speed)
-          self.game.update_state(time_of_action)
-          Helper.sleep(0.5)
-
-        enemies_actions = []
-        if enemies:
-          for enemy in enemies:
-            if enemy.hp > enemy.hp_max/10:
-              if enemy.stamina <= 11:
-                Konsola.print(enemy.name + " czeka", "red")
-                enemy.adjust_stamina(5, 0.5)
-              else:
-                enemy_resulting_speed = self.stat_coefficient(enemy.speed)
-                speed_advantage = enemy_resulting_speed / player_resulting_speed
-                enemy_hits = Helper.probabilistic_round(speed_advantage)
-                for _ in range(enemy_hits):
-                  action = []
-                  action.append(enemy)
-                  action.append(enemy.perform_attack)
-                  action.append("hit")
-                  enemies_actions.append(action)
-                
-
-            elif 0 < enemy.hp <= enemy.hp_max/10 and len(enemies)>1:
-              direction = enemy.try_to_escape(100)
-              if direction:
-                remove_enemy(enemy, direction)
-
-        shuffle(enemies_actions)
-        for a in enemies_actions:
-          mob = a[0]
-          action = a[1]
-          attack = a[2]
-          _, damage_taken = action(self, attack)
-          if damage_taken:
-            self.hp -= damage_taken
-            Konsola.damage_given(False, mob, damage_taken)
-            self.adjust_stamina(-damage_taken/2, -damage_taken/4)
-          else:
-            print(f'{mob.name} chybia')
-            mob.adjust_stamina(-5, -1)
-          time_of_action = Player.TIME_OF_EXCHANGING_BLOWS/self.stat_coefficient(mob.speed)
-          self.game.time.time_progress(time_of_action)
-          Helper.sleep(0.5)
-        
-        check_for_more_enemies()
-
-        Helper.sleep(0.5)
-
 
 
     player_resulting_speed = self.stat_coefficient(self.speed)
 
-    mob.try_to_draw_weapon()
-    print("Walczysz z " + mob.name)
+    current_enemy.try_to_draw_weapon()
+    print("Walczysz z " + current_enemy.name)
 
-    call_for_help = mob.call_for_help()
+    call_for_help = current_enemy.call_for_help()
     if call_for_help:
-      print(mob.name + " głośno zapiszczał")
+      print(current_enemy.name + " głośno zapiszczał")
       Helper.sleep(1)
 
     #main combat loop
-    combat_loop()
+    while self.hp > self.hp_max/10 and any(enemy.hp > enemy.hp_max/10 for enemy in enemies):
+      player_and_enemies_params()
+      if self.stamina <= 11:
+        Konsola.print("Odpocznij!!!", "lred")
+        self.adjust_stamina(5, 0.5)
+      else:
+        choice = Konsola.dynamic_prompt()
+
+        choice_map = {
+          "next":   next_enemy,
+          "n":      next_enemy,
+          "prev":   previous_enemy,
+          "p":      previous_enemy,
+          "/":      combat_help,
+          "?":      combat_help,
+          "garda":  hold_guard,
+          "g":      hold_guard,
+          "zamach": attack_swing,
+          "z":      attack_swing,
+          "cios":   attack_hit,
+          "c":      attack_hit
+        }
+        if choice in choice_map:
+          action = choice_map[choice]
+        else:
+          action = attack_hit
+          self.chance_bonus -= 2 #kara za nie wciskanie c :p
+        # there it all happens
+        # vvvvvvvv
+        action()
+
+
+        time_of_action = Player.TIME_OF_EXCHANGING_BLOWS/self.stat_coefficient(self.speed)
+        self.game.update_state(time_of_action)
+        Helper.sleep(0.5)
+
+      enemies_actions = []
+      if enemies:
+        for enemy in enemies:
+          if enemy.hp > enemy.hp_max/10:
+            if enemy.stamina <= 11:
+              Konsola.print(enemy.name + " czeka", "red")
+              enemy.adjust_stamina(5, 0.5)
+            else:
+              enemy_resulting_speed = self.stat_coefficient(enemy.speed)
+              speed_advantage = enemy_resulting_speed / player_resulting_speed
+              enemy_hits = Helper.probabilistic_round(speed_advantage)
+              for _ in range(enemy_hits):
+                action = []
+                action.append(enemy)
+                action.append(enemy.perform_attack)
+                action.append("hit")
+                enemies_actions.append(action)
+              
+
+          elif 0 < enemy.hp <= enemy.hp_max/10 and len(enemies)>1:
+            direction = enemy.try_to_escape(100)
+            if direction:
+              remove_enemy(enemy, direction)
+
+      shuffle(enemies_actions)
+      for a in enemies_actions:
+        enemy = a[0]
+        action = a[1]
+        attack = a[2]
+        _, damage_taken = action(self, attack)
+        if damage_taken:
+          self.hp -= damage_taken
+          Konsola.damage_given(False, enemy, damage_taken)
+          self.adjust_stamina(-damage_taken/2, -damage_taken/4)
+        else:
+          print(f'{enemy.name} chybia')
+          enemy.adjust_stamina(-5, -1)
+        time_of_action = Player.TIME_OF_EXCHANGING_BLOWS/self.stat_coefficient(enemy.speed)
+        self.game.time.time_progress(time_of_action)
+        Helper.sleep(0.5)
+      
+      check_for_more_enemies()
+
+      Helper.sleep(0.5)
+
     
-    if 0 < mob.hp < mob.hp_max/10 and self.hp > self.hp_max/10:
+    if 0 < current_enemy.hp <= current_enemy.hp_max/10 and self.hp > self.hp_max/10:
       Konsola.print("Twój przeciwnik chwieje się na nogach i nie jest w stanie walczyć. Co robisz?", "cyan")
       print("[1] Dobij go!")      
       print("[2] Daruj życie i pozwól odejść")      
       print("[3] Pozwól odejść, ale ma oddać wszystkie pieniądze")
       choice = Konsola.int_input(1,3)
       if choice == 1:
-        damage_given = mob.hp
-        mob.hp-=damage_given
-        Konsola.damage_given(True, mob, damage_given)
+        damage_given = current_enemy.hp
+        current_enemy.hp-=damage_given
+        Konsola.damage_given(True, current_enemy, damage_given)
       elif choice == 3:
-        if mob.money > 0:
-          award_money(mob)
-        if mob.exp > 0:
-          award_exp(mob, 0.5)
-        direction = mob.try_to_escape(100)
+        if current_enemy.money > 0:
+          award_money(current_enemy)
+        if current_enemy.exp > 0:
+          award_exp(current_enemy, 0.5)
+        direction = current_enemy.try_to_escape(100)
         Konsola.print("Przeciwnik uciekł" + Konsola.direction_translator(direction), "cyan")
         return 0
       else:
-        if mob.exp > 0:
-          award_exp(mob, 0.75)
-        mob.try_to_escape(100)
+        if current_enemy.exp > 0:
+          award_exp(current_enemy, 0.75)
+        current_enemy.try_to_escape(100)
         Konsola.print("Przeciwnik uciekł dziękując za łaskę", "cyan")
         return 0
 
-    elif 0 < self.hp < self.hp_max/10 and mob.hp > mob.hp_max/10:
+    elif 0 < self.hp <= self.hp_max/10 and current_enemy.hp > current_enemy.hp_max/10:
       Konsola.print("Jesteś zbyt pobity by walczyć", "cyan")
       wants_to_kill_you = Helper.random()
       if wants_to_kill_you > 60:
         Konsola.print("Przeciwnik postanowił Cię wykończyć", "cyan")
         damage_taken = self.hp
         self.hp-=damage_taken
-        Konsola.damage_given(False, mob, damage_taken)
+        Konsola.damage_given(False, current_enemy, damage_taken)
       else:
         Konsola.print("Przeciwnik daruje Ci życie", "cyan")
     
     if self.hp > 0:
-      for mob in enemies:
-        if mob.hp == 0:
-          Konsola.print("Pokonałeś " + mob.name, "lgreen")
-          if mob.money > 0:
-            award_money(mob)
-          if mob.exp > 0:
-            award_exp(mob)
-          mob.die()
-          self.mobs_killed.append(mob)
+      for enemy in enemies:
+        if enemy.hp == 0:
+          Konsola.print("Pokonałeś " + enemy.name, "lgreen")
+          if enemy.money > 0:
+            award_money(enemy)
+          if enemy.exp > 0:
+            award_exp(enemy)
+          enemy.die()
+          self.mobs_killed.append(enemy)
         
-    elif self.hp == 0 and mob.hp > 0:
-      Konsola.print("Zostałeś pokonany przez " + mob.name, "lred")
+    elif self.hp == 0 and current_enemy.hp > 0:
+      Konsola.print("Zostałeś pokonany przez " + current_enemy.name, "lred")
     
     else:
       Konsola.print("Nie jesteście w stanie rozstrzygnąć walki.", "cyan")
-      award_exp(mob, 0.5)
+      award_exp(current_enemy, 0.5)
     
     return 0
         
