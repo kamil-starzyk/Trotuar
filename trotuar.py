@@ -114,10 +114,10 @@ while True:
         # except TypeError:
         #   Konsola.print("To polecenie jest jednowyrazowe", "red")
       else: 
-        try:
+        # try:
           seconds = action()
-        except TypeError:
-          Konsola.print("To polecenie wymaga więcej informacji!", "red")
+        # except TypeError:
+        #   Konsola.print("To polecenie wymaga więcej informacji!", "red")
     try:  
       int(seconds)
     except TypeError:

@@ -187,7 +187,8 @@ class Game:
     minutes = seconds // 60
     def loop_body():
       for rat in rats:
-        
+        if rat.current_activity != "random_walk":
+          continue
         is_mob_on_square = True if rat.my_square == self.player.my_square else False
         try:
           

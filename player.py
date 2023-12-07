@@ -9,8 +9,8 @@ class Player(Mob):
   TIME_OF_ITEM_INTERACTION = 30
   TIME_OF_CONVERSATION = 90
   TIME_OF_EXCHANGING_BLOWS = 30
-  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, area,  path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, affiliation):
-    super(Player, self).__init__(mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, area, killable, path, can_trade, items_to_sell, wants_to_buy, can_duel, is_aggressive, can_ally, affiliation)
+  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, current_activity, area, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, affiliation):
+    super(Player, self).__init__(mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, current_activity, area, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, affiliation)
     self.game = None
     self.quest_id = None
     self.picked_item = None
@@ -394,6 +394,7 @@ class Player(Mob):
         for being in potential_enemies:
           if being not in enemies and any(affiliation in being.affiliation for affiliation in enemies[0].affiliation):
             enemies.append(being)
+            being.current_activity = "combat"
             print('')
             Konsola.print(being.name + " dołączył do walki", "lred")
             being.try_to_draw_weapon()
@@ -412,6 +413,7 @@ class Player(Mob):
       Konsola.print("  " + enemy.name + " uciekł " + Konsola.direction_translator(direction), "cyan")
       Helper.sleep(0.5)
       enemies.remove(enemy)
+      enemy.current_activity = "random_walk"
       if len(enemies) > 0:
         current_enemy = enemies[0]
     
@@ -475,6 +477,29 @@ class Player(Mob):
         enemies_try_to_escape(current_enemy)
         self.chance_bonus += 8
 
+    def get_player_choice():
+      choice = Konsola.dynamic_prompt()
+
+      choice_map = {
+        "next":   next_enemy,
+        "n":      next_enemy,
+        "prev":   previous_enemy,
+        "p":      previous_enemy,
+        "/":      combat_help,
+        "?":      combat_help,
+        "garda":  hold_guard,
+        "g":      hold_guard,
+        "zamach": attack_swing,
+        "z":      attack_swing,
+        "cios":   attack_hit,
+        "c":      attack_hit
+      }
+      if choice in choice_map:
+        action = choice_map[choice]
+      else:
+        action = attack_hit
+        self.chance_bonus -= 2 #kara za nie wciskanie c :p
+      return action
 
     player_resulting_speed = self.stat_coefficient(self.speed)
 
@@ -493,59 +518,42 @@ class Player(Mob):
         Konsola.print("Odpocznij!!!", "lred")
         self.adjust_stamina(5, 0.5)
       else:
-        choice = Konsola.dynamic_prompt()
+        action = get_player_choice()
 
-        choice_map = {
-          "next":   next_enemy,
-          "n":      next_enemy,
-          "prev":   previous_enemy,
-          "p":      previous_enemy,
-          "/":      combat_help,
-          "?":      combat_help,
-          "garda":  hold_guard,
-          "g":      hold_guard,
-          "zamach": attack_swing,
-          "z":      attack_swing,
-          "cios":   attack_hit,
-          "c":      attack_hit
-        }
-        if choice in choice_map:
-          action = choice_map[choice]
-        else:
-          action = attack_hit
-          self.chance_bonus -= 2 #kara za nie wciskanie c :p
-        # there it all happens
-        # vvvvvvvv
+      # vvvvvvvv #
         action()
-
+      # ^^^^^^^^ #
 
         time_of_action = Player.TIME_OF_EXCHANGING_BLOWS/self.stat_coefficient(self.speed)
         self.game.update_state(time_of_action)
         Helper.sleep(0.5)
 
-      enemies_actions = []
-      if enemies:
-        for enemy in enemies:
-          if enemy.hp > enemy.hp_max/10:
-            if enemy.stamina <= 11:
-              Konsola.print(enemy.name + " czeka", "red")
-              enemy.adjust_stamina(5, 0.5)
-            else:
-              enemy_resulting_speed = self.stat_coefficient(enemy.speed)
-              speed_advantage = enemy_resulting_speed / player_resulting_speed
-              enemy_hits = Helper.probabilistic_round(speed_advantage)
-              for _ in range(enemy_hits):
-                action = []
-                action.append(enemy)
-                action.append(enemy.perform_attack)
-                action.append("hit")
-                enemies_actions.append(action)
-              
+      if not enemies:
+        break
 
-          elif 0 < enemy.hp <= enemy.hp_max/10 and len(enemies)>1:
-            direction = enemy.try_to_escape(100)
-            if direction:
-              remove_enemy(enemy, direction)
+      enemies_actions = []
+      for enemy in enemies:
+        if enemy.hp > enemy.hp_max/10:
+          if enemy.stamina <= 11:
+            Konsola.print(enemy.name + " czeka", "red")
+            enemy.adjust_stamina(5, 0.5)
+          else:
+            enemy_resulting_speed = self.stat_coefficient(enemy.speed)
+            speed_advantage = enemy_resulting_speed / player_resulting_speed
+            enemy_hits = Helper.probabilistic_round(speed_advantage)
+            for _ in range(enemy_hits):
+              action = []
+              action.append(enemy)
+              action.append(enemy.perform_attack)
+              action.append("hit")
+              enemies_actions.append(action)
+            
+
+        elif 0 < enemy.hp <= enemy.hp_max/10 and len(enemies)>1:
+          direction = enemy.try_to_escape(100)
+          if direction:
+            remove_enemy(enemy, direction)
+
 
       shuffle(enemies_actions)
       for a in enemies_actions:
@@ -751,4 +759,4 @@ class Player(Mob):
       else:
         slots[key] = Item.from_dict(slots[key])
     
-    return cls(data["mob_id"], data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"],data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"], data["killable"], data["path"], data["can_trade"], [], [], data["can_duel"], data["is_aggressive"], data["can_ally"], data["affiliation"], data["area"])
+    return cls(data["mob_id"], data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, {}, data["knowledge"], "", "", [], True, [], [], True, True, True, True, data["affiliation"])
