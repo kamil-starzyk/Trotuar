@@ -88,7 +88,7 @@ for method in random_methods:
   series_of_hits = []
   series_of_misses = []
 
-  for _ in range(1000):
+  for _ in range(2):
     chance = -1
     if method == "basic_random":
       chance = random.randint(0, 100)
@@ -127,9 +127,14 @@ for method in random_methods:
       series_of_misses.append(length_of_series_of_misses)
       if length_of_series_of_misses > longest_series_of_misses:
         longest_series_of_misses = length_of_series_of_misses
-  
-  average_length_of_series_of_hits = sum(series_of_hits) / len(series_of_hits)
-  average_length_of_series_of_misses = sum(series_of_misses) / len(series_of_misses)
+  try:
+    average_length_of_series_of_hits = sum(series_of_hits) / len(series_of_hits)
+  except ZeroDivisionError:
+    average_length_of_series_of_hits = 0
+  try:
+    average_length_of_series_of_misses = sum(series_of_misses) / len(series_of_misses)
+  except ZeroDivisionError:
+    average_length_of_series_of_misses = 0
 
   print("Trafień:" + str(hits))
   print("Pudeł:" + str(misses))
