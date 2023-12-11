@@ -1038,6 +1038,7 @@
             "base_name": "Kowal",
             "name": "Kowal Ben",
             "alias": [
+              "kowal ben",
               "kowal",
               "ben"
             ],
@@ -1266,6 +1267,246 @@
               }
             ],
             "wants_to_buy": [],
+            "killable": false,
+            "can_duel": false,
+            "is_aggressive": false,
+            "can_ally": true,
+            "affiliation": [
+              "Torenerg"
+            ]
+          },
+          {
+            "mob_id": 11,
+            "x": 5,
+            "y": 6,
+            "z": 1,
+            "base_name": "Karczmarz",
+            "name": "Karczmarz Jakub",
+            "alias": [
+              "karczmarz jakub",
+              "karczmarz",
+              "jakub"
+            ],
+            "description": "Dosyć tęgi facet z zadbaną brodą i nieco mniej zadbanym fartuchem zakrywającym białą koszulę.",
+            "lvl": 20,
+            "exp": 100,
+            "weight": 120,
+            "money": 200,
+            "race": "Człowiek",
+            "proficiency": "karczmarz",
+            "params": {
+              "hp": 100,
+              "hp_max": 100,
+              "stamina": 100,
+              "stamina_max":100,
+              "stamina_total":200,
+              "mana": 5,
+              "mana_max": 5,
+              "satiation": 80,
+              "satiation_max": 100,
+              "hydration": 90,
+              "hydration_max": 100
+            },
+            "stats": {
+              "strength": 20,
+              "attack": 10,
+              "defence": 15,
+              "speed": 10,
+              "dexterity": 20,
+              "endurance": 40
+            },
+            "equipment": [
+              {
+                "type": "Tool",
+                "alias": [
+                  "ścierka w kratę",
+                  "scierka w krate",
+                  "scierka",
+                  "ścierka"
+                ],
+                "name": "Scierka w kratę",
+                "description": "Kawałek materiału w kolorze biało-zielonym z czerwoną kratką. ",
+                "weight": 0.1,
+                "price": 6,
+                "attr": {}
+              }
+            ],
+            "slots": {
+              "first_hand": {},
+              "second_hand": {},
+              "head": {},
+              "body": {
+                "type": "Outfit",
+                "alias": [
+                  "biała koszula",
+                  "biala koszula",
+                  "koszula"
+                ],
+                "name": "Biała koszula",
+                "description": "Białą lniana koszula",
+                "weight": 2,
+                "price": 60,
+                "attr": {}
+              },
+              "finger": {},
+              "neck": {}
+            },
+            "conversations": {
+              "greeting": "Witaj w mojej kuźni. Czego potrzebujesz?",
+              "options": [
+                {
+									"condition": "Pierwsze zadanie od kowala",
+                  "text": "Szukam ciekawych zadań i przygód",
+                  "response": "Być może będę miał zadanie dla Ciebie. Zgubiłem srebrną podkowę. Powinna być tu gdzieś w okolicy. Przynieś mi ją a otrzymasz 10 złota. Czy jesteś zainteresowany?",
+                  "next_step": {
+                    "options": [
+                      {
+                        "text": "Tak!",
+                        "response": "Wspaniale.",
+												"forget": "Pierwsze zadanie od kowala",
+												"knowledge": {
+													"Zgubiona podkowa": "Kowal zgubił podkowę. Powinna być gdzieś w okolicy. Jeśli mu ją oddam to dostanę 10 złota."
+												},
+                        "quest_id": 1,
+                        "next_step": {
+                          "options": [
+                            {
+                              "text": "Już się zabieram.",
+                              "response": "Wracaj prędko."
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "text": "Chyba jednak najpierw zajmę się czymś innym",
+                        "response": "Rozumiem, ale zadanie będzie czekało dopóki jej nie znajdę. Bywaj!"
+                      }
+                    ]
+                  }
+                },
+								{
+									"condition": "Zgubiona podkowa",
+                  "text": "W sprawie twojego zadania. Co miałem zrobić?",
+                  "response": "Znajdź moją srebrną podkowę i przynieś ją mi. Może leży gdzieś w lesie.",
+                  "next_step": {
+                    "options": [
+                      {
+                        "text": "Dziękuję za przypomnienie.",
+                        "response": "Dobrze, ale leć już i mi nie przeszkadzaj."
+                      }
+                    ]
+                  }
+                },
+								{
+									"condition": "Ukończono: Zgubiona podkowa",
+                  "text": "Znalazłem tę podkowę. Musialem się trochę nabiegać. Czy masz dla mnie jakieś kolejne zadanie?",
+                  "response": "Dobrze się spisałeś. Na razie to wszystko. Zapytaj strażnika albo zielarkę.",
+                  "next_step": {
+                    "options": [
+                      {
+                        "text": "Dziękuję za nagrodę i życzę miłej pracy",
+                        "response": "Do widzenia",
+												"forget": "Ukończono: Zgubiona podkowa"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": "Chciałem dowiedzieć się więcej o tym mieście",
+                  "response": "Torenberg to bardzo stare miasto z bogatą historią. Założył je Toren II zwany Ostrożnym gdy przypadła mu we władanie Nadmorska Prowincja. Mamy tu port i  wielkie magazyny gdyż miasto to stanowi ważny węzeł w handlu z zamorskimi państwami. Mamy tu też plac turniejowy, karczmę i oczywiście tę kuźnię. Czy interesuje Cię coś bardziej konkretnego?",
+                  "next_step": {
+                    "options": [
+                      {
+                        "text": "Ta wieża w rogu muru",
+                        "response": "To wieża północno-zachodnia. Ma ją w pieczy kapitan Rodgier. Napewno znajdziesz tam coś ciekawego."
+                      },
+                      {
+                        "text": "Ta kuźnia",
+                        "response": "Sam ją zbudowałem... a to będzie już ze 20 lat temu. Od tej pory zapracowała na swoją renomę. Wytwarzam tu miecze dla straży oraz na zamówienie dla możnych."
+                      },
+                      {
+                        "text": "Domek, ten na północ od kuźni. Wyraźnie odstaje wyglądem od reszty zabudowy",
+                        "response": "Mieszka tam stara Chloe, zielarka. Nie pozwoliła tknąć tej chaty palcem kiedy miasto dawało pieniądze na remont fasady.",
+                        "knowledge": {
+                          "Domek Chloe": "Stara zielarka Chloe nie chciała wyremontować domu za pieniądze miasta."
+                        }
+                      },
+                      {
+                        "text": "To wszystko, dziękuję",
+                        "response": "Bywaj zdrów. Ja wracam do pracy."
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": "Do widzenia",
+                  "response": "Do widzenia"
+                }
+              ],
+              "farewell": "Do miłego zobaczenia"
+            },
+            "knowledge": {},
+            "area": "Torenberg",
+            "current_activity": "",
+            "path": [],
+            "can_trade": true,
+            "items_to_sell": [
+              {
+                "type": "Consumable",
+                "alias": [
+                  "piwo ale",
+                  "piwo",
+                  "ale"
+                ],
+                "name": "Piwo ale",
+                "description": "Butelka jasnego piwa",
+                "weight": 1,
+                "price": 5,
+                "attr": {
+                  "amount": 3,
+                  "hydration": 10,
+                  "hp": 2,
+                  "alcohol": 5
+                }
+              },
+              {
+                "type": "Consumable",
+                "alias": [
+                  "wino gronowe",
+                  "wino"
+                ],
+                "name": "Wino gronowe",
+                "description": "Zielona butelka z czerwonym płynem w środku",
+                "weight": 1,
+                "price": 12,
+                "attr": {
+                  "amount": 2,
+                  "hydration": 15,
+                  "hp": 5,
+                  "alcohol": 12
+                }
+              },
+              {
+                "type": "Weapon",
+                "alias": [
+                  "pałka",
+                  "palka"
+                ],
+                "name": "Pałka",
+                "description": "Drewniana pałka, dobrze leżąca w ręce. Stosunkowo lekka, ale może nabić sporego guza",
+                "weight": 3,
+                "price": 20,
+                "attr": {
+                  "body_part": "first_hand",
+                  "damage": 10,
+                  "dexterity": 2,
+                  "strength": -1
+                }
+              }
+            ],
+            "wants_to_buy": [
+              "Imbir"
+            ],
             "killable": false,
             "can_duel": false,
             "is_aggressive": false,
