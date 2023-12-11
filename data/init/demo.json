@@ -1352,68 +1352,36 @@
               "neck": {}
             },
             "conversations": {
-              "greeting": "Witaj w mojej kuźni. Czego potrzebujesz?",
+              "greeting": "Dzień dobry! Czy miły Pan zechciŁby się czegoś napić?",
               "options": [
                 {
-									"condition": "Pierwsze zadanie od kowala",
-                  "text": "Szukam ciekawych zadań i przygód",
-                  "response": "Być może będę miał zadanie dla Ciebie. Zgubiłem srebrną podkowę. Powinna być tu gdzieś w okolicy. Przynieś mi ją a otrzymasz 10 złota. Czy jesteś zainteresowany?",
+									"condition": "Wytępić szczury",
+                  "text": "Szukam odpowiedniej broni do walki ze szczurami. ",
+                  "response": "Te małe pokraki ciężko trafić czymś ciężkim i nieporęcznym. Mam przy sobie pałkę, której używam, żeby przerwać bójki kiedy goście popiją sobie zbyt dobrze. Mogę Ci sprzedać moją zapasową. Jest lekka i poręczna.",
                   "next_step": {
                     "options": [
                       {
-                        "text": "Tak!",
-                        "response": "Wspaniale.",
-												"forget": "Pierwsze zadanie od kowala",
-												"knowledge": {
-													"Zgubiona podkowa": "Kowal zgubił podkowę. Powinna być gdzieś w okolicy. Jeśli mu ją oddam to dostanę 10 złota."
-												},
-                        "quest_id": 1,
-                        "next_step": {
+                        "text": "Chętnie ją odkupię.",
+                        "response": "Dobrze, będzie twoja za 20 złota \n[i]Podpowiedź![/i]Aby kupić jakiś przedmiot od rozmówcy po zakończonej rozmowie użyj komendy \"handel \" i nazwa postaci np. \"handel Jakub\"",
+												"next_step": {
                           "options": [
                             {
-                              "text": "Już się zabieram.",
-                              "response": "Wracaj prędko."
+                              "text": "W porządku",
+                              "response": ""
                             }
                           ]
                         }
                       },
                       {
-                        "text": "Chyba jednak najpierw zajmę się czymś innym",
-                        "response": "Rozumiem, ale zadanie będzie czekało dopóki jej nie znajdę. Bywaj!"
+                        "text": "Dziękuję, jednak spróbuję sobie poradzić w inny sposób",
+                        "response": "Powodzenia"
                       }
                     ]
                   }
                 },
 								{
-									"condition": "Zgubiona podkowa",
-                  "text": "W sprawie twojego zadania. Co miałem zrobić?",
-                  "response": "Znajdź moją srebrną podkowę i przynieś ją mi. Może leży gdzieś w lesie.",
-                  "next_step": {
-                    "options": [
-                      {
-                        "text": "Dziękuję za przypomnienie.",
-                        "response": "Dobrze, ale leć już i mi nie przeszkadzaj."
-                      }
-                    ]
-                  }
-                },
-								{
-									"condition": "Ukończono: Zgubiona podkowa",
-                  "text": "Znalazłem tę podkowę. Musialem się trochę nabiegać. Czy masz dla mnie jakieś kolejne zadanie?",
-                  "response": "Dobrze się spisałeś. Na razie to wszystko. Zapytaj strażnika albo zielarkę.",
-                  "next_step": {
-                    "options": [
-                      {
-                        "text": "Dziękuję za nagrodę i życzę miłej pracy",
-                        "response": "Do widzenia",
-												"forget": "Ukończono: Zgubiona podkowa"
-                      }
-                    ]
-                  }
-                },
-                {
-                  "text": "Chciałem dowiedzieć się więcej o tym mieście",
-                  "response": "Torenberg to bardzo stare miasto z bogatą historią. Założył je Toren II zwany Ostrożnym gdy przypadła mu we władanie Nadmorska Prowincja. Mamy tu port i  wielkie magazyny gdyż miasto to stanowi ważny węzeł w handlu z zamorskimi państwami. Mamy tu też plac turniejowy, karczmę i oczywiście tę kuźnię. Czy interesuje Cię coś bardziej konkretnego?",
+                  "text": "Chciałbym posłuchać plotek o ludziach w tym mieście.",
+                  "response": "Nie znam Cię jeszcze zbyt dobrze i nie napiłeś się ze mną bruderschafta. Może później porozmawiamy.",
                   "next_step": {
                     "options": [
                       {
