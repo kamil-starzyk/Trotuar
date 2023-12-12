@@ -97,6 +97,7 @@
       "neck": {}
     },
     "knowledge": {
+      "Przejście na polankę" : "Aby dostać się na polankę muszę dojść na koniec ścieżki, a następnie przejść na wschód przez gęste zarośla.",
 			"Pierwsze zadanie od kowala": "Nie byłem jeszcze u kowala, może ma dla mnie jakieś ciekawe zadanie.",
 			"Pierwsze zadanie od zielarki": "Nie byłem jeszcze u zielarki, może ma dla mnie jakieś ciekawe zadanie.",
 			"Pierwsze zadanie od kapitana": "Nie byłem jeszcze u kapitana, może ma dla mnie jakieś ciekawe zadanie."
@@ -591,12 +592,74 @@
             "utilities":[],
             "items": []
           },
-
+          {
+            "x": 1,
+            "y": 0,
+            "z": 1,
+            "name": "Polanka",
+            "description": "Stoisz na środku malutkiej polanki, porośniętej chwastami i małymi krzewami. Na wschodzie, w skale widzisz wejście do pieczary. Na zachodzie, w ścianie zarośli dostrzegasz ledwie zauważalne przejście.",
+            "exits": [
+							"w",
+              "e"
+            ],
+            "utilities":[],
+            "items": []
+          },
+          {
+            "x": 2,
+            "y": 0,
+            "z": 1,
+            "name": "Wejście do pieczary",
+            "description": "Znalazłeś się w kamiennej pieczarze. Podłoże opada tu bardzo szybko w dół, skąd do twoich nozdrzy dociera przykry zapach. Wyjście z pieczary jest na zachodzie.",
+            "exits": [
+							"w",
+              "d"
+            ],
+            "utilities":[],
+            "items": []
+          },
+          {
+            "x": 2,
+            "y": 0,
+            "z": 0,
+            "name": "Pieczara",
+            "description": "Jesteś w głęboko pod ziemią. Ściany są wilgotne a odór zgnilizny przytłacza twoje zmysły. Północna i wschodnia ściana jamy są pokryte kleistą mazią, na zachodzie jest stromy stok w górę. Za to w ciemnościach nie możesz dostrzec co kryje się na południu.",
+            "exits": [
+							"s",
+              "u"
+            ],
+            "utilities":[],
+            "items": []
+          },
+          {
+            "x": 2,
+            "y": 1,
+            "z": 0,
+            "name": "Pieczara",
+            "description": "Dalsza część jaskini, jest tu ciemno i brudno, ale trochę bardziej sucho. Jedyne wyjście stąd prowadzi na północ.",
+            "exits": [
+							"n"
+            ],
+            "utilities":[],
+            "items": [
+              {
+                "type": "Item",
+                "alias": [
+                  "szkielet"
+                ],
+                "name": "Szkielet",
+                "description": "Kompletny szkielet, najwidoczniej człowieka.",
+                "weight": 12,
+                "price": 10,
+                "attr": {}
+              }
+            ]
+          },
 					{
             "x": 0,
             "y": 0,
             "z": 1,
-            "name": "Ścieżka",
+            "name": "Koniec ścieżki",
             "description": "Dotarłeś do końca ścieżki. Drzewa i krzewy tworzą przed Tobą nieprzebytą ścianę.",
             "exits": [
 							"s"
@@ -2373,6 +2436,13 @@
             "z": 1,
             "direction": "d",
             "condition": "Wejście do kanałów"
+          },
+          {
+            "x": 0,
+            "y": 0,
+            "z": 1,
+            "direction": "e",
+            "condition": "Przejście na polankę"
           }
         ],
         "areas": [
