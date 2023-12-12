@@ -281,23 +281,22 @@ class Player(Mob):
       if item and not is_buying:
         item.see_more()
       elif item and is_buying:
+        amount_to_buy = 1
         if item.stackable() and item.amount > 1:
           print("Jaką ilość chcesz kupić? (max: " + str(item.amount) + ")")
           amount_to_buy = Konsola.int_input(1, item.amount)
-          if amount_to_buy == item.amount:
-            item = item
-            price = item.price * amount_to_buy
-          else:
-            item = Item.unstack(item, amount_to_buy)
-            price = item.price * amount_to_buy
-        else:
-          item = item
-          price = item.price
+        price = item.price * amount_to_buy
         if self.money < price:
           Konsola.print("Nie stać Cię!", "red")
           continue
-        mob.items_to_sell.remove(item)
-        self.equipment.append(item)
+
+        if amount_to_buy < item.amount:
+          unstacked_item = Item.unstack(item, amount_to_buy)
+          self.equipment.append(unstacked_item) 
+        else:
+          mob.items_to_sell.remove(item)
+          self.equipment.append(item)
+
         self.money -= price
         mob.money += price
 

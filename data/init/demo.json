@@ -1362,7 +1362,7 @@
                     "options": [
                       {
                         "text": "Chętnie ją odkupię.",
-                        "response": "Dobrze, będzie twoja za 20 złota \n[i]Podpowiedź![/i]Aby kupić jakiś przedmiot od rozmówcy po zakończonej rozmowie użyj komendy \"handel \" i nazwa postaci np. \"handel Jakub\"",
+                        "response": "Dobrze, będzie twoja za 20 złota \n[i]Podpowiedź![/i] Aby kupić jakiś przedmiot od rozmówcy po zakończonej rozmowie użyj komendy \"handel \" i nazwa postaci np. \"handel Jakub\".",
 												"next_step": {
                           "options": [
                             {
@@ -1385,23 +1385,8 @@
                   "next_step": {
                     "options": [
                       {
-                        "text": "Ta wieża w rogu muru",
-                        "response": "To wieża północno-zachodnia. Ma ją w pieczy kapitan Rodgier. Napewno znajdziesz tam coś ciekawego."
-                      },
-                      {
-                        "text": "Ta kuźnia",
-                        "response": "Sam ją zbudowałem... a to będzie już ze 20 lat temu. Od tej pory zapracowała na swoją renomę. Wytwarzam tu miecze dla straży oraz na zamówienie dla możnych."
-                      },
-                      {
-                        "text": "Domek, ten na północ od kuźni. Wyraźnie odstaje wyglądem od reszty zabudowy",
-                        "response": "Mieszka tam stara Chloe, zielarka. Nie pozwoliła tknąć tej chaty palcem kiedy miasto dawało pieniądze na remont fasady.",
-                        "knowledge": {
-                          "Domek Chloe": "Stara zielarka Chloe nie chciała wyremontować domu za pieniądze miasta."
-                        }
-                      },
-                      {
                         "text": "To wszystko, dziękuję",
-                        "response": "Bywaj zdrów. Ja wracam do pracy."
+                        "response": "Wróć jak będziesz się chciał czegoś napić"
                       }
                     ]
                   }
