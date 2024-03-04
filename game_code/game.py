@@ -39,7 +39,7 @@ class Game:
     Konsola.print("Aby poczuć przedsmak pełnej rozgrywki spróbuj zagrać w ", line_end="")
     Konsola.print("DEMO", "lwhite")
   def load_game(self, path):
-    data = MyJson.load_json("data/saves/"+path)
+    data = MyJson.load_json("../data/saves/"+path)
     self.player = Player.from_dict(data["player"])
     self.player.game = self
     self.world = World.from_dict(data["world"])
@@ -54,7 +54,7 @@ class Game:
     #Helper.sleep(1)
 
   def demo(self):
-    data = MyJson.load_json("data/init/demo.json")
+    data = MyJson.load_json("../data/init/demo.json")
     self.player = Player.from_dict(data["player"])
     self.player.game = self
     self.world = World.from_dict(data["world"])
@@ -73,7 +73,7 @@ class Game:
     data = self.to_dict()
     location_name = self.player.current_location.name
     datetime = Helper.datetime()
-    path = 'data/saves/' + datetime + "_" + location_name + "_" + str(self.gameplay) + '.json'
+    path = '../data/saves/' + datetime + "_" + location_name + "_" + str(self.gameplay) + '.json'
     path = path.lower()
     path = path.replace(" ", "_")
     print(path)
