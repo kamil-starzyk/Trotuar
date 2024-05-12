@@ -21,7 +21,7 @@ class Helper:
 
   @classmethod
   def open_saves(cls):
-    paths = listdir("./../data/saves")
+    paths = listdir("data/saves")
     if ".gitkeep" in paths:
       paths.remove(".gitkeep")
     return list(reversed(paths))
