@@ -56,10 +56,15 @@ class Player(Mob):
   
   def pick_up(self, item_name):
     item = super().pick_up(item_name, True)
+    if item == 1:
+      Konsola.print("Niesiesz zbyt duży ciężar albo ta rzecz waży za dużo", "red")
+      return 0
     if item:
       self.picked_item = item
       Konsola.print("Podniosłeś ", line_end='')
       Konsola.print(item.name, "lwhite")
+      if self.overloaded:
+        Konsola.print("Jesteś przeciążony", "red")
       return Player.TIME_OF_ITEM_INTERACTION
 
     Konsola.print("Nie ma tu takiej rzeczy", "red")

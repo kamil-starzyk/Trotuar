@@ -820,7 +820,7 @@
                 ],
                 "name": "Beczka piwa",
                 "description": "Średniej wielkości drewniana beczka. Jest pełna piwa",
-                "weight": 55,
+                "weight": 60,
                 "price": 120,
                 "attr": {}
               },
@@ -833,7 +833,7 @@
                 ],
                 "name": "Skrzynka wina",
                 "description": "Drewniana skrzynka, zawierająca 20 butelek gronowego wina",
-                "weight": 25,
+                "weight": 30,
                 "price": 220,
                 "attr": {}
               },
@@ -848,7 +848,7 @@
                 ],
                 "name": "Butelka gorzałki",
                 "description": "Przezroczysta butelka z jasnym płynem w środku",
-                "weight": 25,
+                "weight": 2,
                 "price": 220,
                 "attr": {
                   "amount": 2

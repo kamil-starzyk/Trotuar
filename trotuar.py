@@ -9,6 +9,8 @@ while True:
   
   game.title_screen()
   player = game.player
+  print("Weigth: " + str(player.carry_weight))
+  print("Max weigth: " + str(player.max_carry_weight))
 
   player.my_square.show_square()
 

@@ -6,6 +6,7 @@ import math #ceil damage
 import random #for escape
 
 class Mob:
+  BASIC_CARRY_WEIGHT = 40
   ids = {}
   def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, current_activity, area, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, affiliation):
     self.mob_id = mob_id
@@ -68,6 +69,8 @@ class Mob:
   def pick_up(self, item_name, player=False):
     item = Helper.find_item(self.my_square.items, item_name, player)
     if item:
+      if item.weight*item.amount + self.weight_carried_rn > self.max_carry_weight:
+        return 1
       self.my_square.items.remove(item)
       item_in_eq = Helper.is_item_in_list(item, self.equipment)
       if item.stackable() and item_in_eq:
@@ -170,6 +173,14 @@ class Mob:
     
 
   def show_equipment(self):
+    print("Udźwig: ", end="")
+    weight_color = "lwhite"
+    if self.weight_carried_rn > self.carry_weight and self.weight_carried_rn < self.max_carry_weight:
+      weight_color = "lred"
+    Konsola.print(self.weight_carried_rn, weight_color, line_end=" / ")
+    Konsola.print(self.carry_weight, "lcyan", line_end="(")
+    Konsola.print(self.max_carry_weight, "cyan",line_end=")\n")
+    Konsola.hr()
     Konsola.print_item_list(self.equipment)
     print("Pieniądze: ", end='')
     Konsola.print(self.money, "yellow")
@@ -681,6 +692,36 @@ class Mob:
   @property
   def hydration_max(self):
     return int(self.params["hydration_max"])
+
+  @property
+  def carry_weight(self):
+    strength_coefficient = self.stat_coefficient(self.stats["strength"])
+    return int(strength_coefficient*Mob.BASIC_CARRY_WEIGHT)
+  
+  @property
+  def max_carry_weight(self):
+    carry_weight = self.carry_weight
+    endurance_coefficient = self.stat_coefficient(self.stats["endurance"])
+    endurance_bonus_weight = 0.75*endurance_coefficient*Mob.BASIC_CARRY_WEIGHT
+    return int(carry_weight + endurance_bonus_weight)
+
+  @property
+  def weight_carried_rn(self):
+    total_weight = sum(item.weight*item.amount for item in self.equipment)
+    return total_weight
+  
+  @property
+  def overloaded(self):
+    """
+    Overloaded informs about carrying more weight than carry_weight but less than max_carry_weight.
+    If mob carries less than carry_weight it will return 0, otherwise it will return fraction of weight over carry_weight / max_carry_weight
+    Range of this value is 0-1
+    Returns:
+        float: fraction of excessive weight.
+    """
+    excessive_weight = max(0, self.weight_carried_rn - self.carry_weight)
+    fraction = excessive_weight / self.max_carry_weight
+    return fraction
 
   @property
   def my_square(self):
