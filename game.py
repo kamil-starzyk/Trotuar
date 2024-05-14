@@ -38,6 +38,7 @@ class Game:
     Konsola.print("Ten tryb jeszcze nie jest dostępny :(", "red")
     Konsola.print("Aby poczuć przedsmak pełnej rozgrywki spróbuj zagrać w ", line_end="")
     Konsola.print("DEMO", "lwhite")
+
   def load_game(self, path):
     data = MyJson.load_json("data/saves/"+path)
     self.player = Player.from_dict(data["player"])
@@ -64,9 +65,19 @@ class Game:
     self.player.area = self.world.locations[0].areas[0]
     self.is_playing = True
     Konsola.clear()
-    Konsola.print("Rozpocząłeś grę demonstracyjną", "lwhite")
-    Konsola.hr()
+    #Konsola.print("Rozpocząłeś grę demonstracyjną", "lwhite")
+    Konsola.wrap("Wszystko się nagle zachwiało i obudziłeś się z drzemki. To nie dom się wali, po prostu łódź się zakołysała.")
     #Helper.sleep(1)
+    Konsola.wrap("Ah tak... zostawiłeś rodzinny dom i wioskę daleko za sobą. Podczas podróży przysnąłeś siedząc na skrzyni, oparty o jutowy worek. Spławiacz Jacek zgodził się Ciebie zabrać za drobną opłatą i teraz płyniecie razem na południe. Po drodze jest miasto Torenberg, tam zamierzasz wysiąść i szukać przygód.")
+    #Helper.sleep(3)
+    Konsola.wrap("Szum wody...")
+    #Helper.sleep(0.5)
+    Konsola.wrap("Kołysanie łodzi...")
+    #Helper.sleep(0.5)
+    Konsola.wrap("\"To już niedaleko\" - mówi nagle Jacek. Rozglądasz się i faktycznie, widzisz w oddali ponad koronami drzew wieże wznoszące się nad murami.")
+    #Helper.sleep(1)
+    Konsola.wrap("Mija jeszcze kilka chwil, po których dobijacie do brzegu. Jacek wyskakuje z łodzi i cumuje ją do palika. Ty tymczasem wychodzisz na brzeg.")
+    Konsola.hr()
     self.gameplay = Helper.get_new_gameplay_number()
   
   def save(self):

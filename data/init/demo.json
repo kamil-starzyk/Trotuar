@@ -2,8 +2,8 @@
   "gameplay": 2,
   "player": {
     "mob_id": 1,
-    "x": 6,
-    "y": 2,
+    "x": 0,
+    "y": 4,
     "z": 1,
     "base_name": "Alwer",
     "name": "Alwer",
@@ -98,6 +98,7 @@
     },
     "knowledge": {
       "Przejście na polankę" : "Aby dostać się na polankę muszę dojść na koniec ścieżki, a następnie przejść na wschód przez gęste zarośla.",
+			"Pierwsze zadanie od spławiacza": "Jestem wdzięczny Jackowi za to, że zgodził się mnie tu przytransportować, może mogę mu jakoś pomóc.",
 			"Pierwsze zadanie od kowala": "Nie byłem jeszcze u kowala, może ma dla mnie jakieś ciekawe zadanie.",
 			"Pierwsze zadanie od zielarki": "Nie byłem jeszcze u zielarki, może ma dla mnie jakieś ciekawe zadanie.",
 			"Pierwsze zadanie od kapitana": "Nie byłem jeszcze u kapitana, może ma dla mnie jakieś ciekawe zadanie."
@@ -791,12 +792,69 @@
             "y": 4,
             "z": 1,
             "name": "Żwirowa plaża",
-            "description": "Stoisz nad rzeczką, która płynie z północnego zachodu na południe. Zakręcająca woda stworzyła tu małą, stromą plażę, pełną małych i większych kamieni.",
+            "description": "Stoisz nad rzeką, która płynie z północnego zachodu na południe. Zakręcająca woda stworzyła tu małą, stromą plażę, pełną małych i większych kamieni.",
             "exits": [
 							"e"
             ],
             "utilities":[],
-            "items": []
+            "items": [
+              {
+                "type": "Quest",
+                "alias": [
+                  "worek węgla",
+                  "worek",
+                  "węgiel"
+                ],
+                "name": "Worek węgla",
+                "description": "Szary worek pełny pylącego węgla.",
+                "weight": 65,
+                "price": 40,
+                "attr": {}
+              },
+              {
+                "type": "Quest",
+                "alias": [
+                  "beczka piwa",
+                  "piwo",
+                  "beczka"
+                ],
+                "name": "Beczka piwa",
+                "description": "Średniej wielkości drewniana beczka. Jest pełna piwa",
+                "weight": 55,
+                "price": 120,
+                "attr": {}
+              },
+              {
+                "type": "Quest",
+                "alias": [
+                  "skrzynka wina",
+                  "wino",
+                  "skrzynka"
+                ],
+                "name": "Skrzynka wina",
+                "description": "Drewniana skrzynka, zawierająca 20 butelek gronowego wina",
+                "weight": 25,
+                "price": 220,
+                "attr": {}
+              },
+              {
+                "type": "Quest",
+                "alias": [
+                  "butelka gorzałki",
+                  "butelka gorzalki",
+                  "gorzałka",
+                  "gorzalka",
+                  "butelka"
+                ],
+                "name": "Butelka gorzałki",
+                "description": "Przezroczysta butelka z jasnym płynem w środku",
+                "weight": 25,
+                "price": 220,
+                "attr": {
+                  "amount": 2
+                }
+              }
+            ]
           },
 					{
             "x": 1,
@@ -1714,9 +1772,9 @@
             "area": "Torenberg",
             "current_activity": "",
             "path": [],
-    "can_trade": true,
-    "items_to_sell": [],
-    "wants_to_buy": [],
+            "can_trade": true,
+            "items_to_sell": [],
+            "wants_to_buy": [],
             "killable": false,
             "can_duel": false,
             "is_aggressive": false,
@@ -1935,9 +1993,9 @@
             "area": "Torenberg",
             "current_activity": "",
             "path": [],
-    "can_trade": true,
-    "items_to_sell": [],
-    "wants_to_buy": [],
+            "can_trade": true,
+            "items_to_sell": [],
+            "wants_to_buy": [],
             "killable": false,
             "can_duel": true,
             "is_aggressive": false,
@@ -2099,9 +2157,9 @@
             "area": "",
             "current_activity": "",
             "path": [],
-    "can_trade": true,
-    "items_to_sell": [],
-    "wants_to_buy": [],
+            "can_trade": true,
+            "items_to_sell": [],
+            "wants_to_buy": [],
             "killable": true,
             "can_duel": true,
             "is_aggressive": true,
@@ -2160,9 +2218,9 @@
             "area": "Kanały",
             "current_activity": "random_walk",
             "path": [],
-    "can_trade": false,
-    "items_to_sell": [],
-    "wants_to_buy": [],
+            "can_trade": false,
+            "items_to_sell": [],
+            "wants_to_buy": [],
             "killable": true,
             "can_duel": true,
             "is_aggressive": true,
@@ -2223,9 +2281,9 @@
             "area": "Kanały",
             "current_activity": "random_walk",
             "path": [],
-    "can_trade": false,
-    "items_to_sell": [],
-    "wants_to_buy": [],
+            "can_trade": false,
+            "items_to_sell": [],
+            "wants_to_buy": [],
             "killable": true,
             "can_duel": true,
             "is_aggressive": true,
@@ -2286,9 +2344,9 @@
             "area": "Kanały",
             "current_activity": "random_walk",
             "path": [],
-    "can_trade": false,
-    "items_to_sell": [],
-    "wants_to_buy": [],
+            "can_trade": false,
+            "items_to_sell": [],
+            "wants_to_buy": [],
             "killable": true,
             "can_duel": true,
             "is_aggressive": true,
@@ -2351,9 +2409,9 @@
             "area": "Kanały",
             "current_activity": "random_walk",
             "path": [],
-    "can_trade": false,
-    "items_to_sell": [],
-    "wants_to_buy": [],
+            "can_trade": false,
+            "items_to_sell": [],
+            "wants_to_buy": [],
             "killable": true,
             "can_duel": true,
             "is_aggressive": true,
@@ -2425,6 +2483,216 @@
             "can_ally": true,
             "affiliation": [
               "szczury"
+            ]
+          },
+          {
+            "mob_id": 12,
+            "x": 0,
+            "y": 4,
+            "z": 1,
+            "base_name": "Spławiacz",
+            "name": "Spławiacz Jacek",
+            "alias": [
+              "spławiacz jacek",
+              "splawiacz jacek",
+              "spławiacz",
+              "splawiacz",
+              "jacek"
+            ],
+            "description": "Mężczyzna średniego wzrostu, dosyć szczupły. Ubrany w lnianą koszulę i brązowe spodnie. Na piersi ma przypinkę Gildii Kupieckiej",
+            "lvl": 15,
+            "exp": 20,
+            "weight": 70,
+            "money": 150,
+            "race": "Człowiek",
+            "proficiency": "spławiacz",
+            "params": {
+              "hp": 100,
+              "hp_max": 100,
+              "stamina": 100,
+              "stamina_max":100,
+              "stamina_total":200,
+              "mana": 10,
+              "mana_max": 10,
+              "satiation": 70,
+              "satiation_max": 100,
+              "hydration": 90,
+              "hydration_max": 100
+            },
+            "stats": {
+              "strength": 30,
+              "attack": 10,
+              "defence": 15,
+              "speed": 25,
+              "dexterity": 15,
+              "endurance": 35
+            },
+            "equipment": [
+              {
+                "type": "Consumable",
+                "alias": [
+                  "rogalik z kremem",
+                  "rogalik"
+                ],
+                "name": "Rogalik z kremem",
+                "description": "Złocisty, wypieczony rogalik, z kremowym nadzieniem",
+                "weight": 0.5,
+                "price": 6,
+                "attr": {
+                  "amount": 1,
+                  "satiation": 12,
+                  "hp": 5
+                }
+              },
+              {
+                "type": "Outfit",
+                "alias": [
+                  "sygnet straży",
+                  "sygnet strazy",
+                  "sygnet"
+                ],
+                "name": "Sygnet Straży",
+                "description": "Srebrny pierścień z czerwonym emblematem.",
+                "weight": 0.1,
+                "price": 500,
+                "attr": {
+                  "body_part": "finger"
+                }
+              }
+            ],
+            "slots": {
+              "first_hand": {},
+              "second_hand": {},
+              "head": {},
+              "body": {
+                "type": "Outfit",
+                "alias": [
+                  "zwykłe ubranie",
+                  "ubranie"
+                ],
+                "name": "Zwykłe ubranie",
+                "description": "Lniana koszula i brązowe spodnie. ",
+                "weight": 3,
+                "price": 15,
+                "attr": {
+                  "body_part": "body"
+                }
+              },
+              "finger": {},
+              "neck": {}
+            },
+            "conversations": {
+              "greeting": "Szumi woda, szumi las, wszystko szumi, szkoda nas.",
+              "options": [
+                {
+									"condition": "Pierwsze zadanie od spławiacza",
+                  "text": "Dziękuję za to, że zgodziłeś się mnie przetransportować. Umówiliśmy się na 10 złota...",
+                  "response": "Tak, zgadza się. Ale prawdę mówiąc zgodziłbym się zmniejszyć zapłatę jeśli pomożesz mi dostarczyć towary do klientów w tym mieście. Co ty na to?",
+                  "next_step": {
+                    "options": [
+                      {
+                        "text": "Prawdę mówiąc to pieniądze mi się przydadzą, a po za tym może poznam jakieś ciekawe osoby. ",
+                        "response": "Wspaniale! Na początek dostarcz ten worek węgla do kowala. Jak tylko miniesz bramę to skręć na północ, gdzieś tam go znajdziesz.",
+												"forget": "Pierwsze zadanie od spławiacza",
+                        "quest_id": 4,
+                        "next_step": {
+                          "options": [
+                            {
+                              "text": "Jasna sprawa",
+                              "response": "Do dzieła",
+                              "knowledge": {
+                                "Worek węgla": "Jacek zmniejszy moją zapłatę, jeśli pomogę mu dostarczyć towary. Najpierw mam zanieść worek węgla do kowala."
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "text": "Myślę, że 10 złota to uczciwa cena. Proszę oto zapłata",
+                        "response": "Skoro tak, cóż bywaj. Powodzenia w poszukiwaniu przygód."
+                      }
+                    ]
+                  }
+                },
+								{
+									"condition": "Worek węgla",
+                  "text": "Nie mogę znaleźć kowala",
+                  "response": "Kuźnia Bena znajduje się na północnym zachodzie miasta. Idź na wschód i jak tylko miniesz bramę skręć na północ.",
+                  "next_step": {
+                    "options": [
+                      {
+                        "text": "Dziękuję za przypomnienie.",
+                        "response": "Spokojna głowa."
+                      }
+                    ]
+                  }
+                },
+								{
+									"condition": "Ukończono: Worek węgla",
+                  "text": "Dostarczyłem węgiel do kowala. Czy potrzeba dostarczyć coś jeszcze?",
+                  "response": "No nieźle! Spisałeś się. Drugim i ostatnim klientem jest karczmarz Jakub. Musisz mu zanieść kilka rzeczy, poradzisz sobie?",
+                  "forget": "Worek węgla",
+                  "quest_id": 5,
+                  "next_step": {
+                    "options": [
+                      {
+                        "text": "Tak, co trzeba zanieść?",
+                        "response": "To będzie ta beczka z piwem, skrzynka z winem i dwie butelki gorzały. ",
+                        "forget": "Ukończono: Worek węgla",
+                        "knowledge": {
+                          "Towary dla karczmarza": "Mam dostarczyć do karczmarza Jakuba piwo wino i gorzałę."
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+									"condition": "Towary dla karczmarza",
+                  "text": "Nie mogę znaleźć karczmarza",
+                  "response": "Karczma znajduje się zaraz za wschodnią bramą. Jak tylko wejdziesz do miasta to skręć na południe.",
+                  "next_step": {
+                    "options": [
+                      {
+                        "text": "Dziękuję za przypomnienie.",
+                        "response": "Prosze bardzo"
+                      }
+                    ]
+                  }
+                },
+                {
+									"condition": "Ukończono: Towary dla karczmarza",
+                  "text": "Udało mi się dostarczyć wszystkie towary do karczmy. To co z tą zapłatą?",
+                  "response": "Chyba jesteśmy kwita. Ja wyruszam w dalszą drogę.",
+                  "next_step": {
+                    "options": [
+                      {
+                        "text": "Dziękuję za całą pomoc i życzę spokojnego spływu.",
+                        "response": "A ja Tobie życzę udanego poszukiwania przygód.",
+												"forget": "Ukończono: Towary dla karczmarza"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": "Na razie to wszystko",
+                  "response": "Cześć"
+                }
+              ],
+              "farewell": "Do miłego zobaczenia"
+            },
+            "knowledge": {},
+            "area": "Torenberg",
+            "current_activity": "",
+            "path": [],
+            "can_trade": true,
+            "items_to_sell": [],
+            "wants_to_buy": [],
+            "killable": false,
+            "can_duel": false,
+            "is_aggressive": false,
+            "can_ally": false,
+            "affiliation": [
+              "Gildia kupiecka"
             ]
           }
           
@@ -2616,6 +2884,90 @@
       },
       "status": 0,
 			"knowledge_entry": "Ukończono: Wytępić szczury"
+    },
+    {
+      "id": 4,
+      "name": "Worek węgla",
+      "description": "Muszę dostarczyć worek węgla do kowala",
+      "objectives": [
+        {
+          "type": "item_in_eq",
+          "name": "zabierz worek węgla",
+          "item": "Worek węgla",
+          "progress": 0,
+          "amount": 1
+        },
+        {
+          "type": "return_item",
+          "name": "Dostarcz węgiel do kowala",
+          "item": "Worek węgla",
+          "progress": 0,
+          "amount": 1,
+          "npc": "Kowal Ben"
+        }
+      ],
+      "reward": {
+        "exp": 10
+      },
+      "status": 0,
+			"knowledge_entry": "Ukończono: Worek węgla"
+    },
+    {
+      "id": 5,
+      "name": "Towary dla karczmarza",
+      "description": "Muszę dostarczyć worek węgla do kowala",
+      "objectives": [
+        {
+          "type": "item_in_eq",
+          "name": "Zabierz skrzynkę wina",
+          "item": "Skrzynka wina",
+          "progress": 0,
+          "amount": 1
+        },
+        {
+          "type": "return_item",
+          "name": "Dostarcz skrzynkę wina do karczmy",
+          "item": "Skrzynka wina",
+          "progress": 0,
+          "amount": 1,
+          "npc": "Karczmarz Jakub"
+        },
+        {
+          "type": "item_in_eq",
+          "name": "Zabierz beczkę piwa",
+          "item": "Beczka piwa",
+          "progress": 0,
+          "amount": 1
+        },
+        {
+          "type": "return_item",
+          "name": "Dostarcz beczkę piwa do karczmy",
+          "item": "Beczka piwa",
+          "progress": 0,
+          "amount": 1,
+          "npc": "Karczmarz Jakub"
+        },
+        {
+          "type": "item_in_eq",
+          "name": "Zabierz gorzałkę",
+          "item": "Butelka gorzałki",
+          "progress": 0,
+          "amount": 2
+        },
+        {
+          "type": "return_item",
+          "name": "Dostarcz gorzałkę do karczmy",
+          "item": "Butelka gorzałki",
+          "progress": 0,
+          "amount": 2,
+          "npc": "Karczmarz Jakub"
+        }
+      ],
+      "reward": {
+        "exp": 20
+      },
+      "status": 0,
+			"knowledge_entry": "Ukończono: Towary dla karczmarza"
     }
   ]
 }
