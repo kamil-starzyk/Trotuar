@@ -261,7 +261,7 @@ class Konsola:
     cls.hr()
 
     cls.print_param("hp", mob.hp, mob.hp_max, "lred")
-    cls.print_param("stamina", mob.stamina, mob.stamina_max, "lyellow")
+    cls.print_param("stamina", round(mob.stamina), round(mob.stamina_max), "lyellow")
     cls.print_param("mana", mob.mana, mob.mana_max, "lblue")
     cls.print_param("satiation", mob.satiation, mob.satiation_max, "lgreen")
     cls.print_param("hydration", mob.hydration, mob.hydration_max, "lcyan")
