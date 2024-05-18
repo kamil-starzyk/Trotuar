@@ -101,6 +101,26 @@ class Mob:
       return item
     return 0
 
+  def take(self, item_name, player):
+    container = Helper.find_utility(self.my_square.utilities, "take")
+    if not container:
+      if player:
+        Konsola.print("Tu nie ma skąd wyjmować rzeczy!", "red")
+      return 0
+
+    item = Helper.find_item(container.items, item_name, player)
+    if item:
+      if item.weight*item.amount + self.weight_carried_rn > self.max_carry_weight:
+        return 1
+      container.items.remove(item)
+      item_in_eq = Helper.is_item_in_list(item, self.equipment)
+      if item.stackable() and item_in_eq:
+        item_in_eq.amount += item.amount
+      else:
+        self.equipment.append(item)
+      return item
+    return 0
+
   def use(self, item_name, player=False):
     item = Helper.find_item(self.equipment, item_name, player)
     effects = {}
@@ -503,9 +523,9 @@ class Mob:
         self.slots[k] = None
     aliases = ["trup", "ciało", "cialo", "martwy "+self.name]
     aliases = aliases + self.alias
-    dead_body = Utility("Corpse", aliases, "Martwy "+self.name, self.description, 0, 1, {}, self.equipment, 0, {"search": "Przeszukaj"})
-    self.my_square.utilities.append(dead_body)
-    self.my_square.description += " Leży tu [i]martwy " + self.name +"[/i]. "
+    square_description = "Leży tu [i]martwy " + self.name +"[/i]. "
+    dead_body = Utility("Corpse", aliases, "Martwy "+self.name, self.description, square_description, 0, 1, {}, self.equipment, 0, {"search": "Przeszukaj"})
+    dead_body.put_on_square(self.my_square)
     self.x=0
     self.y=0
     self.z=0

@@ -4,11 +4,12 @@ from item import Item
 
 # skrzynia, łóżko, palenisko, zarośla, 
 class Utility:
-  def __init__(self, type, alias, name, description, lock, opened, attr, items, money, actions):
+  def __init__(self, type, alias, name, description, square_description, lock, opened, attr, items, money, actions):
     self.type = type
     self.alias = alias
     self.name = name
     self.description = description
+    self.square_description = square_description
     self.lock = lock
     self.opened = opened
     self.attr = attr
@@ -16,6 +17,17 @@ class Utility:
     self.money = money
     self.actions = actions
   
+  def put_on_square(self, square):
+    if self not in square.utilities:
+      square.utilities.append(self)
+    square.description += " " + self.square_description
+
+  def remove_from_square(self, square):
+    if self in square.utilities:
+      square.utilities.remove(self)
+    if " " + self.square_description in square.description:
+      square.description = square.description.replace(" " + self.square_description, "", 1)
+
   def see_more(self):
     Konsola.print(self.name, "lcyan")
     Konsola.print(self.description, "lwhite")
@@ -51,6 +63,7 @@ class Utility:
       'alias': self.alias,
       'name': self.name,
       'description': self.description,
+      'square_description': self.square_description,
       'lock': self.lock,
       'opened': self.opened,
       'attr': self.attr,
@@ -62,5 +75,5 @@ class Utility:
   @classmethod
   def from_dict(cls, data):
     items = [Item.from_dict(item_data) for item_data in data["items"]]
-    return cls(data["type"], data["alias"], data["name"], data["description"], data["lock"], data["opened"], data["attr"], items, data['money'], data["actions"])
+    return cls(data["type"], data["alias"], data["name"], data["description"], data["square_description"], data["lock"], data["opened"], data["attr"], items, data['money'], data["actions"])
   

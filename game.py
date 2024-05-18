@@ -7,7 +7,7 @@ from helper import Helper
 from myjson import MyJson
 
 class Game:
-  def __init__(self, gameplay=1, player=None, world=None):
+  def __init__(self, gameplay=1, player=None, world=None, milestones=[]):
     self.version = "0.0.0"
     self.gameplay = gameplay
     self.god_mode = True
@@ -16,6 +16,7 @@ class Game:
     self.is_playing = False
     self.quests = []
     self.time = None
+    self.milestones = milestones
   
   def title_screen(self):
     method_map = {
@@ -61,6 +62,7 @@ class Game:
     self.world = World.from_dict(data["world"])
     self.time = GameTime.from_dict(data["time"])
     self.quests = [Quest.from_dict(data) for data in data["quests"]]
+    self.milestones = data["milestones"]
     self.player.current_location = self.world.locations[0]
     self.player.area = self.world.locations[0].areas[0]
     self.is_playing = True
@@ -229,7 +231,12 @@ class Game:
         loop_body()
       self.time.time_progress(seconds)
 
-    
+    # KAMIENIE MILOWE
+    print("DZYDZE")
+    if "Przybicie do brzegu" in self.milestones:
+      jacek = next((mob for mob in self.player.current_location.mobs if mob.name == "Spławiacz Jacek"), None)
+      jacek.take("worek węgla", True)
+      jacek.drop("worek węgla", True)
 
 
 
@@ -271,7 +278,8 @@ class Game:
       "player": self.player.to_dict(),
       "world": self.world.to_dict(),
       "time": self.time.to_dict(),
-      "quests": [quest.to_dict() for quest in self.quests]
+      "quests": [quest.to_dict() for quest in self.quests],
+      "milestones": self.milestones
     }
 
   @classmethod
@@ -280,6 +288,7 @@ class Game:
     time = GameTime.from_dict(data["time"])
     player = Player.from_dict(data["player"])
     quests = [Quest.from_dict() for quest in data["quests"]]
+    milestones = data["milestones"]
     return cls(data["gameplay"], world, player, time, quests)
   
   def choose_save(self):

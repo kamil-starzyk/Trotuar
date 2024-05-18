@@ -36,8 +36,6 @@ class Square:
       Konsola.print("Przedmioty: ", "lcyan")
       for i in self.items:
         print("  "+i.name_and_count)
-
-
   
   def to_dict(self):
     return {
@@ -55,4 +53,7 @@ class Square:
   def from_dict(cls, data):
     items = [Item.from_dict(item_data) for item_data in data["items"]]
     utilities = [Utility.from_dict(utility_data) for utility_data in data["utilities"]]
-    return cls(data["x"], data["y"], data["z"], data["name"], data["description"], data["exits"], utilities, items)
+    square = cls(data["x"], data["y"], data["z"], data["name"], data["description"], data["exits"], utilities, items)
+    for u in square.utilities:
+      u.put_on_square(square)
+    return square

@@ -12,6 +12,7 @@ while True:
   print("Weigth: " + str(player.carry_weight))
   print("Max weigth: " + str(player.max_carry_weight))
 
+  game.update_state(0)
   player.my_square.show_square()
 
   command_mapping = {
@@ -40,6 +41,8 @@ while True:
   "podnieś" :   player.pick_up,
   "upuść" :     player.drop,
   "upusc" :     player.drop,
+  "take" :      player.take,
+  "wyjmij" :    player.take,
   "zjedz" :     player.use,
   "wypij" :     player.use,
   "zużyj" :     player.use,
@@ -97,7 +100,7 @@ while True:
   "colorama" :  Konsola.test_colorama,
 
   "exp":        player.add_exp
-}
+  }
 
   while game.is_playing:
     prompt = Konsola.prompt(game.player)
