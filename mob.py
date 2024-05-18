@@ -187,9 +187,8 @@ class Mob:
       void
     """
     endurance = self.stat_coefficient(self.stats["endurance"])
-
-    self.stamina += (s / endurance) if s < 0 else (s * endurance)
     self.stamina_max += (s_max / endurance) if s_max < 0 else (s_max * endurance)
+    self.stamina += (s / endurance) if s < 0 else (s * endurance)
     
 
   def show_equipment(self):
@@ -301,7 +300,13 @@ class Mob:
       self.x = next_x
       self.y = next_y
       self.z = next_z
-      self.adjust_stamina(0.5, -0.2)
+      if self.overloaded:
+        stamina = -20*self.overloaded
+        print(stamina)
+        stamina_max = -0.2 - (4*self.overloaded)
+        self.adjust_stamina(stamina, stamina_max)
+      else:
+        self.adjust_stamina(0.5, -0.2)
       return direction
     return 0
      
@@ -636,7 +641,7 @@ class Mob:
 
   @property
   def stamina(self):
-    return int(self.params["stamina"])
+    return self.params["stamina"]
   
   @stamina.setter
   def stamina(self, value):
@@ -650,8 +655,8 @@ class Mob:
   @property
   def stamina_max(self):
     if self.params["stamina_max"] < self.params["stamina_total"]/2:
-      return int(self.params["stamina_max"])
-    return int(self.params["stamina_total"]/2)
+      return self.params["stamina_max"]
+    return self.params["stamina_total"]/2
     
   @stamina_max.setter
   def stamina_max(self, value):
