@@ -188,7 +188,7 @@ class Player(Mob):
     return 0
   
   def outfit(self):
-    Konsola.print("Twoje wyposarzenie", "lcyan")
+    Konsola.print("Twoje wyposażenie", "lcyan")
     super().outfit()
     return 0
 

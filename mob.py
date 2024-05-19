@@ -83,7 +83,7 @@ class Mob:
   def drop(self, item_name, player=False):
     item = Helper.find_item(self.equipment, item_name, player)
     if item:
-      if item.stackable() and item.amount > 1:
+      if item.stackable() and item.amount > 1 and player:
         print("Jaką ilość chcesz wyrzucić? (max: " + str(item.amount) + ")")
         amount_to_drop = Konsola.int_input(1, item.amount)
         if amount_to_drop == item.amount:

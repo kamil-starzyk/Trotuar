@@ -2851,7 +2851,9 @@
                         "forget": "Ukończono: Worek węgla",
                         "knowledge": {
                           "Towary dla karczmarza": "Mam dostarczyć do karczmarza Jakuba piwo wino i gorzałę."
-                        }
+                        },
+                        "milestone": "Towary dla karczmarza"
+                        
                       }
                     ]
                   }

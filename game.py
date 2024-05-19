@@ -53,7 +53,7 @@ class Game:
     Konsola.clear()
     Konsola.print("Udało Ci się wczytać grę", "lwhite")
     Konsola.hr()
-    #Helper.sleep(1)
+    Helper.sleep(1)
 
   def demo(self):
     data = MyJson.load_json("data/init/demo.json")
@@ -69,15 +69,15 @@ class Game:
     Konsola.clear()
     #Konsola.print("Rozpocząłeś grę demonstracyjną", "lwhite")
     Konsola.wrap("Wszystko się nagle zachwiało i obudziłeś się z drzemki. To nie dom się wali, po prostu łódź się zakołysała.")
-    #Helper.sleep(1)
+    Helper.sleep(1)
     Konsola.wrap("Ah tak... zostawiłeś rodzinny dom i wioskę daleko za sobą. Podczas podróży przysnąłeś siedząc na skrzyni, oparty o jutowy worek. Spławiacz Jacek zgodził się Ciebie zabrać za drobną opłatą i teraz płyniecie razem na południe. Po drodze jest miasto Torenberg, tam zamierzasz wysiąść i szukać przygód.")
-    #Helper.sleep(3)
+    Helper.sleep(3)
     Konsola.wrap("Szum wody...")
-    #Helper.sleep(0.5)
+    Helper.sleep(0.5)
     Konsola.wrap("Kołysanie łodzi...")
-    #Helper.sleep(0.5)
+    Helper.sleep(0.5)
     Konsola.wrap("\"To już niedaleko\" - mówi nagle Jacek. Rozglądasz się i faktycznie, widzisz w oddali ponad koronami drzew wieże wznoszące się nad murami.")
-    #Helper.sleep(1)
+    Helper.sleep(1)
     Konsola.wrap("Mija jeszcze kilka chwil, po których dobijacie do brzegu. Jacek wyskakuje z łodzi i cumuje ją do palika. Ty tymczasem wychodzisz na brzeg.")
     Konsola.hr()
     self.gameplay = Helper.get_new_gameplay_number()
@@ -252,6 +252,35 @@ class Game:
       Konsola.hr()
       Helper.sleep(1)
       self.milestones.remove("Worek węgla")
+      self.milestones.append("Worek węgla 2")
+
+    worek_podniesiony = False
+    worek_quest = next((q for q in self.quests if q.id == 4), None)
+    if worek_quest:
+      for obj in quest.objectives:
+        if obj["type"] == "item_in_eq" and obj["progress"] == 1:
+          worek_podniesiony = True
+    
+    if "Worek węgla 2" in self.milestones and worek_podniesiony:
+      Konsola.hr()
+      Konsola.wrap("Aktywne zadania możesz podejrzeć za pomocą komendy [i]zadania[/i]. Aby wyświetlić postęp konkretnego zadania dopisz jego id. (np. [i]zadania 4[/i]). ")
+      self.milestones.remove("Worek węgla 2")
+    
+    if "Towary dla karczmarza" in self.milestones:
+      jacek = next((mob for mob in self.player.current_location.mobs if mob.name == "Spławiacz Jacek"), None)
+      jacek.take("skrzynka wina", False)
+      jacek.drop("skrzynka wina", False)
+      Helper.sleep(1)
+      Konsola.print("Jacek wyjmuje skrzynkę wina z łodzi", "lmagenta")
+      jacek.take("beczka piwa", False)
+      jacek.drop("beczka piwa", False)
+      Helper.sleep(2)
+      Konsola.print("Jacek wyjmuje beczkę piwa z łodzi", "lmagenta")
+      jacek.take("butelka gorzałki", False)
+      jacek.drop("butelka gorzałki", False)
+      Helper.sleep(0.5)
+      Konsola.print("Jacek wyjmuje butelki gorzałki z łodzi", "lmagenta")
+      self.milestones.remove("Towary dla karczmarza")
 
   def active_quests(self, quest_id=0):
     if not quest_id:
