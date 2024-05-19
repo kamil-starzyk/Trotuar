@@ -53,6 +53,11 @@
         "attr": {
           "satiation": 15,
           "hp": 5
+        },
+        "actions": {
+          "see": "zobacz",
+          "drop": "upuść",
+          "use": "jedz"
         }
       },
       {
@@ -69,6 +74,11 @@
         "attr": {
           "hydration": 45,
           "hp": 1
+        },
+        "actions": {
+          "see": "zobacz",
+          "drop": "upuść",
+          "use": "pij"
         }
       }
     ],
@@ -91,6 +101,10 @@
         "attr": {
           "body_part": "body",
           "dexterity": 2
+        },
+        "actions": {
+          "see": "zobacz",
+          "unequip": "zdemij"
         }
       },
       "finger": {},
@@ -169,6 +183,10 @@
                   "speed": 10,
                   "dexterity": 10,
                   "mana_max": 5
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "pick": "podnieś"
                 }
               }
             ]
@@ -211,6 +229,11 @@
                   "amount": 1,
                   "satiation": 10,
                   "hp": 5
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "pick": "podnieś",
+                  "use": "jedz"
                 }
               },
               {
@@ -226,6 +249,11 @@
                 "attr": {
                   "amount": 1,
                   "mana": 20
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "drop": "upuść",
+                  "use": "wypij"
                 }
               }
             ]
@@ -258,6 +286,10 @@
                   "strength": -10,
                   "dexterity": -3,
                   "body_part": "first_hand"
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "pick": "podnieś"
                 }
               }
             ]
@@ -528,8 +560,8 @@
                 "items": [],
                 "money": 0,
                 "actions": {
-                  "open": "Otwórz",
-                  "search": "Przeszukaj"
+                  "open": "otwórz",
+                  "search": "przeszukaj"
                 }
               },
               {
@@ -551,8 +583,8 @@
                 "items": [],
                 "money": 0,
                 "actions": {
-                  "sleep": "Śpij",
-                  "sit": "Usiądź"
+                  "sleep": "śpij",
+                  "sit": "usiądź"
                 }
               }
             ],
@@ -654,7 +686,10 @@
                 "description": "Kompletny szkielet, najwidoczniej człowieka.",
                 "weight": 12,
                 "price": 10,
-                "attr": {}
+                "attr": {},
+                "actions": {
+                  "see": "zobacz"
+                }
               }
             ]
           },
@@ -679,7 +714,11 @@
                 "description": "Piękna, lśniąca, srebrna podkowa",
                 "weight": 0.2,
                 "price": 10,
-                "attr": {}
+                "attr": {},
+                "actions": {
+                  "see": "zobacz",
+                  "pick": "podnieś"
+                }
               }
 						]
           },
@@ -706,6 +745,10 @@
                 "price": 1,
                 "attr": {
                   "amount": 1
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "pick": "podnieś"
                 }
               },
 							{
@@ -719,6 +762,10 @@
                 "price": 2,
                 "attr": {
                   "amount": 1
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "pick": "podnieś"
                 }
               }
 						]
@@ -759,6 +806,10 @@
                 "price": 1,
                 "attr": {
                   "amount": 1
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "pick": "podnieś"
                 }
               }
 						]
@@ -823,7 +874,11 @@
                     "description": "Szary worek pełny pylącego węgla.",
                     "weight": 65,
                     "price": 40,
-                    "attr": {}
+                    "attr": {},
+                    "actions": {
+                      "see": "zobacz",
+                      "pick": "podnieś"
+                    }
                   },
                   {
                     "type": "Quest",
@@ -836,7 +891,11 @@
                     "description": "Średniej wielkości drewniana beczka. Jest pełna piwa",
                     "weight": 60,
                     "price": 120,
-                    "attr": {}
+                    "attr": {},
+                    "actions": {
+                      "see": "zobacz",
+                      "pick": "podnieś"
+                    }
                   },
                   {
                     "type": "Quest",
@@ -849,7 +908,11 @@
                     "description": "Drewniana skrzynka, zawierająca 20 butelek gronowego wina",
                     "weight": 30,
                     "price": 220,
-                    "attr": {}
+                    "attr": {},
+                    "actions": {
+                      "see": "zobacz",
+                      "pick": "podnieś"
+                    }
                   },
                   {
                     "type": "Quest",
@@ -866,13 +929,18 @@
                     "price": 220,
                     "attr": {
                       "amount": 2
+                    },
+                    "actions": {
+                      "see": "zobacz",
+                      "pick": "podnieś"
                     }
                   }
                 ],
                 "money": 0,
                 "actions": {
-                  "take": "Wyjmij",
-                  "search": "Przeszukaj"
+                  "see": "zobacz",
+                  "search": "przeszukaj",
+                  "take": "wyjmij"
                 }
               }
             ],
@@ -1012,6 +1080,10 @@
                 "attr": {
                   "amount": 1,
                   "hp": 10
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "pick": "podnieś"
                 }
               }
             ]
@@ -1228,6 +1300,11 @@
                   "amount": 1,
                   "satiation": 5,
                   "hp": 5
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "drop": "upuść",
+                  "use": "zjedz"
                 }
               },
               {
@@ -1241,6 +1318,10 @@
                 "price": 40,
                 "attr": {
                   "body_part": "second_hand"
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "drop": "upuść"
                 }
               }
             ],
@@ -1256,7 +1337,11 @@
                 "description": "Białe, materiałowe nakrycie głowy.",
                 "weight": 0.2,
                 "price": 12,
-                "attr": {}
+                "attr": {},
+                "actions": {
+                  "see": "zobacz",
+                  "unequip": "zdejmij"
+                }
               },
               "body": {
                 "type": "Outfit",
@@ -1268,7 +1353,11 @@
                 "description": "Skórzany fartuch z kieszeniami. Stanowi ochronę przed iskrami i gorącem.",
                 "weight": 2,
                 "price": 60,
-                "attr": {}
+                "attr": {},
+                "actions": {
+                  "see": "zobacz",
+                  "unequip": "zdejmij"
+                }
               },
               "finger": {},
               "neck": {}
@@ -1388,6 +1477,10 @@
                   "damage": 12,
                   "strength": -5,
                   "dexterity": -5
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "drop": "upuść"
                 }
               },
               {
@@ -1406,6 +1499,10 @@
                   "damage": 40,
                   "strength": -15,
                   "dexterity": -15
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "drop": "upuść"
                 }
               }
             ],
@@ -1471,7 +1568,11 @@
                 "description": "Kawałek materiału w kolorze biało-zielonym z czerwoną kratką. ",
                 "weight": 0.1,
                 "price": 6,
-                "attr": {}
+                "attr": {},
+                "actions": {
+                  "see": "zobacz",
+                  "drop": "upuść"
+                }
               }
             ],
             "slots": {
@@ -1489,7 +1590,11 @@
                 "description": "Białą lniana koszula",
                 "weight": 2,
                 "price": 60,
-                "attr": {}
+                "attr": {},
+                "actions": {
+                  "see": "zobacz",
+                  "unequip": "zdejmij"
+                }
               },
               "finger": {},
               "neck": {}
@@ -1563,6 +1668,10 @@
                   "hydration": 10,
                   "hp": 2,
                   "alcohol": 5
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "drop": "upuść"
                 }
               },
               {
@@ -1580,6 +1689,10 @@
                   "hydration": 15,
                   "hp": 5,
                   "alcohol": 12
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "drop": "upuść"
                 }
               },
               {
@@ -1597,6 +1710,10 @@
                   "damage": 10,
                   "dexterity": 2,
                   "strength": -1
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "drop": "upuść"
                 }
               }
             ],
@@ -1666,6 +1783,10 @@
                 "attr": {
                   "amount": 1,
                   "hp": -5
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "drop": "upuść"
                 }
               },
               {
@@ -1679,7 +1800,11 @@
                 "description": "Mały, zużyty nożyk z białą rękojeścią",
                 "weight": 0.5,
                 "price": 18,
-                "attr": {}
+                "attr": {},
+                "actions": {
+                  "see": "zobacz",
+                  "drop": "upuść"
+                }
               }
             ],
             "slots": {
@@ -1698,6 +1823,10 @@
                 "price": 10,
                 "attr": {
                   "body_part": "head"
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "unequip": "zdejmij"
                 }
               },
               "body": {
@@ -1712,6 +1841,10 @@
                 "price": 15,
                 "attr": {
                   "body_part": "body"
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "unequip": "zdejmij"
                 }
               },
               "finger": {},
@@ -1860,6 +1993,11 @@
                   "amount": 1,
                   "satiation": 10,
                   "hp": 5
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "drop": "upuść",
+                  "use": "zjedz"
                 }
               },
               {
@@ -1875,6 +2013,10 @@
                 "price": 500,
                 "attr": {
                   "body_part": "finger"
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "drop": "upuść"
                 }
               }
             ],
@@ -1893,6 +2035,10 @@
                   "body_part": "first_hand",
                   "damage": 50,
                   "strength": 25
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "unequip": "zdejmij"
                 }
               },
               "second_hand": {},
@@ -1908,6 +2054,10 @@
                 "price": 50,
                 "attr": {
                   "defence": 10
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "unequip": "zdejmij"
                 }
               },
               "body": {
@@ -1923,6 +2073,10 @@
                 "attr": {
                   "body_part": "body",
                   "defence": 20
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "unequip": "zdejmij"
                 }
               },
               "finger": {},
@@ -2081,6 +2235,11 @@
                 "price": 2,
                 "attr": {
                   "satiation": 5
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "drop": "upuść",
+                  "use": "zjedz"
                 }
               },
               {
@@ -2097,6 +2256,10 @@
                   "damage": 15,
                   "strength": -2,
                   "dexterity": -2
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "drop": "upuść"
                 }
               },
               {
@@ -2114,6 +2277,10 @@
                   "defence": 10,
                   "strength": -2,
                   "dexterity": -3
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "drop": "upuść"
                 }
               }
             ],
@@ -2133,6 +2300,10 @@
                 "attr": {
                   "body_part": "head",
                   "defence": 1
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "unequip": "zdejmij"
                 }
               },
               "body": {
@@ -2148,6 +2319,10 @@
                 "attr": {
                   "body_part": "body",
                   "defence": 2
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "unequip": "zdejmij"
                 }
               },
               "finger": {},
@@ -2564,6 +2739,10 @@
                   "amount": 1,
                   "satiation": 12,
                   "hp": 5
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "drop": "upuść"
                 }
               },
               {
@@ -2579,6 +2758,10 @@
                 "price": 500,
                 "attr": {
                   "body_part": "finger"
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "drop": "upuść"
                 }
               }
             ],
@@ -2598,13 +2781,17 @@
                 "price": 15,
                 "attr": {
                   "body_part": "body"
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "unequip": "zdejmij"
                 }
               },
               "finger": {},
               "neck": {}
             },
             "conversations": {
-              "greeting": "Szumi woda, szumi las, wszystko szumi, szkoda nas.",
+              "greeting": "Ahh jak to dobrze choć na chwilę stanąć na suchym lądzie.",
               "options": [
                 {
 									"condition": "Pierwsze zadanie od spławiacza",
@@ -2624,7 +2811,8 @@
                               "response": "Do dzieła",
                               "knowledge": {
                                 "Worek węgla": "Jacek zmniejszy moją zapłatę, jeśli pomogę mu dostarczyć towary. Najpierw mam zanieść worek węgla do kowala."
-                              }
+                              },
+                              "milestone": "Worek węgla"
                             }
                           ]
                         }

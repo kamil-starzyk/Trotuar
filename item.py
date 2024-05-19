@@ -1,7 +1,7 @@
 from konsola import Konsola
 
 class Item:
-  def __init__(self, type, alias, name, description, weight, price, attr):
+  def __init__(self, type, alias, name, description, weight, price, attr, actions):
     self.type = type
     self.alias = alias
     self.name = name
@@ -9,6 +9,7 @@ class Item:
     self.weight = weight
     self.price = price
     self.attr = attr
+    self.actions = actions
 
   def see_more(self):
     Konsola.print(self.name, "lcyan")
@@ -25,6 +26,10 @@ class Item:
       for k, v in self.attr.items():
         Konsola.print(" " + k, line_end=': ')
         Konsola.print(v, "lwhite")
+    Konsola.print("Możliwe działania:", "lwhite")
+    for _, v in self.actions.items():
+      print(" - "+ v)
+
   
   @property
   def name_and_count(self):
@@ -57,16 +62,17 @@ class Item:
       "description": self.description,
       "weight": self.weight,
       "price": self.price,
-      "attr": self.attr
+      "attr": self.attr,
+      "actions": self.actions
     }
   
   @classmethod
   def from_dict(cls, data):
-    return cls(data["type"], data["alias"], data["name"], data["description"], data["weight"], data["price"], data["attr"])
+    return cls(data["type"], data["alias"], data["name"], data["description"], data["weight"], data["price"], data["attr"], data["actions"])
   
   @classmethod
   def unstack(cls, item, amount_to_unstack):
     attr = item.attr.copy()
     attr["amount"] = amount_to_unstack
     item.amount -= amount_to_unstack
-    return cls(item.type, item.alias, item.name, item.description, item.weight, item.price, attr)
+    return cls(item.type, item.alias, item.name, item.description, item.weight, item.price, attr, item.actions)

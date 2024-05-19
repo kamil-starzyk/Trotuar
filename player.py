@@ -69,6 +69,22 @@ class Player(Mob):
 
     Konsola.print("Nie ma tu takiej rzeczy", "red")
     return 0
+
+  def take(self, item_name):
+    item = super().take(item_name, True)
+    if item == 1:
+      Konsola.print("Niesiesz zbyt duży ciężar albo ta rzecz waży za dużo", "red")
+      return 0
+    if item:
+      self.picked_item = item
+      Konsola.print("Wyjąłeś ", line_end='')
+      Konsola.print(item.name, "lwhite")
+      if self.overloaded:
+        Konsola.print("Jesteś przeciążony", "red")
+      return Player.TIME_OF_ITEM_INTERACTION
+
+    Konsola.print("Nie ma tu takiej rzeczy", "red")
+    return 0
   
   def drop(self, item_name):
     item = super().drop(item_name, True)
@@ -200,6 +216,8 @@ class Player(Mob):
         for key, value in selected_option["knowledge"].items():
           if key not in self.knowledge:
             self.knowledge[key] = value
+      if selected_option.get("milestone"):
+        self.game.milestones.append(selected_option["milestone"])
       if selected_option.get("forget"):
         key = selected_option.get("forget")
         if key in self.knowledge:

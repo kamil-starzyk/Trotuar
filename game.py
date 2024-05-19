@@ -232,13 +232,26 @@ class Game:
       self.time.time_progress(seconds)
 
     # KAMIENIE MILOWE
-    print("DZYDZE")
     if "Przybicie do brzegu" in self.milestones:
+      Helper.sleep(0.5)
+      Konsola.wrap("Rozpoczynasz swoją przygodę! Czynność, którą będziesz wykonywał najczęściej to poruszanie się pomiędzy sąsiednimi lokalizacjami. Każda lokalizacja ma swoją [i]nazwę[/i], [i]opis[/i] oraz dostępne [i]wyjścia[/i]. Aby się przemieścić wpisz jako prompt nazwę dostępnego kierunku np([i]east[/i]), albo jej jednoliterowy skrót (np. [i]e[/i]). Na początek jednak spróbuj porozmawiać z Jackiem. Aby to zrobić wpisz [i]rozmawiaj jacek[/i].")
+      Konsola.hr()
+      Helper.sleep(1)
+      self.milestones.remove("Przybicie do brzegu")
+    if "Worek węgla" in self.milestones:
       jacek = next((mob for mob in self.player.current_location.mobs if mob.name == "Spławiacz Jacek"), None)
       jacek.take("worek węgla", True)
       jacek.drop("worek węgla", True)
-
-
+      Konsola.print("Jacek wyjmuje worek węgla z łodzi", "lmagenta")
+      Konsola.hr()
+      Helper.sleep(1.5)
+      self.show_current_square()
+      Konsola.hr()
+      Helper.sleep(0.5)
+      Konsola.wrap("Jeśli na twojej lokalizacji znajdują się jakieś przedmioty albo osoby, z którymi możesz wejść w interakcję, to zostaną one wypisane pod pozyją [i]Istoty[/i] lub [i]Przedmioty[/i]. Pewne interaktywne obiekty znajdujące się na lokalizacji są wskazane w jej opisie. Szukaj podświetlonych nazw (np. [i]łódź[/i]). Dla różnych obiektów są dostępne różne komendy, ale zawsze możesz wspisać polecenie [i]zobacz[/i] (np. [i]zobacz worek węgla[/i]) aby dowiedzieć się o obiekcie coś więcej i poznać dostępne komendy. ")
+      Konsola.hr()
+      Helper.sleep(1)
+      self.milestones.remove("Worek węgla")
 
   def active_quests(self, quest_id=0):
     if not quest_id:
