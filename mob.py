@@ -302,7 +302,6 @@ class Mob:
       self.z = next_z
       if self.overloaded:
         stamina = -20*self.overloaded
-        print(stamina)
         stamina_max = -0.2 - (4*self.overloaded)
         self.adjust_stamina(stamina, stamina_max)
       else:
