@@ -265,18 +265,32 @@ class Game:
       Konsola.hr()
       Konsola.wrap("Aktywne zadania możesz podejrzeć za pomocą komendy [i]zadania[/i]. Aby wyświetlić postęp konkretnego zadania dopisz jego id. (np. [i]zadania 4[/i]). ")
       Konsola.hr()
+      Helper.sleep(0.5)
+      Konsola.wrap("Mapa jest zbudowana z kwadratowych lokacji, każda z nich ma taki sam rozmiar. Używając kierunków (n - north, e - east, s - south, w - west) możesz przemieścić się na sąsiednią lokację, oczywiście pod warunkiem, że dany kierunek jest dostępny po pozycją [i]Wyjścia: [/i]. Aby się nie zgubić dobrze jest rysować mapę na kartce w kratkę. \n[i]Podpowiedź:[/i] Zaczynamy na skrajnym zachodzie mapy i dosłownie kilka kratek od północnej granicy. Możesz więc zacząć rysować przy lewej krawędzi kartki, kilka centymetrów od góry. ")
+      Konsola.hr()
       #Helper.sleep(0.5)
       self.milestones.remove("Worek węgla 2")
       self.milestones.append("Worek węgla 3")
     
     if "Worek węgla 3" in self.milestones and self.player.is_on_square(6,2,1):
       Konsola.hr()
-      Konsola.wrap("Brawo! Odnalazłeś kuźnię! Teraz, aby przekaać przedmiot właściwej osobie musisz skorzystać z komendy [i]podaruj[/i] (np. [i]podaruj worek węgla[/i]). Nie musisz wpisywać komu. Jeśli na lokacji jest tylko jedna osoba nie będzie problemu. Za to kiedy potencjalnych odbiorców byłoby więcej - gra zapyta o kogo Ci chodzi. ")
+      Konsola.wrap("Brawo! Odnalazłeś kuźnię! Teraz, aby przekazać przedmiot właściwej osobie musisz skorzystać z komendy [i]podaruj[/i] (np. [i]podaruj worek węgla[/i]). Nie musisz wpisywać komu. Jeśli na lokacji jest tylko jedna osoba nie będzie problemu. Za to kiedy potencjalnych odbiorców byłoby więcej - gra zapyta o kogo Ci chodzi. ")
       Konsola.hr()
       #Helper.sleep(0.5)
       self.milestones.remove("Worek węgla 3")
       self.milestones.append("Worek węgla 4")
     
+    worek_oddany = False
+    if worek_quest:
+      for obj in quest.objectives:
+        if obj["type"] == "return_item" and obj["progress"] == 1:
+          worek_oddany = True
+    
+    if "Worek węgla 4" in self.milestones and worek_oddany:
+      Konsola.hr()
+      Konsola.wrap("Wspaniale! Udało Ci się ukończyć pierwsze zadanie! Zadania są jednym ze źódeł zdobywania doświadczenia. Aby zobaczyć obecny postęp swojej postaci użyj komendy [i]whoami[/i]. Wyświetla ona podstawowe dane na twój temat, w tym obecny poziom, zdobyte doświadczenie oraz inne #TODO. ")
+      Konsola.hr()
+      #Helper.sleep(0.5)
     
     if "Towary dla karczmarza" in self.milestones:
       jacek = next((mob for mob in self.player.current_location.mobs if mob.name == "Spławiacz Jacek"), None)
@@ -301,6 +315,9 @@ class Game:
       Konsola.wrap("Uważaj na wagę swojego ekwipunku. Jego zawartość możesz sprawdzić komendą [i]ekwipunek[/i] lub [i]eq[/i]. Zobaczysz tam listę swoich rzeczy, ich sumaryczną mase oraz swój udźwig w postaci: [i]Udźwig: 50 / 40(80)[/i]. W tym przypadku gracz niesie 50 funtów ekwipunku, czyli 10 więcej niż jego zwykły udźwig i 30 poniżej maksymalnego udźwigu. Im większe przeciążenie ponad normalny udźwig, tym szybciej się męczysz. Swoją aktualną staminę możesz zobaczyć na prompcie jako St: lub używając komendy [i]statystyki[/i]/[i]stats[/i].  ")
       self.milestones.remove("Ciężkie rzeczy")
   
+    
+
+
 
   def active_quests(self, quest_id=0):
     if not quest_id:

@@ -161,6 +161,21 @@ class Player(Mob):
       return 1
     Konsola.print("Nie ma tu takiej rzeczy, ani nie masz jej w ekwipunku. Nie ma tu także takiej osoby.", "red")
   
+  def read(self, item_name):
+    item = Helper.find_item(self.equipment, item_name, True)
+    if item:
+      time = item.read()
+      return time
+    item = Helper.find_item(self.my_square.items, item_name, True)
+    if item:
+      time = item.read()
+      return time
+    utility = Helper.find_item(self.my_square.utilities, item_name, True)
+    if utility:
+      time = utility.read()
+      return time
+    Konsola.print("Nie ma tu nio, co dałoby się przeczytać", "red")
+  
   def search_utility(self, item_name):
     utility = Helper.find_item(self.my_square.utilities, item_name, True)
     if utility:
