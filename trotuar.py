@@ -48,6 +48,7 @@ while True:
   "zuzyj" :     player.use,
   "uzyj" :      player.use,
   "zobacz" :    player.see,
+  "czytaj" :    player.read,
   "załóż" :     player.equip,
   "zaloz" :     player.equip,
   "zdejmij" :   player.unequip,

@@ -340,13 +340,33 @@
             "y": 2,
             "z": 1,
             "name": "Ulica",
-            "description": "Przechadzasz się ulicami miasta. Na wschodzie widzisz wejście do kuźni, nad którym buja się znak: Kuźnia u Bena.",
+            "description": "Przechadzasz się ulicami miasta. Na wschodzie widzisz wejście do kuźni",
             "exits": [
               "n",
               "e",
               "s"
             ],
-            "utilities":[],
+            "utilities":[{
+              "type": "Boat",
+              "alias": [
+                "znak"
+              ],
+              "name": "Znak",
+              "description": "Drewniany znak z symbolem podkowy i napisem",
+              "square_description": "nad którym buja się [i]znak[/i]: Kuźnia u Bena.",
+              "lock" : "",
+              "opened": 0,
+              "attr": {
+                "text": " __| |____________________________________________| |__\n(__   ____________________________________________   __)\n   | |                                            | |\n   | |                                            | |\n   | |                                            | |\n   | |               Kuźnia u Bena                | |\n   | |                                            | |\n   | |                                            | |\n __| |____________________________________________| |__\n(__   ____________________________________________   __)\n   | |                                            | |",
+                "duration": 15
+              },
+              "items": [],
+              "money": 0,
+              "actions": {
+                "see": "zobacz",
+                "read": "czytaj"
+              }
+            }],
             "items": []
           },
           {
@@ -407,7 +427,7 @@
             "y": 4,
             "z": 1,
             "name": "Główna ulica",
-            "description": "Przechadzasz się główną ulicą. Na południu widzisz wejście do karczmy.",
+            "description": "Przechadzasz się główną ulicą. Na południu widzisz wejście do karczmy. Z północy dobiega Cię dźwięk kucia stali.",
             "exits": [
               "n",
               "e",

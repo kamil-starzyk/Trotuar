@@ -3,3 +3,5 @@
 /arbituary_stuff
 /.vscode
 todo.txt
+data/saves/*
+!data/saves/.gitkeep

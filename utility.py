@@ -50,12 +50,24 @@ class Utility:
     print("Pieniądze: ", end='')
     Konsola.print(self.money, "yellow")
   
-  def sleep(self, mob):
+  def sleep(self):
     if "sleep" not in self.actions:
       return 0
     if "comfort" in self.attr:
       return self.attr["comfort"]
     return 30
+
+  def read(self):
+    if "read" not in self.actions:
+      return 0
+    if "text" not in self.attr:
+      Konsola.print("Tu nic nie zostało jeszcze napisane", "red")
+      return 0
+    Konsola.wrap(self.attr["text"])
+    if "duration" in self.attr:
+      return self.attr["duration"]
+    return 1
+    
   
   def to_dict(self):
     return {
