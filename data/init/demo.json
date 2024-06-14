@@ -3124,7 +3124,7 @@
       "objectives": [
         {
           "type": "item_in_eq",
-          "name": "zabierz worek węgla",
+          "name": "Zabierz worek węgla",
           "item": "Worek węgla",
           "progress": 0,
           "amount": 1

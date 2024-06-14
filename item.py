@@ -23,6 +23,7 @@ class Item:
       Konsola.print(self.amount, "lwhite")
     if self.attr:
       Konsola.print("Atrybuty:", "lwhite")
+      #TODO nie wyświetlać zbędnych atrybutów
       for k, v in self.attr.items():
         Konsola.print(" " + k, line_end=': ')
         Konsola.print(v, "lwhite")
