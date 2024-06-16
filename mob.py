@@ -31,12 +31,12 @@ class Mob:
     self.conversations = conversations
     self.knowledge = knowledge
     
-    self.current_activity = current_activity
+    self.current_activity = current_activity #random_walk
     self.area = area
     self.dest_x = None
     self.dest_y = None
     self.dest_z = None
-    self.is_searching_for_route = False
+    self.is_following_route = False
     self.path_to_dest = path
     
     self.can_trade = can_trade
@@ -62,7 +62,7 @@ class Mob:
   def see_more(self):
     Konsola.print(self.name, "lcyan")
     Konsola.print(self.description, "lwhite")
-    Konsola.print("Wyposarzenie", "lcyan")
+    Konsola.print("Wyposażenie", "lcyan")
     self.outfit()
 
 
@@ -267,7 +267,7 @@ class Mob:
       self.dest_x = x
       self.dest_y = y
       self.dest_z = z
-      self.is_searching_for_route = True
+      self.is_following_route = True
       return True
     print("There is no square with this coordinates")
     return 0
@@ -389,7 +389,7 @@ class Mob:
       self.move_in_direction(step)
       return step
     
-    self.is_searching_for_route = False
+    self.is_following_route = False
     return None
 
   def call_for_help(self):

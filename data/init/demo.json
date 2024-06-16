@@ -2108,7 +2108,7 @@
                 {
 									"condition": "Pierwsze zadanie od kapitana",
                   "text": "Szukam ciekawych zadań i przygód",
-                  "response": "Mam jeden palący problem, ale nie wiem czy sobie z nim poradzisz. Otórz w mieście grasują od jakiegoś czasu szczury. Są tak bezczelne, że nawet przebiegają mi między nogami, ale zawsze jestem za wolny, żeby jakiegokolwiek złapać. Jeśli uda Ci się wytępić te pokraki to mogę Ci pomóc zdobyć jakieś lepsze wyposarzenie.",
+                  "response": "Mam jeden palący problem, ale nie wiem czy sobie z nim poradzisz. Otórz w mieście grasują od jakiegoś czasu szczury. Są tak bezczelne, że nawet przebiegają mi między nogami, ale zawsze jestem za wolny, żeby jakiegokolwiek złapać. Jeśli uda Ci się wytępić te pokraki to mogę Ci pomóc zdobyć jakieś lepsze wyposażenie.",
                   "next_step": {
                     "options": [
                       {
