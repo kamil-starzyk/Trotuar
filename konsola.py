@@ -272,7 +272,10 @@ class Konsola:
   def print_param(cls, attribute_name, attribute_value, attribute_max, bg_color):
     color = cls.color_parser("black", bg_color)
     text = " " + attribute_name.upper() + ": " + str(attribute_value) + " / " + str(attribute_max)
-    numbers_of_pixels = int((attribute_value / attribute_max)*24)
+    try:
+      numbers_of_pixels = int((attribute_value / attribute_max)*24)
+    except ZeroDivisionError:
+      numbers_of_pixels = 24
     for i in range(24):
       if i < numbers_of_pixels:
         print(color, end='')
