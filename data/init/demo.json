@@ -1478,7 +1478,9 @@
             },
             "knowledge": {},
             "area": "Torenberg",
-            "current_activity": "",
+            "current_activity": {},
+            "next_activity": {},
+            "schedule": {},
             "path": [],
             "can_trade": true,
             "items_to_sell": [
@@ -1668,7 +1670,9 @@
             },
             "knowledge": {},
             "area": "Torenberg",
-            "current_activity": "",
+            "current_activity": {},
+            "next_activity": {},
+            "schedule": {},
             "path": [],
             "can_trade": true,
             "items_to_sell": [
@@ -1945,7 +1949,9 @@
             },
             "knowledge": {},
             "area": "Torenberg",
-            "current_activity": "",
+            "current_activity": {},
+            "next_activity": {},
+            "schedule": {},
             "path": [],
             "can_trade": true,
             "items_to_sell": [],
@@ -2187,7 +2193,9 @@
             },
             "knowledge": {},
             "area": "Torenberg",
-            "current_activity": "",
+            "current_activity": {},
+            "next_activity": {},
+            "schedule": {},
             "path": [],
             "can_trade": true,
             "items_to_sell": [],
@@ -2371,8 +2379,42 @@
               "farewell": "Spadaj"
             },
             "knowledge": {},
-            "area": "",
-            "current_activity": "",
+            "area": "Plac treningowy",
+            "current_activity": {
+                "type": "random_walk",
+                "description": ["spaceruje sobie", "przechadza się z miejsca na miejsce"],
+                "importance": 1
+              },
+            "next_activity": {},
+            "schedule": {
+              "08:00": {
+                "type": "random_walk",
+                "description": ["spaceruje sobie", "przechadza się z miejsca na miejsce"],
+                "importance": 1
+              },
+              "12:00": {
+                "type": "fight",
+                "description": ["trenuje z kukłą", "zadaje ciosy kukle"],
+                "importance": 8,
+                "mob_id": 13
+              },
+              "12:15": {
+                "type": "random_walk",
+                "description": ["spaceruje sobie", "przechadza się z miejsca na miejsce"],
+                "importance": 1
+              },
+              "13:00": {
+                "type": "rest",
+                "description": ["odpoczywa", "zbija bąki"],
+                "importance": 1
+              },
+              "18:00": {
+                "type": "stays_at_place",
+                "description": ["siedzi w karczmie", "zagląda na dno kufla", "ogląda świat przez dno butelki"],
+                "importance": 2,
+                "destination": {"x": 5, "y": 6, "z": 1}
+              }
+            },
             "path": [],
             "can_trade": true,
             "items_to_sell": [],
@@ -2381,6 +2423,177 @@
             "can_duel": true,
             "is_aggressive": true,
             "can_ally": true,
+            "affiliation": []
+          },
+          {
+            "mob_id": 13,
+            "x": 2,
+            "y": 6,
+            "z": 1,
+            "base_name": "Kukła",
+            "name": "Zwykła kukła",
+            "alias": [
+              "zwykła kukła",
+              "zwykla kukla",
+              "kukła",
+              "kukla"
+            ],
+            "description": "Drewniana kukła okuta blachą. Na głowie ma namalowany szyderczy uśmiech.",
+            "lvl": 1,
+            "exp": 10,
+            "weight": 50,
+            "money": 0,
+            "race": "Kukła",
+            "proficiency": "kukła",
+            "params": {
+              "hp": 1000,
+              "hp_max": 1000,
+              "stamina": 1,
+              "stamina_max":1,
+              "stamina_total":1,
+              "mana": 1,
+              "mana_max": 1,
+              "satiation": 0,
+              "satiation_max": 100,
+              "hydration": 0,
+              "hydration_max": 100
+            },
+            "stats": {
+              "strength": 10,
+              "attack": 0,
+              "defence": 50,
+              "speed": 0,
+              "dexterity": 0,
+              "endurance": 50
+            },
+            "equipment": [],
+            "slots": {
+              "first_hand": {},
+              "second_hand": {},
+              "head": {},
+              "body": {
+                "type": "Armor",
+                "alias": [
+                  "blacha"
+                ],
+                "name": "Nitowana blacha",
+                "description": "Kawał blachy, przytwierdzony nitami do drewnianej konstrukcji",
+                "weight": 5,
+                "price": 10,
+                "attr": {
+                  "body_part": "body",
+                  "defence": 10
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "unequip": "zdejmij"
+                }
+              },
+              "finger": {},
+              "neck": {}
+            },
+            "conversations": {},
+            "knowledge": {},
+            "area": "",
+            "current_activity": {},
+            "next_activity": {},
+            "schedule": {},
+            "path": [],
+            "can_trade": true,
+            "items_to_sell": [],
+            "wants_to_buy": [],
+            "killable": true,
+            "can_duel": true,
+            "is_aggressive": true,
+            "can_ally": false,
+            "affiliation": []
+          },
+          {
+            "mob_id": 14,
+            "x": 2,
+            "y": 6,
+            "z": 1,
+            "base_name": "Kukła",
+            "name": "Mechaniczna kukła",
+            "alias": [
+              "mechaniczna kukła",
+              "mechaniczna kukla",
+              "kukła",
+              "kukla"
+            ],
+            "description": "Drewniana kukła okuta blachą. Całość jest zamocowana na obrotowej podstawie. W \"ręce\" kukła trzyma kiścień z metalową gałką na łańcuchu. Jeśli trafisz ją w nieodpowiedni sposób to wprawisz mechanizm w ruch i możesz oberwać.",
+            "lvl": 1,
+            "exp": 50,
+            "weight": 50,
+            "money": 0,
+            "race": "Kukła",
+            "proficiency": "kukła",
+            "params": {
+              "hp": 100,
+              "hp_max": 100,
+              "stamina": 1,
+              "stamina_max":1,
+              "stamina_total":1,
+              "mana": 1,
+              "mana_max": 1,
+              "satiation": 0,
+              "satiation_max": 100,
+              "hydration": 0,
+              "hydration_max": 100
+            },
+            "stats": {
+              "strength": 10,
+              "attack": 0,
+              "defence": 50,
+              "speed": 0,
+              "dexterity": 0,
+              "endurance": 50
+            },
+            "equipment": [],
+            "slots": {
+              "first_hand": {
+                "type": "Weapon",
+                "alias": [
+                  "żelazny kiścień",
+                  "zelazny kiscien",
+                  "kiścień",
+                  "kiscen"
+                ],
+                "name": "Żelazny kiścień",
+                "description": "Drewniany trzonek z metalową gałką na łańcuchu. Gałka nie ma kolców.",
+                "weight": 5,
+                "price": 30,
+                "attr": {
+                  "body_part": "first_hand",
+                  "damage": 5,
+                  "strength": -5,
+                  "dexterity": -1
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "drop": "upuść"
+                }
+              },
+              "second_hand": {},
+              "head": {},
+              "body": {},
+              "finger": {},
+              "neck": {}
+            },
+            "conversations": {},
+            "knowledge": {},
+            "area": "",
+            "current_activity": {},
+            "next_activity": {},
+            "schedule": {},
+            "path": [],
+            "can_trade": true,
+            "items_to_sell": [],
+            "wants_to_buy": [],
+            "killable": true,
+            "can_duel": true,
+            "is_aggressive": true,
+            "can_ally": false,
             "affiliation": []
           },
           {
@@ -2433,7 +2646,19 @@
             "conversations": {},
             "knowledge": {},
             "area": "Kanały",
-            "current_activity": "random_walk",
+            "current_activity": {
+              "type": "random_walk",
+              "description": ["przemyka kanałami", "uderza małymi stópkami o trotuar"],
+              "importance": 1
+            },
+            "next_activity": {},
+            "schedule": {
+              "00:00": {
+                "type": "random_walk",
+                "description": ["przemyka kanałami", "uderza małymi stópkami o trotuar"],
+                "importance": 1
+              }
+            },
             "path": [],
             "can_trade": false,
             "items_to_sell": [],
@@ -2496,7 +2721,19 @@
             "conversations": {},
             "knowledge": {},
             "area": "Kanały",
-            "current_activity": "random_walk",
+            "current_activity": {
+              "type": "random_walk",
+              "description": ["przemyka kanałami", "uderza małymi stópkami o trotuar"],
+              "importance": 1
+            },
+            "next_activity": {},
+            "schedule": {
+              "00:00": {
+                "type": "random_walk",
+                "description": ["przemyka kanałami", "uderza małymi stópkami o trotuar"],
+                "importance": 1
+              }
+            },
             "path": [],
             "can_trade": false,
             "items_to_sell": [],
@@ -2559,7 +2796,19 @@
             "conversations": {},
             "knowledge": {},
             "area": "Kanały",
-            "current_activity": "random_walk",
+            "current_activity": {
+              "type": "random_walk",
+              "description": ["przemyka kanałami", "uderza małymi stópkami o trotuar"],
+              "importance": 1
+            },
+            "next_activity": {},
+            "schedule": {
+              "00:00": {
+                "type": "random_walk",
+                "description": ["przemyka kanałami", "uderza małymi stópkami o trotuar"],
+                "importance": 1
+              }
+            },
             "path": [],
             "can_trade": false,
             "items_to_sell": [],
@@ -2624,7 +2873,19 @@
             "conversations": {},
             "knowledge": {},
             "area": "Kanały",
-            "current_activity": "random_walk",
+            "current_activity": {
+              "type": "random_walk",
+              "description": ["przemyka kanałami", "uderza małymi stópkami o trotuar"],
+              "importance": 1
+            },
+            "next_activity": {},
+            "schedule": {
+              "00:00": {
+                "type": "random_walk",
+                "description": ["przemyka kanałami", "uderza małymi stópkami o trotuar"],
+                "importance": 1
+              }
+            },
             "path": [],
             "can_trade": false,
             "items_to_sell": [],
@@ -2689,11 +2950,23 @@
             "conversations": {},
             "knowledge": {},
             "area": "Kanały",
-            "current_activity": "random_walk",
+            "current_activity": {
+              "type": "random_walk",
+              "description": ["przemyka kanałami", "uderza małymi stópkami o trotuar"],
+              "importance": 1
+            },
+            "next_activity": {},
+            "schedule": {
+              "00:00": {
+                "type": "random_walk",
+                "description": ["przemyka kanałami", "uderza małymi stópkami o trotuar"],
+                "importance": 1
+              }
+            },
             "path": [],
-    "can_trade": false,
-    "items_to_sell": [],
-    "wants_to_buy": [],
+            "can_trade": false,
+            "items_to_sell": [],
+            "wants_to_buy": [],
             "killable": true,
             "can_duel": true,
             "is_aggressive": true,
@@ -2914,7 +3187,15 @@
             },
             "knowledge": {},
             "area": "Torenberg",
-            "current_activity": "",
+            "current_activity": {},
+            "next_activity": {},
+            "schedule": {
+              "00:00": {
+                "type": "random_walk",
+                "description": ["przemyka kanałami", "uderza małymi stópkami o trotuar"],
+                "importance": 1
+              }
+            },
             "path": [],
             "can_trade": true,
             "items_to_sell": [],
@@ -3010,6 +3291,31 @@
                 "z": 0
               }
             ]
+          },
+          {
+            "name": "Plac treningowy",
+            "squares": [
+              {
+                "x": 1,
+                "y": 5,
+                "z": 1
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "z": 1
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "z": 1
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "z": 1
+              }
+            ]
           }
         ]
       }
@@ -3017,8 +3323,8 @@
   },
   "time": {
     "s": 0,
-    "m": 56,
-    "h": 11,
+    "m": 57,
+    "h": 17,
     "d": 8,
     "week_d": 1,
     "w": 2,

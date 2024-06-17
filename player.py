@@ -3,14 +3,15 @@ from konsola import Konsola
 from helper import Helper
 from mob import Mob
 from item import Item
+from activity import Activity
 
 class Player(Mob):
   TIME_OF_MOVEMENT = 60
   TIME_OF_ITEM_INTERACTION = 30
   TIME_OF_CONVERSATION = 90
   TIME_OF_EXCHANGING_BLOWS = 30
-  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, current_activity, area, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, affiliation):
-    super(Player, self).__init__(mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, current_activity, area, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, affiliation)
+  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, current_activity, next_activity, schedule, area, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, affiliation):
+    super(Player, self).__init__(mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, current_activity, next_activity, schedule, area, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, affiliation)
     self.game = None
     self.quest_id = None
     self.picked_item = None
@@ -416,13 +417,13 @@ class Player(Mob):
     def player_and_enemies_params():
       Konsola.clear()
       Konsola.print_param("Ja", self.hp, self.hp_max, "lred")
-      Konsola.print_param("stamina", self.stamina, self.stamina_max, "lyellow")
+      Konsola.print_param("stamina", int(self.stamina), int(self.stamina_max), "lyellow")
       Konsola.print_param("mana", self.mana, self.mana_max, "lblue")
       for enemy in enemies:
         if enemy.hp > 0:
           print("")
           Konsola.print_param(enemy.name, enemy.hp, enemy.hp_max, "red")
-          Konsola.print_param("stamina", enemy.stamina, enemy.stamina_max, "yellow")
+          Konsola.print_param("stamina", int(enemy.stamina), int(enemy.stamina_max), "yellow")
     
     def award_exp(enemy, fraction=1):
       Konsola.print("  Zdobywasz: ", line_end="")
@@ -443,10 +444,10 @@ class Player(Mob):
         for being in potential_enemies:
           if being not in enemies and any(affiliation in being.affiliation for affiliation in enemies[0].affiliation):
             enemies.append(being)
-            being.current_activity = "combat"
+            being.current_activity = Activity("fight", ["walczy z Tobą"], 1, self.mob_id)
             print('')
             Konsola.print(being.name + " dołączył do walki", "lred")
-            being.try_to_draw_weapon()
+            being.try_to_draw_weapon(True)
             Helper.sleep(0.5)
             return
     
@@ -462,7 +463,7 @@ class Player(Mob):
       Konsola.print("  " + enemy.name + " uciekł " + Konsola.direction_translator(direction), "cyan")
       Helper.sleep(0.5)
       enemies.remove(enemy)
-      enemy.current_activity = "random_walk"
+      enemy.current_activity = Activity("random_walk", ["tupta sobie"], 1)
       if len(enemies) > 0:
         current_enemy = enemies[0]
     
@@ -491,6 +492,7 @@ class Player(Mob):
         ("cios", "c"): "Prosty cios",
         ("zamach", "z"): "Szeroki zamach, próba trafienia kilku przeciwników",
         ("garda", "g"): "Czekaj",
+        ("quit", "q"): "Próba ucieczki"
       }
       for c in combat_actions:
         print(c , end=' - ')
@@ -505,7 +507,7 @@ class Player(Mob):
         enemy.chance_bonus -= 5
     
     def attack_swing():
-      enemies_hit, damage_sum = self.perform_attack(enemies, "swing")
+      enemies_hit, damage_sum = self.perform_attack(enemies, "swing", True)
       if enemies_hit:
         Konsola.print(f'Wykonałeś skuteczny zamach! Trafiłeś {len(enemies_hit)} przeciwników, zadając w sumie {damage_sum} obrażeń', "lwhite")
         self.chance_bonus = 0
@@ -516,7 +518,7 @@ class Player(Mob):
         self.adjust_stamina(-5, -1)
     
     def attack_hit():
-      _, damage_given = self.perform_attack(current_enemy, "hit")
+      _, damage_given = self.perform_attack(current_enemy, "hit", True)
       if damage_given:
         Konsola.damage_given(True, current_enemy, damage_given)
         current_enemy.adjust_stamina(-damage_given/2, -damage_given/4)
@@ -525,6 +527,20 @@ class Player(Mob):
         print("Chybiłeś")
         enemies_try_to_escape(current_enemy)
         self.chance_bonus += 8
+    class QuitCombatException(Exception):
+      """Custom exception to signal quitting the combat."""
+      pass
+
+    def quit():
+      chance = Helper.random(0+self.speed, 50+self.speed)
+      if chance >= 40:
+        fraction = current_enemy.hp / current_enemy.hp_max
+        award_exp(current_enemy, fraction)
+        Konsola.print("Udało Ci się uciec!", "lwhite")
+        raise QuitCombatException()
+      Konsola.print("Przeciwnik nie pozwolił Ci odstąpić pola walki!", "lwhite")
+      self.chance_bonus-=5
+
 
     def get_player_choice():
       choice = Konsola.dynamic_prompt()
@@ -541,7 +557,9 @@ class Player(Mob):
         "zamach": attack_swing,
         "z":      attack_swing,
         "cios":   attack_hit,
-        "c":      attack_hit
+        "c":      attack_hit,
+        "quit":   quit,
+        "q":      quit,
       }
       if choice in choice_map:
         action = choice_map[choice]
@@ -552,12 +570,12 @@ class Player(Mob):
 
     player_resulting_speed = self.stat_coefficient(self.speed)
 
-    current_enemy.try_to_draw_weapon()
+    current_enemy.try_to_draw_weapon(True)
     print("Walczysz z " + current_enemy.name)
 
     call_for_help = current_enemy.call_for_help()
     if call_for_help:
-      print(current_enemy.name + " głośno zapiszczał")
+      print(current_enemy.name + " głośno zapiszczał")#TODO
       Helper.sleep(1)
 
     #main combat loop
@@ -570,9 +588,11 @@ class Player(Mob):
         action = get_player_choice()
 
       # vvvvvvvv #
-        action()
+        try:
+          action()
+        except QuitCombatException:
+          return 1
       # ^^^^^^^^ #
-
         time_of_action = Player.TIME_OF_EXCHANGING_BLOWS/self.stat_coefficient(self.speed)
         self.game.update_state(time_of_action)
         Helper.sleep(0.5)
@@ -808,4 +828,4 @@ class Player(Mob):
       else:
         slots[key] = Item.from_dict(slots[key])
     
-    return cls(data["mob_id"], data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, {}, data["knowledge"], "", "", [], True, [], [], True, True, True, True, data["affiliation"])
+    return cls(data["mob_id"], data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, {}, data["knowledge"], "", "", None, None, [], True, [], [], True, True, True, True, data["affiliation"])

@@ -5,6 +5,7 @@ from quest import Quest
 from konsola import Konsola
 from helper import Helper
 from myjson import MyJson
+from activity import Activity
 
 class Game:
   def __init__(self, gameplay=1, player=None, world=None, milestones=[]):
@@ -69,15 +70,15 @@ class Game:
     Konsola.clear()
     #Konsola.print("Rozpocząłeś grę demonstracyjną", "lwhite")
     Konsola.wrap("Wszystko się nagle zachwiało i obudziłeś się z drzemki. To nie dom się wali, po prostu łódź się zakołysała.")
-    Helper.sleep(1)
+    #Helper.sleep(1)
     Konsola.wrap("Ah tak... zostawiłeś rodzinny dom i wioskę daleko za sobą. Podczas podróży przysnąłeś siedząc na skrzyni, oparty o jutowy worek. Spławiacz Jacek zgodził się Ciebie zabrać za drobną opłatą i teraz płyniecie razem na południe. Po drodze jest miasto Torenberg, tam zamierzasz wysiąść i szukać przygód.")
-    Helper.sleep(3)
+    #Helper.sleep(3)
     Konsola.wrap("Szum wody...")
-    Helper.sleep(0.5)
+    #Helper.sleep(0.5)
     Konsola.wrap("Kołysanie łodzi...")
-    Helper.sleep(0.5)
+    #Helper.sleep(0.5)
     Konsola.wrap("\"To już niedaleko\" - mówi nagle Jacek. Rozglądasz się i faktycznie, widzisz w oddali ponad koronami drzew wieże wznoszące się nad murami.")
-    Helper.sleep(1)
+    #Helper.sleep(1)
     Konsola.wrap("Mija jeszcze kilka chwil, po których dobijacie do brzegu. Jacek wyskakuje z łodzi i cumuje ją do palika. Ty tymczasem wychodzisz na brzeg.")
     Konsola.hr()
     self.gameplay = Helper.get_new_gameplay_number()
@@ -161,7 +162,7 @@ class Game:
         quest.status = 2
         Konsola.print(" Ukończyłeś zadanie : ", line_end="")
         Konsola.print(quest.name, "lgreen")
-        Helper.sleep(1)
+        #Helper.sleep(1)
         if "money" in quest.reward:
           Konsola.print("  Otrzymujesz: ", line_end="")
           Konsola.print(str(quest.reward["money"]) + " złota", "lyellow")
@@ -184,7 +185,7 @@ class Game:
     if self.player.hp == 0:
       self.is_playing = False
       Konsola.you_died()
-      Helper.sleep(2)
+      #Helper.sleep(2)
       print("")
       Konsola.hr()
       print("[1] Wróć do menu")
@@ -194,30 +195,68 @@ class Game:
         exit()
     
     # docelowo tu będą moby, które są nota bene mobilne. Na razie to są tylko szczury
-    rats = [mob for mob in self.player.current_location.mobs if mob.base_name == "Szczur"]
+    mobs = self.player.current_location.mobs
 
     seconds = int(sec)
     minutes = seconds // 60
     def loop_body():
-      for rat in rats:
-        if rat.current_activity != "random_walk":
+      for mob in mobs:
+        if not mob.current_activity:
           continue
-        is_mob_on_square = True if rat.my_square == self.player.my_square else False
-        try:
+        mob.update_current_activity(self.time)
+        is_mob_on_square = True if mob.my_square == self.player.my_square else False
+        if mob.current_activity.type in ["random_walk", "following_path"]:
+          try:
+            direction = mob.follow_path()
+            if not direction:
+              direction = mob.random_walk()
+            #direction = None
+          except AttributeError:
+            print(mob.mob_id)
+            print(f'{mob.x} : {mob.y} : {mob.z}')
+          if is_mob_on_square and direction:
+            to_direction = Konsola.direction_translator(direction)
+            Konsola.print("  " + mob.name + " odszedł " + to_direction, "magenta")
+          if direction and mob.my_square == self.player.my_square:
+            from_direction = Konsola.direction_translator(direction, True)
+            Konsola.print("  " + mob.name + " przyszedł " + from_direction, "lmagenta")
+        
+        if mob.current_activity.type == "following_path":
+          print(mob.path_to_dest)
+          x, y, z = mob.current_activity.destination.values()
+          if mob.is_on_square(x, y, z):
+            mob.current_activity = mob.next_activity
+            mob.next_activity = None
+        
+        elif mob.current_activity.type == "stays_at_place":
+          x, y, z = mob.current_activity.destination.values()
+          if not mob.is_on_square(x, y, z):
+            mob.find_path_to_coordinates(x, y, z)
+            mob.next_activity = mob.current_activity
+            mob.current_activity = Activity("following_path", ["podąża gdzieś wesołym krokiem", "idzie gdzieś podśpiewując"], 6, destination= {"x": x, "y": y, "z": z})
+            continue
+
+
+
+        elif mob.current_activity.type == "fight":
+          enemy = next((m for m in self.player.current_location.mobs if m.mob_id == mob.current_activity.mob_id), None)
+          if not enemy:
+            continue
+          if not mob.is_on_square(enemy.x, enemy.y, enemy.z):
+            mob.find_path_to_coordinates(enemy.x, enemy.y, enemy.z)
+            mob.next_activity = mob.current_activity
+            mob.current_activity = Activity("following_path", ["podąża gdzieś z groźną miną"], 6, destination= {"x": enemy.x, "y": enemy.y, "z": enemy.z})
+            
+          if enemy.current_activity:
+            if enemy.current_activity.type != "fight":
+              enemy.next_activity = enemy.current_activity
+              enemy.current_activity = Activity("fight", "walczy z "+mob.name, 5, mob.mob_id)
+          mob.try_to_draw_weapon(is_mob_on_square)
+          mob.perform_attack(enemy, "hit", is_mob_on_square)
+
           
-          direction = rat.follow_path()
-          if not direction:
-            direction = rat.random_walk()
-          #direction = None
-        except AttributeError:
-          print(rat.mob_id)
-          print(f'{rat.x} : {rat.y} : {rat.z}')
-        if is_mob_on_square and direction:
-          to_direction = Konsola.direction_translator(direction)
-          Konsola.print("  " + rat.name + " odszedł " + to_direction, "magenta")
-        if direction and rat.my_square == self.player.my_square:
-          from_direction = Konsola.direction_translator(direction, True)
-          Konsola.print("  " + rat.name + " przyszedł " + from_direction, "lmagenta")
+
+
 
     for _ in range(minutes):
       loop_body()
@@ -233,10 +272,10 @@ class Game:
 
     # KAMIENIE MILOWE
     if "Przybicie do brzegu" in self.milestones:
-      Helper.sleep(0.5)
+      #Helper.sleep(0.5)
       Konsola.wrap("Rozpoczynasz swoją przygodę! Czynność, którą będziesz wykonywał najczęściej to poruszanie się pomiędzy sąsiednimi lokalizacjami. Każda lokalizacja ma swoją [i]nazwę[/i], [i]opis[/i] oraz dostępne [i]wyjścia[/i]. Aby się przemieścić wpisz jako prompt nazwę dostępnego kierunku np([i]east[/i]), albo jej jednoliterowy skrót (np. [i]e[/i]). Na początek jednak spróbuj porozmawiać z Jackiem. Aby to zrobić wpisz [i]rozmawiaj jacek[/i].")
       Konsola.hr()
-      Helper.sleep(1)
+      #Helper.sleep(1)
       self.milestones.remove("Przybicie do brzegu")
     if "Worek węgla" in self.milestones:
       jacek = next((mob for mob in self.player.current_location.mobs if mob.name == "Spławiacz Jacek"), None)
@@ -244,13 +283,13 @@ class Game:
       jacek.drop("worek węgla", True)
       Konsola.print("Jacek wyjmuje worek węgla z łodzi", "lmagenta")
       Konsola.hr()
-      Helper.sleep(1.5)
+      #Helper.sleep(1.5)
       self.show_current_square()
       Konsola.hr()
-      Helper.sleep(0.5)
+      #Helper.sleep(0.5)
       Konsola.wrap("Jeśli na twojej lokalizacji znajdują się jakieś przedmioty albo osoby, z którymi możesz wejść w interakcję, to zostaną one wypisane pod pozyją [i]Istoty[/i] lub [i]Przedmioty[/i]. Pewne interaktywne obiekty znajdujące się na lokalizacji są wskazane w jej opisie. Szukaj podświetlonych nazw (np. [i]łódź[/i]). Dla różnych obiektów są dostępne różne komendy, ale zawsze możesz wspisać polecenie [i]zobacz[/i] (np. [i]zobacz worek węgla[/i]) aby dowiedzieć się o obiekcie coś więcej i poznać dostępne komendy. ")
       Konsola.hr()
-      Helper.sleep(1)
+      #Helper.sleep(1)
       self.milestones.remove("Worek węgla")
       self.milestones.append("Worek węgla 2")
 
@@ -265,7 +304,7 @@ class Game:
       Konsola.hr()
       Konsola.wrap("Aktywne zadania możesz podejrzeć za pomocą komendy [i]zadania[/i]. Aby wyświetlić postęp konkretnego zadania dopisz jego id. (np. [i]zadania 4[/i]). ")
       Konsola.hr()
-      Helper.sleep(0.5)
+      #Helper.sleep(0.5)
       self.milestones.remove("Worek węgla 2")
       self.milestones.append("Worek węgla 3")
     
@@ -275,7 +314,7 @@ class Game:
       Konsola.hr()
       Konsola.wrap("Teraz wracaj nad rzekę po kolejne zadania!")
       Konsola.hr()
-      Helper.sleep(0.5)
+      #Helper.sleep(0.5)
       self.milestones.remove("Worek węgla 3")
       self.milestones.append("Worek węgla 4")
     
@@ -291,23 +330,23 @@ class Game:
       Konsola.hr()
       self.milestones.remove("Worek węgla 4")
 
-      #Helper.sleep(0.5)
+      ##Helper.sleep(0.5)
     
     if "Towary dla karczmarza" in self.milestones:
       jacek = next((mob for mob in self.player.current_location.mobs if mob.name == "Spławiacz Jacek"), None)
       jacek.take("beczka piwa", False)
       jacek.drop("beczka piwa", False)
-      Helper.sleep(2)
+      #Helper.sleep(2)
       Konsola.print("Jacek wyjmuje beczkę piwa z łodzi", "lmagenta")
       jacek.take("skrzynka wina", False)
       jacek.drop("skrzynka wina", False)
-      Helper.sleep(1)
+      #Helper.sleep(1)
       Konsola.print("Jacek wyjmuje skrzynkę wina z łodzi", "lmagenta")
       jacek.take("butelka gorzałki", False)
       jacek.drop("butelka gorzałki", False)
-      Helper.sleep(0.5)
+      #Helper.sleep(0.5)
       Konsola.print("Jacek wyjmuje butelki gorzałki z łodzi", "lmagenta")
-      Helper.sleep(1)
+      #Helper.sleep(1)
       self.show_current_square()
       self.milestones.remove("Towary dla karczmarza")
       self.milestones.append("Ciężkie rzeczy")

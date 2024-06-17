@@ -9,7 +9,8 @@ while True:
   
   game.title_screen()
   player = game.player
-  
+  #uzjel = next((mob for mob in player.current_location.mobs if mob.name == "Łotrzyk Uzjel"), None)
+
   game.update_state(0)
   player.my_square.show_square()
 
@@ -87,6 +88,7 @@ while True:
   "/" :         game.show_current_square,       
   "czas" :      game.time.show_time,
   "time" :      game.time.show_time,
+  "t":          (game.time.show_time, True),
   "whoami" :    player.whoami,
   "whereami" :  player.whereami,
   "help" :      Konsola.help,

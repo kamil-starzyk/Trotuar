@@ -2,13 +2,14 @@ from helper import Helper
 from konsola import Konsola
 from item import Item
 from utility import Utility
+from activity import Activity
 import math #ceil damage
 import random #for escape
 
 class Mob:
   BASIC_CARRY_WEIGHT = 40
   ids = {}
-  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, current_activity, area, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, affiliation):
+  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, current_activity, next_activity, schedule, area, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, affiliation):
     self.mob_id = mob_id
     self.x = x
     self.y = y
@@ -31,7 +32,9 @@ class Mob:
     self.conversations = conversations
     self.knowledge = knowledge
     
-    self.current_activity = current_activity #random_walk
+    self.current_activity = current_activity 
+    self.next_activity = next_activity
+    self.schedule = schedule
     self.area = area
     self.dest_x = None
     self.dest_y = None
@@ -62,6 +65,8 @@ class Mob:
   def see_more(self):
     Konsola.print(self.name, "lcyan")
     Konsola.print(self.description, "lwhite")
+    if self.current_activity:
+      Konsola.print_random(self.current_activity.description)
     Konsola.print("Wyposażenie", "lcyan")
     self.outfit()
 
@@ -153,20 +158,23 @@ class Mob:
       return item
     return 0
 
-  def try_to_draw_weapon(self):
+  def try_to_draw_weapon(self, print_details=False):
+    ''' pass boolean to print details or not '''
     if self.slots["first_hand"] == None:
       for item in self.equipment:
         if "body_part" in item.attr and item.attr["body_part"] == "first_hand":
           self.equip(item.alias[0])
-          Konsola.print(self.name + " dobywa " + item.name, "red")
-          Helper.sleep(0.5)
+          if print_details:
+            Konsola.print(self.name + " dobywa " + item.name, "red")
+            Helper.sleep(0.5)
 
     if self.slots["second_hand"] == None:
       for item in self.equipment:
         if "body_part" in item.attr and item.attr["body_part"] == "second_hand":
           self.equip(item.alias[0])
-          Konsola.print(self.name + " dobywa " + item.name, "red")
-          Helper.sleep(0.5)
+          if print_details:
+            Konsola.print(self.name + " dobywa " + item.name, "red")
+            Helper.sleep(0.5)
 
   def try_to_escape(self, speed_bonus=0):
     chance = Helper.random(0+self.speed, 50+self.speed)
@@ -221,14 +229,17 @@ class Mob:
   def show_params(self):
     Konsola.print_params(self)
 
-  def perform_attack(self, target, attack_type="hit"):
+  def perform_attack(self, target, attack_type="hit", print_details=False):
+    ''' pass boolean to print details or not '''
     chance = Helper.random()
     if attack_type == "hit":
       chance += self.dexterity + self.attack / 2 - (target.speed + target.defence / 2)
-      Konsola.print(self.name + " atakuje -> " + target.name, "lyellow")
+      if print_details:
+        Konsola.print(self.name + " atakuje " + target.name, "lyellow")
     elif attack_type == "swing":
       chance += self.dexterity + self.attack / 2 - (target[0].speed + target[0].defence / 2)
-      Konsola.print(self.name + " wykonuje zamach", "lyellow")
+      if print_details:
+        Konsola.print(self.name + " wykonuje zamach", "lyellow")
     
     damage_sum = 0
     enemies_hit = []
@@ -376,7 +387,6 @@ class Mob:
       if path in paths:
         path = 0
       if isinstance(path, list):
-        path.reverse()
         paths.append(path)
     shortest_path = None
     if len(paths) > 0:
@@ -393,10 +403,13 @@ class Mob:
     return None
 
   def call_for_help(self):
-    allies = self.find_mobs_in_radius(5, affiliation=self.affiliation[0])
-    for a in allies:
-      a.find_path_to_coordinates(self.x, self.y, self.z)
-    return len(allies)
+    try:
+      allies = self.find_mobs_in_radius(5, affiliation=self.affiliation[0])
+      for a in allies:
+        a.find_path_to_coordinates(self.x, self.y, self.z)
+      return len(allies)
+    except IndexError:
+      return 0
     
   def calculate_distance(self, x, y, z):
     a = self.x - x
@@ -553,6 +566,30 @@ class Mob:
       except AttributeError:
         pass
     return max(0, stat_value) 
+  
+  def update_current_activity(self, time):
+    current_time = time.get_hour_minute()
+    for activity_time, activity in self.schedule.items():
+      if activity_time == current_time:
+        print("Łeeeeeeee")
+        try:
+          if self.current_activity.type == "fight":
+            enemy = next((mob for mob in self.current_location.mobs if mob.mob_id == mob.current_activity.mob_id), None)
+            if enemy:
+              enemy.current_activity = enemy.next_activity
+              enemy.next_activity = None
+        except AttributeError:
+          pass
+
+        self.current_activity = activity
+        print(self.current_activity.type)
+
+
+
+
+
+
+    
 
   # Getter properties
   @property
@@ -763,8 +800,21 @@ class Mob:
     area_name = ''
     if hasattr(self.area, 'name'):
       area_name = self.area.name
-
     
+
+    if hasattr(self.current_activity, 'type'):
+      current_activity = self.current_activity.to_dict()
+    else:
+      current_activity = {}
+    if hasattr(self.next_activity, 'type'):
+      next_activity = next_activity.to_dict()
+    else:
+      next_activity = {}
+    if self.schedule:
+      schedule = {time: activity.to_dict() for time, activity in self.schedule.items()}
+    else:
+      schedule = {}
+
     return {
       "mob_id": self.mob_id,
       "x": self.x, 
@@ -787,7 +837,9 @@ class Mob:
       "conversations": self.conversations,
       "knowledge": self.knowledge,
       "area": area_name,
-      "current_activity": self.current_activity,
+      "current_activity": current_activity,
+      "next_activity": next_activity,
+      "schedule": schedule,
       "path": self.path_to_dest,
       "can_trade": self.can_trade,
       "items_to_sell": [item.to_dict() for item in self.items_to_sell],
@@ -815,8 +867,15 @@ class Mob:
       else:
         slots[key] = Item.from_dict(slots[key])
     items_to_sell = [Item.from_dict(item_data) for item_data in data["items_to_sell"]]
+    schedule_data = data.get("schedule", {})
+    schedule = {}
+    for time, activity_data in schedule_data.items():
+      schedule[time] = Activity.from_dict(activity_data)
+    current_activity = Activity.from_dict(data.get("current_activity")) if data["current_activity"] else None
+    next_activity = Activity.from_dict(data.get("next_activity")) if data["next_activity"] else None
+
     try:
-      mob = cls(mob_id, data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"], data["current_activity"], data["area"], data["path"], data["can_trade"], items_to_sell, data["wants_to_buy"], data["killable"], data["can_duel"], data["is_aggressive"], data["can_ally"], data["affiliation"])
+      mob = cls(mob_id, data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"], current_activity, next_activity, schedule, data["area"], data["path"], data["can_trade"], items_to_sell, data["wants_to_buy"], data["killable"], data["can_duel"], data["is_aggressive"], data["can_ally"], data["affiliation"])
       return mob
     except TypeError:
       print("Nie udało się wczytać danych.")

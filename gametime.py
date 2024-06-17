@@ -26,6 +26,9 @@ class GameTime:
   
   def get_current_time_of_day(self):
     return next((value for key, value in self.times_of_day.items() if key[0] <= self.h < key[1]), None)
+  
+  def get_hour_minute(self):
+    return f"{self.h:02d}:{self.m:02d}"
 
   def time_progress(self, sec):
     # Define constants for the new time system
