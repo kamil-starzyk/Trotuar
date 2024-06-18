@@ -3,13 +3,14 @@ from konsola import Konsola
 from item import Item
 from utility import Utility
 from activity import Activity
+from blueprint import Blueprint
 import math #ceil damage
 import random #for escape
 
 class Mob:
   BASIC_CARRY_WEIGHT = 40
   ids = {}
-  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, current_activity, next_activity, schedule, area, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, affiliation):
+  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, current_activity, next_activity, schedule, area, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, blueprints, affiliation):
     self.mob_id = mob_id
     self.x = x
     self.y = y
@@ -50,6 +51,7 @@ class Mob:
     self.can_duel = can_duel
     self.is_aggressive = is_aggressive
     self.can_ally = can_ally
+    self.blueprints = blueprints
     self.affiliation = affiliation
     self.direction_history = {
       "n": 0,
@@ -157,6 +159,17 @@ class Mob:
       self.equipment.append(item)
       return item
     return 0
+
+  def show_blueprints(self, number=0):
+    if not number:
+      Konsola.print("PRZEPISY i INSTRUKCJE:", "lyellow")
+      iterator = 1
+      for b in self.blueprints:
+        print(iterator, end=". ")
+        print(b.name)
+    else:
+      number = int(number)
+      self.blueprints[number-1].read()
 
   def try_to_draw_weapon(self, print_details=False):
     ''' pass boolean to print details or not '''
@@ -842,6 +855,7 @@ class Mob:
       "can_duel": self.can_duel,
       "is_aggressive": self.is_aggressive,
       "can_ally": self.can_ally,
+      "blueprints": [blueprint.to_dict() for blueprint in self.blueprints],
       "affiliation": self.affiliation
     }
 
@@ -867,9 +881,10 @@ class Mob:
       schedule[time] = Activity.from_dict(activity_data)
     current_activity = Activity.from_dict(data.get("current_activity")) if data["current_activity"] else None
     next_activity = Activity.from_dict(data.get("next_activity")) if data["next_activity"] else None
+    blueprints = [Blueprint.from_dict(blueprint) for blueprint in data["blueprints"]]
 
     try:
-      mob = cls(mob_id, data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"], current_activity, next_activity, schedule, data["area"], data["path"], data["can_trade"], items_to_sell, data["wants_to_buy"], data["killable"], data["can_duel"], data["is_aggressive"], data["can_ally"], data["affiliation"])
+      mob = cls(mob_id, data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"], current_activity, next_activity, schedule, data["area"], data["path"], data["can_trade"], items_to_sell, data["wants_to_buy"], data["killable"], data["can_duel"], data["is_aggressive"], data["can_ally"], blueprints, data["affiliation"])
       return mob
     except TypeError:
       print("Nie udało się wczytać danych.")

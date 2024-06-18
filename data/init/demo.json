@@ -117,6 +117,43 @@
 			"Pierwsze zadanie od zielarki": "Nie byłem jeszcze u zielarki, może ma dla mnie jakieś ciekawe zadanie.",
 			"Pierwsze zadanie od kapitana": "Nie byłem jeszcze u kapitana, może ma dla mnie jakieś ciekawe zadanie."
 		},
+    "blueprints": [
+      {
+        "type": "Food",
+        "name"  : "Przepis na kanapkę z serem",
+        "content": "Kanapka z serem to posiłek, który zajmuje sazczególne miejsce w moim sercu. Mama mi ją przyżądzała zawsze kiedy wyruszałem do szkoły. Aby wykonać kanapkę potrzebne będą następujące składniki: chleb i ser, oraz narzędzia: nóż. Chleb najpierw kroimy na kromki, a nastepnie pomiędzy dwie kromki wkładamy plasterek sera.",
+        "time": 600,
+        "skills_needed": {
+          "cooking": 10
+        },
+        "materials_needed": {
+          "bread": 1,
+          "cheese": 1
+        },
+        "tools_needed": ["knife"],
+          "resulting_item": {
+            "type": "Consumable",
+            "alias": [
+              "kanapka z serem",
+              "kanapka"
+            ],
+            "name": "Kanapka z serem",
+            "description": "Pyszna kanapka ze złocistym serem",
+            "weight": 1,
+            "price": 5,
+            "attr": {
+              "satiation": 12,
+              "hp": 2
+            },
+            "actions": {
+              "see": "zobacz",
+              "drop": "upuść",
+              "use": "jedz"
+            }
+          },
+        "number_of_items": 5
+      }
+    ],
     "affiliation": [
       "Torenerg"
     ]
@@ -1601,6 +1638,7 @@
             "can_duel": false,
             "is_aggressive": false,
             "can_ally": true,
+            "blueprints": [],
             "affiliation": [
               "Torenerg"
             ]
@@ -1816,6 +1854,7 @@
             "can_duel": false,
             "is_aggressive": false,
             "can_ally": true,
+            "blueprints": [],
             "affiliation": [
               "Torenerg"
             ]
@@ -2028,6 +2067,7 @@
             "can_duel": false,
             "is_aggressive": false,
             "can_ally": true,
+            "blueprints": [],
             "affiliation": [
               "Torenerg"
             ]
@@ -2272,6 +2312,7 @@
             "can_duel": true,
             "is_aggressive": false,
             "can_ally": true,
+            "blueprints": [],
             "affiliation": [
               "Torenerg"
             ]
@@ -2494,6 +2535,7 @@
             "can_duel": true,
             "is_aggressive": true,
             "can_ally": true,
+            "blueprints": [],
             "affiliation": []
           },
           {
@@ -2577,6 +2619,7 @@
             "can_duel": true,
             "is_aggressive": true,
             "can_ally": false,
+            "blueprints": [],
             "affiliation": []
           },
           {
@@ -2665,6 +2708,7 @@
             "can_duel": true,
             "is_aggressive": true,
             "can_ally": false,
+            "blueprints": [],
             "affiliation": []
           },
           {
@@ -2740,6 +2784,7 @@
             "can_duel": true,
             "is_aggressive": true,
             "can_ally": true,
+            "blueprints": [],
             "affiliation": [
               "szczury"
             ]
@@ -2817,6 +2862,7 @@
             "can_duel": true,
             "is_aggressive": true,
             "can_ally": true,
+            "blueprints": [],
             "affiliation": [
               "szczury"
             ]
@@ -2894,6 +2940,7 @@
             "can_duel": true,
             "is_aggressive": true,
             "can_ally": true,
+            "blueprints": [],
             "affiliation": [
               "szczury"
             ]
@@ -2973,6 +3020,7 @@
             "can_duel": true,
             "is_aggressive": true,
             "can_ally": true,
+            "blueprints": [],
             "affiliation": [
               "szczury"
             ]
@@ -3052,6 +3100,7 @@
             "can_duel": true,
             "is_aggressive": true,
             "can_ally": true,
+            "blueprints": [],
             "affiliation": [
               "szczury"
             ]
@@ -3279,6 +3328,7 @@
             "can_duel": false,
             "is_aggressive": false,
             "can_ally": false,
+            "blueprints": [],
             "affiliation": [
               "Gildia kupiecka"
             ]
