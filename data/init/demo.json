@@ -809,11 +809,79 @@
             "y": 1,
             "z": 1,
             "name": "Obóz",
-            "description": "Dotarłeś do końca ścieżki. Ktoś tu rozbił mały obóz. Jest tu ognisko i dwa namioty. Dalej przed sobą na wschodzie widzisz miejskie mury.",
+            "description": "Dotarłeś do końca ścieżki. Ktoś tu rozbił mały obóz. Dalej przed sobą na wschodzie widzisz miejskie mury.",
             "exits": [
 							"w"
             ],
-            "utilities":[],
+            "utilities":[
+              {
+                "type": "Shelter",
+                "alias": [
+                  "mały namiot",
+                  "maly namiot",
+                  "namiot"
+                ],
+                "name": "Mały namiot",
+                "description": "Skromne schronienie, które oferuje podstawową ochronę przed żywiołami. Jego prostota i łatwość montażu pozwalają na szybkie rozbicie obozu w dowolnym miejscu.",
+                "square_description": "Stoi tu [i]mały namiot[/i]",
+                "lock" : "",
+                "opened": 1,
+                "attr": {
+                  "comfort": 50
+                },
+                "items": [],
+                "money": 0,
+                "actions": {
+                  "search": "przeszukaj",
+                  "sleep": "śpij",
+                  "fold": "żłóż",
+                  "pitch": "rozbij"
+                }
+              },
+              {
+                "type": "Shelter",
+                "alias": [
+                  "duży namiot",
+                  "duzy namiot",
+                  "namiot"
+                ],
+                "name": "Duży namiot",
+                "description": "Skromne schronienie, które oferuje podstawową ochronę przed żywiołami. Wydaje się, że może pomieścić dwie osoby. Płótno, z którego jest zrobiony pokrywają zdobienia symbolizujące pustynne życie.",
+                "square_description": ", a obok niego [i]duży namiot[/i].",
+                "lock" : "",
+                "opened": 1,
+                "attr": {
+                  "comfort": 60
+                },
+                "items": [],
+                "money": 0,
+                "actions": {
+                  "search": "przeszukaj",
+                  "sleep": "śpij",
+                  "fold": "żłóż",
+                  "pitch": "rozbij"
+                }
+              },
+              {
+                "type": "Fireplace",
+                "alias": [
+                  "ognisko"
+                ],
+                "name": "Ognisko",
+                "description": "Otoczone kamieniami ognisko.",
+                "square_description": "Jest tu też [i]ognisko[/i].",
+                "lock" : "",
+                "opened": 0,
+                "attr": {
+                  "heat": 50
+                },
+                "items": [],
+                "money": 0,
+                "actions": {
+                  "cook": "gotuj"
+                }
+              }
+            ],
             "items": [
 							{
                 "type": "Consumable",
