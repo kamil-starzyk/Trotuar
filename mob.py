@@ -571,7 +571,6 @@ class Mob:
     current_time = time.get_hour_minute()
     for activity_time, activity in self.schedule.items():
       if activity_time == current_time:
-        print("Łeeeeeeee")
         try:
           if self.current_activity.type == "fight":
             enemy = next((mob for mob in self.current_location.mobs if mob.mob_id == mob.current_activity.mob_id), None)
@@ -582,11 +581,6 @@ class Mob:
           pass
 
         self.current_activity = activity
-        print(self.current_activity.type)
-
-
-
-
 
 
     

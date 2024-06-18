@@ -9,10 +9,11 @@ class Activity:
     "fight",
     "stays_at_place"
   ]
-  def __init__(self, type, description, importance, mob_id=0, destination=None):
+  def __init__(self, type, description, importance, area=None, mob_id=0, destination=None):
     self.type = type
     self.description = description
     self.importance = importance #int 1-10
+    self.area = area
     self.mob_id = mob_id
     self.destination = destination
 
@@ -21,6 +22,7 @@ class Activity:
       "type": self.type,
       "description": self.description,
       "importance": self.importance,
+      "area": self.area,
       "mob_id": self.mob_id,
       "destination": self.destination
     }
@@ -34,7 +36,8 @@ class Activity:
     if not isinstance(description, list) or not description:
       raise ValueError("Description must be a non-empty list.")
     importance = data.get("importance", 1)
+    area = data.get("area", None)
     mob_id = data.get("mob_id", 0)
     destination = data.get("destination", None)
     
-    return cls(type, description, importance, mob_id, destination)
+    return cls(type, description, importance, area, mob_id, destination)

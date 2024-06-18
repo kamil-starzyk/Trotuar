@@ -27,6 +27,12 @@ class Location:
       if mob.my_square == square:
         mob_list.append(mob)
     return mob_list
+  
+  def find_area(self, area_name):
+    for area in self.areas:
+      if area.name == area_name:
+        return area
+    return None
 
   def to_dict(self):
     return {

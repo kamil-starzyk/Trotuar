@@ -2,15 +2,16 @@ from square import Square
 from mob import Mob
 
 class Area:
-  def __init__(self, name, squares):
+  def __init__(self, name, reference_coordinate, squares):
     self.name = name
+    self.reference_coordinate = reference_coordinate
     self.squares = squares
 
-  def is_square_in_area(self, sq):
+  def are_coordinates_in_area(self, x, y, z):
     sq_coords = {
-      "x": sq.x,
-      "y": sq.y,
-      "z": sq.z
+      "x": x,
+      "y": y,
+      "z": z
     }
     if sq_coords in self.squares:
       return True
@@ -19,9 +20,10 @@ class Area:
   def to_dict(self):
     return {
       "name": self.name,
+      "reference_coordinate": self.reference_coordinate,
       "squares": self.squares
     }
   
   @classmethod
   def from_dict(cls, data):
-    return cls(data["name"], data["squares"])
+    return cls(data["name"], data["reference_coordinate"], data["squares"])

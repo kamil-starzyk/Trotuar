@@ -222,12 +222,24 @@ class Game:
             Konsola.print("  " + mob.name + " przyszedł " + from_direction, "lmagenta")
         
         if mob.current_activity.type == "following_path":
-          print(mob.path_to_dest)
           x, y, z = mob.current_activity.destination.values()
           if mob.is_on_square(x, y, z):
             mob.current_activity = mob.next_activity
             mob.next_activity = None
-        
+
+        elif mob.current_activity.type == "random_walk":
+          area_name = mob.current_activity.area
+          destined_area = mob.current_location.find_area(area_name)
+          mob.area = destined_area
+          if not destined_area.are_coordinates_in_area(mob.x, mob.y, mob.z):
+            x = destined_area.reference_coordinate["x"]
+            y = destined_area.reference_coordinate["y"]
+            z = destined_area.reference_coordinate["z"]
+            mob.find_path_to_coordinates(x, y, z)
+            mob.next_activity = mob.current_activity
+            mob.current_activity = Activity("following_path", ["podąża gdzieś wesołym krokiem", "idzie gdzieś podśpiewując"], 6, destination= {"x": x, "y": y, "z": z})
+            continue
+
         elif mob.current_activity.type == "stays_at_place":
           x, y, z = mob.current_activity.destination.values()
           if not mob.is_on_square(x, y, z):
