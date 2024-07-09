@@ -11,8 +11,8 @@ class Player(Mob):
   TIME_OF_ITEM_INTERACTION = 30
   TIME_OF_CONVERSATION = 90
   TIME_OF_EXCHANGING_BLOWS = 30
-  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, current_activity, next_activity, schedule, area, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, blueprints, affiliation):
-    super(Player, self).__init__(mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, current_activity, next_activity, schedule, area, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, blueprints, affiliation)
+  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, current_activity, next_activity, schedule, area, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, teacher_of, blueprints, affiliation):
+    super(Player, self).__init__(mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, current_activity, next_activity, schedule, area, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, teacher_of, blueprints, affiliation)
     self.game = None
     self.quest_id = None
     self.picked_item = None
@@ -348,6 +348,48 @@ class Player(Mob):
       
       time_of_trade += 60
     return time_of_trade
+
+  def train(self, trait):
+    mobs = self.current_location.mobs_on_square(self.my_square)
+    mob = None
+    for m in mobs:
+      if trait in m.teacher_of:
+        mob = m
+        break
+
+    if not mob:
+      Konsola.print("Nie ma tu nauczyciela, który mógłby Cię szkolić!", "lred")
+      return 0
+    
+    if trait in self.stats:
+      #Training of STAT  
+      Konsola.print("To potrwa 2 godziny i będzie Cię kosztowało dużo wysiłku.", line_end=' ')
+      Konsola.print(mob.name, "lwhite", line_end=' ')  
+      Konsola.print("zażąda od Ciebie 10 pieniędzy za poświęcony czas")
+      Konsola.print("Czy chcesz kontynuować? (Y/n)", 'lgreen')
+      choice = input()
+      if choice.lower() == "y":
+        if self.stamina_max < 75:
+          Konsola.print("Dziś jesteś już zbyt zmęczony na taki trening. Prześpij się i wróć jutro!", "lred")
+          return 30
+        if self.stamina < 75:
+          Konsola.print("Odpocznij trochę zanim rozpoczniesz trening!", "lred")
+          return 30
+        if self.money < 10:
+          Konsola.print("Nie stać Cię na zapłatę!", "lred")
+          return 30
+        Konsola.print(mob.name + " uczy Cię", line_end=' ')  
+        Konsola.print(trait, "lwhite")
+        self.money-= 10
+        mob.money+= 10
+        self.adjust_stamina(-70, -70)
+        self.stats[trait] += 1
+        Helper.sleep(1)
+        Konsola.print("Jesteś bardzo zmęczony po treningu, ale zdobyłeś jeden punkt " + trait, "lyellow")
+      else:
+        print("Odchodzisz w pokoju")  
+        return 30
+    #TODO Training of SKILL
 
   def compare(self, mob_name):
     mobs = self.current_location.mobs_on_square(self.my_square)
@@ -830,4 +872,4 @@ class Player(Mob):
         slots[key] = Item.from_dict(slots[key])
     blueprints = [Blueprint.from_dict(blueprint) for blueprint in data["blueprints"]]
 
-    return cls(data["mob_id"], data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, {}, data["knowledge"], "", "", None, None, [], True, [], [], True, True, True, True, blueprints, data["affiliation"])
+    return cls(data["mob_id"], data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, {}, data["knowledge"], "", "", None, None, [], True, [], [], True, True, True, True, [], blueprints, data["affiliation"])

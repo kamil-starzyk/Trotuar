@@ -82,6 +82,8 @@ while True:
   "handel":     player.trade,
   "handluj":    player.trade,
   "trade":      player.trade,
+  "train":      player.train,
+  "trenuj":     player.train,
   "zadania":    game.active_quests,
   "quests":     game.active_quests,
   "przepisy":   player.show_blueprints,
@@ -116,13 +118,15 @@ while True:
       if isinstance(action, tuple):
         seconds = action[0](action[1])
       elif argument:
-        
+        try:
            seconds = action(argument)
-        
+        except TypeError:
+          Konsola.print("To polecenie jest jednowyrazowe!", "lred")
       else: 
-        
+        try:
           seconds = action()
-       
+        except TypeError:
+          Konsola.print("To polecenie wymaga więcej informacji!", "lred")
     try:  
       int(seconds)
     except TypeError:

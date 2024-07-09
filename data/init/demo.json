@@ -117,7 +117,8 @@
 			"Pierwsze zadanie od zielarki": "Nie byłem jeszcze u zielarki, może ma dla mnie jakieś ciekawe zadanie.",
 			"Pierwsze zadanie od kapitana": "Nie byłem jeszcze u kapitana, może ma dla mnie jakieś ciekawe zadanie."
 		},
-    "blueprints": [
+    "teacher_of": [],
+            "blueprints": [
       {
         "type": "Food",
         "name"  : "Przepis na kanapkę z serem",
@@ -1638,6 +1639,7 @@
             "can_duel": false,
             "is_aggressive": false,
             "can_ally": true,
+            "teacher_of": ["strength"],
             "blueprints": [],
             "affiliation": [
               "Torenerg"
@@ -1854,6 +1856,7 @@
             "can_duel": false,
             "is_aggressive": false,
             "can_ally": true,
+            "teacher_of": [],
             "blueprints": [],
             "affiliation": [
               "Torenerg"
@@ -2067,6 +2070,7 @@
             "can_duel": false,
             "is_aggressive": false,
             "can_ally": true,
+            "teacher_of": [],
             "blueprints": [],
             "affiliation": [
               "Torenerg"
@@ -2312,6 +2316,7 @@
             "can_duel": true,
             "is_aggressive": false,
             "can_ally": true,
+            "teacher_of": [],
             "blueprints": [],
             "affiliation": [
               "Torenerg"
@@ -2535,6 +2540,7 @@
             "can_duel": true,
             "is_aggressive": true,
             "can_ally": true,
+            "teacher_of": [],
             "blueprints": [],
             "affiliation": []
           },
@@ -2619,6 +2625,7 @@
             "can_duel": true,
             "is_aggressive": true,
             "can_ally": false,
+            "teacher_of": [],
             "blueprints": [],
             "affiliation": []
           },
@@ -2708,6 +2715,7 @@
             "can_duel": true,
             "is_aggressive": true,
             "can_ally": false,
+            "teacher_of": [],
             "blueprints": [],
             "affiliation": []
           },
@@ -2784,6 +2792,7 @@
             "can_duel": true,
             "is_aggressive": true,
             "can_ally": true,
+            "teacher_of": [],
             "blueprints": [],
             "affiliation": [
               "szczury"
@@ -2862,6 +2871,7 @@
             "can_duel": true,
             "is_aggressive": true,
             "can_ally": true,
+            "teacher_of": [],
             "blueprints": [],
             "affiliation": [
               "szczury"
@@ -2940,6 +2950,7 @@
             "can_duel": true,
             "is_aggressive": true,
             "can_ally": true,
+            "teacher_of": [],
             "blueprints": [],
             "affiliation": [
               "szczury"
@@ -3020,6 +3031,7 @@
             "can_duel": true,
             "is_aggressive": true,
             "can_ally": true,
+            "teacher_of": [],
             "blueprints": [],
             "affiliation": [
               "szczury"
@@ -3100,6 +3112,7 @@
             "can_duel": true,
             "is_aggressive": true,
             "can_ally": true,
+            "teacher_of": [],
             "blueprints": [],
             "affiliation": [
               "szczury"
@@ -3328,6 +3341,7 @@
             "can_duel": false,
             "is_aggressive": false,
             "can_ally": false,
+            "teacher_of": [],
             "blueprints": [],
             "affiliation": [
               "Gildia kupiecka"

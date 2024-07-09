@@ -10,7 +10,7 @@ import random #for escape
 class Mob:
   BASIC_CARRY_WEIGHT = 40
   ids = {}
-  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, current_activity, next_activity, schedule, area, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, blueprints, affiliation):
+  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, equipment, slots, conversations, knowledge, current_activity, next_activity, schedule, area, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, teacher_of, blueprints, affiliation):
     self.mob_id = mob_id
     self.x = x
     self.y = y
@@ -51,6 +51,7 @@ class Mob:
     self.can_duel = can_duel
     self.is_aggressive = is_aggressive
     self.can_ally = can_ally
+    self.teacher_of = teacher_of
     self.blueprints = blueprints
     self.affiliation = affiliation
     self.direction_history = {
@@ -855,6 +856,7 @@ class Mob:
       "can_duel": self.can_duel,
       "is_aggressive": self.is_aggressive,
       "can_ally": self.can_ally,
+      "teacher_of": self.teacher_of,
       "blueprints": [blueprint.to_dict() for blueprint in self.blueprints],
       "affiliation": self.affiliation
     }
@@ -884,7 +886,7 @@ class Mob:
     blueprints = [Blueprint.from_dict(blueprint) for blueprint in data["blueprints"]]
 
     try:
-      mob = cls(mob_id, data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"], current_activity, next_activity, schedule, data["area"], data["path"], data["can_trade"], items_to_sell, data["wants_to_buy"], data["killable"], data["can_duel"], data["is_aggressive"], data["can_ally"], blueprints, data["affiliation"])
+      mob = cls(mob_id, data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], eq, slots, data["conversations"], data["knowledge"], current_activity, next_activity, schedule, data["area"], data["path"], data["can_trade"], items_to_sell, data["wants_to_buy"], data["killable"], data["can_duel"], data["is_aggressive"], data["can_ally"], data['teacher_of'], blueprints, data["affiliation"])
       return mob
     except TypeError:
       print("Nie udało się wczytać danych.")
