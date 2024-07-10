@@ -39,6 +39,10 @@
       "dexterity": 15,
       "endurance": 15
     },
+    "skills":{
+      "sword": 50,
+      "cooking": 50
+    },
     "equipment": [
       {
         "type": "Consumable",
@@ -118,7 +122,7 @@
 			"Pierwsze zadanie od kapitana": "Nie byłem jeszcze u kapitana, może ma dla mnie jakieś ciekawe zadanie."
 		},
     "teacher_of": [],
-            "blueprints": [
+    "blueprints": [
       {
         "type": "Food",
         "name"  : "Przepis na kanapkę z serem",
@@ -132,26 +136,26 @@
           "cheese": 1
         },
         "tools_needed": ["knife"],
-          "resulting_item": {
-            "type": "Consumable",
-            "alias": [
-              "kanapka z serem",
-              "kanapka"
-            ],
-            "name": "Kanapka z serem",
-            "description": "Pyszna kanapka ze złocistym serem",
-            "weight": 1,
-            "price": 5,
-            "attr": {
-              "satiation": 12,
-              "hp": 2
-            },
-            "actions": {
-              "see": "zobacz",
-              "drop": "upuść",
-              "use": "jedz"
-            }
+        "resulting_item": {
+          "type": "Consumable",
+          "alias": [
+            "kanapka z serem",
+            "kanapka"
+          ],
+          "name": "Kanapka z serem",
+          "description": "Pyszna kanapka ze złocistym serem",
+          "weight": 1,
+          "price": 5,
+          "attr": {
+            "satiation": 12,
+            "hp": 2
           },
+          "actions": {
+            "see": "zobacz",
+            "drop": "upuść",
+            "use": "jedz"
+          }
+        },
         "number_of_items": 5
       }
     ],
@@ -1411,6 +1415,9 @@
               "dexterity": 25,
               "endurance": 30
             },
+            "skills":{
+              "blacksmithing": 90
+            },
             "equipment": [
               {
                 "type": "Consumable",
@@ -1685,6 +1692,9 @@
               "dexterity": 20,
               "endurance": 40
             },
+            "skills":{
+              "cudgel": 50
+            },
             "equipment": [
               {
                 "type": "Tool",
@@ -1901,6 +1911,7 @@
               "dexterity": 15,
               "endurance": 10
             },
+            "skills":{},
             "equipment": [
               {
                 "type": "Consumable",
@@ -2116,6 +2127,9 @@
               "dexterity": 30,
               "endurance": 30
             },
+            "skills":{
+              "sword": 100
+            },
             "equipment": [
               {
                 "type": "Consumable",
@@ -2316,7 +2330,7 @@
             "can_duel": true,
             "is_aggressive": false,
             "can_ally": true,
-            "teacher_of": [],
+            "teacher_of": ["attack", "sword"],
             "blueprints": [],
             "affiliation": [
               "Torenerg"
@@ -2363,6 +2377,11 @@
               "speed": 10,
               "dexterity": 10,
               "endurance": 10
+            },
+            "skills":{
+              "saber": 60,
+              "sword": 30,
+              "pickpocketing": 90
             },
             "equipment": [
               {
@@ -2585,6 +2604,7 @@
               "dexterity": 0,
               "endurance": 50
             },
+            "skills":{},
             "equipment": [],
             "slots": {
               "first_hand": {},
@@ -2669,6 +2689,9 @@
               "speed": 0,
               "dexterity": 0,
               "endurance": 50
+            },
+            "skills":{
+              "cudgel": 50
             },
             "equipment": [],
             "slots": {
@@ -2757,6 +2780,7 @@
               "dexterity": 5,
               "endurance": 30
             },
+            "skills":{},
             "equipment": [],
             "slots": {
               "first_hand": {},
@@ -2836,6 +2860,7 @@
               "dexterity": 5,
               "endurance": 30
             },
+            "skills":{},
             "equipment": [],
             "slots": {
               "first_hand": {},
@@ -2915,6 +2940,7 @@
               "dexterity": 5,
               "endurance": 30
             },
+            "skills":{},
             "equipment": [],
             "slots": {
               "first_hand": {},
@@ -2996,6 +3022,7 @@
               "dexterity": 5,
               "endurance": 35
             },
+            "skills":{},
             "equipment": [],
             "slots": {
               "first_hand": {},
@@ -3077,6 +3104,7 @@
               "dexterity": 5,
               "endurance": 35
             },
+            "skills":{},
             "equipment": [],
             "slots": {
               "first_hand": {},
@@ -3159,6 +3187,9 @@
               "speed": 25,
               "dexterity": 15,
               "endurance": 35
+            },
+            "skills":{
+              "steering": 100
             },
             "equipment": [
               {

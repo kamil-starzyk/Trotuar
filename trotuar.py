@@ -87,6 +87,9 @@ while True:
   "zadania":    game.active_quests,
   "quests":     game.active_quests,
   "przepisy":   player.show_blueprints,
+  "stwórz":     player.create,
+  "stworz":     player.create,
+  "create":     player.create,
   
   "/" :         game.show_current_square,       
   "czas" :      game.time.show_time,
