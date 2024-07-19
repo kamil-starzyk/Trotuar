@@ -28,6 +28,7 @@ class Mob:
     self.proficiency = proficiency
     self.params = params
     self.stats = stats
+    self.skills = skills
     self.equipment = equipment
     self.slots = slots
     self.conversations = conversations

@@ -852,6 +852,48 @@ class Player(Mob):
     print("Chyba nie tędy droga...")
     return 0
       
+  def create(self, item_name):
+    for blueprint in self.blueprints:
+      if item_name not in blueprint.resulting_item.alias:
+        Konsola.print("Nie masz odpowiedniego przepisu!", "lred")
+        return 0
+      
+      print("Korzystasz z przepisu: ", end='')
+      Konsola.print(blueprint.name, "lyellow")
+      Konsola.hr()
+      Konsola.wrap(blueprint.content)
+      Konsola.hr()
+      for skill, value in blueprint.skills_needed.items():
+        if self.skills[skill] < value:
+          Konsola.print("Twoja umiejętność: ", "lred", line_end='')
+          Konsola.print(skill + " (" + str(self.skills[skill]) + ") ", 'lyellow', line_end='')
+          Konsola.print("jest niewystarczająca! Potrzeba przynajmniej " + str(value) + ".", "lred")
+          return 0
+  
+      tools_posesed = [] 
+      for item in self.equipment:
+        if "tool" in item.attr:
+          tools_posesed.append(item.attr["tool"])
+      
+      missing_tools = [tool for tool in blueprint.tools_needed if tool not in tools_posesed]
+      if missing_tools:
+        Konsola.print("Nie posiadasz narzędzi: ", "lred", line_end='')
+        Konsola.print(str(missing_tools), 'lyellow')
+        Konsola.print("Potrzebne narzędzia: " + str(blueprint.tools_needed))
+        return 0 
+      
+      materials_posesed = {} 
+      for item in self.equipment:
+        if "material" in item.attr:
+          materials_posesed[item.attr["material"]] = item.amount
+      
+      missing_materials = {material: qty for material, qty in blueprint.materials_needed.items() 
+                          if material not in materials_posesed or materials_posesed[material] < qty}
+      if missing_materials:
+        Konsola.print("Nie posiadasz składnikówi: ", "lred", line_end='')
+        Konsola.print(str(missing_materials), 'lyellow')
+        Konsola.print("Potrzebne składniki: " + str(blueprint.materials_needed))
+        return 0 
 
   def to_dict(self):
     player = super().to_dict()

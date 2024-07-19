@@ -45,6 +45,27 @@
     },
     "equipment": [
       {
+        "type": "Tool",
+        "alias": [
+          "nóż kuchenny",
+          "noz kuchenny",
+          "nóż",
+          "noz"
+        ],
+        "name": "Nóż kuchenny",
+        "description": "Mały nóż, z wyrobioną drewnianą rękojeścią i podobnie wyrobionym ostrzem. Nie nadaje się do walki.",
+        "weight": 0.5,
+        "price": 10,
+        "attr": {
+          "tool": "knife"
+        },
+        "actions": {
+          "see": "zobacz",
+          "drop": "upuść",
+          "use": "jedz"
+        }
+      },
+      {
         "type": "Consumable",
         "alias": [
           "placuszek z serem",
@@ -57,6 +78,44 @@
         "attr": {
           "satiation": 15,
           "hp": 5
+        },
+        "actions": {
+          "see": "zobacz",
+          "drop": "upuść",
+          "use": "jedz"
+        }
+      },
+      {
+        "type": "Consumable",
+        "alias": [
+          "ser"
+        ],
+        "name": "Ser",
+        "description": "Kawał żółtego sera z dziurami",
+        "weight": 0.5,
+        "price": 2,
+        "attr": {
+          "satiation": 40,
+          "material": "cheese"
+        },
+        "actions": {
+          "see": "zobacz",
+          "drop": "upuść",
+          "use": "jedz"
+        }
+      },
+      {
+        "type": "Consumable",
+        "alias": [
+          "chleb"
+        ],
+        "name": "Chleb",
+        "description": "Bochenek chleba z chrupiącą, złocistą skórką",
+        "weight": 0.5,
+        "price": 2,
+        "attr": {
+          "satiation": 20,
+          "material": "bread"
         },
         "actions": {
           "see": "zobacz",
@@ -133,7 +192,7 @@
         },
         "materials_needed": {
           "bread": 1,
-          "cheese": 1
+          "cheese": 2
         },
         "tools_needed": ["knife"],
         "resulting_item": {
@@ -144,11 +203,11 @@
           ],
           "name": "Kanapka z serem",
           "description": "Pyszna kanapka ze złocistym serem",
-          "weight": 1,
+          "weight": 0.2,
           "price": 5,
           "attr": {
             "satiation": 12,
-            "hp": 2
+            "stamina": 2
           },
           "actions": {
             "see": "zobacz",
