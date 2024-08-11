@@ -122,7 +122,7 @@ while True:
         seconds = action[0](action[1])
       elif argument:
         try:
-           seconds = action(argument)
+          seconds = action(argument)
         except TypeError:
           Konsola.print("To polecenie jest jednowyrazowe!", "lred")
       else: 

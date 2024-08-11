@@ -44,6 +44,4 @@ class Blueprint:
   
   @classmethod
   def from_dict(cls, data):
-    item = data["resulting_item"]
-    resulting_item = Item.from_dict(item)
-    return cls(data["type"], data["name"], data["content"], data["time"], data["skills_needed"], data["materials_needed"], data["tools_needed"], resulting_item, data["number_of_items"])
+    return cls(data["type"], data["name"], data["content"], data["time"], data["skills_needed"], data["materials_needed"], data["tools_needed"], data["resulting_item"], data["number_of_items"])

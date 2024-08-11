@@ -854,7 +854,7 @@ class Player(Mob):
       
   def create(self, item_name):
     for blueprint in self.blueprints:
-      if item_name not in blueprint.resulting_item.alias:
+      if item_name not in blueprint.resulting_item["alias"]:
         Konsola.print("Nie masz odpowiedniego przepisu!", "lred")
         return 0
       
@@ -864,9 +864,14 @@ class Player(Mob):
       Konsola.wrap(blueprint.content)
       Konsola.hr()
       for skill, value in blueprint.skills_needed.items():
-        if self.skills[skill] < value:
+        try:
+          self_skill_value = self.skills[skill]
+        except KeyError:
+          self_skill_value = 0
+        if self_skill_value < value:
+          
           Konsola.print("Twoja umiejętność: ", "lred", line_end='')
-          Konsola.print(skill + " (" + str(self.skills[skill]) + ") ", 'lyellow', line_end='')
+          Konsola.print(skill + " (" + str(self_skill_value) + ") ", 'lyellow', line_end='')
           Konsola.print("jest niewystarczająca! Potrzeba przynajmniej " + str(value) + ".", "lred")
           return 0
   
@@ -894,6 +899,17 @@ class Player(Mob):
         Konsola.print(str(missing_materials), 'lyellow')
         Konsola.print("Potrzebne składniki: " + str(blueprint.materials_needed))
         return 0 
+      
+      number_of_items = blueprint.number_of_items 
+
+      for _ in range(number_of_items):
+        item = Item.from_dict(blueprint.resulting_item)
+        #TODO klasa ekwipunku
+        self.equipment.append(item)
+        if item.stackable():
+          number_of_items = item.amount
+      Konsola.print("Stworzyłeś " + str(number_of_items) + " sztuk ", "lgreen")
+      Konsola.print(blueprint.resulting_item["name"], "lyellow")
 
   def to_dict(self):
     player = super().to_dict()
