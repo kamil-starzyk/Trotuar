@@ -899,6 +899,16 @@ class Player(Mob):
         Konsola.print(str(missing_materials), 'lyellow')
         Konsola.print("Potrzebne składniki: " + str(blueprint.materials_needed))
         return 0 
+      #TODO nie działa całe te
+      for material, qty in blueprint.materials_needed.items():
+        for item in self.equipment:
+          if "material" in item.attr and item.attr["material"] == material:
+            if item.stackable:
+              item.amount -= qty
+            else:
+              self.equipment.remove(item)
+            print("pobrano " + str(qty) + " " + item.name)
+            continue 
       
       number_of_items = blueprint.number_of_items 
 
@@ -908,6 +918,12 @@ class Player(Mob):
         self.equipment.append(item)
         if item.stackable():
           number_of_items = item.amount
+      
+      Helper.sleep(1)
+      for description in blueprint.action_descriptions:
+        Helper.sleep(0.5)
+        Konsola.wrap(description)
+      Helper.sleep(1)
       Konsola.print("Stworzyłeś " + str(number_of_items) + " sztuk ", "lgreen")
       Konsola.print(blueprint.resulting_item["name"], "lyellow")
 

@@ -216,7 +216,14 @@
             "use": "jedz"
           }
         },
-        "number_of_items": 1
+        "number_of_items": 1,
+        "action_descriptions" : [
+          "Wyciągasz nóż",
+          "Kroisz chleb na kromki",
+          "Ukrawasz plasterki sera",
+          "Wkładasz je pomiędzy kromki",
+          "Układasz gotowe kanapeczki w ładny stos i pakujesz je do plecaka"
+        ]
       }
     ],
     "affiliation": [

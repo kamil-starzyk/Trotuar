@@ -3,7 +3,7 @@ from konsola import Konsola
 from item import Item
 
 class Blueprint:
-  def __init__(self, type, name, content, time, skills_needed, materials_needed, tools_needed, resulting_item, number_of_items):
+  def __init__(self, type, name, content, time, skills_needed, materials_needed, tools_needed, resulting_item, number_of_items, action_descriptions):
     self.type = type
     self.name = name
     self.content = content
@@ -13,6 +13,7 @@ class Blueprint:
     self.tools_needed = tools_needed
     self.resulting_item = resulting_item
     self.number_of_items = number_of_items
+    self.action_descriptions = action_descriptions
   
   def read(self):
     Konsola.print(self.name, "lyellow")
@@ -39,9 +40,10 @@ class Blueprint:
       "materials_needed": self.materials_needed,
       "tools_needed": self.tools_needed,
       "resulting_item": self.resulting_item.to_dict(),
-      "number_of_items": self.number_of_items
+      "number_of_items": self.number_of_items,
+      "action_descriptions": self.action_descriptions
     }
   
   @classmethod
   def from_dict(cls, data):
-    return cls(data["type"], data["name"], data["content"], data["time"], data["skills_needed"], data["materials_needed"], data["tools_needed"], data["resulting_item"], data["number_of_items"])
+    return cls(data["type"], data["name"], data["content"], data["time"], data["skills_needed"], data["materials_needed"], data["tools_needed"], data["resulting_item"], data["number_of_items"], data["action_descriptions"])
