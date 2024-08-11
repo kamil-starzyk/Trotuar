@@ -5,6 +5,7 @@ from mob import Mob
 from item import Item
 from activity import Activity
 from blueprint import Blueprint
+from equipment import Equipment
 
 class Player(Mob):
   TIME_OF_MOVEMENT = 60
@@ -937,7 +938,7 @@ class Player(Mob):
     if mob_id in Mob.ids:
       raise ValueError(f"Duplicate mob ID found: {mob_id}")
     cls.ids[mob_id] = data["name"]
-    eq = [Item.from_dict(item_data) for item_data in data["equipment"]]
+    eq = Equipment.from_dict(data["equipment"])
     slots = data["slots"]
     for key in slots:
       if slots[key] == {}:

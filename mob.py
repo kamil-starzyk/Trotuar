@@ -4,6 +4,7 @@ from item import Item
 from utility import Utility
 from activity import Activity
 from blueprint import Blueprint
+from equipment import Equipment
 import math #ceil damage
 import random #for escape
 
@@ -81,7 +82,7 @@ class Mob:
       if item.weight*item.amount + self.weight_carried_rn > self.max_carry_weight:
         return 1
       self.my_square.items.remove(item)
-      item_in_eq = Helper.is_item_in_list(item, self.equipment)
+      item_in_eq = self.equipment.is_item_in_eq()
       if item.stackable() and item_in_eq:
         item_in_eq.amount += item.amount
       else:
@@ -223,7 +224,7 @@ class Mob:
     Konsola.print(self.carry_weight, "lcyan", line_end="(")
     Konsola.print(self.max_carry_weight, "cyan",line_end=")\n")
     Konsola.hr()
-    Konsola.print_item_list(self.equipment)
+    self.equipment.show()
     print("Pieniądze: ", end='')
     Konsola.print(self.money, "yellow")
   
@@ -843,7 +844,7 @@ class Mob:
       "params": self.params,
       "stats": self.stats,
       "skills": self.skills,
-      "equipment": [item.to_dict() for item in self.equipment],
+      "equipment": self.equipment.to_dict(),
       "slots": slots_dict,
       "conversations": self.conversations,
       "knowledge": self.knowledge,
@@ -872,7 +873,7 @@ class Mob:
     cls.ids[mob_id] = data["name"]
 
 
-    eq = [Item.from_dict(item_data) for item_data in data["equipment"]]
+    eq = Equipment.from_dict(data["equipment"])
     slots = data["slots"]
     for key in slots:
       if slots[key] == {}:
