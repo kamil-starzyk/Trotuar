@@ -1,6 +1,7 @@
 from konsola import Konsola
 from item import Item
 from utility import Utility
+from equipment import Equipment
 
 class Square:
   def __init__(self, x, y, z, name, description, exits, utilities, items):
@@ -32,9 +33,9 @@ class Square:
         print("  "+mob.name)
         pass
 
-    if len(self.items) > 0:
+    if len(self.items.items) > 0:
       Konsola.print("Przedmioty: ", "lcyan")
-      for i in self.items:
+      for i in self.items.items:
         print("  "+i.name_and_count)
   
   def to_dict(self):
@@ -46,12 +47,12 @@ class Square:
       "description": self.description,
       "exits": self.exits,
       "utilities" : [utility.to_dict() for utility in self.utilities],
-      "items" : [item.to_dict() for item in self.items]
+      "items" : self.items.to_dict()
     }
   
   @classmethod
   def from_dict(cls, data):
-    items = [Item.from_dict(item_data) for item_data in data["items"]]
+    items = Equipment.from_dict(data["items"])
     utilities = [Utility.from_dict(utility_data) for utility_data in data["utilities"]]
     square = cls(data["x"], data["y"], data["z"], data["name"], data["description"], data["exits"], utilities, items)
     for u in square.utilities:

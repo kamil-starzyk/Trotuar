@@ -110,7 +110,7 @@ class Player(Mob):
         print(e + ": +" +str(effects[e]))
   
   def give(self, item_name):
-    item = Helper.find_item(self.equipment, item_name, True)
+    item = Helper.find_item(self.equipment.items, item_name, True)
     if not item:
       Konsola.print("Nie masz takiej rzeczy w ekwipunku", "red")
       return 0
@@ -127,25 +127,20 @@ class Player(Mob):
     if not mob:
       Konsola.print("Nie udało się przekazać przedmiotu", "red")
       return 0
-
+    amount_to_give = 1
     if item.stackable() and item.amount > 1:
       print("Jaką ilość chcesz podarować? (max: " + str(item.amount) + ")")
       amount_to_give = Konsola.int_input(1, item.amount)
-      if amount_to_give == item.amount:
-        self.equipment.remove(item)
-      else:
-        item = Item.unstack(item, amount_to_give)
-    else:
-      self.equipment.remove(item)
+    item = self.equipment.remove_item(item, amount_to_give)
 
-    mob.equipment.append(item)
+    mob.equipment.add_item(item)
     self.item_receiver = mob
     self.given_item = item
     return Player.TIME_OF_ITEM_INTERACTION
     
     
   def see(self, item_name):
-    item = Helper.find_item(self.equipment, item_name, True)
+    item = Helper.find_item(self.equipment.items, item_name, True)
     if item:
       item.see_more()
       return 1
@@ -165,7 +160,7 @@ class Player(Mob):
     Konsola.print("Nie ma tu takiej rzeczy, ani nie masz jej w ekwipunku. Nie ma tu także takiej osoby.", "red")
   
   def read(self, item_name):
-    item = Helper.find_item(self.equipment, item_name, True)
+    item = Helper.find_item(self.equipment.items, item_name, True)
     if item:
       time = item.read()
       return time
@@ -333,10 +328,10 @@ class Player(Mob):
 
         if amount_to_buy < item.amount:
           unstacked_item = Item.unstack(item, amount_to_buy)
-          self.equipment.append(unstacked_item) 
+          self.equipment.add_item(unstacked_item) 
         else:
           mob.items_to_sell.remove(item)
-          self.equipment.append(item)
+          self.equipment.add_item(item)
 
         self.money -= price
         mob.money += price
@@ -877,7 +872,7 @@ class Player(Mob):
           return 0
   
       tools_posesed = [] 
-      for item in self.equipment:
+      for item in self.equipment.items:
         if "tool" in item.attr:
           tools_posesed.append(item.attr["tool"])
       
@@ -889,7 +884,7 @@ class Player(Mob):
         return 0 
       
       materials_posesed = {} 
-      for item in self.equipment:
+      for item in self.equipment.items:
         if "material" in item.attr:
           materials_posesed[item.attr["material"]] = item.amount
       
@@ -902,12 +897,12 @@ class Player(Mob):
         return 0 
       #TODO nie działa całe te
       for material, qty in blueprint.materials_needed.items():
-        for item in self.equipment:
+        for item in self.equipment.items:
           if "material" in item.attr and item.attr["material"] == material:
             if item.stackable:
               item.amount -= qty
             else:
-              self.equipment.remove(item)
+              self.equipment.remove_item(item)
             print("pobrano " + str(qty) + " " + item.name)
             continue 
       
@@ -916,7 +911,7 @@ class Player(Mob):
       for _ in range(number_of_items):
         item = Item.from_dict(blueprint.resulting_item)
         #TODO klasa ekwipunku
-        self.equipment.append(item)
+        self.equipment.add_item(item)
         if item.stackable():
           number_of_items = item.amount
       

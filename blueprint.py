@@ -39,7 +39,7 @@ class Blueprint:
       "skills_needed": self.skills_needed,
       "materials_needed": self.materials_needed,
       "tools_needed": self.tools_needed,
-      "resulting_item": self.resulting_item.to_dict(),
+      "resulting_item": self.resulting_item,
       "number_of_items": self.number_of_items,
       "action_descriptions": self.action_descriptions
     }

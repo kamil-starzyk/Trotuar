@@ -13,10 +13,24 @@ class Equipment:
     Helper.is_item_in_list(item, self.items)
 
   def add_item(self, item):
-    pass
+    item_in_eq = self.is_item_in_eq(item)
+    if item.stackable() and item_in_eq:
+      item_in_eq.amount += item.amount
+    else:
+      self.items.append(item)
+    return item
 
-  def remove_item(self, item):
-    pass
+  def remove_item(self, item, amount=1):
+    if item.stackable():
+      if amount == item.amount:
+        self.items.remove(item)
+      else:
+        item = Item.unstack(item, amount)
+    else:
+      self.items.remove(item)
+    
+    return item
+     
     
 
   def to_dict(self):

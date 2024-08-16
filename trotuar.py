@@ -121,15 +121,17 @@ while True:
       if isinstance(action, tuple):
         seconds = action[0](action[1])
       elif argument:
-        try:
+        #try:
           seconds = action(argument)
-        except TypeError:
-          Konsola.print("To polecenie jest jednowyrazowe!", "lred")
+        #except TypeError:
+          #Konsola.print("To polecenie jest jednowyrazowe!", "lred")
       else: 
         #try:
           seconds = action()
         #except TypeError:
-          Konsola.print("To polecenie wymaga więcej informacji!", "lred")
+          #Konsola.print("To polecenie wymaga więcej informacji!", "lred")
+    else:
+      Konsola.print("Błędne polecenie! Spróbuj \'help\' aby poznać dostępne komendy.", "lred")
     try:  
       int(seconds)
     except TypeError:
