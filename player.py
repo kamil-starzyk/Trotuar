@@ -573,7 +573,7 @@ class Player(Mob):
     def quit():
       chance = Helper.random(0+self.speed, 50+self.speed)
       if chance >= 40:
-        fraction = current_enemy.hp / current_enemy.hp_max
+        fraction = (current_enemy.hp_max - current_enemy.hp) / current_enemy.hp_max
         award_exp(current_enemy, fraction)
         Konsola.print("Udało Ci się uciec!", "lwhite")
         raise QuitCombatException()
