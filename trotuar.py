@@ -65,6 +65,8 @@ while True:
   "statystyki": player.show_stats,
   "params":     player.show_params,
   "parametry":  player.show_params,
+  "skills":     player.show_skills,
+  "umiejetnosci":player.show_skills,
   "odpoczywaj": player.rest,
   "odpocznij":  player.rest,
   "rest":       player.rest,

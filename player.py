@@ -12,6 +12,24 @@ class Player(Mob):
   TIME_OF_ITEM_INTERACTION = 30
   TIME_OF_CONVERSATION = 90
   TIME_OF_EXCHANGING_BLOWS = 30
+  ALL_SKILLS = {
+    "melee": [
+      "fist", "sword", "knife", "cudgel"
+    ],
+    "ranged": [
+      "thrown", "bow", "crossbow", "slingshot"
+    ],
+    "craft": [
+      "cooking", "alchemy", "blacksmithing", "carpentry"
+    ],
+    "magic": [
+      "fire", "water", "air", "light", "nature", "necromancy"
+    ],
+    "nature": [
+      "herbs", "animals", "fungi", "plants"
+    ]
+  }
+
   def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, skills, equipment, slots, conversations, knowledge, current_activity, next_activity, schedule, area, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, teacher_of, blueprints, affiliation):
     super(Player, self).__init__(mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, skills, equipment, slots, conversations, knowledge, current_activity, next_activity, schedule, area, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, teacher_of, blueprints, affiliation)
     self.game = None
@@ -33,6 +51,17 @@ class Player(Mob):
     print('"x": ' + str(self.x)+',')
     print('"y": ' + str(self.y)+',')
     print('"z": ' + str(self.z))
+  
+  def show_skills(self):
+    for skill_group, skill_list in self.ALL_SKILLS.items():
+      skill_group = skill_group.upper()
+      Konsola.print(skill_group, "lwhite")
+      for skill in skill_list:
+        value = 0
+        if skill in self.skills:
+          value = self.skills[skill]
+        Konsola.print(" - " + skill + ": ", line_end='')
+        Konsola.print(value, "yellow")
   
   def max_exp_for_level(self, level):
     if level == 1:
@@ -355,8 +384,12 @@ class Player(Mob):
 
     if not mob:
       Konsola.print("Nie ma tu nauczyciela, który mógłby Cię szkolić!", "lred")
-      return 0
+      # return 0
     
+    skills = []
+    for v in self.ALL_SKILLS.values():
+      skills += v
+
     if trait in self.stats:
       #Training of STAT  
       Konsola.print("To potrwa 2 godziny i będzie Cię kosztowało dużo wysiłku.", line_end=' ')
@@ -382,10 +415,47 @@ class Player(Mob):
         self.stats[trait] += 1
         Helper.sleep(1)
         Konsola.print("Jesteś bardzo zmęczony po treningu, ale zdobyłeś jeden punkt " + trait, "lyellow")
+        return 7200
       else:
         print("Odchodzisz w pokoju")  
         return 30
-    #TODO Training of SKILL
+    elif trait in skills:
+    #Training of SKILL 
+      Konsola.print("To potrwa 3 godziny i będzie Cię kosztowało trochę wysiłku.", line_end=' ')
+      Konsola.print(mob.name, "lwhite", line_end=' ')  
+      Konsola.print("zażąda od Ciebie 10 pieniędzy za poświęcony czas")
+      Konsola.print("Czy chcesz kontynuować? (Y/n)", 'lgreen')
+      choice = input()
+      if choice.lower() == "y":
+        if self.stamina_max < 50:
+          Konsola.print("Dziś jesteś już zbyt zmęczony na taki trening. Prześpij się i wróć jutro!", "lred")
+          return 30
+        if self.stamina < 50:
+          Konsola.print("Odpocznij trochę zanim rozpoczniesz trening!", "lred")
+          return 30
+        if self.money < 10:
+          Konsola.print("Nie stać Cię na zapłatę!", "lred")
+          return 30
+        Konsola.print(mob.name + " uczy Cię", line_end=' ')  
+        Konsola.print(trait, "lwhite")
+        self.money-= 10
+        mob.money+= 10
+        self.adjust_stamina(-50, -50)
+        if trait in self.skills:
+          self.skills[trait] += 2
+        else:
+          self.skills[trait] = 2
+
+        Helper.sleep(1)
+        Konsola.print("Jesteś bardzo zmęczony po treningu, ale zdobyłeś jeden punkt " + trait, "lyellow")
+        return 10800
+      else:
+        print("Odchodzisz w pokoju")  
+        return 30
+    else:
+      Konsola.print("Próbowałeś się nauczyć czegoś co nie jest ani statystyką ani umiejętnością! Zaiste niebywałe, że widzisz tę wiadomość", "lred")
+
+      
 
   def compare(self, mob_name):
     mobs = self.current_location.mobs_on_square(self.my_square)
