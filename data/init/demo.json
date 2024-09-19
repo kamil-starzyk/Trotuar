@@ -2631,6 +2631,216 @@
             "affiliation": []
           },
           {
+            "mob_id": 15,
+            "x": 1,
+            "y": 5,
+            "z": 1,
+            "base_name": "Nomada",
+            "name": "Nomada Gor",
+            "alias": [
+              "nomada gor",
+              "nomada",
+              "gor"
+            ],
+            "wi": "Na oko czterdziestoletni mężczyzna. Jest ubrany w jasne, przewiewne ubrania, na głowie ma biały turban.",
+            "lvl": 20,
+            "exp": 150,
+            "weight": 80,
+            "money": 50,
+            "race": "Człowiek",
+            "proficiency": "nomada",
+            "params": {
+              "hp": 100,
+              "hp_max": 100,
+              "stamina": 100,
+              "stamina_max":100,
+              "stamina_total":200,
+              "mana": 20,
+              "mana_max": 20,
+              "satiation": 70,
+              "satiation_max": 100,
+              "hydration": 60,
+              "hydration_max": 100
+            },
+            "stats": {
+              "strength": 20,
+              "attack": 12,
+              "defence": 15,
+              "speed": 20,
+              "dexterity": 18,
+              "endurance": 35
+            },
+            "skills":{
+              "knife": 70,
+              "slingshot": 80,
+              "fire": 50,
+              "air": 80,
+              "animals": 60
+
+            },
+            "equipment": [
+              {
+                "type": "Consumable",
+                "alias": [
+                  "daktyle"
+                ],
+                "name": "Daktyle",
+                "description": "Suszone daktyle",
+                "weight": 0.3,
+                "price": 4,
+                "attr": {
+                  "satiation": 10
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "drop": "upuść",
+                  "use": "zjedz"
+                }
+              },
+              {
+                "type": "Weapon",
+                "alias": [
+                  "noz z kości słoniowej",
+                  "nóz z kości słoniowej",
+                  "nóz z kości",
+                  "noz z kości",
+                  "noz",
+                  "nóz"
+                ],
+                "name": "Nóż z kości słoniowej",
+                "description": "Nóż z kości słoniowej. Na ostrzu ma wyryte symbole",
+                "weight": 0.5,
+                "price": 30,
+                "attr": {
+                  "body_part": "first_hand",
+                  "damage": 25,
+                  "dexterity": -5
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "drop": "upuść"
+                }
+              }
+            ],
+            "slots": {
+              "first_hand": {},
+              "second_hand": {},
+              "head": {
+                "type": "Outfit",
+                "alias": [
+                  "biały turban",
+                  "turban"
+                ],
+                "name": "Biały turban",
+                "description": "Nakrycie głowy wykonane poprzez zwinięcie długiego, białego kawałka materiału",
+                "weight": 2.5,
+                "price": 30,
+                "attr": {
+                  "body_part": "head",
+                  "defence": 3
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "unequip": "zdejmij"
+                }
+              },
+              "body": {
+                "type": "Outfit",
+                "alias": [
+                  "lniane ubranie",
+                  "ubranie"
+                ],
+                "name": "Lniane ubranie",
+                "description": "Lniane spodnie i koszula przewiązana materiałowym pasem.",
+                "weight": 1.5,
+                "price": 25,
+                "attr": {
+                  "body_part": "body",
+                  "defence": 3
+                },
+                "actions": {
+                  "see": "zobacz",
+                  "unequip": "zdejmij"
+                }
+              },
+              "finger": {},
+              "neck": {}
+            },
+            "conversations": {
+              "greeting": "Alejkum Asalam",
+              "options": [
+                {
+                  "text": "Chętnie Cię pokonam",
+                  "response": "No to dawaj!",
+                  "next_step": {
+                    "options": [
+                      {
+                        "text": "Bedziesz gryzł piach",
+                        "response": "Arr"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": "Życie mi miłe, poczekaj tu na kogoś, kto ma mniej rozumu",
+                  "response": "Wiedziałem, żeś cienki w barach"
+                }
+              ],
+              "farewell": "Spadaj"
+            },
+            "knowledge": {},
+            "area": "Plac treningowy",
+            "current_activity": {
+                "type": "random_walk",
+                "description": ["spaceruje sobie", "przechadza się z miejsca na miejsce"],
+                "area": "Plac treningowy",
+                "importance": 1
+              },
+            "next_activity": {},
+            "schedule": {
+              "08:00": {
+                "type": "random_walk",
+                "description": ["spaceruje sobie", "przechadza się z miejsca na miejsce"],
+                "area": "Plac treningowy",
+                "importance": 1
+              },
+              "12:00": {
+                "type": "fight",
+                "description": ["trenuje z kukłą", "zadaje ciosy kukle"],
+                "importance": 8,
+                "mob_id": 13
+              },
+              "12:15": {
+                "type": "random_walk",
+                "description": ["spaceruje sobie", "przechadza się z miejsca na miejsce"],
+                "area": "Las",
+                "importance": 1
+              },
+              "13:00": {
+                "type": "rest",
+                "description": ["odpoczywa", "zbija bąki"],
+                "importance": 1
+              },
+              "18:00": {
+                "type": "stays_at_place",
+                "description": ["siedzi w karczmie", "zagląda na dno kufla", "ogląda świat przez dno butelki"],
+                "importance": 2,
+                "destination": {"x": 5, "y": 6, "z": 1}
+              }
+            },
+            "path": [],
+            "can_trade": true,
+            "items_to_sell": [],
+            "wants_to_buy": [],
+            "killable": true,
+            "can_duel": true,
+            "is_aggressive": true,
+            "can_ally": true,
+            "teacher_of": [],
+            "blueprints": [],
+            "affiliation": []
+          },
+          {
             "mob_id": 13,
             "x": 2,
             "y": 6,
