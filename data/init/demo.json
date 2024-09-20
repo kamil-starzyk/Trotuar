@@ -2767,26 +2767,138 @@
               "neck": {}
             },
             "conversations": {
-              "greeting": "Alejkum Asalam",
+              "greeting": "Alejkum Salam",
               "options": [
                 {
-                  "text": "Chętnie Cię pokonam",
-                  "response": "No to dawaj!",
+                  "text": "Co tu robicie?",
+                  "response": "Pochodzimy z Dalekiej krainy Kandor. Podróżujemy, aby handlować i zdobywać wiedzę.",
                   "next_step": {
                     "options": [
                       {
-                        "text": "Bedziesz gryzł piach",
-                        "response": "Arr"
+                        "text": "O jaką wiedzę chodzi?",
+                        "response": "Interesują nas tajemnice starożytnych cywilizacji i magia natury. A Ty, czego szukasz?",
+                        "next_step": {
+                          "options": [
+                            {
+                              "text": "Poszukuję zaginionej wiedzy o dawnych królestwach.",
+                              "response": "Jeśli tak, możesz spróbować odwiedzić stare ruiny w Górach Cienia. Podobno są tam ukryte skarby dawnych władców.",
+                              "next_step": {
+                                "options": [
+                                  {
+                                    "text": "Opowiedz mi więcej o tych ruinach.",
+                                    "response": "Są starożytne i pełne pułapek, ale mówi się, że w ich sercu znajduje się świątynia pełna magicznych artefaktów. Być może tam znajdziesz to, czego szukasz."
+                                  },
+                                  {
+                                    "text": "Brzmi ryzykownie. Może spróbuję innego podejścia.",
+                                    "response": "Zawsze warto działać ostrożnie. Może znajdziesz inne źródło informacji."
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "text": "Chcę poznać sekrety magii natury.",
+                              "response": "Ah, magia natury to piękna, ale kapryśna sztuka. W pobliskich lasach znajdziesz Druidów, którzy mogą Cię czegoś nauczyć.",
+                              "next_step": {
+                                "options": [
+                                  {
+                                    "text": "Gdzie mogę ich znaleźć?",
+                                    "response": "Znajdują się głęboko w lesie, w miejscu zwanym Gajem Dusz. Pamiętaj, by szanować ich zwyczaje."
+                                  },
+                                  {
+                                    "text": "Może jeszcze nie jestem gotowy.",
+                                    "response": "Rozumiemy. Magia natury wymaga harmonii z samym sobą i otoczeniem."
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "text": "Czym handlujecie?",
+                        "response": "Handlujemy egzotycznymi przyprawami, rzadkimi kamieniami i artefaktami z naszych podróży. A czym Ty się zajmujesz?",
+                        "next_step": {
+                          "options": [
+                            {
+                              "text": "Jestem poszukiwaczem przygód.",
+                              "response": "Doskonale! Być może spotkasz nas na swojej drodze ponownie. Może będziemy mieć coś, co Cię zainteresuje."
+                            },
+                            {
+                              "text": "Interesuję się handlem. Może coś od was kupię.",
+                              "response": "Zawsze chętnie handlujemy. Mamy kamienie szlachetne z dalekich krajów oraz przyprawy, które mogą dodać smaku Twojemu życiu."
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "text": "Co to za kraina Kandor?",
+                        "response": "Kandor to odległa kraina, ukryta między górami i oceanem. Jest pełna mądrych ludzi i niesamowitych wynalazków.",
+                        "next_step": {
+                          "options": [
+                            {
+                              "text": "Opowiedz mi więcej o tych wynalazkach.",
+                              "response": "W Kandorze rozwinięto technologię opartą na kryształach energii. Dzięki nim możemy przemieszczać się szybciej niż kiedykolwiek. Może kiedyś tam zawitasz i zobaczysz to na własne oczy."
+                            },
+                            {
+                              "text": "Czy można się tam dostać?",
+                              "response": "Dostać się do Kandor to wyzwanie. Droga jest długa, a jedyny sposób, aby tam dotrzeć, to przez magiczny portal ukryty w Dolinie Wiatrów."
+                            }
+                          ]
+                        }
                       }
                     ]
                   }
                 },
                 {
-                  "text": "Życie mi miłe, poczekaj tu na kogoś, kto ma mniej rozumu",
-                  "response": "Wiedziałem, żeś cienki w barach"
+                  "text": "Czy możecie mi pomóc?",
+                  "response": "Zależy, czego potrzebujesz. Jesteśmy otwarci na różne propozycje.",
+                  "next_step": {
+                    "options": [
+                      {
+                        "text": "Szukam przewodnika.",
+                        "response": "Znamy te ziemie jak własną kieszeń. Możemy Cię poprowadzić.",
+                        "next_step": {
+                          "options": [
+                            {
+                              "text": "Dokąd możecie mnie zaprowadzić?",
+                              "response": "Najlepiej znamy okoliczne góry i lasy. Możemy też wskazać drogę do najbliższego miasta."
+                            },
+                            {
+                              "text": "Może innym razem.",
+                              "response": "Rozumiemy, droga zawsze będzie otwarta."
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "text": "Potrzebuję porady.",
+                        "response": "Chętnie Ci doradzimy, ale powiedz, w czym konkretnie tkwi problem.",
+                        "next_step": {
+                          "options": [
+                            {
+                              "text": "Mam problem z odnalezieniem drogi.",
+                              "response": "Jesteśmy świetnymi przewodnikami. Pokażemy Ci najkrótszą i najbezpieczniejszą ścieżkę."
+                            },
+                            {
+                              "text": "Potrzebuję porady dotyczącej handlu.",
+                              "response": "Handel to nasza specjalność. Zawsze warto negocjować i znać wartość swoich towarów. Mamy kilka trików, które mogą Ci się przydać."
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "text": "Nie, jednak poradzę sobie sam.",
+                        "response": "Rozumiemy. Pomyślnych wiatrów w takim razie!"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": "Miło było spotkać! Bywaj!",
+                  "response": "Obyś trafił do swego celu!"
                 }
               ],
-              "farewell": "Spadaj"
+              "farewell": "Pomyślnych wiatrów"
             },
             "knowledge": {},
             "area": "Plac treningowy",
