@@ -180,6 +180,7 @@
 			"Pierwsze zadanie od zielarki": "Nie byłem jeszcze u zielarki, może ma dla mnie jakieś ciekawe zadanie.",
 			"Pierwsze zadanie od kapitana": "Nie byłem jeszcze u kapitana, może ma dla mnie jakieś ciekawe zadanie."
 		},
+    "journal": {},
     "teacher_of": [],
     "blueprints": [
       {
@@ -1657,6 +1658,7 @@
               "farewell": "Do miłego zobaczenia"
             },
             "knowledge": {},
+            "journal": {},
             "area": "Torenberg",
             "current_activity": {},
             "next_activity": {},
@@ -1854,6 +1856,7 @@
               "farewell": "Do miłego zobaczenia"
             },
             "knowledge": {},
+            "journal": {},
             "area": "Torenberg",
             "current_activity": {},
             "next_activity": {},
@@ -2136,6 +2139,7 @@
               "farewell": "Do miłego zobaczenia"
             },
             "knowledge": {},
+            "journal": {},
             "area": "Torenberg",
             "current_activity": {},
             "next_activity": {},
@@ -2385,6 +2389,7 @@
               "farewell": "Do miłego zobaczenia"
             },
             "knowledge": {},
+            "journal": {},
             "area": "Torenberg",
             "current_activity": {},
             "next_activity": {},
@@ -2579,6 +2584,7 @@
               "farewell": "Spadaj"
             },
             "knowledge": {},
+            "journal": {},
             "area": "Plac treningowy",
             "current_activity": {
                 "type": "random_walk",
@@ -2901,6 +2907,7 @@
               "farewell": "Pomyślnych wiatrów"
             },
             "knowledge": {},
+            "journal": {},
             "area": "Plac treningowy",
             "current_activity": {
                 "type": "random_walk",
@@ -3022,6 +3029,7 @@
             },
             "conversations": {},
             "knowledge": {},
+            "journal": {},
             "area": "",
             "current_activity": {},
             "next_activity": {},
@@ -3115,6 +3123,7 @@
             },
             "conversations": {},
             "knowledge": {},
+            "journal": {},
             "area": "",
             "current_activity": {},
             "next_activity": {},
@@ -3181,6 +3190,7 @@
             },
             "conversations": {},
             "knowledge": {},
+            "journal": {},
             "area": "Kanały",
             "current_activity": {
               "type": "random_walk",
@@ -3261,6 +3271,7 @@
             },
             "conversations": {},
             "knowledge": {},
+            "journal": {},
             "area": "Kanały",
             "current_activity": {
               "type": "random_walk",
@@ -3341,6 +3352,7 @@
             },
             "conversations": {},
             "knowledge": {},
+            "journal": {},
             "area": "Kanały",
             "current_activity": {
               "type": "random_walk",
@@ -3423,6 +3435,7 @@
             },
             "conversations": {},
             "knowledge": {},
+            "journal": {},
             "area": "Kanały",
             "current_activity": {
               "type": "random_walk",
@@ -3505,6 +3518,7 @@
             },
             "conversations": {},
             "knowledge": {},
+            "journal": {},
             "area": "Kanały",
             "current_activity": {
               "type": "random_walk",
@@ -3749,6 +3763,7 @@
               "farewell": "Do miłego zobaczenia"
             },
             "knowledge": {},
+            "journal": {},
             "area": "Torenberg",
             "current_activity": {},
             "next_activity": {},

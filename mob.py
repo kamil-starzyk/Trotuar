@@ -11,7 +11,7 @@ import random #for escape
 class Mob:
   BASIC_CARRY_WEIGHT = 40
   ids = {}
-  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, skills, equipment, slots, conversations, knowledge, current_activity, next_activity, schedule, area, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, teacher_of, blueprints, affiliation):
+  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, skills, equipment, slots, conversations, knowledge, journal, current_activity, next_activity, schedule, area, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, teacher_of, blueprints, affiliation):
     self.mob_id = mob_id
     self.x = x
     self.y = y
@@ -34,6 +34,7 @@ class Mob:
     self.slots = slots
     self.conversations = conversations
     self.knowledge = knowledge
+    self.journal = journal
     
     self.current_activity = current_activity 
     self.next_activity = next_activity
@@ -834,6 +835,7 @@ class Mob:
       "slots": slots_dict,
       "conversations": self.conversations,
       "knowledge": self.knowledge,
+      "journal": self.journal,
       "area": area_name,
       "current_activity": current_activity,
       "next_activity": next_activity,
@@ -876,9 +878,13 @@ class Mob:
     blueprints = [Blueprint.from_dict(blueprint) for blueprint in data["blueprints"]]
 
     try:
-      mob = cls(mob_id, data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], data["skills"], eq, slots, data["conversations"], data["knowledge"], current_activity, next_activity, schedule, data["area"], data["path"], data["can_trade"], items_to_sell, data["wants_to_buy"], data["killable"], data["can_duel"], data["is_aggressive"], data["can_ally"], data['teacher_of'], blueprints, data["affiliation"])
+      mob = cls(mob_id, data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], data["skills"], eq, slots, data["conversations"], data["knowledge"], data["journal"], current_activity, next_activity, schedule, data["area"], data["path"], data["can_trade"], items_to_sell, data["wants_to_buy"], data["killable"], data["can_duel"], data["is_aggressive"], data["can_ally"], data['teacher_of'], blueprints, data["affiliation"])
       return mob
     except TypeError:
-      print("Nie udało się wczytać danych.")
+      print("Nie udało się wczytać danych: TypeError")
+      print("Aktualnie ładowana postać: "+ data["name"])
+      exit()
+    except KeyError:
+      print("Nie udało się wczytać danych: KeyError")
       print("Aktualnie ładowana postać: "+ data["name"])
       exit()
