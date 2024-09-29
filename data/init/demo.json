@@ -2632,8 +2632,8 @@
           },
           {
             "mob_id": 15,
-            "x": 1,
-            "y": 5,
+            "x": 2,
+            "y": 1,
             "z": 1,
             "base_name": "Nomada",
             "name": "Nomada Gor",
@@ -2642,7 +2642,7 @@
               "nomada",
               "gor"
             ],
-            "wi": "Na oko czterdziestoletni mężczyzna. Jest ubrany w jasne, przewiewne ubrania, na głowie ma biały turban.",
+            "description": "Na oko czterdziestoletni mężczyzna. Jest ubrany w jasne, przewiewne ubrania, na głowie ma biały turban.",
             "lvl": 20,
             "exp": 150,
             "weight": 80,
@@ -2944,13 +2944,13 @@
             "can_trade": true,
             "items_to_sell": [],
             "wants_to_buy": [],
-            "killable": true,
+            "killable": false,
             "can_duel": true,
-            "is_aggressive": true,
+            "is_aggressive": false,
             "can_ally": true,
-            "teacher_of": [],
+            "teacher_of": ["dexterity", "bow", "animals"],
             "blueprints": [],
-            "affiliation": []
+            "affiliation": ["Kandor"]
           },
           {
             "mob_id": 13,
