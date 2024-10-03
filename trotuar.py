@@ -88,6 +88,8 @@ while True:
   "trenuj":     player.train,
   "zadania":    game.active_quests,
   "quests":     game.active_quests,
+  "dziennik":   player.show_journal,
+  "journal":    player.show_journal,
   "przepisy":   player.show_blueprints,
   "stwórz":     player.create,
   "stworz":     player.create,

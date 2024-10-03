@@ -2899,6 +2899,41 @@
                     ]
                   }
                 },
+                { 
+                  "text": "Czy możesz mnie czegoś nauczyć?",
+                  "response": "Jako ludzie pustyni i podróżnicy mamy wiele cennnych zdolności. Mogę Cię nauczyć posługiwania się łukiem i obchodzenia ze zwierzętami. Mogę Ci także pomóc zwiększyć swoją zręczność. Która z tych opcji Cię interesuje?",
+                  "journal": {
+                    "teachers": {
+                      "skills" : {
+                        "bow": "Nomada Gor (Torenberg)",
+                        "animals": "Nomada Gor (Torenberg)"
+                      },
+                      "stats":{
+                        "dexterity": "Nomada Gor (Torenberg)"
+                      }
+                    }
+                  },
+                  "next_step": {
+                    "options": [
+                      {
+                        "text": "Łuk!",
+                        "response": "Aby rozpocząć szkolenie napisz [i]trenuj bow[/i]"
+                      },
+                      {
+                        "text": "Obchodzenie się ze zwierzętami!",
+                        "response": "Aby rozpocząć szkolenie napisz [i]trenuj animals[/i]"
+                      },
+                      {
+                        "text": "Zręczność!",
+                        "response": "Aby rozpocząć szkolenie napisz [i]trenuj dexterity[/i]"
+                      },
+                      {
+                        "text": "Wrócę do Ciebie później!",
+                        "response": "Będziemy gdziś tutaj w okolicy"
+                      }
+                    ]
+                  }
+                },
                 {
                   "text": "Miło było spotkać! Bywaj!",
                   "response": "Obyś trafił do swego celu!"
@@ -2908,11 +2943,11 @@
             },
             "knowledge": {},
             "journal": {},
-            "area": "Plac treningowy",
+            "area": "Las",
             "current_activity": {
                 "type": "random_walk",
                 "description": ["spaceruje sobie", "przechadza się z miejsca na miejsce"],
-                "area": "Plac treningowy",
+                "area": "Las",
                 "importance": 1
               },
             "next_activity": {},

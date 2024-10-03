@@ -805,14 +805,13 @@ class Mob:
     else:
       current_activity = {}
     if hasattr(self.next_activity, 'type'):
-      next_activity = next_activity.to_dict()
+      next_activity = self.next_activity.to_dict()
     else:
       next_activity = {}
     if self.schedule:
       schedule = {time: activity.to_dict() for time, activity in self.schedule.items()}
     else:
       schedule = {}
-
     return {
       "mob_id": self.mob_id,
       "x": self.x, 

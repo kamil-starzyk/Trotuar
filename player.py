@@ -234,6 +234,28 @@ class Player(Mob):
     super().outfit()
     return 0
 
+  def show_journal(self):
+        if not self.journal:
+            print("Journal is empty.")
+            return
+
+        # Iteruj przez główne kategorie w journalu
+        for category, content in self.journal.items():
+          print(f"\n{category.capitalize()}:")
+            
+          # Sprawdzaj, czy wartości w kategoriach to zagnieżdżone słowniki
+          if isinstance(content, dict):
+            for subcategory, subcontent in content.items():
+              Konsola.print(f"  {subcategory.capitalize()}:", "lyellow")
+                    
+              # Sprawdzaj czy podkategorie mają dalsze zagnieżdżone słowniki
+              if isinstance(subcontent, dict):
+                for key, value in subcontent.items():
+                  print(f"    {key}: {value}")
+              else:
+                print(f"    {subcontent}")
+          else:
+            print(f"  {content}")
 
   def navigate_conversation(self, current_step, total_time=0):
     options = []
@@ -260,6 +282,21 @@ class Player(Mob):
             self.knowledge[key] = value
       if selected_option.get("milestone"):
         self.game.milestones.append(selected_option["milestone"])
+      if selected_option.get("journal"):
+        for journal_key, journal_value in selected_option["journal"].items():
+          # Sprawdź, czy kategoria (np. "teachers") istnieje
+          if journal_key not in self.journal:
+            self.journal[journal_key] = journal_value
+          else:
+            # Jeśli kategoria istnieje, przetwarzaj jej podkategorie
+            for sub_key, sub_value in journal_value.items():
+              if sub_key not in self.journal[journal_key]:
+                self.journal[journal_key][sub_key] = sub_value
+              else:
+                # Sprawdź jeszcze głębsze poziomy, jeśli są, np. "skills", "stats"
+                for item_key, item_value in sub_value.items():
+                  if item_key not in self.journal[journal_key][sub_key]:
+                    self.journal[journal_key][sub_key][item_key] = item_value
       if selected_option.get("forget"):
         key = selected_option.get("forget")
         if key in self.knowledge:
