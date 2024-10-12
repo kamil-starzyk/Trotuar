@@ -78,7 +78,7 @@ class Mob:
   
 
   def pick_up(self, item_name, player=False):
-    item = Helper.find_item(self.my_square.items.items, item_name, player)
+    item = Helper.find_item(self.my_square.items, item_name, player)
     if item:
       if item.weight*item.amount + self.weight_carried_rn > self.max_carry_weight:
         return 1
@@ -89,7 +89,7 @@ class Mob:
     return 0
   
   def drop(self, item_name, player=False):
-    item = Helper.find_item(self.equipment.items, item_name, player)
+    item = Helper.find_item(self.equipment, item_name, player)
     if item:
       amount_to_drop = 1
       if item.stackable() and item.amount > 1 and player:
@@ -119,7 +119,7 @@ class Mob:
     return 0
 
   def use(self, item_name, player=False):
-    item = Helper.find_item(self.equipment.items, item_name, player)
+    item = Helper.find_item(self.equipment, item_name, player)
     effects = {}
     if item and item.type == "Consumable":
       consumable_attr = ["hp", "stamina", "mana", "satiation", "hydration"]
@@ -134,7 +134,7 @@ class Mob:
 
   
   def equip(self, item_name, player=False):
-    item = Helper.find_item(self.equipment.items, item_name, player)
+    item = Helper.find_item(self.equipment, item_name, player)
     if item and 'body_part' in item.attr:
       self.slots[item.attr['body_part']] = item
       self.equipment.remove_item(item)
@@ -164,7 +164,7 @@ class Mob:
   def try_to_draw_weapon(self, print_details=False):
     ''' pass boolean to print details or not '''
     if self.slots["first_hand"] == None:
-      for item in self.equipment.items:
+      for item in self.equipment:
         if "body_part" in item.attr and item.attr["body_part"] == "first_hand":
           self.equip(item.alias[0])
           if print_details:
@@ -172,7 +172,7 @@ class Mob:
             Helper.sleep(0.5)
 
     if self.slots["second_hand"] == None:
-      for item in self.equipment.items:
+      for item in self.equipment:
         if "body_part" in item.attr and item.attr["body_part"] == "second_hand":
           self.equip(item.alias[0])
           if print_details:
@@ -544,7 +544,7 @@ class Mob:
     aliases = ["trup", "ciało", "cialo", "martwy "+self.name]
     aliases = aliases + self.alias
     square_description = "Leży tu [i]martwy " + self.name +"[/i]. "
-    dead_body = Utility("Corpse", aliases, "Martwy "+self.name, self.description, square_description, 0, 1, {}, self.equipment.items, 0, {"search": "Przeszukaj"})
+    dead_body = Utility("Corpse", aliases, "Martwy "+self.name, self.description, square_description, 0, 1, {}, self.equipment, 0, {"search": "Przeszukaj"})
     dead_body.put_on_square(self.my_square)
     self.x=0
     self.y=0
@@ -766,7 +766,7 @@ class Mob:
 
   @property
   def weight_carried_rn(self):
-    total_weight = sum(item.weight*item.amount for item in self.equipment.items)
+    total_weight = sum(item.weight*item.amount for item in self.equipment)
     return total_weight
   
   @property

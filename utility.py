@@ -1,6 +1,7 @@
 from konsola import Konsola
 from helper import Helper
 from item import Item
+from equipment import Equipment
 
 # skrzynia, łóżko, palenisko, zarośla, 
 class Utility:
@@ -79,13 +80,13 @@ class Utility:
       'lock': self.lock,
       'opened': self.opened,
       'attr': self.attr,
-      'items': [item.to_dict() for item in self.items],
+      'items': self.items.to_dict(),
       'money': self.money,
       'actions': self.actions
     }
   
   @classmethod
   def from_dict(cls, data):
-    items = [Item.from_dict(item_data) for item_data in data["items"]]
+    items = Equipment.from_dict(data["items"])
     return cls(data["type"], data["alias"], data["name"], data["description"], data["square_description"], data["lock"], data["opened"], data["attr"], items, data['money'], data["actions"])
   

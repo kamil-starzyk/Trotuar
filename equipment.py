@@ -32,6 +32,10 @@ class Equipment:
     return item
      
     
+  def __iter__(self):
+    return iter(self.items)
+  def __len__(self):
+    return len(self.items)
 
   def to_dict(self):
     return [item.to_dict() for item in self.items]

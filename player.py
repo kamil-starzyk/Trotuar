@@ -139,7 +139,7 @@ class Player(Mob):
         print(e + ": +" +str(effects[e]))
   
   def give(self, item_name):
-    item = Helper.find_item(self.equipment.items, item_name, True)
+    item = Helper.find_item(self.equipment, item_name, True)
     if not item:
       Konsola.print("Nie masz takiej rzeczy w ekwipunku", "red")
       return 0
@@ -169,7 +169,7 @@ class Player(Mob):
     
     
   def see(self, item_name):
-    item = Helper.find_item(self.equipment.items, item_name, True)
+    item = Helper.find_item(self.equipment, item_name, True)
     if item:
       item.see_more()
       return 1
@@ -189,7 +189,7 @@ class Player(Mob):
     Konsola.print("Nie ma tu takiej rzeczy, ani nie masz jej w ekwipunku. Nie ma tu także takiej osoby.", "red")
   
   def read(self, item_name):
-    item = Helper.find_item(self.equipment.items, item_name, True)
+    item = Helper.find_item(self.equipment, item_name, True)
     if item:
       time = item.read()
       return time
@@ -979,7 +979,7 @@ class Player(Mob):
           return 0
   
       tools_posesed = [] 
-      for item in self.equipment.items:
+      for item in self.equipment:
         if "tool" in item.attr:
           tools_posesed.append(item.attr["tool"])
       
@@ -991,7 +991,7 @@ class Player(Mob):
         return 0 
       
       materials_posesed = {} 
-      for item in self.equipment.items:
+      for item in self.equipment:
         if "material" in item.attr:
           materials_posesed[item.attr["material"]] = item.amount
       
@@ -1004,7 +1004,7 @@ class Player(Mob):
         return 0 
       #TODO nie działa całe te
       for material, qty in blueprint.materials_needed.items():
-        for item in self.equipment.items:
+        for item in self.equipment:
           if "material" in item.attr and item.attr["material"] == material:
             if item.stackable:
               item.amount -= qty

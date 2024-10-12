@@ -33,9 +33,9 @@ class Square:
         print("  "+mob.name)
         pass
 
-    if len(self.items.items) > 0:
+    if len(self.items) > 0:
       Konsola.print("Przedmioty: ", "lcyan")
-      for i in self.items.items:
+      for i in self.items:
         print("  "+i.name_and_count)
   
   def to_dict(self):
