@@ -281,7 +281,10 @@ class Player(Mob):
           if key not in self.knowledge:
             self.knowledge[key] = value
       if selected_option.get("milestone"):
-        self.game.milestones.append(selected_option["milestone"])
+        #self.game.milestones.append(selected_option["milestone"])
+
+        self.game.milestones[selected_option["milestone"]]["status"] = 1
+            
       if selected_option.get("journal"):
         for journal_key, journal_value in selected_option["journal"].items():
           # Sprawdź, czy kategoria (np. "teachers") istnieje

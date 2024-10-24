@@ -3717,7 +3717,7 @@
                               "knowledge": {
                                 "Worek węgla": "Jacek zmniejszy moją zapłatę, jeśli pomogę mu dostarczyć towary. Najpierw mam zanieść worek węgla do kowala."
                               },
-                              "milestone": "Worek węgla"
+                              "milestone": "Worek Węgla"
                             }
                           ]
                         }
@@ -4167,5 +4167,47 @@
 			"knowledge_entry": "Ukończono: Towary dla karczmarza"
     }
   ],
-  "milestones": ["Przybicie do brzegu"]
+  "milestones": {
+    "Przybicie do brzegu": {
+      "status": 1,
+      "conditions": null,
+      "actions": [
+        {
+          "type": "wrap_text",
+          "text": "Rozpoczynasz swoją przygodę! Czynność, którą będziesz wykonywał najczęściej to poruszanie się pomiędzy sąsiednimi lokalizacjami. Każda lokalizacja ma swoją [i]nazwę[/i], [i]opis[/i] oraz dostępne [i]wyjścia[/i]. Aby się przemieścić wpisz jako prompt nazwę dostępnego kierunku np([i]east[/i]), albo jej jednoliterowy skrót (np. [i]e[/i]). Na początek jednak spróbuj porozmawiać z Jackiem. Aby to zrobić wpisz [i]rozmawiaj jacek[/i]."
+        }
+      ],
+      "next_milestone": null
+    },
+    "Worek Węgla": {
+      "status": 0,
+      "conditions": null,
+      "actions": [
+        {
+          "type": "take_drop_item",
+          "mob_id": 12,
+          "item_name": "worek węgla",
+          "message": "Jacek wyjmuje worek węgla z łodzi"
+        },
+        {
+          "type": "wrap_text",
+          "text": "Jeśli na twojej lokalizacji znajdują się jakieś przedmioty albo osoby, z którymi możesz wejść w interakcję, to zostaną one wypisane pod pozyją [i]Istoty[/i] lub [i]Przedmioty[/i]. Pewne interaktywne obiekty znajdujące się na lokalizacji są wskazane w jej opisie. Szukaj podświetlonych nazw (np. [i]łódź[/i]). Dla różnych obiektów są dostępne różne komendy, ale zawsze możesz wspisać polecenie [i]zobacz[/i] (np. [i]zobacz worek węgla[/i]) aby dowiedzieć się o obiekcie coś więcej i poznać dostępne komendy. "
+        }
+      ],
+      "next_milestone": "Worek Węgla 2"
+    },
+    "Worek Węgla 2": {
+      "status": 0,
+      "conditions": [
+        {
+          "type": "quest_active",
+          "quest_id": 4
+        },
+        {
+          "type": "quest_objective_done",
+          "objective_name": "Zabierz worek węgla"
+        }
+      ]
+    }
+  }
 }

@@ -5,7 +5,7 @@ class Quest:
     self.description = description
     self.objectives = objectives 
     self.reward = reward
-    self.status = status
+    self.status = status # 0 - not yet taken / 1 - active / 2 -finished
     self.knowledge_entry = knowledge_entry
   
   def is_finished(self):
