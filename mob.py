@@ -88,10 +88,9 @@ class Mob:
       return item
     return 0
   
-  def drop(self, item_name, player=False):
+  def drop(self, item_name, amount_to_drop=1, player=False):
     item = Helper.find_item(self.equipment, item_name, player)
     if item:
-      amount_to_drop = 1
       if item.stackable() and item.amount > 1 and player:
         print("Jaką ilość chcesz wyrzucić? (max: " + str(item.amount) + ")")
         amount_to_drop = Konsola.int_input(1, item.amount)
@@ -101,7 +100,7 @@ class Mob:
       return item
     return 0
 
-  def take(self, item_name, player):
+  def take(self, item_name, player=False):
     container = Helper.find_utility(self.my_square.utilities, "take")
     if not container:
       if player:
@@ -109,6 +108,7 @@ class Mob:
       return 0
 
     item = Helper.find_item(container.items, item_name, player)
+    #TODO item amount based on user input or mob data
     if item:
       if item.weight*item.amount + self.weight_carried_rn > self.max_carry_weight:
         return 1

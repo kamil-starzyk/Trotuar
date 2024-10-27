@@ -4112,7 +4112,7 @@
     {
       "id": 5,
       "name": "Towary dla karczmarza",
-      "description": "Muszę dostarczyć worek węgla do kowala",
+      "description": "Muszę dostarczyć towary dla karczmarza",
       "objectives": [
         {
           "type": "item_in_eq",
@@ -4187,6 +4187,7 @@
           "type": "take_drop_item",
           "mob_id": 12,
           "item_name": "worek węgla",
+          "item_amount": 1,
           "message": "Jacek wyjmuje worek węgla z łodzi"
         },
         {
@@ -4208,7 +4209,7 @@
       "actions": [
         {
           "type": "wrap_text",
-          "text": "Wspaniale! Udało Ci się ukończyć pierwsze zadanie! Zadania są jednym ze źódeł zdobywania doświadczenia. Aby zobaczyć obecny postęp swojej postaci użyj komendy [i]whoami[/i]. Wyświetla ona podstawowe dane na twój temat, w tym obecny poziom, zdobyte doświadczenie oraz inne #TODO. "
+          "text": "Aktywne zadania możesz podejrzeć za pomocą komendy [i]zadania[/i]. Aby wyświetlić postęp konkretnego zadania dopisz jego id. (np. [i]zadania 4[/i]). "
         }
       ],
       "next_milestone": "Worek Węgla 3"
@@ -4228,10 +4229,6 @@
         {
           "type": "wrap_text",
           "text": "Brawo! Odnalazłeś kuźnię! Teraz, aby przekazać przedmiot właściwej osobie musisz skorzystać z komendy [i]podaruj[/i] (np. [i]podaruj worek węgla[/i]). Nie musisz wpisywać komu. Jeśli na lokacji jest tylko jedna osoba nie będzie problemu. Za to kiedy potencjalnych odbiorców byłoby więcej - gra zapyta o kogo Ci chodzi. "
-        },
-        {
-          "type": "wrap_text",
-          "text": "Teraz wracaj nad rzekę po kolejne zadania!"
         }
       ],
       "next_milestone": "Worek Węgla 4"
@@ -4248,7 +4245,11 @@
       "actions": [
         {
           "type": "wrap_text",
-          "text": "Aktywne zadania możesz podejrzeć za pomocą komendy [i]zadania[/i]. Aby wyświetlić postęp konkretnego zadania dopisz jego id. (np. [i]zadania 4[/i]). "
+          "text": "Wspaniale! Udało Ci się ukończyć pierwsze zadanie! Zadania są jednym ze źódeł zdobywania doświadczenia. Aby zobaczyć obecny postęp swojej postaci użyj komendy [i]whoami[/i]. Wyświetla ona podstawowe dane na twój temat, w tym obecny poziom, zdobyte doświadczenie oraz inne #TODO. "
+        },
+        {
+          "type": "wrap_text",
+          "text": "Teraz wracaj nad rzekę po kolejne zadania!"
         }
       ],
       "next_milestone": null
@@ -4261,18 +4262,21 @@
           "type": "take_drop_item",
           "mob_id": 12,
           "item_name": "beczka piwa",
+          "item_amount": 1,
           "message": "Jacek wyjmuje beczkę piwa z łodzi"
         },
         {
           "type": "take_drop_item",
           "mob_id": 12,
           "item_name": "skrzynka wina",
+          "item_amount": 1,
           "message": "Jacek wyjmuje skrzynkę wina z łodzi"
         },
         {
           "type": "take_drop_item",
           "mob_id": 12,
           "item_name": "butelka gorzałki",
+          "item_amount": 2,
           "message": "Jacek wyjmuje butelki gorzałki z łodzi"
         }
       ],
@@ -4291,7 +4295,7 @@
           "text": "Uważaj na wagę swojego ekwipunku. Jego zawartość możesz sprawdzić komendą [i]ekwipunek[/i] lub [i]eq[/i]. Zobaczysz tam listę swoich rzeczy, ich sumaryczną masę oraz swój udźwig w postaci: [i]Udźwig: 50 / 40(80)[/i]. W tym przypadku gracz niesie 50 funtów ekwipunku, czyli 10 więcej niż jego zwykły udźwig i 30 poniżej maksymalnego udźwigu. Im większe przeciążenie ponad normalny udźwig, tym szybciej się męczysz. Swoją aktualną staminę możesz zobaczyć na prompcie jako St: lub używając komendy [i]parametry[/i]/[i]params[/i].  "
         }
       ],
-      "next milestone": null
+      "next_milestone": null
     }
   }
 }

@@ -47,7 +47,8 @@ class Game:
     self.player.game = self
     self.world = World.from_dict(data["world"])
     self.time = GameTime.from_dict(data["time"])
-    self.quests = [Quest.from_dict(data) for data in data["quests"]] 
+    self.quests = [Quest.from_dict(data) for data in data["quests"]]
+    self.milestones = data["milestones"] 
     self.player.current_location = self.world.locations[0]
     self.player.area = self.world.locations[0].areas[0]
     self.is_playing = True
@@ -285,33 +286,24 @@ class Game:
     #MILESTONES
     for _, milestone in self.milestones.items():
       conditions_met = True
-      if milestone["conditions"]:
+      if milestone["status"] == 1 and milestone["conditions"]:
         for condition in milestone["conditions"]:
           if condition["type"] == "quest_objective_done":
             quest = next((q for q in self.quests if q.id == condition["quest_id"]), None)
-            if quest.status != 1:
+            if quest.status < 1:
               conditions_met = False
-              break
-            for obj in quest.objectives:
-              # print(obj["name"])
-              # print(condition["objective_name"])
-              # print(obj["progress"])
-              # print(obj["amount"
-              if not (obj["name"] == condition["objective_name"] and obj["progress"] == obj["amount"]):
-                conditions_met = False
-                break
+            else:
+              for obj in quest.objectives:
+                if obj["name"] == condition["objective_name"] and obj["progress"] == obj["amount"]:
+                  conditions_met = True
+                  break
+                else:
+                  conditions_met = False
+            
           if condition["type"] == "player_on_square":
             x = condition["x"]
             y = condition["y"]
             z = condition["z"]
-            # print(self.player.x, end=" ")
-            # print(x)
-            # print(self.player.y, end=" ")
-            # print(y)
-            # print(self.player.z, end=" ")
-            # print(z)
-            # print(self.player.current_location.name)
-            # print(condition["location"])
             if not (self.player.current_location.name == condition["location"] and self.player.is_on_square(x,y,z)):
               conditions_met = False
               break
@@ -331,14 +323,13 @@ class Game:
 
           elif action["type"] == "take_drop_item":
             mob = next((mob for mob in self.player.current_location.mobs if mob.mob_id == action["mob_id"]), None)
-            mob.take(action["item_name"], True)
-            mob.drop(action["item_name"], True)
+            mob.take(action["item_name"])
+            mob.drop(action["item_name"], action["item_amount"])
             Konsola.print(action["message"], "lmagenta")
-            Konsola.hr()
             #Helper.sleep(1.5)
-            self.show_current_square()
-            Konsola.hr()
-
+            
+        Helper.sleep(1.5)
+        self.show_current_square()
 
         milestone["status"] = 2
         if milestone["next_milestone"]:
@@ -395,7 +386,7 @@ class Game:
     player = Player.from_dict(data["player"])
     quests = [Quest.from_dict() for quest in data["quests"]]
     milestones = data["milestones"]
-    return cls(data["gameplay"], world, player, time, quests)
+    return cls(data["gameplay"], world, player, time, quests, milestones)
   
   def choose_save(self):
     saves = Helper.open_saves()
