@@ -287,15 +287,41 @@ class Game:
       conditions_met = True
       if milestone["conditions"]:
         for condition in milestone["conditions"]:
-          if condition["type"] == "quest_active":
+          if condition["type"] == "quest_objective_done":
             quest = next((q for q in self.quests if q.id == condition["quest_id"]), None)
             if quest.status != 1:
               conditions_met = False
-          if condition["type"] == "quest_objective_done":
+              break
             for obj in quest.objectives:
+              # print(obj["name"])
+              # print(condition["objective_name"])
+              # print(obj["progress"])
+              # print(obj["amount"
               if not (obj["name"] == condition["objective_name"] and obj["progress"] == obj["amount"]):
                 conditions_met = False
-          
+                break
+          if condition["type"] == "player_on_square":
+            x = condition["x"]
+            y = condition["y"]
+            z = condition["z"]
+            # print(self.player.x, end=" ")
+            # print(x)
+            # print(self.player.y, end=" ")
+            # print(y)
+            # print(self.player.z, end=" ")
+            # print(z)
+            # print(self.player.current_location.name)
+            # print(condition["location"])
+            if not (self.player.current_location.name == condition["location"] and self.player.is_on_square(x,y,z)):
+              conditions_met = False
+              break
+          if condition["type"] == "player_overloaded":
+            if not self.player.overloaded:
+              conditions_met = False
+              break
+
+            
+
       if milestone["status"] == 1 and conditions_met:
         for action in milestone["actions"]:
           if action["type"] == "wrap_text":
