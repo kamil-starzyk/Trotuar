@@ -7,7 +7,8 @@ class Activity:
     "random_walk",
     "following_path",
     "fight",
-    "stays_at_place"
+    "stays_at_place",
+    "prepares_workshop"
   ]
   def __init__(self, type, description, importance, area=None, mob_id=0, destination=None):
     self.type = type

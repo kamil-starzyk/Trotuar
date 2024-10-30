@@ -456,7 +456,9 @@
               "e",
               "s"
             ],
-            "utilities":[{
+            "utilities":[
+            {
+              "id": 7,
               "type": "Boat",
               "alias": [
                 "znak"
@@ -676,6 +678,7 @@
             ],
             "utilities":[
               {
+                "id": 1,
                 "type": "Chest",
                 "alias": [
                   "skrzynia osobista",
@@ -695,6 +698,7 @@
                 }
               },
               {
+                "id": 2,
                 "type": "Furniture",
                 "alias": [
                   "łóżko jednoosobowe",
@@ -925,6 +929,7 @@
             ],
             "utilities":[
               {
+                "id": 3,
                 "type": "Shelter",
                 "alias": [
                   "mały namiot",
@@ -949,6 +954,7 @@
                 }
               },
               {
+                "id": 4,
                 "type": "Shelter",
                 "alias": [
                   "duży namiot",
@@ -973,6 +979,7 @@
                 }
               },
               {
+                "id": 5,
                 "type": "Fireplace",
                 "alias": [
                   "ognisko"
@@ -1049,6 +1056,7 @@
             ],
             "utilities":[
               {
+                "id": 6,
                 "type": "Boat",
                 "alias": [
                   "łódź",
@@ -1662,7 +1670,14 @@
             "area": "Torenberg",
             "current_activity": {},
             "next_activity": {},
-            "schedule": {},
+            "schedule": {
+              "7:00": {
+                "type": "prepares_workshop",
+                "description": ["układa narzędzia", "sprawdza stan techniczny urządzeń", "rozpala piec"],
+                "importance": 5,
+                "destination": {"x": 6, "y": 2, "z": 1}
+              }
+            },
             "path": [],
             "can_trade": true,
             "items_to_sell": [

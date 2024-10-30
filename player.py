@@ -1021,7 +1021,7 @@ class Player(Mob):
 
       for _ in range(number_of_items):
         item = Item.from_dict(blueprint.resulting_item)
-        #TODO klasa ekwipunku
+        #TODO klasa ekwipunku //DONE :)
         self.equipment.add_item(item)
         if item.stackable():
           number_of_items = item.amount
