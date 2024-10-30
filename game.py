@@ -103,20 +103,24 @@ class Game:
       exit()
 
 
-
-
   def show_current_square(self):
     self.player.my_square.show_square()
 
 
   def update_state(self, sec):
+    self.update_quests()
+    self.check_player_status()
+    self.update_mobs(sec)
+    self.process_milestones()
+
+  def update_quests(self):
     for quest in self.quests:
       if self.player.quest_id:
         if quest.id == self.player.quest_id:
           quest.status = 1
           Konsola.print(" Przyjąłeś zadanie: ", line_end="")
           Konsola.print(quest.name, "lyellow")
-
+    
     for quest in [q for q in self.quests if q.status == 1]:
       if self.player.picked_item:
         for obj in quest.objectives:
@@ -182,7 +186,8 @@ class Game:
     self.player.given_item = None
     self.player.item_receiver = None
     self.player.mobs_killed = []
-
+  
+  def check_player_status(self):
     if self.player.hp == 0:
       self.is_playing = False
       Konsola.you_died()
@@ -191,11 +196,12 @@ class Game:
       Konsola.hr()
       print("[1] Wróć do menu")
       print("[2] Opuść grę")
+ 
       choice = Konsola.int_input(1,2)
       if choice == 2:
         exit()
-    
-    # docelowo tu będą moby, które są nota bene mobilne. Na razie to są tylko szczury
+
+  def update_mobs(self, sec):
     mobs = self.player.current_location.mobs
 
     seconds = int(sec)
@@ -267,10 +273,6 @@ class Game:
           mob.try_to_draw_weapon(is_mob_on_square)
           mob.perform_attack(enemy, "hit", is_mob_on_square)
 
-          
-
-
-
     for _ in range(minutes):
       loop_body()
 
@@ -283,7 +285,7 @@ class Game:
         loop_body()
       self.time.time_progress(seconds)
 
-    #MILESTONES
+  def process_milestones(self):
     for _, milestone in self.milestones.items():
       conditions_met = True
       if milestone["status"] == 1 and milestone["conditions"]:

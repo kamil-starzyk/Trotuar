@@ -2,17 +2,13 @@ from game import Game
 from konsola import Konsola
 from helper import Helper
 
-game = Game()
-
-
 while True:
   
+  game = Game()
   game.title_screen()
   player = game.player
-  #uzjel = next((mob for mob in player.current_location.mobs if mob.name == "Łotrzyk Uzjel"), None)
 
   game.update_state(0)
-  player.my_square.show_square()
 
   command_mapping = {
   "n" :         (player.move_in_direction, "n"),
