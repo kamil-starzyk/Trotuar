@@ -206,6 +206,7 @@ class Game:
 
     seconds = int(sec)
     minutes = seconds // 60
+    
     def loop_body():
       for mob in mobs:
         if not mob.current_activity:

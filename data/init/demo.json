@@ -2609,34 +2609,67 @@
               },
             "next_activity": {},
             "schedule": {
-              "08:00": {
-                "type": "random_walk",
-                "description": ["spaceruje sobie", "przechadza się z miejsca na miejsce"],
-                "area": "Plac treningowy",
-                "importance": 1
+              "12345":{
+                "08:00": {
+                  "type": "random_walk",
+                  "description": ["spaceruje sobie", "przechadza się z miejsca na miejsce"],
+                  "area": "Plac treningowy",
+                  "importance": 1
+                },
+                "12:00": {
+                  "type": "fight",
+                  "description": ["trenuje z kukłą", "zadaje ciosy kukle"],
+                  "importance": 8,
+                  "mob_id": 13
+                },
+                "12:15": {
+                  "type": "random_walk",
+                  "description": ["spaceruje sobie", "przechadza się z miejsca na miejsce"],
+                  "area": "Las",
+                  "importance": 1
+                },
+                "13:00": {
+                  "type": "rest",
+                  "description": ["odpoczywa", "zbija bąki"],
+                  "importance": 1
+                },
+                "18:00": {
+                  "type": "stays_at_place",
+                  "description": ["siedzi w karczmie", "zagląda na dno kufla", "ogląda świat przez dno butelki"],
+                  "importance": 2,
+                  "destination": {"x": 5, "y": 6, "z": 1}
+                }
               },
-              "12:00": {
-                "type": "fight",
-                "description": ["trenuje z kukłą", "zadaje ciosy kukle"],
-                "importance": 8,
-                "mob_id": 13
-              },
-              "12:15": {
-                "type": "random_walk",
-                "description": ["spaceruje sobie", "przechadza się z miejsca na miejsce"],
-                "area": "Las",
-                "importance": 1
-              },
-              "13:00": {
-                "type": "rest",
-                "description": ["odpoczywa", "zbija bąki"],
-                "importance": 1
-              },
-              "18:00": {
-                "type": "stays_at_place",
-                "description": ["siedzi w karczmie", "zagląda na dno kufla", "ogląda świat przez dno butelki"],
-                "importance": 2,
-                "destination": {"x": 5, "y": 6, "z": 1}
+              "67":{
+                "11:00": {
+                  "type": "random_walk",
+                  "description": ["spaceruje sobie", "przechadza się z miejsca na miejsce"],
+                  "area": "Plac treningowy",
+                  "importance": 1
+                },
+                "14:00": {
+                  "type": "fight",
+                  "description": ["trenuje z kukłą", "zadaje ciosy kukle"],
+                  "importance": 8,
+                  "mob_id": 13
+                },
+                "14:15": {
+                  "type": "random_walk",
+                  "description": ["spaceruje sobie", "przechadza się z miejsca na miejsce"],
+                  "area": "Las",
+                  "importance": 1
+                },
+                "16:00": {
+                  "type": "rest",
+                  "description": ["odpoczywa", "zbija bąki"],
+                  "importance": 1
+                },
+                "19:00": {
+                  "type": "stays_at_place",
+                  "description": ["siedzi w karczmie", "zagląda na dno kufla", "ogląda świat przez dno butelki"],
+                  "importance": 2,
+                  "destination": {"x": 5, "y": 6, "z": 1}
+                }
               }
             },
             "path": [],

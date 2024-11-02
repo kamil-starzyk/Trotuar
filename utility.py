@@ -90,6 +90,5 @@ class Utility:
   @classmethod
   def from_dict(cls, data):
     items = Equipment.from_dict(data["items"])
-    print(data["name"])
     return cls(data["id"], data["type"], data["alias"], data["name"], data["description"], data["square_description"], data["lock"], data["opened"], data["attr"], items, data['money'], data["actions"])
   
