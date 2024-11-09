@@ -809,7 +809,9 @@ class Mob:
     else:
       next_activity = {}
     if self.schedule:
-      schedule = {time: activity.to_dict() for time, activity in self.schedule.items()}
+      for day, activities in self.schedule.items():
+        schedule = {}
+        schedule[day] = {time: activity.to_dict() for time, activity in activities.items()}
     else:
       schedule = {}
     return {
@@ -868,10 +870,18 @@ class Mob:
       else:
         slots[key] = Item.from_dict(slots[key])
     items_to_sell = [Item.from_dict(item_data) for item_data in data["items_to_sell"]]
+    
     schedule_data = data.get("schedule", {})
-    schedule = {}
-    for time, activity_data in schedule_data.items():
-      schedule[time] = Activity.from_dict(activity_data)
+    schedule = {str(day): {} for day in range(1, 8)} 
+    for days_key, activities in schedule_data.items():
+      for day in days_key:
+        for time, activity_data in activities.items():
+
+          if time not in schedule[day]:
+            schedule[day][time] = Activity.from_dict(activity_data)
+          
+    # print(schedule)
+    
     current_activity = Activity.from_dict(data.get("current_activity")) if data["current_activity"] else None
     next_activity = Activity.from_dict(data.get("next_activity")) if data["next_activity"] else None
     blueprints = [Blueprint.from_dict(blueprint) for blueprint in data["blueprints"]]

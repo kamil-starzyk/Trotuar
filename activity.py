@@ -30,6 +30,7 @@ class Activity:
   
   @classmethod
   def from_dict(cls, data):
+    print(data["type"])
     type = data.get("type")
     if type not in cls.LIST_OF_ACTIVITIES:
       raise ValueError(f"Invalid activity type: {type}")

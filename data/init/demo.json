@@ -1671,11 +1671,13 @@
             "current_activity": {},
             "next_activity": {},
             "schedule": {
-              "7:00": {
-                "type": "prepares_workshop",
-                "description": ["układa narzędzia", "sprawdza stan techniczny urządzeń", "rozpala piec"],
-                "importance": 5,
-                "destination": {"x": 6, "y": 2, "z": 1}
+              "1234567":{
+                "7:00": {
+                  "type": "prepares_workshop",
+                  "description": ["układa narzędzia", "sprawdza stan techniczny urządzeń", "rozpala piec"],
+                  "importance": 5,
+                  "destination": {"x": 6, "y": 2, "z": 1}
+                }
               }
             },
             "path": [],
@@ -3000,34 +3002,36 @@
               },
             "next_activity": {},
             "schedule": {
-              "08:00": {
-                "type": "random_walk",
-                "description": ["spaceruje sobie", "przechadza się z miejsca na miejsce"],
-                "area": "Plac treningowy",
-                "importance": 1
-              },
-              "12:00": {
-                "type": "fight",
-                "description": ["trenuje z kukłą", "zadaje ciosy kukle"],
-                "importance": 8,
-                "mob_id": 13
-              },
-              "12:15": {
-                "type": "random_walk",
-                "description": ["spaceruje sobie", "przechadza się z miejsca na miejsce"],
-                "area": "Las",
-                "importance": 1
-              },
-              "13:00": {
-                "type": "rest",
-                "description": ["odpoczywa", "zbija bąki"],
-                "importance": 1
-              },
-              "18:00": {
-                "type": "stays_at_place",
-                "description": ["siedzi w karczmie", "zagląda na dno kufla", "ogląda świat przez dno butelki"],
-                "importance": 2,
-                "destination": {"x": 5, "y": 6, "z": 1}
+              "1234567":{
+                "08:00": {
+                  "type": "random_walk",
+                  "description": ["spaceruje sobie", "przechadza się z miejsca na miejsce"],
+                  "area": "Plac treningowy",
+                  "importance": 1
+                },
+                "12:00": {
+                  "type": "fight",
+                  "description": ["trenuje z kukłą", "zadaje ciosy kukle"],
+                  "importance": 8,
+                  "mob_id": 13
+                },
+                "12:15": {
+                  "type": "random_walk",
+                  "description": ["spaceruje sobie", "przechadza się z miejsca na miejsce"],
+                  "area": "Las",
+                  "importance": 1
+                },
+                "13:00": {
+                  "type": "rest",
+                  "description": ["odpoczywa", "zbija bąki"],
+                  "importance": 1
+                },
+                "18:00": {
+                  "type": "stays_at_place",
+                  "description": ["siedzi w karczmie", "zagląda na dno kufla", "ogląda świat przez dno butelki"],
+                  "importance": 2,
+                  "destination": {"x": 5, "y": 6, "z": 1}
+                }
               }
             },
             "path": [],
@@ -3283,11 +3287,13 @@
             },
             "next_activity": {},
             "schedule": {
-              "00:00": {
-                "type": "random_walk",
-                "description": ["przemyka kanałami", "uderza małymi stópkami o trotuar"],
-              "area": "Kanały",
-                "importance": 1
+              "1234567":{
+                "00:00": {
+                  "type": "random_walk",
+                  "description": ["przemyka kanałami", "uderza małymi stópkami o trotuar"],
+                  "area": "Kanały",
+                    "importance": 1
+                }
               }
             },
             "path": [],
@@ -3364,11 +3370,13 @@
             },
             "next_activity": {},
             "schedule": {
-              "00:00": {
-                "type": "random_walk",
-                "description": ["przemyka kanałami", "uderza małymi stópkami o trotuar"],
-              "area": "Kanały",
-                "importance": 1
+              "1234567":{
+                "00:00": {
+                  "type": "random_walk",
+                  "description": ["przemyka kanałami", "uderza małymi stópkami o trotuar"],
+                  "area": "Kanały",
+                    "importance": 1
+                }
               }
             },
             "path": [],
@@ -3445,11 +3453,13 @@
             },
             "next_activity": {},
             "schedule": {
-              "00:00": {
-                "type": "random_walk",
-                "description": ["przemyka kanałami", "uderza małymi stópkami o trotuar"],
-              "area": "Kanały",
-                "importance": 1
+              "1234567":{
+                "00:00": {
+                  "type": "random_walk",
+                  "description": ["przemyka kanałami", "uderza małymi stópkami o trotuar"],
+                  "area": "Kanały",
+                    "importance": 1
+                }
               }
             },
             "path": [],
@@ -3528,11 +3538,13 @@
             },
             "next_activity": {},
             "schedule": {
-              "00:00": {
-                "type": "random_walk",
-                "description": ["przemyka kanałami", "uderza małymi stópkami o trotuar"],
-              "area": "Kanały",
-                "importance": 1
+              "1234567":{
+                "00:00": {
+                  "type": "random_walk",
+                  "description": ["przemyka kanałami", "uderza małymi stópkami o trotuar"],
+                  "area": "Kanały",
+                    "importance": 1
+                }
               }
             },
             "path": [],
@@ -3611,11 +3623,13 @@
             },
             "next_activity": {},
             "schedule": {
-              "00:00": {
-                "type": "random_walk",
-                "description": ["przemyka kanałami", "uderza małymi stópkami o trotuar"],
-              "area": "Kanały",
-                "importance": 1
+              "1234567":{
+                "00:00": {
+                  "type": "random_walk",
+                  "description": ["przemyka kanałami", "uderza małymi stópkami o trotuar"],
+                  "area": "Kanały",
+                    "importance": 1
+                }
               }
             },
             "path": [],
