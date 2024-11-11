@@ -572,18 +572,20 @@ class Mob:
   
   def update_current_activity(self, time):
     current_time = time.get_hour_minute()
-    for activity_time, activity in self.schedule.items():
-      if activity_time == current_time:
-        try:
-          if self.current_activity.type == "fight":
-            enemy = next((mob for mob in self.current_location.mobs if mob.mob_id == mob.current_activity.mob_id), None)
-            if enemy:
-              enemy.current_activity = enemy.next_activity
-              enemy.next_activity = None
-        except AttributeError:
-          pass
+    current_week_day = time.get_week_day()
+    for activity_day, activities in self.schedule.items():
+      for activity_time, activity in activities.items():
+        if activity_time == current_time and int(activity_day) == int(current_week_day):
+          try:
+            if self.current_activity.type == "fight":
+              enemy = next((mob for mob in self.current_location.mobs if mob.mob_id == mob.current_activity.mob_id), None)
+              if enemy:
+                enemy.current_activity = enemy.next_activity
+                enemy.next_activity = None
+          except AttributeError:
+            pass
 
-        self.current_activity = activity
+          self.current_activity = activity
 
   
 

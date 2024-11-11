@@ -30,6 +30,9 @@ class GameTime:
   def get_hour_minute(self):
     return f"{self.h:02d}:{self.m:02d}"
 
+  def get_week_day(self):
+    return self.week_d
+
   def time_progress(self, sec):
     # Define constants for the new time system
     SECONDS_PER_MINUTE = 60
