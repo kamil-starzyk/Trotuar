@@ -1,3 +1,4 @@
+from mob import Mob
 from helper import Helper
 from konsola import Konsola
 from item import Item
@@ -8,11 +9,11 @@ from equipment import Equipment
 import math #ceil damage
 import random #for escape
 
-class Npc:
+class Npc(Mob):
   BASIC_CARRY_WEIGHT = 40
   ids = {}
   def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, skills, equipment, slots, conversations, knowledge, journal, current_activity, next_activity, schedule, area, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, teacher_of, blueprints, affiliation):
-    super(Npc, self).__init__(mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, skills, equipment, slots, knowledge, journal)
+    super(Npc, self).__init__(mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, skills, equipment, slots, knowledge, journal, killable, can_duel, blueprints, affiliation)
     self.conversations = conversations
     
     
@@ -29,14 +30,11 @@ class Npc:
     self.can_trade = can_trade
     self.items_to_sell = items_to_sell
     self.wants_to_buy = wants_to_buy
-    self.chance_bonus = 0
-    self.killable = killable
-    self.can_duel = can_duel
+    
     self.is_aggressive = is_aggressive
     self.can_ally = can_ally
     self.teacher_of = teacher_of
     self.blueprints = blueprints
-    self.affiliation = affiliation
     self.direction_history = {
       "n": 0,
       "s": 0,
@@ -58,48 +56,6 @@ class Npc:
       return True
     print("There is no square with this coordinates")
     return 0
-  
-  def calculate_next_position(self, direction):
-    # Extract logic for calculating next coordinates based on direction
-    next_x, next_y, next_z = self.x, self.y, self.z
-
-    if direction == "n":
-        next_y -= 1
-    elif direction == "e":
-        next_x += 1
-    elif direction == "s":
-        next_y += 1
-    elif direction == "w":
-        next_x -= 1
-    elif direction == "u":
-        next_z += 1
-    elif direction == "d":
-        next_z -= 1
-
-    return next_x, next_y, next_z
-
-  def move_in_direction(self, direction):
-    next_x, next_y, next_z = self.calculate_next_position(direction)
-
-    # Check if the next coordinates are within the allowed area before moving
-    # if self.area and {"x": next_x, "y": next_y, "z": next_z} in self.area.squares:
-    if direction in self.my_square.exits:
-      self.x = next_x
-      self.y = next_y
-      self.z = next_z
-      if self.overloaded:
-        stamina = -20*self.overloaded
-        stamina_max = -0.2 - (4*self.overloaded)
-        self.adjust_stamina(stamina, stamina_max)
-      else:
-        self.adjust_stamina(0.5, -0.2)
-      return direction
-    return 0
-     
-  def is_on_square(self, x, y, z):
-    if self.x == x and self.y == y and self.z == z:
-      return True
-    return False
 
   def recursive_pathfinder(self, x, y, z, visited):
     if (x, y, z) in visited:
@@ -280,207 +236,6 @@ class Npc:
 
           self.current_activity = activity
 
-  
-
-    
-
-  # Getter properties
-  @property
-  def strength(self):
-    """
-    Strength is very straight-forwart stat. It determines how much damage an blow will do.
-    Range of this stat is 0-50
-    Returns:
-        int: The item-adjusted strength value.
-    """
-    return self.stat_minus_items_attr("strength")
-
-  @property
-  def attack(self):
-    """
-    Attack defines overall offensive ability of mob. It partially affects chance of dealing a hit and primarily amount of damage done.
-    It also increases chance of dealing critical hit
-    Range of this stat is 0-50
-    Returns:
-        int: The item-adjusted attack value.
-    """
-    return self.stat_minus_items_attr("attack")
-
-  @property
-  def defence(self):
-    """
-    Defence defines overall defensive ability of mob. It partially decreases chance of being hit and primarily decreases amount of damage received.
-    Range of this stat is 0-50
-    Returns:
-        int: The item-adjusted defence value.
-    """
-    return self.stat_minus_items_attr("defence")
-
-  @property
-  def speed(self):
-    """
-    Speed determines rate of hits. Higher speed means more occasions to hit enemy. It also reduces chance of being hit.
-    This stat is the most negatively affected by items in outfit.
-    Range of this stat is 0-50
-    Returns:
-        int: The item-adjusted speed value.
-    """
-    return self.stat_minus_items_attr("speed")
-
-  @property
-  def dexterity(self):
-    """
-    Dexterity represents one's ability to hand weapon. It primarily affects chance of dealing a hit and to some extent amount of damage done.
-    It increases chance of dealing critical hit more than attack.
-    It also narrwows down range of randomness of damage done:
-     - 0 dexterity: damage_multiplier(33 - 66), 
-     - 50 dexterity: damage_multiplier(45 - 55)
-    Range of this stat is 0-50
-    Returns:
-        int: The item-adjusted dexterity value.
-    """
-    return self.stat_minus_items_attr("dexterity")
-
-  @property
-  def endurance(self):
-    """
-    Endurance tells how quickly someone gets tired, and ho fast he regenerates
-    Range of this stat is 0-50
-    Returns:
-        int: The item-adjusted endurance value.
-    """
-    return self.stat_minus_items_attr("endurance")
-
-  @property
-  def hp(self):
-    return int(self.params["hp"])
-  
-  @hp.setter
-  def hp(self, value):
-    if value <= 0:
-      self.params["hp"] = 0
-    elif value >= self.params["hp_max"]:
-      self.params["hp"] = self.params["hp_max"]
-    else:
-      self.params["hp"] = value
-      
-  @property
-  def hp_max(self):
-    return int(self.params["hp_max"])
-
-  @property
-  def stamina(self):
-    return self.params["stamina"]
-  
-  @stamina.setter
-  def stamina(self, value):
-    if value <= 0:
-      self.params["stamina"] = 0
-    elif value >= self.stamina_max:
-      self.params["stamina"] = self.stamina_max
-    else:
-      self.params["stamina"] = value
-
-  @property
-  def stamina_max(self):
-    if self.params["stamina_max"] < self.params["stamina_total"]/2:
-      return self.params["stamina_max"]
-    return self.params["stamina_total"]/2
-    
-  @stamina_max.setter
-  def stamina_max(self, value):
-    if value <= 0:
-      self.params["stamina_max"] = 0
-    elif value >= self.params["stamina_total"]:
-      self.params["stamina_max"] = self.params["stamina_total"]
-    else:
-      self.params["stamina_max"] = value
-
-  @property
-  def mana(self):
-    return int(self.params["mana"])
-  
-  @property
-  def mana_max(self):
-    return int(self.params["mana_max"])
-  
-  @mana.setter
-  def mana(self, value):
-    if value <= 0:
-      self.params["mana"] = 0
-    elif value >= self.params["mana_max"]:
-      self.params["mana"] = self.params["mana_max"]
-    else:
-      self.params["mana"] = value
-
-  @property
-  def satiation(self):
-    return int(self.params["satiation"])
-  
-  @satiation.setter
-  def satiation(self, value):
-    if value <= 0:
-      self.params["satiation"] = 0
-    elif value >= self.params["satiation_max"]:
-      self.params["satiation"] = self.params["satiation_max"]
-    else:
-      self.params["satiation"] = value
-  
-  @property
-  def satiation_max(self):
-    return int(self.params["satiation_max"])
-    
-  @property
-  def hydration(self):
-    return int(self.params["hydration"])
-  
-  @hydration.setter
-  def hydration(self, value):
-    if value <= 0:
-      self.params["hydration"] = 0
-    elif value >= self.params["hydration_max"]:
-      self.params["hydration"] = self.params["hydration_max"]
-    else:
-      self.params["hydration"] = value
-  
-  @property
-  def hydration_max(self):
-    return int(self.params["hydration_max"])
-
-  @property
-  def carry_weight(self):
-    strength_coefficient = self.stat_coefficient(self.stats["strength"])
-    return int(strength_coefficient*Mob.BASIC_CARRY_WEIGHT)
-  
-  @property
-  def max_carry_weight(self):
-    carry_weight = self.carry_weight
-    endurance_coefficient = self.stat_coefficient(self.stats["endurance"])
-    endurance_bonus_weight = 0.75*endurance_coefficient*Mob.BASIC_CARRY_WEIGHT
-    return int(carry_weight + endurance_bonus_weight)
-
-  @property
-  def weight_carried_rn(self):
-    total_weight = sum(item.weight*item.amount for item in self.equipment)
-    return total_weight
-  
-  @property
-  def overloaded(self):
-    """
-    Overloaded informs about carrying more weight than carry_weight but less than max_carry_weight.
-    If mob carries less than carry_weight it will return 0, otherwise it will return fraction of weight over carry_weight / max_carry_weight
-    Range of this value is 0-1
-    Returns:
-        float: fraction of excessive weight.
-    """
-    excessive_weight = max(0, self.weight_carried_rn - self.carry_weight)
-    fraction = excessive_weight / self.max_carry_weight
-    return fraction
-
-  @property
-  def my_square(self):
-    return self.current_location.find_square(self.x, self.y, self.z)
-
 
   def to_dict(self):
     npc = super().to_dict()
@@ -518,14 +273,6 @@ class Npc:
     next_activity = Activity.from_dict(data.get("next_activity")) if data["next_activity"] else None
     blueprints = [Blueprint.from_dict(blueprint) for blueprint in data["blueprints"]]
 
-    try:
-      mob = cls(mob_id, data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], data["skills"], eq, slots, data["conversations"], data["knowledge"], data["journal"], current_activity, next_activity, schedule, data["area"], data["path"], data["can_trade"], items_to_sell, data["wants_to_buy"], data["killable"], data["can_duel"], data["is_aggressive"], data["can_ally"], data['teacher_of'], blueprints, data["affiliation"])
-      return mob
-    except TypeError:
-      print("Nie udało się wczytać danych: TypeError")
-      print("Aktualnie ładowana postać: "+ data["name"])
-      exit()
-    except KeyError:
-      print("Nie udało się wczytać danych: KeyError")
-      print("Aktualnie ładowana postać: "+ data["name"])
-      exit()
+    
+    mob = cls(mob_id, data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], data["skills"], eq, slots, data["conversations"], data["knowledge"], data["journal"], current_activity, next_activity, schedule, data["area"], data["path"], data["can_trade"], items_to_sell, data["wants_to_buy"], data["killable"], data["can_duel"], data["is_aggressive"], data["can_ally"], data['teacher_of'], blueprints, data["affiliation"])
+    return mob

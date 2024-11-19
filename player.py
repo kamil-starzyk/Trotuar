@@ -12,27 +12,10 @@ class Player(Mob):
   TIME_OF_ITEM_INTERACTION = 30
   TIME_OF_CONVERSATION = 90
   TIME_OF_EXCHANGING_BLOWS = 30
-  ALL_SKILLS = {
-    "melee": [
-      "fist", "sword", "knife", "cudgel"
-    ],
-    "ranged": [
-      "thrown", "bow", "crossbow", "slingshot"
-    ],
-    "craft": [
-      "cooking", "alchemy", "blacksmithing", "carpentry"
-    ],
-    "magic": [
-      "fire", "water", "air", "light", "nature", "necromancy"
-    ],
-    "nature": [
-      "herbs", "animals", "fungi", "plants"
-    ]
-  }
 
-  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, skills, equipment, slots, conversations, knowledge, journal, current_activity, next_activity, schedule, area, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, teacher_of, blueprints, affiliation):
+  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, skills, equipment, slots, knowledge, journal, killable, can_duel, blueprints, affiliation):
     Mob.ids = {} #resets class property when game is reloaded
-    super(Player, self).__init__(mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, skills, equipment, slots, conversations, knowledge, journal, current_activity, next_activity, schedule, area, path, can_trade, items_to_sell, wants_to_buy, killable, can_duel, is_aggressive, can_ally, teacher_of, blueprints, affiliation)
+    super(Player, self).__init__(mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, skills, equipment, slots, knowledge, journal, killable, can_duel, blueprints, affiliation)
     self.game = None
     self.quest_id = None
     self.picked_item = None
@@ -1053,4 +1036,4 @@ class Player(Mob):
         slots[key] = Item.from_dict(slots[key])
     blueprints = [Blueprint.from_dict(blueprint) for blueprint in data["blueprints"]]
 
-    return cls(data["mob_id"], data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], data["skills"], eq, slots, {}, data["knowledge"], data["journal"], "", "", None, None, [], True, [], [], True, True, True, True, [], blueprints, data["affiliation"])
+    return cls(data["mob_id"], data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], data["skills"], eq, slots, data["knowledge"], data["journal"], True, True, blueprints, data["affiliation"])

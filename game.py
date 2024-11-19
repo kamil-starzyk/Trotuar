@@ -66,7 +66,6 @@ class Game:
     self.quests = [Quest.from_dict(data) for data in data["quests"]]
     self.milestones = data["milestones"]
     self.player.current_location = self.world.locations[0]
-    self.player.area = self.world.locations[0].areas[0]
     self.is_playing = True
     Konsola.clear()
     #Konsola.print("Rozpocząłeś grę demonstracyjną", "lwhite")
@@ -234,7 +233,7 @@ class Game:
           if mob.is_on_square(x, y, z):
             mob.current_activity = mob.next_activity
             mob.next_activity = None
-
+  
         elif mob.current_activity.type == "random_walk":
           area_name = mob.current_activity.area
           destined_area = mob.current_location.find_area(area_name)

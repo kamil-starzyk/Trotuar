@@ -10,8 +10,25 @@ import random #for escape
 
 class Mob:
   BASIC_CARRY_WEIGHT = 40
+  ALL_SKILLS = {
+    "melee": [
+      "fist", "sword", "knife", "cudgel"
+    ],
+    "ranged": [
+      "thrown", "bow", "crossbow", "slingshot"
+    ],
+    "craft": [
+      "cooking", "alchemy", "blacksmithing", "carpentry"
+    ],
+    "magic": [
+      "fire", "water", "air", "light", "nature", "necromancy"
+    ],
+    "nature": [
+      "herbs", "animals", "fungi", "plants"
+    ]
+  }
   ids = {}
-  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, skills, equipment, slots, knowledge, journal):
+  def __init__(self, mob_id, x, y, z, base_name, name, alias, description, lvl, exp, weight, money, race, proficiency, params, stats, skills, equipment, slots, knowledge, journal, killable, can_duel, blueprints, affiliation):
     self.mob_id = mob_id
     self.x = x
     self.y = y
@@ -34,6 +51,11 @@ class Mob:
     self.slots = slots
     self.knowledge = knowledge
     self.journal = journal
+    self.chance_bonus = 0
+    self.killable = killable
+    self.can_duel = can_duel
+    self.blueprints = blueprints
+    self.affiliation = affiliation
     
 
   def see_more(self):
@@ -157,6 +179,48 @@ class Mob:
     self.stamina_max += (s_max / endurance) if s_max < 0 else (s_max * endurance)
     self.stamina += (s / endurance) if s < 0 else (s * endurance)
     
+  def calculate_next_position(self, direction):
+    # Extract logic for calculating next coordinates based on direction
+    next_x, next_y, next_z = self.x, self.y, self.z
+
+    if direction == "n":
+        next_y -= 1
+    elif direction == "e":
+        next_x += 1
+    elif direction == "s":
+        next_y += 1
+    elif direction == "w":
+        next_x -= 1
+    elif direction == "u":
+        next_z += 1
+    elif direction == "d":
+        next_z -= 1
+
+    return next_x, next_y, next_z
+
+  def move_in_direction(self, direction):
+    next_x, next_y, next_z = self.calculate_next_position(direction)
+
+    # Check if the next coordinates are within the allowed area before moving
+    # if self.area and {"x": next_x, "y": next_y, "z": next_z} in self.area.squares:
+    if direction in self.my_square.exits:
+      self.x = next_x
+      self.y = next_y
+      self.z = next_z
+      if self.overloaded:
+        stamina = -20*self.overloaded
+        stamina_max = -0.2 - (4*self.overloaded)
+        self.adjust_stamina(stamina, stamina_max)
+      else:
+        self.adjust_stamina(0.5, -0.2)
+      return direction
+    return 0
+     
+  def is_on_square(self, x, y, z):
+    if self.x == x and self.y == y and self.z == z:
+      return True
+    return False
+
 
   def show_equipment(self):
     print("Udźwig: ", end="")
@@ -579,47 +643,3 @@ class Mob:
       "blueprints": [blueprint.to_dict() for blueprint in self.blueprints],
       "affiliation": self.affiliation
     }
-
-  @classmethod
-  def from_dict(cls, data):
-    mob_id = data["mob_id"]
-    if mob_id in cls.ids:
-      raise ValueError(f"Duplicate mob ID found: {mob_id}")
-    cls.ids[mob_id] = data["name"]
-
-
-    eq = Equipment.from_dict(data["equipment"])
-    slots = data["slots"]
-    for key in slots:
-      if slots[key] == {}:
-        slots[key] = None
-      else:
-        slots[key] = Item.from_dict(slots[key])
-    items_to_sell = [Item.from_dict(item_data) for item_data in data["items_to_sell"]]
-    
-    schedule_data = data.get("schedule", {})
-    schedule = {str(day): {} for day in range(1, 8)} 
-    for days_key, activities in schedule_data.items():
-      for day in days_key:
-        for time, activity_data in activities.items():
-
-          if time not in schedule[day]:
-            schedule[day][time] = Activity.from_dict(activity_data)
-          
-    # print(schedule)
-    
-    current_activity = Activity.from_dict(data.get("current_activity")) if data["current_activity"] else None
-    next_activity = Activity.from_dict(data.get("next_activity")) if data["next_activity"] else None
-    blueprints = [Blueprint.from_dict(blueprint) for blueprint in data["blueprints"]]
-
-    try:
-      mob = cls(mob_id, data["x"], data["y"], data["z"], data["base_name"], data["name"], data["alias"], data["description"], data["lvl"], data["exp"], data["weight"], data["money"], data["race"], data["proficiency"], data["params"], data["stats"], data["skills"], eq, slots, data["conversations"], data["knowledge"], data["journal"], current_activity, next_activity, schedule, data["area"], data["path"], data["can_trade"], items_to_sell, data["wants_to_buy"], data["killable"], data["can_duel"], data["is_aggressive"], data["can_ally"], data['teacher_of'], blueprints, data["affiliation"])
-      return mob
-    except TypeError:
-      print("Nie udało się wczytać danych: TypeError")
-      print("Aktualnie ładowana postać: "+ data["name"])
-      exit()
-    except KeyError:
-      print("Nie udało się wczytać danych: KeyError")
-      print("Aktualnie ładowana postać: "+ data["name"])
-      exit()

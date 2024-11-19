@@ -1,6 +1,3 @@
-from square import Square
-from mob import Mob
-
 class Area:
   def __init__(self, name, reference_coordinate, squares):
     self.name = name

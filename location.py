@@ -1,6 +1,6 @@
 from square import Square
 from area import Area
-from mob import Mob
+from npc import Npc
 
 class Location:
   def __init__(self, name, description, size_x, size_y, size_z, ground_level, squares, mobs, secret_passages, areas):
@@ -59,7 +59,7 @@ class Location:
     squares_list = data["squares"]
     mobs_list = data["mobs"]
     squares = [Square.from_dict(square_data) for square_data in squares_list]
-    mobs = [Mob.from_dict(mob_data) for mob_data in mobs_list]
+    mobs = [Npc.from_dict(mob_data) for mob_data in mobs_list]
     passages = data["secret_passages"]
     areas_list = data["areas"]
     areas = [Area.from_dict(area_data) for area_data in areas_list]
