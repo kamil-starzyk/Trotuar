@@ -6,6 +6,7 @@ from item import Item
 from activity import Activity
 from blueprint import Blueprint
 from equipment import Equipment
+from combat import Combat
 
 class Player(Mob):
   TIME_OF_MOVEMENT = 60
@@ -543,6 +544,10 @@ class Player(Mob):
       Konsola.print("Nie ma tu kogoś takiego", "red")
       return 0
 
+    
+    combat = Combat()
+    self.game.combat = combat
+    
     enemies = []
     enemies.append(current_enemy)
     current_enemy_index = 0

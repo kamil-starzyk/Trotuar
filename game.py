@@ -18,6 +18,7 @@ class Game:
     self.quests = []
     self.time = None
     self.milestones = milestones #milestone["status"] = 0 - not active / 1 - active / 2 - completed
+    self.combat = None
   
   def title_screen(self):
     method_map = {
