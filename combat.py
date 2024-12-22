@@ -11,6 +11,10 @@ class Combat:
     self.queue = []
     self.active = True    
 
+  def add_combatant(self, mob):
+    if mob not in self.combatants:
+      self.combatants.append(mob)
+
 
 
 

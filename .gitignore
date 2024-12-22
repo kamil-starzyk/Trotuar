@@ -5,3 +5,4 @@
 todo.txt
 data/saves/*
 !data/saves/.gitkeep
+combat_copy.py
