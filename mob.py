@@ -1,7 +1,6 @@
 from helper import Helper
 from konsola import Konsola
 from item import Item
-from utility import Utility
 from activity import Activity
 from blueprint import Blueprint
 from equipment import Equipment
@@ -343,6 +342,7 @@ class Mob:
     return coefficient 
 
   def die(self):
+    from utility import Utility
     for k, v in self.slots.items():
       if v:
         self.my_square.items.append(v)

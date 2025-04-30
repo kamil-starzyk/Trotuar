@@ -329,6 +329,25 @@ class Game:
             mob.drop(action["item_name"], action["item_amount"])
             Konsola.print(action["message"], "lmagenta")
             #Helper.sleep(1.5)
+          
+          elif action["type"] == "load_passenger":
+            mob = next((mob for mob in self.player.current_location.mobs if mob.mob_id == action["mob_id"]), None)
+            utility = next((utility for utility in self.player.my_square.utilities if utility.id == action["utility_id"]), None)
+            if "passengers" in utility.attr:
+              if utility.add_passenger(mob):
+                Konsola.print(action["message"], "lmagenta")
+              else:
+                Konsola.print("Nie udało się wsiąść", "red")
+          
+          elif action["type"] == "unload_passenger":
+            utility = next((utility for utility in self.player.my_square.utilities if utility.id == action["utility_id"]), None)
+            if "passengers" in utility.attr:
+              if utility.remove_passenger(action["mob_id"], self.player.my_square):
+                Konsola.print(action["message"], "lmagenta")
+              else:
+                Konsola.print("Nie udało się wysiąść", "red")
+
+
             
         Helper.sleep(1.5)
         self.show_current_square()

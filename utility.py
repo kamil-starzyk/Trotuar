@@ -36,8 +36,17 @@ class Utility:
     if self.attr:
       Konsola.print("Atrybuty:", "lwhite")
       for k, v in self.attr.items():
-        Konsola.print(" " + k, line_end=': ')
-        Konsola.print(v, "lwhite")
+        #skip: text, duration
+        if k == "comfort":
+          Konsola.print(" Komfort", line_end=': ')
+          Konsola.print(v, "lwhite")
+        if k == "heat":
+          Konsola.print(" Ciepło", line_end=': ')
+          Konsola.print(v, "lwhite")
+        if k == "passengers" and len(self.attr["passengers"]) > 0:
+          Konsola.print(" Pasażerowie:")
+          for p in self.attr["passengers"]:
+            Konsola.print(p["name"], "lwhite")
     if self.actions:
       Konsola.print("Możliwe działania:", "lwhite")
       for k, v in self.actions.items():
@@ -69,6 +78,33 @@ class Utility:
     if "duration" in self.attr:
       return self.attr["duration"]
     return 1
+
+  def add_passenger(self, mob):
+    if "passengers" in self.attr:
+      passenger = mob.to_dict() 
+      self.attr["passengers"].append(passenger)
+      mob.x, mob.y, mob.z = 0,0,0
+      return 1
+    return 0
+  def remove_passenger(self, mob_id, square):
+    from npc import Npc
+    from player import Player
+    if "passengers" in self.attr:
+      for p in self.attr["passengers"]:
+        if p["mob_id"] == mob_id:
+          mob_already_exists = next((mob for mob in square.location.mobs if mob.mob_id == mob_id), None)
+          if mob_already_exists:
+            passenger = mob_already_exists
+
+          elif p["mob_id"] == 1:
+            passenger = Player.from_dict(p) 
+          else:
+            passenger = Npc.from_dict(p) 
+          passenger.x, passenger.y, passenger.z = square.x, square.y, square.z
+          passenger.current_location = square.location
+          return passenger
+    return 0    
+
     
   
   def to_dict(self):

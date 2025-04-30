@@ -373,7 +373,7 @@
             "y": 2,
             "z": 1,
             "name": "Kuźnia",
-            "description": "Oto warsztat miejscowego kowala. Stoi tu [i]palenisko[/i], a przy nim [i]miech[/i]. Obok jest [i]kowadło[/i] oraz [i]brus[/i]. Wyjście jest na zachodzie. [i]Radujmy się naszą Polską[/i].",
+            "description": "Oto warsztat miejscowego kowala. Stoi tu [i]palenisko[/i], a przy nim [i]miech[/i]. Obok jest [i]kowadło[/i] oraz [i]brus[/i]. Wyjście jest na zachodzie.",
             "exits": [
               "w"
             ],
@@ -1067,7 +1067,9 @@
                 "square_description": "Jest tu zacumowana [i]łódź[/i].",
                 "lock" : "",
                 "opened": 1,
-                "attr": {},
+                "attr": {
+                  "passengers" : []
+                },
                 "items": [
                   {
                     "type": "Quest",
@@ -3786,7 +3788,11 @@
                       },
                       {
                         "text": "Myślę, że 10 złota to uczciwa cena. Proszę oto zapłata",
-                        "response": "Skoro tak, cóż bywaj. Powodzenia w poszukiwaniu przygód."
+                        "response": "Skoro tak, cóż bywaj. Powodzenia w poszukiwaniu przygód.",
+                        "special_event": {
+                          "type": "pay_price",
+                          "value": 10
+                        }
                       }
                     ]
                   }
@@ -3847,7 +3853,8 @@
                       {
                         "text": "Dziękuję za całą pomoc i życzę spokojnego spływu.",
                         "response": "A ja Tobie życzę udanego poszukiwania przygód.",
-												"forget": "Ukończono: Towary dla karczmarza"
+												"forget": "Ukończono: Towary dla karczmarza",
+                        "milestone": "Odpływamy"
                       }
                     ]
                   }
@@ -4346,15 +4353,24 @@
     },
     "Ciężkie rzeczy": {
       "status": 0,
-      "conditions": [
-        {
-          "type": "player_overloaded"
-        }
-      ],
+      "conditions": null,
       "actions": [
         {
           "type": "wrap_text",
           "text": "Uważaj na wagę swojego ekwipunku. Jego zawartość możesz sprawdzić komendą [i]ekwipunek[/i] lub [i]eq[/i]. Zobaczysz tam listę swoich rzeczy, ich sumaryczną masę oraz swój udźwig w postaci: [i]Udźwig: 50 / 40(80)[/i]. W tym przypadku gracz niesie 50 funtów ekwipunku, czyli 10 więcej niż jego zwykły udźwig i 30 poniżej maksymalnego udźwigu. Im większe przeciążenie ponad normalny udźwig, tym szybciej się męczysz. Swoją aktualną staminę możesz zobaczyć na prompcie jako St: lub używając komendy [i]parametry[/i]/[i]params[/i].  "
+        }
+      ],
+      "next_milestone": null
+    },
+    "Odpływamy": {
+      "status": 1,
+      "conditions": null,
+      "actions": [
+        {
+          "type": "load_passenger",
+          "mob_id": 12,
+          "utility_id": 6,
+          "message": "Jacek wsiada do łodzi"
         }
       ],
       "next_milestone": null

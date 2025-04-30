@@ -289,6 +289,12 @@ class Player(Mob):
         if key in self.knowledge:
           del self.knowledge[key]
 
+      if selected_option.get("special_event"):
+        event = selected_option.get("special_event")
+        if event["type"] == "pay_price":
+          #nawet nie zamierzam obsługiwać przelewu do jacka
+          self.money -= 10
+
            
       if "quest_id" in selected_option:
         quest_id = selected_option["quest_id"]
