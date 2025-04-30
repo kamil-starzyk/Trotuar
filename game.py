@@ -346,6 +346,11 @@ class Game:
                 Konsola.print(action["message"], "lmagenta")
               else:
                 Konsola.print("Nie udało się wysiąść", "red")
+          
+          elif action["type"] == "remove_utility":
+            utility = next((utility for utility in self.player.my_square.utilities if utility.id == action["utility_id"]), None)
+            utility.remove_from_square(self.player.my_square)
+            Konsola.print(action["message"], "lmagenta")
 
 
             

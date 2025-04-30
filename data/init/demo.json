@@ -4363,7 +4363,7 @@
       "next_milestone": null
     },
     "Odpływamy": {
-      "status": 1,
+      "status": 0,
       "conditions": null,
       "actions": [
         {
@@ -4371,6 +4371,11 @@
           "mob_id": 12,
           "utility_id": 6,
           "message": "Jacek wsiada do łodzi"
+        },
+        {
+          "type": "remove_utility",
+          "utility_id": 6,
+          "message": "Łódź z Jackiem na pokładzie odpływa w siną dal..."
         }
       ],
       "next_milestone": null
