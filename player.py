@@ -1024,9 +1024,38 @@ class Player(Mob):
       Konsola.print(blueprint.resulting_item["name"], "lyellow")
 
   def to_dict(self):
-    player = super().to_dict()
-    return player
-  
+    slots_dict = {}
+    for key, value in self.slots.items():
+      if value is None:
+        slots_dict[key] = {}
+      else:
+        slots_dict[key] = value.to_dict()
+    return {
+      "mob_id": self.mob_id,
+      "x": self.x, 
+      "y": self.y,
+      "z": self.z,
+      "base_name": self.base_name,
+      "name": self.name,
+      "alias": self.alias,
+      "description": self.description,
+      "lvl": self.lvl,
+      "exp": self.exp,
+      "weight": self.weight,
+      "money": self.money,
+      "race": self.race,
+      "proficiency": self.proficiency,
+      "params": self.params,
+      "stats": self.stats,
+      "skills": self.skills,
+      "equipment": self.equipment.to_dict(),
+      "slots": slots_dict,
+      "knowledge": self.knowledge,
+      "journal": self.journal,
+      "blueprints": [blueprint.to_dict() for blueprint in self.blueprints],
+      "affiliation": self.affiliation
+    }
+
   @classmethod
   def from_dict(cls, data):
     mob_id = data["mob_id"]

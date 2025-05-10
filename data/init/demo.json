@@ -181,7 +181,6 @@
 			"Pierwsze zadanie od kapitana": "Nie byłem jeszcze u kapitana, może ma dla mnie jakieś ciekawe zadanie."
 		},
     "journal": {},
-    "teacher_of": [],
     "blueprints": [
       {
         "type": "Food",
@@ -4376,6 +4375,10 @@
           "type": "remove_utility",
           "utility_id": 6,
           "message": "Łódź z Jackiem na pokładzie odpływa w siną dal..."
+        },
+        {
+          "type": "wrap_text",
+          "text": "Wykonałeś wszystkie zadania, które miał dla Ciebie Jacek. Udaj się terax do miasta i poszukaj następnych przygód, rozmawiaj z ludźmi baw się dobrze"
         }
       ],
       "next_milestone": null

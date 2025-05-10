@@ -184,7 +184,10 @@ class Konsola:
 
           start_index = text_to_highlight.find(start_tag, end_index)  
 
-          normal_text = text_to_highlight[end_index + len(end_tag): start_index]
+          if start_index == -1:
+            normal_text = text_to_highlight[end_index + len(end_tag):]
+          else:
+            normal_text = text_to_highlight[end_index + len(end_tag): start_index]
           highlighted_parts[normal_text] = False
 
 

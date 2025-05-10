@@ -238,8 +238,72 @@ class Npc(Mob):
 
 
   def to_dict(self):
-    npc = super().to_dict()
-    return npc
+    slots_dict = {}
+    for key, value in self.slots.items():
+      if value is None:
+        slots_dict[key] = {}
+      else:
+        slots_dict[key] = value.to_dict()
+    
+    area_name = ''
+    if hasattr(self.area, 'name'):
+      area_name = self.area.name
+    
+
+    if hasattr(self.current_activity, 'type'):
+      current_activity = self.current_activity.to_dict()
+    else:
+      current_activity = {}
+    
+    if hasattr(self.next_activity, 'type'):
+      next_activity = self.next_activity.to_dict()
+    else:
+      next_activity = {}
+    if self.schedule:
+      for day, activities in self.schedule.items():
+        schedule = {}
+        schedule[day] = {time: activity.to_dict() for time, activity in activities.items()}
+    else:
+      schedule = {}
+    return {
+      "mob_id": self.mob_id,
+      "x": self.x, 
+      "y": self.y,
+      "z": self.z,
+      "base_name": self.base_name,
+      "name": self.name,
+      "alias": self.alias,
+      "description": self.description,
+      "lvl": self.lvl,
+      "exp": self.exp,
+      "weight": self.weight,
+      "money": self.money,
+      "race": self.race,
+      "proficiency": self.proficiency,
+      "params": self.params,
+      "stats": self.stats,
+      "skills": self.skills,
+      "equipment": self.equipment.to_dict(),
+      "slots": slots_dict,
+      "conversations": self.conversations,
+      "knowledge": self.knowledge,
+      "journal": self.journal,
+      "area": area_name,
+      "current_activity": current_activity,
+      "next_activity": next_activity,
+      "schedule": schedule,
+      "path": self.path_to_dest,
+      "can_trade": self.can_trade,
+      "items_to_sell": [item.to_dict() for item in self.items_to_sell],
+      "wants_to_buy": self.wants_to_buy,
+      "killable": self.killable,
+      "can_duel": self.can_duel,
+      "is_aggressive": self.is_aggressive,
+      "can_ally": self.can_ally,
+      "teacher_of": self.teacher_of,
+      "blueprints": [blueprint.to_dict() for blueprint in self.blueprints],
+      "affiliation": self.affiliation
+    }
   
   @classmethod
   def from_dict(cls, data):
