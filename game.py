@@ -352,6 +352,9 @@ class Game:
             utility.remove_from_square(self.player.my_square)
             Konsola.print(action["message"], "lmagenta")
 
+          elif action["type"] == "save_game":
+            self.save()
+            Konsola.print(action["message"], "lmagenta")
 
             
         Helper.sleep(1.5)

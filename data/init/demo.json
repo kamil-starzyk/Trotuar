@@ -2347,7 +2347,8 @@
                               "response": "Powodzenia.",
                               "knowledge": {
                                 "Wytępić szczury": "Kapitan obiecał mi pomóc z uzbrojeniem jeśli zabiję 5 szczurów."
-                              }
+                              },
+                              "milestone": "Zabić szczury"
                             }
                           ]
                         }
@@ -4379,6 +4380,17 @@
         {
           "type": "wrap_text",
           "text": "Wykonałeś wszystkie zadania, które miał dla Ciebie Jacek. Udaj się terax do miasta i poszukaj następnych przygód, rozmawiaj z ludźmi baw się dobrze"
+        }
+      ],
+      "next_milestone": null
+    },
+    "Zabić szczury": {
+      "status": 0,
+      "conditions": null,
+      "actions": [
+        {
+          "type": "save_game",
+          "message": "Gra została automatycznie zapisana"
         }
       ],
       "next_milestone": null
