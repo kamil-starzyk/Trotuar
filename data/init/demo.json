@@ -1638,6 +1638,7 @@
                   "next_step": {
                     "options": [
                       {
+                        "condition": "Zobaczyłem wieżę",
                         "text": "Ta wieża w rogu muru",
                         "response": "To wieża północno-zachodnia. Ma ją w pieczy kapitan Rodgier. Napewno znajdziesz tam coś ciekawego."
                       },
@@ -1646,6 +1647,7 @@
                         "response": "Sam ją zbudowałem... a to będzie już ze 20 lat temu. Od tej pory zapracowała na swoją renomę. Wytwarzam tu miecze dla straży oraz na zamówienie dla możnych."
                       },
                       {
+                        "condition": "Zobaczyłem domek zielarki",
                         "text": "Domek, ten na północ od kuźni. Wyraźnie odstaje wyglądem od reszty zabudowy",
                         "response": "Mieszka tam stara Chloe, zielarka. Nie pozwoliła tknąć tej chaty palcem kiedy miasto dawało pieniądze na remont fasady.",
                         "knowledge": {
@@ -4391,6 +4393,50 @@
         {
           "type": "save_game",
           "message": "Gra została automatycznie zapisana"
+        }
+      ],
+      "next_milestone": null
+    },
+    "Zobaczyć domek zielarki": {
+      "status": 1,
+      "conditions": [
+        {
+          "type": "player_on_square",
+          "location": "Demo",
+          "x": 6,
+          "y": 1,
+          "z": 1
+        }
+      ],
+      "actions": [
+        {
+          "type": "add_knowledge",
+          "knowledge": {
+            "Zobaczyłem domek zielarki" : "Stoi przy drodze pod północnym murem"
+          }
+            
+        }
+      ],
+      "next_milestone": null
+    },
+    "Zobaczyć wieżę w rogu": {
+      "status": 1,
+      "conditions": [
+        {
+          "type": "player_on_square",
+          "location": "Demo",
+          "x": 4,
+          "y": 1,
+          "z": 1
+        }
+      ],
+      "actions": [
+        {
+          "type": "add_knowledge",
+          "knowledge": {
+            "Zobaczyłem wieżę" : "Stoi w północno zachodnim rogu muru"
+          }
+            
         }
       ],
       "next_milestone": null

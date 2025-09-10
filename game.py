@@ -356,6 +356,10 @@ class Game:
             self.save()
             Konsola.print(action["message"], "lmagenta")
 
+          elif action["type"] == "add_knowledge":
+            for key, value in action["knowledge"].items():
+              self.player.knowledge[key] = value
+
             
         Helper.sleep(1.5)
         self.show_current_square()
