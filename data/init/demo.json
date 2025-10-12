@@ -2365,7 +2365,7 @@
 								{
 									"condition": "Wytępić szczury",
                   "text": "W sprawie twojego zadania. Mam problem z zabiciem jakiegokolwiek szczura",
-                  "response": "Mówiłem Ci, że to nie będzie proste. Po pierwsze popraw swoją szybkość i zręczność. Po drugie zdobądź odpowiednią broń. Miecz nie nadaje sie do polowania na gryzonie. Dużo lepsza będzie pałka.",
+                  "response": "Mówiłem Ci, że to nie będzie proste. Po pierwsze popraw swoją szybkość i zręczność. Po drugie zdobądź odpowiednią broń. Miecz nie nadaje sie do polowania na gryzonie. Dużo lepsza będzie pałka. Zapytaj karczmarza.",
                   "next_step": {
                     "options": [
                       {
@@ -4392,7 +4392,7 @@
       "actions": [
         {
           "type": "save_game",
-          "message": "Gra została automatycznie zapisana"
+          "message": "Gra została automatycznie zapisana. W razie niepowodzenia możesz w menu głównym wybrać opcję (2.) i wczytać ostatni zapis."
         }
       ],
       "next_milestone": null

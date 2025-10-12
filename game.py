@@ -434,21 +434,61 @@ class Game:
       print(str(number) + ". ", end="")
       Konsola.print(path, "lwhite")
       number+=1
+    Konsola.print("Możesz usunąć zapisy używając komendy delete [numer] lub delete all aby usunąć wszystkie zapisy", "yellow")
     print("")
     
-    correct = False
-    while not correct:
+    while True:
       Konsola.print("Wybierz zapis: ", "lgreen", line_end='')
-      choice = input()
+      choice = input().split()
+
+      if not choice:
+        continue
+
+      if choice[0] == "q":
+        return
+      if choice[0] == "delete":
+        if len(choice) < 2:
+          Konsola.print("Użycie: delete [numer | all]", "lyellow")
+          continue
+        if choice[1] == "all":
+          if choice[1] == "all":
+            confirm = input("Na pewno usunąć wszystkie zapisy? (t/n): ").lower()
+            if confirm == "t":
+              deleted = Helper.delete_all_saves()
+              Konsola.print(f"Usunięto {len(deleted)} zapisów.", "lred")
+              saves = []
+              return
+            else:
+              Konsola.print("Anulowano.", "lgray")
+              continue
+        if choice[1].isdigit():
+          idx = int(choice[1]) - 1
+          if 0 <= idx < len(saves):
+            filename = saves[idx]
+            confirm = input(f"Czy na pewno usunąć zapis '{filename}'? (t/n): ").lower()
+            if confirm == "t":
+              if Helper.delete_save(filename):
+                Konsola.print(f"Usunięto zapis {filename}", "lred")
+              else:
+                Konsola.print("Nie udało się usunąć zapisu.", "lred")
+              saves = Helper.open_saves()
+              if not saves:
+                Konsola.print("Nie masz już żadnych zapisów.", "lred")
+                return
+            else:
+              Konsola.print("Anulowano.", "lgray")
+          else:
+            Konsola.print("Nie ma zapisu o takim numerze.", "lyellow")
+      
+
       try:
-        choice = int(choice)
+        save_nr = int(choice[0])
       except:
-        if choice == "q":
-          return
+
         print("Podaj liczbę ")
         continue
-      if 0 < choice <= len(saves):
-        self.load_game(saves[choice-1])
+      if 0 < save_nr <= len(saves):
+        self.load_game(saves[save_nr-1])
         return
       else:
         print("Nie ma takiego zapisu ")

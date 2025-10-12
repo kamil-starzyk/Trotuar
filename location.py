@@ -59,6 +59,7 @@ class Location:
     squares_list = data["squares"]
     mobs_list = data["mobs"]
     squares = [Square.from_dict(square_data) for square_data in squares_list]
+    Npc.ids = {}
     mobs = [Npc.from_dict(mob_data) for mob_data in mobs_list]
     passages = data["secret_passages"]
     areas_list = data["areas"]

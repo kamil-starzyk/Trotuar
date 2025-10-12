@@ -1,7 +1,7 @@
 import time
 import re
 from datetime import datetime
-from os import listdir
+import os
 from konsola import Konsola
 import random
 
@@ -20,11 +20,42 @@ class Helper:
     return formatted_date
 
   @classmethod
+  def ensure_save_dir(cls):
+    """Upewnia się, że folder z zapisami istnieje."""
+    os.makedirs("data/saves", exist_ok=True)
+
+  @classmethod
   def open_saves(cls):
-    paths = listdir("data/saves")
+    """Zwraca listę dostępnych plików z zapisami (najnowsze pierwsze)."""
+    cls.ensure_save_dir()
+    paths = os.listdir("data/saves")
     if ".gitkeep" in paths:
       paths.remove(".gitkeep")
     return list(reversed(paths))
+
+  @classmethod
+  def delete_save(cls, filename):
+    """Usuwa pojedynczy zapis (po nazwie pliku)."""
+    cls.ensure_save_dir()
+    save_path = os.path.join("data/saves", filename)
+    if os.path.exists(save_path):
+      os.remove(save_path)
+      return True
+    return False
+
+  @classmethod
+  def delete_all_saves(cls):
+    """Usuwa wszystkie zapisy z folderu `data/saves` (oprócz .gitkeep)."""
+    cls.ensure_save_dir()
+    deleted = []
+    for f in os.listdir("data/saves"):
+      if f == ".gitkeep":
+        continue
+      file_path = os.path.join("data/saves", f)
+      if os.path.exists(file_path):
+        os.remove(file_path)
+        deleted.append(f)
+    return deleted
 
   @classmethod
   def get_new_gameplay_number(cls):
