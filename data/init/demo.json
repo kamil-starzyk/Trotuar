@@ -376,7 +376,24 @@
             "exits": [
               "w"
             ],
-            "utilities":[],
+            "utilities":[
+              {
+                "id": 8,
+                "type": "Device",
+                "alias": [
+                  "palenisko"
+                ],
+                "name": "Palenisko",
+                "description": "Masywne kamienne palenisko, na środku ma zagłębienie na węgiel. Z boku ma otwór doprowadzający powietrze z miecha.",
+                "square_description": "Na środku stoi [i]palenisko[/i].",
+                "lock" : "",
+                "opened": 0,
+                "attr": {},
+                "items": [],
+                "money": 0,
+                "actions": {}
+              }
+            ],
             "items": [
               {
                 "type": "Tool",

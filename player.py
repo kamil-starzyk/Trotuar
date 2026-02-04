@@ -414,7 +414,7 @@ class Player(Mob):
 
     if not mob:
       Konsola.print("Nie ma tu nauczyciela, który mógłby Cię szkolić!", "lred")
-      # return 0
+      return 0
     
     skills = []
     for v in self.ALL_SKILLS.values():
