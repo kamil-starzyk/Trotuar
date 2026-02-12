@@ -385,13 +385,72 @@
                 ],
                 "name": "Palenisko",
                 "description": "Masywne kamienne palenisko, na środku ma zagłębienie na węgiel. Z boku ma otwór doprowadzający powietrze z miecha.",
-                "square_description": "Na środku stoi [i]palenisko[/i].",
+                "square_description": "",
                 "lock" : "",
                 "opened": 0,
                 "attr": {},
                 "items": [],
                 "money": 0,
-                "actions": {}
+                "actions": {
+                  "see": "zobacz"
+                }
+              },
+              {
+                "id": 9,
+                "type": "Device",
+                "alias": [
+                  "miech"
+                ],
+                "name": "Miech",
+                "description": "Urządzenie służące do zwięszania temperatury w palenisku.",
+                "square_description": "",
+                "lock" : "",
+                "opened": 0,
+                "attr": {},
+                "items": [],
+                "money": 0,
+                "actions": {
+                  "see": "zobacz",
+                  "use": "użyj"
+                }
+              },
+              {
+                "id": 10,
+                "type": "Device",
+                "alias": [
+                  "kowadło",
+                  "kowadlo"
+                ],
+                "name": "Kowadło",
+                "description": "Masywny kawał stali do wykuwania na nim mniejszych kawałków stali",
+                "square_description": "",
+                "lock" : "",
+                "opened": 0,
+                "attr": {},
+                "items": [],
+                "money": 0,
+                "actions": {
+                  "see": "zobacz"
+                }
+              },
+              {
+                "id": 11,
+                "type": "Device",
+                "alias": [
+                  "brus"
+                ],
+                "name": "Brus",
+                "description": "Obrotowe kamienne koło z napędem nożnym służące do ostrzenia broni",
+                "square_description": "",
+                "lock" : "",
+                "opened": 0,
+                "attr": {},
+                "items": [],
+                "money": 0,
+                "actions": {
+                  "see": "zobacz",
+                  "uze": "użyj"
+                }
               }
             ],
             "items": [
