@@ -5,13 +5,14 @@ from equipment import Equipment
 
 # skrzynia, łóżko, palenisko, zarośla, 
 class Utility:
-  def __init__(self, id, type, alias, name, description, square_description, lock, opened, attr, items, money, actions):
+  def __init__(self, id, type, alias, name, description, square_description, coupled_utility, lock, opened, attr, items, money, actions):
     self.id = id
     self.type = type
     self.alias = alias
     self.name = name
     self.description = description
     self.square_description = square_description
+    self.coupled_utility = coupled_utility
     self.lock = lock
     self.opened = opened
     self.attr = attr
@@ -115,6 +116,7 @@ class Utility:
       'name': self.name,
       'description': self.description,
       'square_description': self.square_description,
+      'coupled_utility': self.coupled_utility,
       'lock': self.lock,
       'opened': self.opened,
       'attr': self.attr,
@@ -126,5 +128,5 @@ class Utility:
   @classmethod
   def from_dict(cls, data):
     items = Equipment.from_dict(data["items"])
-    return cls(data["id"], data["type"], data["alias"], data["name"], data["description"], data["square_description"], data["lock"], data["opened"], data["attr"], items, data['money'], data["actions"])
+    return cls(data["id"], data["type"], data["alias"], data["name"], data["description"], data["square_description"], data["coupled_utility"], data["lock"], data["opened"], data["attr"], items, data['money'], data["actions"])
   

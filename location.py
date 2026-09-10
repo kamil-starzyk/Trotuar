@@ -14,6 +14,7 @@ class Location:
     self.mobs = mobs
     self.secret_passages = secret_passages
     self.areas = areas
+    self.utilities = []
   
   def find_square(self, target_x, target_y, target_z):
     for square in self.squares:
@@ -67,6 +68,7 @@ class Location:
     location = cls(name, description, size_x, size_y, size_z, ground_level, squares, mobs, passages, areas)
     for square in squares:
       square.location = location
+      location.utilities.extend(square.utilities)
     for mob in mobs:
       mob.current_location = location
       mob_area = next((area for area in areas if area.name == mob.area), None)

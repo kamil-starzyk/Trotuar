@@ -119,6 +119,13 @@ class Mob:
           effects[attr_name] = attr_value
       
       self.equipment.remove_item(item)  
+    
+    if not item:
+      utility = Helper.find_utility(self.my_square.utilities, "use", item_name)
+      if utility and "miech" in utility.alias: 
+        palenisko = Helper.coupled_utility(self.my_square.utilities, utility.coupled_utility)
+        print(palenisko.name)
+
     return item, effects
 
   

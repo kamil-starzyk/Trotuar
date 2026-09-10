@@ -91,10 +91,12 @@ class Helper:
       return 0
   
   @classmethod
-  def find_utility(cls, utility_list, action):
+  def find_utility(cls, utility_list, action, utility_name=None):
     hit = []
     for u in utility_list:
-      if action in u.actions:
+      if action == "use" and action in u.actions and utility_name in u.alias:
+        hit.append(u)
+      if action in u.actions and action != "use":
         hit.append(u)
     
     if len(hit) == 1:
@@ -105,6 +107,10 @@ class Helper:
     else:
       return 0
   
+  @classmethod
+  def coupled_utility(cls, utility_list, utility_id):
+    return next(u for u in utility_list if u.id == utility_id)
+
   @classmethod
   def chose_one_item(cls, item_list):
     for i in range(len(item_list)):
