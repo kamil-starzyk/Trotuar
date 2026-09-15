@@ -13,7 +13,7 @@ class Item:
 
   def see_more(self):
     Konsola.print(self.name, "lcyan")
-    Konsola.print(self.description, "lwhite")
+    Konsola.wrap(self.description, "lwhite")
     Konsola.print("Wartość: ", line_end='')
     Konsola.print(self.price, "lwhite")
     Konsola.print("Ciężar: ", line_end='')

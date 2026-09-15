@@ -59,7 +59,7 @@ class Mob:
 
   def see_more(self):
     Konsola.print(self.name, "lcyan")
-    Konsola.print(self.description, "lwhite")
+    Konsola.wrap(self.description, "lwhite")
     if self.current_activity:
       Konsola.print_random(self.current_activity.description)
     Konsola.print("Wyposażenie", "lcyan")
@@ -124,7 +124,14 @@ class Mob:
       utility = Helper.find_utility(self.my_square.utilities, "use", item_name)
       if utility and "miech" in utility.alias: 
         palenisko = Helper.coupled_utility(self.my_square.utilities, utility.coupled_utility)
-        print(palenisko.name)
+        if palenisko.attr["is_ignited"] != True:
+          Konsola.print("Powietrze zaszumiało, ale palenisko jest wygaszone i nic to nie dało. Musisz najpierw rozpalić palenisko przy użyciu hubki i krzesiwa.")
+        elif palenisko.attr["coal"] >= 10:
+          palenisko.attr["coal"]-=10
+          palenisko.attr["temperature"]+=200
+          Konsola.print("Miech zaszumiał, a płomienie buchnęły z paleniska.")
+        else:
+          Konsola.print("W palenisku jest za mało węgla")
 
     return item, effects
 

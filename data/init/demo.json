@@ -384,16 +384,23 @@
                   "palenisko"
                 ],
                 "name": "Palenisko",
-                "description": "Masywne kamienne palenisko, na środku ma zagłębienie na węgiel. Z boku ma otwór doprowadzający powietrze z miecha.",
+                "description": "Masywne kamienne palenisko, na środku ma zagłębienie na węgiel. Z boku ma otwór doprowadzający powietrze z miecha.\nŻeby rozgrzewać metal należy najpierw rozpalić palenisko (komenda [i]rozpal palenisko[/i], musisz mieć przy sobie hubkę i krzesiwo, a w palenisku musi być pod dostatkiem węgla), a następnie podnieść temperaturę przy pomocy miecha (komenda [i]użyj miech[/i]).",
                 "coupled_utility": null, 
                 "square_description": "",
                 "lock" : "",
                 "opened": 0,
-                "attr": {},
+                "attr": {
+                  "coal": 20,
+                  "coal_max": 100,
+                  "temperature": 0,
+                  "is_ignited": true
+                },
                 "items": [],
                 "money": 0,
                 "actions": {
-                  "see": "zobacz"
+                  "see": "zobacz",
+                  "ignite": "rozpal",
+                  "extinguish": "wygaś"
                 }
               },
               {
@@ -1158,7 +1165,7 @@
                 },
                 "items": [
                   {
-                    "type": "Quest",
+                    "type": "Supply",
                     "alias": [
                       "worek węgla",
                       "worek",
@@ -1168,14 +1175,16 @@
                     "description": "Szary worek pełny pylącego węgla.",
                     "weight": 65,
                     "price": 40,
-                    "attr": {},
+                    "attr": {
+                      "coal": 60
+                    },
                     "actions": {
                       "see": "zobacz",
                       "pick": "podnieś"
                     }
                   },
                   {
-                    "type": "Quest",
+                    "type": "Supply",
                     "alias": [
                       "beczka piwa",
                       "piwo",
@@ -1185,14 +1194,17 @@
                     "description": "Średniej wielkości drewniana beczka. Jest pełna piwa",
                     "weight": 60,
                     "price": 120,
-                    "attr": {},
+                    "attr": {
+                      "beer": 50
+                    },
                     "actions": {
                       "see": "zobacz",
-                      "pick": "podnieś"
+                      "pick": "podnieś",
+                      "use": "użyj"
                     }
                   },
                   {
-                    "type": "Quest",
+                    "type": "Supply",
                     "alias": [
                       "skrzynka wina",
                       "wino",
@@ -1202,14 +1214,16 @@
                     "description": "Drewniana skrzynka, zawierająca 20 butelek gronowego wina",
                     "weight": 30,
                     "price": 220,
-                    "attr": {},
+                    "attr": {
+                      "wine": 20
+                    },
                     "actions": {
                       "see": "zobacz",
                       "pick": "podnieś"
                     }
                   },
                   {
-                    "type": "Quest",
+                    "type": "Consumable",
                     "alias": [
                       "butelka gorzałki",
                       "butelka gorzalki",
@@ -1219,7 +1233,7 @@
                     ],
                     "name": "Butelka gorzałki",
                     "description": "Przezroczysta butelka z jasnym płynem w środku",
-                    "weight": 2,
+                    "weight": 1,
                     "price": 220,
                     "attr": {
                       "amount": 2

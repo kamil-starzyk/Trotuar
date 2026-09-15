@@ -33,7 +33,7 @@ class Utility:
 
   def see_more(self):
     Konsola.print(self.name, "lcyan")
-    Konsola.print(self.description, "lwhite")
+    Konsola.wrap(self.description, "lwhite")
     if self.attr:
       Konsola.print("Atrybuty:", "lwhite")
       for k, v in self.attr.items():
@@ -48,6 +48,9 @@ class Utility:
           Konsola.print(" Pasażerowie:")
           for p in self.attr["passengers"]:
             Konsola.print(p["name"], "lwhite")
+        if k == "temperature":
+          Konsola.print(" Temperatura:", line_end=': ')
+          Konsola.print(v, "lwhite")
     if self.actions:
       Konsola.print("Możliwe działania:", "lwhite")
       for k, v in self.actions.items():
