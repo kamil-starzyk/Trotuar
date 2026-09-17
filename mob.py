@@ -128,7 +128,9 @@ class Mob:
           Konsola.print("Powietrze zaszumiało, ale palenisko jest wygaszone i nic to nie dało. Musisz najpierw rozpalić palenisko przy użyciu hubki i krzesiwa.")
         elif palenisko.attr["coal"] >= 10:
           palenisko.attr["coal"]-=10
-          palenisko.attr["temperature"]+=200
+          palenisko.attr["temperature"]+=100
+          if palenisko.attr["temperature"] > palenisko.attr["temperature_max"]:
+            palenisko.attr["temperature"] = palenisko.attr["temperature_max"]
           Konsola.print("Miech zaszumiał, a płomienie buchnęły z paleniska.")
         else:
           Konsola.print("W palenisku jest za mało węgla")

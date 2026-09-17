@@ -8,14 +8,16 @@ class Activity:
     "following_path",
     "fight",
     "stays_at_place",
-    "prepares_workshop"
+    "prepares_workshop",
+    "works_in_forge"
   ]
-  def __init__(self, type, description, importance, area=None, mob_id=0, destination=None):
+  def __init__(self, type, description, importance, area=None, mob_id=0, utility_id=0, destination=None):
     self.type = type
     self.description = description
     self.importance = importance #int 1-10
     self.area = area
     self.mob_id = mob_id
+    self.utility_id = utility_id
     self.destination = destination
 
   def to_dict(self):
@@ -25,6 +27,7 @@ class Activity:
       "importance": self.importance,
       "area": self.area,
       "mob_id": self.mob_id,
+      "utility_id": self.utility_id,
       "destination": self.destination
     }
   
@@ -39,6 +42,7 @@ class Activity:
     importance = data.get("importance", 1)
     area = data.get("area", None)
     mob_id = data.get("mob_id", 0)
+    utility_id = data.get("utility_id", 0)
     destination = data.get("destination", None)
     
-    return cls(type, description, importance, area, mob_id, destination)
+    return cls(type, description, importance, area, mob_id, utility_id, destination)

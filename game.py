@@ -272,7 +272,13 @@ class Game:
               enemy.current_activity = Activity("fight", "walczy z "+mob.name, 5, mob.mob_id)
           mob.try_to_draw_weapon(is_mob_on_square)
           mob.perform_attack(enemy, "hit", is_mob_on_square)
+        elif mob.current_activity.type == "works_in_forge":
+          palenisko = Helper.coupled_utility(mob.my_square.utilities, mob.current_activity.utility_id)
+          if palenisko.attr["coal"] < 10:
+            Konsola.print("Kowal popatrzył i westchnął:", "white")  
+            Konsola.print(" - Muszę dołożyć węgla", "lwhite")
 
+          
     for _ in range(minutes):
       loop_body()
 

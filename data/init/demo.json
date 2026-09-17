@@ -392,7 +392,9 @@
                 "attr": {
                   "coal": 20,
                   "coal_max": 100,
-                  "temperature": 0,
+                  "temperatur_min": 600,
+                  "temperature": 600,
+                  "temperature_max": 1200,
                   "is_ignited": true
                 },
                 "items": [],
@@ -1772,7 +1774,13 @@
             "knowledge": {},
             "journal": {},
             "area": "Torenberg",
-            "current_activity": {},
+            "current_activity": {
+              "type": "works_in_forge",
+              "description": ["pracuje w kuźni", "kuje stal"],
+              "importance": 5,
+              "utility_id": 8,
+              "destination": {"x": 6, "y": 2, "z": 1}
+            },
             "next_activity": {},
             "schedule": {
               "1234567":{
@@ -1780,6 +1788,13 @@
                   "type": "prepares_workshop",
                   "description": ["układa narzędzia", "sprawdza stan techniczny urządzeń", "rozpala piec"],
                   "importance": 5,
+                  "destination": {"x": 6, "y": 2, "z": 1}
+                },
+                "8:00": {
+                  "type": "works_in_forge",
+                  "description": ["pracuje w kuźni", "kuje stal"],
+                  "importance": 5,
+                  "utility_id": 8,
                   "destination": {"x": 6, "y": 2, "z": 1}
                 }
               }
