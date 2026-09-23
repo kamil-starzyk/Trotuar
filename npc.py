@@ -236,6 +236,10 @@ class Npc(Mob):
 
           self.current_activity = activity
 
+  def use(self, item_name):
+    item, effects = super().use_item(item_name, True)
+
+    return item, effects
 
   def to_dict(self):
     slots_dict = {}

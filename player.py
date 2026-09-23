@@ -114,13 +114,33 @@ class Player(Mob):
     return 0
 
   def use(self, item_name):
-    item, effects = super().use(item_name, True)
-    if effects:
-      Konsola.print("Zużyłeś ", line_end='')
-      Konsola.print(item.name, "lwhite")
-      print("Efekty: ")
-      for e in effects:
-        print(e + ": +" +str(effects[e]))
+    item, effects = super().use_item(item_name, True)
+    if item:
+      if effects:
+        Konsola.print("Zużyłeś ", line_end='')
+        Konsola.print(item.name, "lwhite")
+        print("Efekty: ")
+        for e in effects:
+          print(e + ": +" +str(effects[e]))
+      # inne itemy niż consumable do obsłużenia
+      return 30
+    else:
+      utility = Helper.find_utility(self.my_square.utilities, "use", item_name)
+      if utility and "miech" in utility.alias: 
+        palenisko = Helper.coupled_utility(self.my_square.utilities, utility.coupled_utility)
+        if palenisko.attr["is_ignited"] != True:
+          Konsola.print("Powietrze zaszumiało, ale palenisko jest wygaszone i nic to nie dało. Musisz najpierw rozpalić palenisko przy użyciu hubki i krzesiwa.")
+        elif palenisko.attr["coal"] >= 10:
+          palenisko.attr["coal"]-=10
+          palenisko.attr["temperature"]+=100
+          if palenisko.attr["temperature"] > palenisko.attr["temperature_max"]:
+            palenisko.attr["temperature"] = palenisko.attr["temperature_max"]
+          Konsola.print("Miech zaszumiał, a płomienie buchnęły z paleniska.")
+        else:
+          Konsola.print("W palenisku jest za mało węgla")
+          palenisko.attr["coal_low"] = True
+        
+        return 30
   
   def give(self, item_name):
     item = Helper.find_item(self.equipment, item_name, True)
@@ -147,6 +167,8 @@ class Player(Mob):
     item = self.equipment.remove_item(item, amount_to_give)
 
     mob.equipment.add_item(item)
+    for i in mob.equipment:
+      print(i.name)
     self.item_receiver = mob
     self.given_item = item
     return Player.TIME_OF_ITEM_INTERACTION

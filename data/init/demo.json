@@ -2,8 +2,8 @@
   "gameplay": 2,
   "player": {
     "mob_id": 1,
-    "x": 6,
-    "y": 2,
+    "x": 0,
+    "y": 4,
     "z": 1,
     "base_name": "Alwer",
     "name": "Alwer",
@@ -395,7 +395,8 @@
                   "temperatur_min": 600,
                   "temperature": 600,
                   "temperature_max": 1200,
-                  "is_ignited": true
+                  "is_ignited": true,
+                  "coal_low": false
                 },
                 "items": [],
                 "money": 0,

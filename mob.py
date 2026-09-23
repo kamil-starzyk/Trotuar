@@ -107,10 +107,12 @@ class Mob:
       return item
     return 0
 
-  def use(self, item_name, player=False):
+  def use_item(self, item_name, player=False):
     item = Helper.find_item(self.equipment, item_name, player)
     effects = {}
-    if item and item.type == "Consumable":
+    if not item:
+      return False, effects
+    if item.type == "Consumable":
       consumable_attr = ["hp", "stamina", "mana", "satiation", "hydration"]
       for attr_name, attr_value in item.attr.items():
         
@@ -119,22 +121,16 @@ class Mob:
           effects[attr_name] = attr_value
       
       self.equipment.remove_item(item)  
+    elif item.type == "Supply":
+      supply_attr = ["coal"]
+      for attr_name, attr_value in item.attr.items():
+        
+        if attr_name in supply_attr:
+          for u in self.my_square.utilities:
+            if attr_name in u.attr and attr_name != "use":
+              item = u
+              effects[attr_name] = attr_value
     
-    if not item:
-      utility = Helper.find_utility(self.my_square.utilities, "use", item_name)
-      if utility and "miech" in utility.alias: 
-        palenisko = Helper.coupled_utility(self.my_square.utilities, utility.coupled_utility)
-        if palenisko.attr["is_ignited"] != True:
-          Konsola.print("Powietrze zaszumiało, ale palenisko jest wygaszone i nic to nie dało. Musisz najpierw rozpalić palenisko przy użyciu hubki i krzesiwa.")
-        elif palenisko.attr["coal"] >= 10:
-          palenisko.attr["coal"]-=10
-          palenisko.attr["temperature"]+=100
-          if palenisko.attr["temperature"] > palenisko.attr["temperature_max"]:
-            palenisko.attr["temperature"] = palenisko.attr["temperature_max"]
-          Konsola.print("Miech zaszumiał, a płomienie buchnęły z paleniska.")
-        else:
-          Konsola.print("W palenisku jest za mało węgla")
-
     return item, effects
 
   
