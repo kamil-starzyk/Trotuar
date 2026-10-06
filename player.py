@@ -140,7 +140,7 @@ class Player(Mob):
           Konsola.print("W palenisku jest za mało węgla")
           palenisko.attr["coal_low"] = True
         
-        return 30
+        return 60
   
   def give(self, item_name):
     item = Helper.find_item(self.equipment, item_name, True)

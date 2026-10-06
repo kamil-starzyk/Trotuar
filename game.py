@@ -274,15 +274,16 @@ class Game:
           mob.perform_attack(enemy, "hit", is_mob_on_square)
         elif mob.current_activity.type == "works_in_forge":
           palenisko = Helper.coupled_utility(mob.my_square.utilities, mob.current_activity.utility_id)
-          # if palenisko.attr["coal"] < 10:
           if palenisko.attr["coal_low"] == True:
             Konsola.print("Kowal popatrzył i westchnął:", "white")  
             Konsola.print(" - Muszę dołożyć węgla", "lwhite")
-            _, effects = mob.use("workek węgla")
-            print(effects)
+            _, effects = mob.use("worek węgla")
             if effects and "coal" in effects:
+              Helper.sleep(0.5)
               Konsola.print("Kowal dorzucił węgla do paleniska", "lwhite")
+              palenisko.attr["coal_low"] = False
             else:
+              Helper.sleep(0.5)
               Konsola.print(" - Ayy caramba! Skończył mi się węgiel", "lwhite")
           
     for _ in range(minutes):
