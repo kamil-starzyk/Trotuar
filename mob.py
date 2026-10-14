@@ -119,8 +119,8 @@ class Mob:
         if attr_name in consumable_attr:
           setattr(self, attr_name, getattr(self, attr_name) + attr_value)
           effects[attr_name] = attr_value
-      
-      self.equipment.remove_item(item)  
+          self.equipment.remove_item(item)  
+          
     elif item.type == "Supply":
       supply_attr = ["coal"]
       for attr_name, attr_value in item.attr.items():
@@ -128,8 +128,10 @@ class Mob:
         if attr_name in supply_attr:
           for u in self.my_square.utilities:
             if attr_name in u.attr and attr_name != "use":
-              item = u
+              u.attr[attr_name]+=attr_value
+              
               effects[attr_name] = attr_value
+              self.equipment.remove_item(item)  
     
     return item, effects
 
