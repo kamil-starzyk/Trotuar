@@ -119,7 +119,7 @@ class Mob:
         if attr_name in consumable_attr:
           setattr(self, attr_name, getattr(self, attr_name) + attr_value)
           effects[attr_name] = attr_value
-          self.equipment.remove_item(item)  
+      self.equipment.remove_item(item)  
           
     elif item.type == "Supply":
       supply_attr = ["coal"]

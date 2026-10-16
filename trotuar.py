@@ -87,6 +87,8 @@ while True:
   "dziennik":   player.show_journal,
   "journal":    player.show_journal,
   "przepisy":   player.show_blueprints,
+  "zrób":       player.create,
+  "zrob":       player.create,
   "stwórz":     player.create,
   "stworz":     player.create,
   "create":     player.create,
