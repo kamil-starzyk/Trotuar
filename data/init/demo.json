@@ -62,7 +62,7 @@
         "actions": {
           "see": "zobacz",
           "drop": "upuść",
-          "use": "jedz"
+          "use": "użyj"
         }
       },
       {
@@ -195,6 +195,63 @@
           "cheese": 0.5
         },
         "tools_needed": ["knife"],
+        "utilities_needed": [],
+        "resulting_item": {
+          "type": "Consumable",
+          "alias": [
+            "kanapka z serem",
+            "kanapka"
+          ],
+          "name": "Kanapka z serem",
+          "description": "Pyszna kanapka ze złocistym serem",
+          "weight": 0.2,
+          "price": 5,
+          "attr": {
+            "amount": 5,
+            "satiation": 12,
+            "stamina": 2
+          },
+          "actions": {
+            "see": "zobacz",
+            "drop": "upuść",
+            "use": "jedz"
+          }
+        },
+        "number_of_items": 1,
+        "action_descriptions" : [
+          "Wyciągasz nóż",
+          "Kroisz chleb na kromki",
+          "Ukrawasz plasterki sera",
+          "Wkładasz je pomiędzy kromki",
+          "Układasz gotowe kanapeczki w ładny stos i pakujesz je do plecaka"
+        ]
+      },
+      {
+        "type": "Part",
+        "name"  : "Instrukcja wykonania głowni miecza",
+        "content": "Głownię miecza wykonuje się poprzez rozgrzanie kawałka metalu w palenisku a następnie formowaniu go przy użyciu młota na kowadle. Proces podgrzewania i kucia trzeba wielokrotnie powtarzać. Aby można było korzystać z paleniska musi być ono rozpalone i bardzo rozgrzane. ",
+        "time": 600,
+        "skills_needed": {
+          "cooking": 10
+        },
+        "materials_needed": {
+          "steel": 1
+        },
+        "tools_needed": ["hammer"],
+        "utilities_needed": [
+          {
+            "palenisko": {
+              "is_ignited": true,
+              "temperature": 1100
+            }
+          },
+          {
+            "kowadło": {}
+          },
+          {
+            "brus": {}
+          }
+        ],
         "resulting_item": {
           "type": "Consumable",
           "alias": [
@@ -2448,7 +2505,7 @@
                 {
 									"condition": "Pierwsze zadanie od kapitana",
                   "text": "Szukam ciekawych zadań i przygód",
-                  "response": "Mam jeden palący problem, ale nie wiem czy sobie z nim poradzisz. Otórz w mieście grasują od jakiegoś czasu szczury. Są tak bezczelne, że nawet przebiegają mi między nogami, ale zawsze jestem za wolny, żeby jakiegokolwiek złapać. Jeśli uda Ci się wytępić te pokraki to mogę Ci pomóc zdobyć jakieś lepsze wyposażenie.",
+                  "response": "Mam jeden palący problem, ale nie wiem czy sobie z nim poradzisz. Otóż w mieście grasują od jakiegoś czasu szczury. Są tak bezczelne, że nawet przebiegają mi między nogami, ale zawsze jestem za wolny, żeby jakiegokolwiek złapać. Jeśli uda Ci się wytępić te pokraki to mogę Ci pomóc zdobyć jakieś lepsze wyposażenie.",
                   "next_step": {
                     "options": [
                       {

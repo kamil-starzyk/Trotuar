@@ -160,6 +160,7 @@ class Mob:
       for b in self.blueprints:
         print(iterator, end=". ")
         print(b.name)
+        iterator+=1
     else:
       number = int(number)
       self.blueprints[number-1].read()

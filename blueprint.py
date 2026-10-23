@@ -3,7 +3,7 @@ from konsola import Konsola
 from item import Item
 
 class Blueprint:
-  def __init__(self, type, name, content, time, skills_needed, materials_needed, tools_needed, resulting_item, number_of_items, action_descriptions):
+  def __init__(self, type, name, content, time, skills_needed, materials_needed, tools_needed, utilities_needed, resulting_item, number_of_items, action_descriptions):
     self.type = type
     self.name = name
     self.content = content
@@ -11,6 +11,7 @@ class Blueprint:
     self.skills_needed = skills_needed
     self.materials_needed = materials_needed
     self.tools_needed = tools_needed
+    self.utilities_needed = utilities_needed
     self.resulting_item = resulting_item
     self.number_of_items = number_of_items
     self.action_descriptions = action_descriptions
@@ -28,6 +29,10 @@ class Blueprint:
     Konsola.print("Potrzebne narzędzia:", "lwhite")
     for t in self.tools_needed:
       print(" " + t)
+    Konsola.print("Potrzebne urządzenia:", "lwhite")
+    for u in self.utilities_needed:
+      for k, v in u.items():
+        print(" " + k)
     
 
   def to_dict(self):
@@ -39,6 +44,7 @@ class Blueprint:
       "skills_needed": self.skills_needed,
       "materials_needed": self.materials_needed,
       "tools_needed": self.tools_needed,
+      "utilities_needed": self.utilities_needed,
       "resulting_item": self.resulting_item,
       "number_of_items": self.number_of_items,
       "action_descriptions": self.action_descriptions
@@ -46,4 +52,4 @@ class Blueprint:
   
   @classmethod
   def from_dict(cls, data):
-    return cls(data["type"], data["name"], data["content"], data["time"], data["skills_needed"], data["materials_needed"], data["tools_needed"], data["resulting_item"], data["number_of_items"], data["action_descriptions"])
+    return cls(data["type"], data["name"], data["content"], data["time"], data["skills_needed"], data["materials_needed"], data["tools_needed"], data["utilities_needed"], data["resulting_item"], data["number_of_items"], data["action_descriptions"])

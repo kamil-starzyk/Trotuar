@@ -142,7 +142,19 @@ class Npc(Mob):
       return len(allies)
     except IndexError:
       return 0
-    
+  
+  def try_to_escape(self, speed_bonus=100):
+    chance = Helper.random(0+self.speed, 50+self.speed)
+    chance+=speed_bonus
+    if chance >= 50:
+      exits = self.my_square.exits
+      if not exits:
+        return 0
+      e = random.choice(exits)
+      self.move_in_direction(e)
+      return e
+    return 0
+
   def calculate_distance(self, x, y, z):
     a = self.x - x
     b = self.y - y
