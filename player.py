@@ -1044,6 +1044,7 @@ class Player(Mob):
       Helper.sleep(1)
       Konsola.print("Stworzyłeś " + str(number_of_items) + " sztuk ", "lgreen")
       Konsola.print(blueprint.resulting_item["name"], "lyellow")
+      return blueprint.time
 
   def to_dict(self):
     slots_dict = {}
